@@ -59,7 +59,7 @@ namespace SPTLeaderboard
             new PlayerOnDeadPatch().Enable();
             new OnPlayerAddedItem().Enable();
             new OnPlayerRemovedItem().Enable();
-            
+
             if (!DataUtils.IsLoaded)
             {
                 DataUtils.Load(callback=>

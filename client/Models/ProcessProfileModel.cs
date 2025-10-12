@@ -217,35 +217,37 @@ public class ProcessProfileModel
                 
                 #region StatTrack
 
-                var statTrackIsUsed = StatTrackInterop.Loaded();
+                // var statTrackIsUsed = StatTrackInterop.Loaded();
+                var statTrackIsUsed = false;
                 Dictionary<string, Dictionary<string, WeaponInfo>> processedStatTrackData = new Dictionary<string, Dictionary<string, WeaponInfo>>();
+                processedStatTrackData = null;
                 
-                if (!SettingsModel.Instance.EnableModSupport.Value && !statTrackIsUsed)
-                {
-                    LeaderboardPlugin.logger.LogWarning(
-                        $"StatTrack process data skip. StatTrack Find? : {statTrackIsUsed} | Enabled Mod Support? : {SettingsModel.Instance.EnableModSupport.Value}");
-                    processedStatTrackData = null;
-                }
-                else
-                {
-                    LeaderboardPlugin.logger.LogWarning($"Loaded StatTrack plugin {statTrackIsUsed}");
-                    
-                    var dataStatTrack = StatTrackInterop.LoadFromServer();
-                    if (dataStatTrack != null)
-                    {
-#if DEBUG || BETA
-                        LeaderboardPlugin.logger.LogWarning(
-                            $"Data raw StatTrack {JsonConvert.SerializeObject(dataStatTrack).ToJson()}");
-#endif
-                        processedStatTrackData = StatTrackInterop.GetAllValidWeapons(profileID ,dataStatTrack);
-#if DEBUG || BETA
-                        if (processedStatTrackData != null)
-                        {
-                            LeaderboardPlugin.logger.LogWarning("processedStatTrackData != null: Data -> "+JsonConvert.SerializeObject(processedStatTrackData).ToJson());
-                        }
-#endif
-                    }
-                }
+//                 if (!SettingsModel.Instance.EnableModSupport.Value && !statTrackIsUsed)
+//                 {
+//                     LeaderboardPlugin.logger.LogWarning(
+//                         $"StatTrack process data skip. StatTrack Find? : {statTrackIsUsed} | Enabled Mod Support? : {SettingsModel.Instance.EnableModSupport.Value}");
+//                     processedStatTrackData = null;
+//                 }
+//                 else
+//                 {
+//                     LeaderboardPlugin.logger.LogWarning($"Loaded StatTrack plugin {statTrackIsUsed}");
+//                     
+//                     var dataStatTrack = StatTrackInterop.LoadFromServer();
+//                     if (dataStatTrack != null)
+//                     {
+// #if DEBUG || BETA
+//                         LeaderboardPlugin.logger.LogWarning(
+//                             $"Data raw StatTrack {JsonConvert.SerializeObject(dataStatTrack).ToJson()}");
+// #endif
+//                         processedStatTrackData = StatTrackInterop.GetAllValidWeapons(profileID ,dataStatTrack);
+// #if DEBUG || BETA
+//                         if (processedStatTrackData != null)
+//                         {
+//                             LeaderboardPlugin.logger.LogWarning("processedStatTrackData != null: Data -> "+JsonConvert.SerializeObject(processedStatTrackData).ToJson());
+//                         }
+// #endif
+//                     }
+//                 }
 
                 #endregion
                 
@@ -272,29 +274,8 @@ public class ProcessProfileModel
                     DBinInv = haveDevItems,
                     IsCasual = SettingsModel.Instance.ModCasualMode.Value
                 };
-
-                if (!SettingsModel.Instance.PublicProfile.Value)
-                {
-                    var privateProfileData = new PrivateProfileData(baseData);
-
-#if DEBUG
-                    LeaderboardPlugin.logger.LogWarning(
-                        $"DATA privateProfileData {JsonConvert.SerializeObject(privateProfileData)}");
-#endif
-                    
-#if BETA
-                    var betaDataPrivateProfile = PrivateProfileData.MakeBetaCopy(privateProfileData);
-                    betaDataPrivateProfile.ModInt = "BETA";
-                    betaDataPrivateProfile.Mods = ["BETA"];
-                    betaDataPrivateProfile.Token = "BETA";
-                    
-                    LeaderboardPlugin.logger.LogWarning(
-                        $"DATA privateProfileData {JsonConvert.SerializeObject(betaDataPrivateProfile)}");
-#endif
-
-                    LeaderboardPlugin.SendRaidData(privateProfileData);
-                }
-                else if (SettingsModel.Instance.PublicProfile.Value && !isScavRaid)
+                
+                if (!isScavRaid)
                 {
                     var traderInfoData = DataUtils.GetTraderInfo(pmcData);
                     
@@ -344,7 +325,7 @@ public class ProcessProfileModel
 
                     LeaderboardPlugin.SendRaidData(pmcProfileData);
                 }
-                else if (SettingsModel.Instance.PublicProfile.Value && isScavRaid)
+                else
                 {
                     var traderInfoData = DataUtils.GetTraderInfo(pmcData);
                     

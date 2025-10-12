@@ -10,3 +10,5 @@ secret.token
 client/SPTLeaderboard.sln.DotSettings.user
 *.7z
 client/BuildScripts/Build
+*.dll
+*.pdb

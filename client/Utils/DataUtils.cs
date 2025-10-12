@@ -199,9 +199,8 @@ public static class DataUtils
 
     public static void Load(Action<bool> callback)
     {
-        BaseUnityPlugin FikaCoreBLYAT;
-        TryGetPlugin("com.fika.core", out FikaCoreBLYAT);
-        FikaCore = FikaCoreBLYAT;
+        TryGetPlugin("com.fika.core", out var FikaCoreTemp);
+        FikaCore = FikaCoreTemp;
         IsLoaded = true;
         callback.Invoke(FikaCore != null);
     }
