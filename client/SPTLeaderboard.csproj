@@ -136,7 +136,6 @@
         <Compile Include="Data\ImageData.cs" />
         <Compile Include="Data\LocalizationData.cs" />
         <Compile Include="Data\PlayerHeartbeatData.cs" />
-        <Compile Include="Data\PrivateProfileData.cs" />
         <Compile Include="Data\AdditiveProfileData.cs" />
         <Compile Include="Data\ProfileData.cs" />
         <Compile Include="Data\ResponseRaidData.cs" />
