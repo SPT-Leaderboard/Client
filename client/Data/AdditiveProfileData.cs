@@ -78,6 +78,9 @@ namespace SPTLeaderboard.Data
         [JsonProperty("lastRaidEXP")]
         public int LastRaidEXP { get; set; }
         
+        [JsonProperty("hideout")]
+        public HideoutData HideoutData { get; set; }
+        
         [JsonProperty("lastRaidHits")]
         public int LastRaidHits { get; set; }
         
@@ -172,6 +175,7 @@ namespace SPTLeaderboard.Data
                 IsTransition = original.IsTransition,
                 IsUsingStattrack = original.IsUsingStattrack,
                 LastRaidEXP = original.LastRaidEXP,
+                HideoutData = original.HideoutData,
                 LastRaidHits = original.LastRaidHits,
                 LastRaidMap = original.LastRaidMap,
                 LastRaidMapRaw = original.LastRaidMapRaw,

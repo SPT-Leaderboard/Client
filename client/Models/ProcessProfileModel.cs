@@ -28,7 +28,7 @@ public class ProcessProfileModel
                 
                 var pmcData = session.GetProfileBySide(ESideType.Pmc);
                 var scavData = session.GetProfileBySide(ESideType.Savage);
-
+                
                 #region ItemsProcess
 
                 var trackingLoot = LeaderboardPlugin.Instance.TrackingLoot;
@@ -44,6 +44,8 @@ public class ProcessProfileModel
 
                 #endregion
                 
+                #region AgressorProcess
+                
                 string nameKiller = "";
                 if (resultRaid.result == ExitStatus.Killed)
                 {
@@ -53,6 +55,8 @@ public class ProcessProfileModel
                         nameKiller = PlayerHelper.TryGetAgressorName(scavData);
                     }
                 }
+                
+                #endregion
                 
                 var gameVersion = session.Profile.Info.GameVersion;
                 var lastRaidLocationRaw = localRaidSettings.location;
@@ -76,6 +80,8 @@ public class ProcessProfileModel
                 }
                 
                 bool discFromRaid = resultRaid.result == ExitStatus.Left;
+
+                #region Transition Process
                 
                 var isTransition = false;
                 var lastRaidTransitionTo = "None";
@@ -85,6 +91,8 @@ public class ProcessProfileModel
                     lastRaidTransitionTo = s;
                     isTransition = b;
                 });
+                
+                #endregion
 
                 var allAchievementsDict = pmcData.AchievementsData.ToDictionary(
                     pair => pair.Key.ToString(),
@@ -163,7 +171,7 @@ public class ProcessProfileModel
 #if DEBUG || BETA
                 LeaderboardPlugin.logger.LogWarning($"Death coordinates {PlayerHelper.Instance.LastDeathPosition}");
 #endif
-                
+                var hideoutData = new HideoutData();
                 if (!isScavRaid)
                 {
 #if DEBUG || BETA
@@ -176,6 +184,25 @@ public class ProcessProfileModel
                     LeaderboardPlugin.logger.LogWarning($"[Session Counter] ExpLooting {ExpLooting}");
                     LeaderboardPlugin.logger.LogWarning($"[Session Counter] HitCount {HitCount}");
 #endif
+                    
+                    #region Hideout
+
+                    var areasPmc = (pmcData.Hideout.Areas).ToList();
+                    hideoutData = new HideoutData();
+                    foreach (var areaPmc in areasPmc)
+                    {
+                        if (areaPmc.AreaType != EAreaType.NotSet)
+                        {
+                            var propertyName = areaPmc.AreaType.ToString();
+                            var property = typeof(HideoutData).GetProperty(propertyName);
+                            if (property != null && property.PropertyType == typeof(int))
+                            {
+                                property.SetValue(hideoutData, areaPmc.Level);
+                            }
+                        }
+                    }
+
+                    #endregion
                 }
 
                 #endregion
@@ -287,6 +314,7 @@ public class ProcessProfileModel
                         IsTransition = isTransition,
                         IsUsingStattrack = statTrackIsUsed,
                         LastRaidEXP = ExpLooting,
+                        HideoutData = hideoutData,
                         LastRaidHits = HitCount,
                         LastRaidMap = lastRaidLocation,
                         LastRaidMapRaw = lastRaidLocationRaw,
@@ -305,7 +333,7 @@ public class ProcessProfileModel
                         Prestige = pmcData.Info.PrestigeLevel,
                         PublicProfile = true,
                         HasKappa = hasKappa,
-                        ScavLevel = scavData.Info.Level, 
+                        ScavLevel = scavData.Info.Level,
                         RaidDamage = TotalDamage,
                         RegistrationDate = session.Profile.Info.RegistrationDate,
                         TraderInfo = traderInfoData
