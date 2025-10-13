@@ -10,8 +10,8 @@ public class HitsTracker
     private static HitsTracker _instance;
     public static HitsTracker Instance => _instance ??= new HitsTracker();
 
-    private HitsData data = new HitsData();
-    private List<float> hitDistances = new List<float>();
+    private HitsData data = new ();
+    private HitsDistanceData hitDistances = new ();
 
     private HitsTracker() { }
 
@@ -50,7 +50,7 @@ public class HitsTracker
     public void Clear()
     {
         data = new HitsData();
-        hitDistances = new List<float>();
+        hitDistances = new HitsDistanceData();
     }
 
     public HitsData GetHitsData()
@@ -60,20 +60,45 @@ public class HitsTracker
     
     public float GetLongestShot()
     {
-        return hitDistances.Count <= 0 ? 0f : hitDistances.Max();
+        var hitLists = new List<List<float>> {
+            hitDistances.Head, hitDistances.Chest, hitDistances.Stomach,
+            hitDistances.LeftArm, hitDistances.RightArm, hitDistances.LeftLeg, hitDistances.RightLeg
+        };
+
+        var maxDistances = hitLists
+            .Where(list => list.Count > 0)
+            .Select(list => list.Max());
+
+        return maxDistances.Any() ? maxDistances.Max() : 0f;
     }
     
-    public void AddHit(float distance)
+    public float GetLongestHeadshot()
     {
-        float roundedDistance = (float)Math.Round(distance, 1);
+        return hitDistances.Head.Any() ? hitDistances.Head.Max() : 0f;
+    }
+    
+    public float GetAverageShot()
+    {
+        var hitLists = new List<List<float>> {
+            hitDistances.Head, hitDistances.Chest, hitDistances.Stomach,
+            hitDistances.LeftArm, hitDistances.RightArm, hitDistances.LeftLeg, hitDistances.RightLeg
+        };
+
+        var averageDistances = hitLists
+            .Where(list => list.Count > 0)
+            .Select(list => list.Average());
+
+        return averageDistances.Any() ? averageDistances.Average() : 0f;
+    }
+    
+    public void AddHit(float distance, EBodyPart bodyPart)
+    {
+        var roundedDistance = (float)Math.Round(distance, 1);
 #if DEBUG || BETA
-        LeaderboardPlugin.logger.LogInfo($"[HitsTracker] Add hit with distance {roundedDistance}");
+        LeaderboardPlugin.logger.LogInfo($"[HitsTracker] Add hit with distance {roundedDistance} for {bodyPart.ToString()}");
 #endif
-        hitDistances.Add(roundedDistance);
+        hitDistances.Add(roundedDistance, bodyPart);
     }
 
-    public List<float> GetHitDistances()
-    {
-        return hitDistances;
-    }
+    
 }

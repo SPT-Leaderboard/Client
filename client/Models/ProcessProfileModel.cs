@@ -14,7 +14,7 @@ public class ProcessProfileModel
 {
     public static ProcessProfileModel Instance { get; private set; }
 
-    public void ProcessAndSendProfile(LocalRaidSettings localRaidSettings, RaidEndDescriptorClass resultRaid, HitsData hitsData, List<float> dataDistanceHits)
+    public void ProcessAndSendProfile(LocalRaidSettings localRaidSettings, RaidEndDescriptorClass resultRaid)
     {
         if (!SettingsModel.Instance.EnableSendData.Value || PlayerHelper.GetLimitViolationsSilent(PlayerHelper.GetEquipmentData()))
             return;
@@ -128,17 +128,17 @@ public class ProcessProfileModel
                 
                 var AverageShot = 0.0f;
                 var LongestShot = 0;
-                if (dataDistanceHits.Count > 1)
-                {
-                    AverageShot = dataDistanceHits.Average();
-                    AverageShot = (float)Math.Round(AverageShot, 1);
+                var LongestHeadshot = 0;
 
-                    LongestShot = (int)dataDistanceHits.Max();
+                AverageShot = (float)Math.Round(HitsTracker.Instance.GetAverageShot(), 1);
+
+                LongestShot = (int)HitsTracker.Instance.GetLongestShot();
+                LongestHeadshot = (int)HitsTracker.Instance.GetLongestHeadshot();
 #if DEBUG || BETA
-                    LeaderboardPlugin.logger.LogWarning($"[Session Counter] AverageShot {AverageShot}");
-                    LeaderboardPlugin.logger.LogWarning($"[Session Counter] LongestShot {LongestShot}");
+                LeaderboardPlugin.logger.LogWarning($"[Session Counter] AverageShot {AverageShot}");
+                LeaderboardPlugin.logger.LogWarning($"[Session Counter] LongestShot {LongestShot}");
 #endif
-                }
+                
                 
                 #region PMCStats
                 
@@ -291,7 +291,7 @@ public class ProcessProfileModel
                         LastRaidMap = lastRaidLocation,
                         LastRaidMapRaw = lastRaidLocationRaw,
                         LastRaidTransitionTo = lastRaidTransitionTo,
-                        RaidHits = hitsData,
+                        RaidHits = HitsTracker.Instance.GetHitsData(),
                         AllAchievements = allAchievementsDict,
                         LongestShot = LongestShot,
                         AverageShot = AverageShot,
@@ -341,7 +341,7 @@ public class ProcessProfileModel
                         LastRaidMap = lastRaidLocation,
                         LastRaidMapRaw = lastRaidLocationRaw,
                         LastRaidTransitionTo = lastRaidTransitionTo,
-                        RaidHits = hitsData,
+                        RaidHits = HitsTracker.Instance.GetHitsData(),
                         AllAchievements = allAchievementsDict,
                         LongestShot = LongestShot,
                         AverageShot = AverageShot,

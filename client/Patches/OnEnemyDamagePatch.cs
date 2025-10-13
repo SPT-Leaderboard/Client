@@ -41,7 +41,7 @@ namespace SPTLeaderboard.Patches
             
             if (!(damage.Weapon is ThrowWeapItemClass))
             {
-                HitsTracker.Instance.AddHit(distance);
+                HitsTracker.Instance.AddHit(distance, bodyPart);
             }
             
 #if DEBUG || BETA
