@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using Comfort.Common;
 using EFT;
@@ -65,26 +66,33 @@ public class ProcessProfileModel
                     isScavRaid = profileData.Info.Side == "Savage";
                 }
 
+                #region Quests process
+                
                 var completedQuests = new Dictionary<string, QuestInfoData>();
                 if (!isScavRaid)
                 {
                     foreach (var quest in pmcData.QuestsData)
                     {
                         var successTime = 0;
-                        foreach (var timestamp in quest.StatusStartTimestamps.Where(timestamp => timestamp.Key == EQuestStatus.Success))
+                        foreach (var timestamp in quest.StatusStartTimestamps.Where(timestamp =>
+                                     timestamp.Key == EQuestStatus.Success))
                         {
                             successTime = (int)timestamp.Value;
                         }
 
+                        var imageUrl = Path.GetFileName(quest.Template?.Image);
                         var questInfo = new QuestInfoData
                         {
                             AcceptTime = quest.StartTime,
                             FinishTime = successTime,
-                            ImageUrl = quest.Template?.Image
+                            ImageUrl = imageUrl
                         };
-                        completedQuests.Add(quest.Id, questInfo);
+                        if (!completedQuests.ContainsKey(quest.Id))
+                            completedQuests.Add(quest.Id, questInfo);
                     }
                 }
+                
+                #endregion
                 
                 bool discFromRaid = resultRaid.result == ExitStatus.Left;
 

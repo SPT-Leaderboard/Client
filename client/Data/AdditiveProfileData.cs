@@ -77,9 +77,9 @@ namespace SPTLeaderboard.Data
         
         [JsonProperty("lastRaidEXP")]
         public int LastRaidEXP { get; set; }
-        
+
         [JsonProperty("hideout")]
-        public HideoutData HideoutData { get; set; }
+        public HideoutData HideoutData { get; set; } = null;
         
         [JsonProperty("lastRaidHits")]
         public int LastRaidHits { get; set; }
