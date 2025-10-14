@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Comfort.Common;
 using EFT;
+using EFT.Quests;
 using EFT.UI;
 using Newtonsoft.Json;
 using SPTLeaderboard.Data;
@@ -77,6 +78,27 @@ public class ProcessProfileModel
                 if (profileData != null)
                 {
                     isScavRaid = profileData.Info.Side == "Savage";
+                }
+
+                var completedQuests = new Dictionary<string, QuestInfoData>();
+                if (!isScavRaid)
+                {
+                    foreach (var quest in pmcData.QuestsData)
+                    {
+                        var successTime = 0;
+                        foreach (var timestamp in quest.StatusStartTimestamps.Where(timestamp => timestamp.Key == EQuestStatus.Success))
+                        {
+                            successTime = (int)timestamp.Value;
+                        }
+
+                        var questInfo = new QuestInfoData
+                        {
+                            AcceptTime = quest.StartTime,
+                            FinishTime = successTime,
+                            ImageUrl = quest.Template?.Image
+                        };
+                        completedQuests.Add(quest.Id, questInfo);
+                    }
                 }
                 
                 bool discFromRaid = resultRaid.result == ExitStatus.Left;
@@ -248,7 +270,6 @@ public class ProcessProfileModel
                 // var statTrackIsUsed = StatTrackInterop.Loaded();
                 var statTrackIsUsed = false;
                 Dictionary<string, Dictionary<string, WeaponInfo>> processedStatTrackData = new Dictionary<string, Dictionary<string, WeaponInfo>>();
-                processedStatTrackData = null;
                 
 //                 if (!SettingsModel.Instance.EnableModSupport.Value && !statTrackIsUsed)
 //                 {
@@ -337,7 +358,8 @@ public class ProcessProfileModel
                         RaidDamage = TotalDamage,
                         DamageTaken = DamageTaken,
                         RegistrationDate = session.Profile.Info.RegistrationDate,
-                        TraderInfo = traderInfoData
+                        TraderInfo = traderInfoData,
+                        Quests = completedQuests
                     };
                     
 #if DEBUG
@@ -383,12 +405,12 @@ public class ProcessProfileModel
                         PlayedAs = "SCAV",
                         PmcSide = pmcData.Side.ToString(),
                         Prestige = pmcData.Info.PrestigeLevel,
-                        HasKappa = hasKappa,
                         ScavLevel = scavData.Info.Level, 
                         RaidDamage = TotalDamage,
                         DamageTaken = DamageTaken,
                         RegistrationDate = session.Profile.Info.RegistrationDate,
-                        TraderInfo = traderInfoData
+                        TraderInfo = traderInfoData,
+                        Quests = completedQuests
                     };
                     
 #if DEBUG

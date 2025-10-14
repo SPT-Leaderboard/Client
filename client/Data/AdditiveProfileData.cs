@@ -71,9 +71,9 @@ namespace SPTLeaderboard.Data
         
         [JsonProperty("isTransition")]
         public bool IsTransition { get; set; }
-        
+
         [JsonProperty("isUsingStattrack")]
-        public bool IsUsingStattrack { get; set; }
+        public bool IsUsingStattrack { get; set; } = false;
         
         [JsonProperty("lastRaidEXP")]
         public int LastRaidEXP { get; set; }
@@ -101,6 +101,7 @@ namespace SPTLeaderboard.Data
         
         [JsonProperty("longestShot")]
         public int LongestShot { get; set; }
+        
         [JsonProperty("longestHeadshot")]
         public int LongestHeadshot { get; set; }    
         
@@ -151,6 +152,9 @@ namespace SPTLeaderboard.Data
 
         [JsonProperty("traderInfo")]
         public Dictionary<string, TraderData> TraderInfo { get; set; } = null;
+
+        [JsonProperty("completed_quests")]
+        public Dictionary<string, QuestInfoData> Quests { get; set; } = new();
 
         public static AdditiveProfileData MakeBetaCopy(AdditiveProfileData original)
         {
