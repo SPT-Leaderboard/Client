@@ -8,9 +8,8 @@ namespace SPTLeaderboard.Utils;
 public class TrackingLoot
 {
     public HashSet<string> TrackedIds = new HashSet<string>();
-
-    public int LootedValue = 0;
-    public int PreRaidLottValue = 0;
+    
+    public int PreRaidLootValue = 0;
 
     public bool Add(Item item)
     {
@@ -35,11 +34,13 @@ public class TrackingLoot
     public void OnStartRaid()
     {
         Clear();
-        LootedValue = 0;
-        PreRaidLottValue = 0;
+        PreRaidLootValue = 0;
         
         LeaderboardPlugin.Instance.BeforeRaidPlayerEquipment.Clear();
-            
+        
+        var listItems = PlayerHelper.GetEquipmentItemsTemplateId();
+        PreRaidLootValue = DataUtils.GetPriceItems(listItems);
+        
         foreach (var item in PlayerHelper.GetEquipmentItemsIds())
         {
             LeaderboardPlugin.Instance.BeforeRaidPlayerEquipment.Add(item);

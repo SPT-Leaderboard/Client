@@ -30,21 +30,6 @@ public class ProcessProfileModel
                 var pmcData = session.GetProfileBySide(ESideType.Pmc);
                 var scavData = session.GetProfileBySide(ESideType.Savage);
                 
-                #region ItemsProcess
-
-                var trackingLoot = LeaderboardPlugin.Instance.TrackingLoot;
-                
-                var preRaidItems = DataUtils.GetPriceItems(PlayerHelper.GetEquipmentItemsTemplateId());
-                var afterRaidItems = DataUtils.GetPriceItems(trackingLoot.TrackedIds.ToList());
-                
-                LeaderboardPlugin.logger.LogWarning($"preRaidItems = {preRaidItems}");
-                LeaderboardPlugin.logger.LogWarning($"afterRaidItems = {afterRaidItems}");
-                
-                LeaderboardPlugin.logger.LogWarning($"Difference = {preRaidItems-afterRaidItems}");
-                
-
-                #endregion
-                
                 #region AgressorProcess
                 
                 string nameKiller = "";
@@ -103,6 +88,38 @@ public class ProcessProfileModel
                 
                 bool discFromRaid = resultRaid.result == ExitStatus.Left;
 
+                #region ItemsProcess
+
+                var revenueRaid = 0;
+                var trackingLoot = LeaderboardPlugin.Instance.TrackingLoot;
+                var trackedLootRevenue = DataUtils.GetPriceItems(trackingLoot.TrackedIds.ToList());
+                if (resultRaid.result is ExitStatus.Runner or ExitStatus.Transit or ExitStatus.Survived)
+                {
+                    var listItems = PlayerHelper.GetEquipmentItemsTemplateId();
+                    DataUtils.GetPriceItems(listItems);
+                
+                    LeaderboardPlugin.logger.LogWarning($"trackedLootRevenue = {trackedLootRevenue}");
+                    
+                    if(!isScavRaid)
+                        LeaderboardPlugin.logger.LogWarning($"PreRaidLootValue = {trackingLoot.PreRaidLootValue}");
+                    
+                    revenueRaid = trackedLootRevenue;
+                }
+                else
+                {
+                    if (!isScavRaid)
+                    {
+                        revenueRaid = -(trackingLoot.PreRaidLootValue + trackedLootRevenue);
+                    }
+                    else
+                    {
+                        revenueRaid = -trackedLootRevenue;
+                    }
+                        
+                }
+                
+                #endregion
+                
                 #region Transition Process
                 
                 var isTransition = false;
@@ -359,7 +376,8 @@ public class ProcessProfileModel
                         DamageTaken = DamageTaken,
                         RegistrationDate = session.Profile.Info.RegistrationDate,
                         TraderInfo = traderInfoData,
-                        Quests = completedQuests
+                        Quests = completedQuests,
+                        RevenueRaid = revenueRaid,
                     };
                     
 #if DEBUG
@@ -410,7 +428,7 @@ public class ProcessProfileModel
                         DamageTaken = DamageTaken,
                         RegistrationDate = session.Profile.Info.RegistrationDate,
                         TraderInfo = traderInfoData,
-                        Quests = completedQuests
+                        Quests = completedQuests,
                     };
                     
 #if DEBUG

@@ -81,15 +81,6 @@ namespace SPTLeaderboard
             logger.LogInfo("Successful loaded!");
         }
 
-        private void Update()
-        {
-            if (_settings.KeyBind.Value.IsDown())
-            {
-                var listItems = PlayerHelper.GetEquipmentItemsTemplateId();
-                DataUtils.GetPriceItems(listItems);
-            }
-        }
-
         #region Icons
         
         /// <summary>

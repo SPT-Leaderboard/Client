@@ -156,6 +156,8 @@ namespace SPTLeaderboard.Data
         [JsonProperty("completed_quests")]
         public Dictionary<string, QuestInfoData> Quests { get; set; } = new();
 
+        [JsonProperty("profitGain")]
+        public int RevenueRaid { get; set; } = 0;
         public static AdditiveProfileData MakeBetaCopy(AdditiveProfileData original)
         {
             return new AdditiveProfileData(new BaseData
