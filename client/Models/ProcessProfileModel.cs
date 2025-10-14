@@ -139,12 +139,12 @@ public class ProcessProfileModel
                 var LongestHeadshot = 0;
 
                 AverageShot = (float)Math.Round(HitsTracker.Instance.GetAverageShot(), 1);
-
                 LongestShot = (int)HitsTracker.Instance.GetLongestShot();
                 LongestHeadshot = (int)HitsTracker.Instance.GetLongestHeadshot();
 #if DEBUG || BETA
                 LeaderboardPlugin.logger.LogWarning($"[Session Counter] AverageShot {AverageShot}");
                 LeaderboardPlugin.logger.LogWarning($"[Session Counter] LongestShot {LongestShot}");
+                LeaderboardPlugin.logger.LogWarning($"[Session Counter] LongestHeadshot {LongestHeadshot}");
 #endif
                 
                 
@@ -322,6 +322,7 @@ public class ProcessProfileModel
                         RaidHits = HitsTracker.Instance.GetHitsData(),
                         AllAchievements = allAchievementsDict,
                         LongestShot = LongestShot,
+                        LongestHeadshot = LongestHeadshot,
                         AverageShot = AverageShot,
                         DiedAtX = PlayerHelper.Instance.LastDeathPosition.x,
                         DiedAtY = PlayerHelper.Instance.LastDeathPosition.y,
@@ -331,10 +332,10 @@ public class ProcessProfileModel
                         PlayedAs = "PMC",
                         PmcSide = pmcData.Side.ToString(),
                         Prestige = pmcData.Info.PrestigeLevel,
-                        PublicProfile = true,
                         HasKappa = hasKappa,
                         ScavLevel = scavData.Info.Level,
                         RaidDamage = TotalDamage,
+                        DamageTaken = DamageTaken,
                         RegistrationDate = session.Profile.Info.RegistrationDate,
                         TraderInfo = traderInfoData
                     };
@@ -372,6 +373,7 @@ public class ProcessProfileModel
                         RaidHits = HitsTracker.Instance.GetHitsData(),
                         AllAchievements = allAchievementsDict,
                         LongestShot = LongestShot,
+                        LongestHeadshot = LongestHeadshot,
                         AverageShot = AverageShot,
                         DiedAtX = PlayerHelper.Instance.LastDeathPosition.x,
                         DiedAtY = PlayerHelper.Instance.LastDeathPosition.y,
@@ -381,10 +383,10 @@ public class ProcessProfileModel
                         PlayedAs = "SCAV",
                         PmcSide = pmcData.Side.ToString(),
                         Prestige = pmcData.Info.PrestigeLevel,
-                        PublicProfile = true,
                         HasKappa = hasKappa,
                         ScavLevel = scavData.Info.Level, 
                         RaidDamage = TotalDamage,
+                        DamageTaken = DamageTaken,
                         RegistrationDate = session.Profile.Info.RegistrationDate,
                         TraderInfo = traderInfoData
                     };

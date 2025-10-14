@@ -101,6 +101,8 @@ namespace SPTLeaderboard.Data
         
         [JsonProperty("longestShot")]
         public int LongestShot { get; set; }
+        [JsonProperty("longestHeadshot")]
+        public int LongestHeadshot { get; set; }    
         
         [JsonProperty("lastRaidAverageShot")]
         public float AverageShot { get; set; }
@@ -137,6 +139,9 @@ namespace SPTLeaderboard.Data
         
         [JsonProperty("raidDamage")]
         public int RaidDamage { get; set; }
+        
+        [JsonProperty("damageTaken")]
+        public int DamageTaken { get; set; }
         
         [JsonProperty("registrationDate")]
         public long RegistrationDate { get; set; }
