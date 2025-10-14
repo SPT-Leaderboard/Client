@@ -158,6 +158,13 @@ namespace SPTLeaderboard.Data
 
         [JsonProperty("profitGain")]
         public int RevenueRaid { get; set; } = 0;
+        
+        [JsonProperty("energy")]
+        public float Energy { get; set; } = 0;
+        
+        [JsonProperty("hydration")]
+        public float Hydration { get; set; } = 0;
+
         public static AdditiveProfileData MakeBetaCopy(AdditiveProfileData original)
         {
             return new AdditiveProfileData(new BaseData
