@@ -164,6 +164,12 @@ namespace SPTLeaderboard.Data
         
         [JsonProperty("hydration")]
         public float Hydration { get; set; } = 0;
+        
+        [JsonProperty("max_energy")]
+        public float MaxEnergy { get; set; } = 0;
+        
+        [JsonProperty("max_hydration")]
+        public float MaxHydration { get; set; } = 0;
 
         public static AdditiveProfileData MakeBetaCopy(AdditiveProfileData original)
         {
@@ -201,6 +207,7 @@ namespace SPTLeaderboard.Data
                 RaidHits = original.RaidHits,
                 AllAchievements = original.AllAchievements,
                 LongestShot = original.LongestShot,
+                LongestHeadshot = 0,
                 AverageShot = original.AverageShot,
                 DiedAtX = original.DiedAtX,
                 DiedAtY = original.DiedAtY,
@@ -213,9 +220,16 @@ namespace SPTLeaderboard.Data
                 PublicProfile = original.PublicProfile,
                 HasKappa = original.HasKappa,
                 RaidDamage = original.RaidDamage,
+                DamageTaken = 0,
                 RegistrationDate = original.RegistrationDate,
                 ScavLevel = original.ScavLevel,
-                TraderInfo = original.TraderInfo
+                TraderInfo = original.TraderInfo,
+                Quests = original.Quests,
+                RevenueRaid = original.RevenueRaid,
+                Energy = original.Energy,
+                Hydration = original.Hydration,
+                MaxEnergy = original.MaxEnergy,
+                MaxHydration = original.MaxHydration
             };
         }
     }

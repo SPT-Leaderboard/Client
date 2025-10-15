@@ -207,6 +207,8 @@ public class ProcessProfileModel
 
                 var CurrentEnergy = pmcData.Health.Energy.Current;
                 var CurrentHydration = pmcData.Health.Hydration.Current;
+                var MaxEnergy = pmcData.Health.Energy.Maximum;
+                var MaxHydration = pmcData.Health.Hydration.Maximum;
                 
                 var KilledPmc = session.Profile.Stats.Eft.SessionCounters.GetInt(SessionCounterTypesAbstractClass.KilledPmc);
                 var KilledSavage = session.Profile.Stats.Eft.SessionCounters.GetInt(SessionCounterTypesAbstractClass.KilledSavage);
@@ -390,7 +392,9 @@ public class ProcessProfileModel
                         Quests = completedQuests,
                         RevenueRaid = revenueRaid,
                         Energy = CurrentEnergy,
-                        Hydration = CurrentHydration
+                        Hydration = CurrentHydration,
+                        MaxEnergy = MaxEnergy,
+                        MaxHydration = MaxHydration
                     };
                     
 #if DEBUG
@@ -442,7 +446,9 @@ public class ProcessProfileModel
                         RegistrationDate = session.Profile.Info.RegistrationDate,
                         TraderInfo = traderInfoData,
                         Quests = completedQuests,
-                        RevenueRaid = revenueRaid
+                        RevenueRaid = revenueRaid,
+                        MaxEnergy = MaxEnergy,
+                        MaxHydration = MaxHydration
                     };
                     
 #if DEBUG
