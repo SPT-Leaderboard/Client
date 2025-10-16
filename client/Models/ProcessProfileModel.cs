@@ -79,13 +79,11 @@ public class ProcessProfileModel
                         {
                             successTime = (int)timestamp.Value;
                         }
-
-                        var imageUrl = Path.GetFileName(quest.Template?.Image);
+                        
                         var questInfo = new QuestInfoData
                         {
                             AcceptTime = quest.StartTime,
-                            FinishTime = successTime,
-                            ImageUrl = imageUrl
+                            FinishTime = successTime
                         };
                         if (!completedQuests.ContainsKey(quest.Id))
                             completedQuests.Add(quest.Id, questInfo);

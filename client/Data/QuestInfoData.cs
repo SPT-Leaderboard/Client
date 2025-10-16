@@ -9,7 +9,4 @@ public class QuestInfoData
 
     [JsonProperty("finish_time")]
     public int FinishTime { get; set; }
-
-    [JsonProperty("image_url")]
-    public string ImageUrl { get; set; }
 }
