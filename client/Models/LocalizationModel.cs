@@ -154,12 +154,13 @@ namespace SPTLeaderboard.Models
                 ErrorType.NSFW_NAME => LocalizationData.Error_NsfwName,
                 ErrorType.DEVITEMS => LocalizationData.Error_DevItems,
                 ErrorType.API_BANNED => LocalizationData.Error_API_BANNED,
+                ErrorType.BANNED => LocalizationData.Error_BANNED,
                 ErrorType.API_TOO_MANY_REQUESTS => LocalizationData.Error_API_TOO_MUCH_REQUESTS,
                 _ => throw new ArgumentOutOfRangeException(nameof(errorType), errorType, null)
             };
         }
         
-        public static string GetCorrectedNickname(GInterface187 profileData)
+        public static string GetCorrectedNickname(GInterface214 profileData)
         {
             return profileData.Side == EPlayerSide.Savage ? Transliterate(profileData.Nickname) : profileData.Nickname;
         }
@@ -171,7 +172,7 @@ namespace SPTLeaderboard.Models
         /// <returns></returns>
         private static string Transliterate(string text)
         {
-            return GClass930.dictionary_0.Aggregate(text, (current, key) => current.Replace(key.Key, key.Value));
+            return GClass953.Dictionary_0.Aggregate(text, (current, key) => current.Replace(key.Key, key.Value));
         }
 
         /// <summary>

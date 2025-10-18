@@ -8,6 +8,7 @@ using BepInEx.Bootstrap;
 using Comfort.Common;
 using EFT;
 using EFT.InventoryLogic;
+using Newtonsoft.Json;
 using SPT.Common.Http;
 using SPT.Common.Utils;
 using SPT.Reflection.Utils;
@@ -59,20 +60,17 @@ public static class DataUtils
 
         try
         {
-            string json = RequestHandler.GetJson("/launcher/profile/info");
-
+            string json = RequestHandler.GetJson("/launcher/server/serverModsUsedByProfile");
+            LeaderboardPlugin.logger.LogWarning($"GetServerMods: {json}");
             if (string.IsNullOrWhiteSpace(json))
                 return listServerMods;
+            
+            List<ModItem> serverMods = Json.Deserialize<List<ModItem>>(json);
 
-            ServerProfileInfo serverProfileInfo = Json.Deserialize<ServerProfileInfo>(json);
-
-            if (serverProfileInfo?.sptData?.Mods != null)
+            if (serverMods != null)
             {
-                foreach (var serverMod in serverProfileInfo.sptData.Mods)
-                {
-                    if (serverMod?.Name != null)
-                        listServerMods.Add(serverMod.Name);
-                }
+                var listMods = serverMods.Select(mod => mod.Name).ToList();
+                listServerMods.AddRange(listMods);
             }
         }
         catch (Exception ex)
@@ -81,6 +79,79 @@ public static class DataUtils
         }
 
         return listServerMods;
+    }
+
+    
+    
+    /// <summary>
+    /// Get final price from list items
+    /// </summary>
+    /// <returns></returns>
+    public static int GetPriceItems(List<string> listItems)
+    {
+        var price = 0;
+
+        var data = new ItemsData()
+        {
+            Items = listItems
+        };
+        
+        try
+        {
+            var json = RequestHandler.PostJson("/SPTLB/GetItemPrices", JsonConvert.SerializeObject(data));
+            
+            if (string.IsNullOrWhiteSpace(json))
+                return price;
+
+            price = int.Parse(json);
+            
+            LeaderboardPlugin.logger.LogWarning($"GetPriceItems Response = {price}");
+        }
+        catch (Exception ex)
+        {
+            LeaderboardPlugin.logger.LogWarning($"GetPriceItems failed: {ex}");
+            return price;
+        }
+
+        return price;
+    }
+    
+    /// <summary>
+    /// Get price from item
+    /// </summary>
+    /// <returns></returns>
+    public static int GetPriceItem(MongoID item)
+    {
+        var price = 0;
+
+        var listItems = new List<string>()
+        {
+            item.ToString()
+        };
+        
+        var data = new ItemsData()
+        {
+            Items = listItems
+        };
+        
+        try
+        {
+            var json = RequestHandler.PostJson("/SPTLB/GetItemPrices", JsonConvert.SerializeObject(data));
+
+            if (string.IsNullOrWhiteSpace(json))
+                return price;
+
+            price = int.Parse(json);
+            
+            LeaderboardPlugin.logger.LogWarning($"GetPriceItems Response = {price}");
+        }
+        catch (Exception ex)
+        {
+            LeaderboardPlugin.logger.LogWarning($"GetPriceItems failed: {ex}");
+            return price;
+        }
+        
+        return price;
     }
 
     public static List<string> GetUserMods()
@@ -128,9 +199,8 @@ public static class DataUtils
 
     public static void Load(Action<bool> callback)
     {
-        BaseUnityPlugin FikaCoreBLYAT;
-        TryGetPlugin("com.fika.core", out FikaCoreBLYAT);
-        FikaCore = FikaCoreBLYAT;
+        TryGetPlugin("com.fika.core", out var FikaCoreTemp);
+        FikaCore = FikaCoreTemp;
         IsLoaded = true;
         callback.Invoke(FikaCore != null);
     }
@@ -264,29 +334,21 @@ public static class DataUtils
         };
     }
 
-    public static void TryGetTransitionData(GClass1959 resultRaid, Action<string, bool> callback)
+    public static void TryGetTransitionData(RaidEndDescriptorClass resultRaid, Action<string, bool> callback)
     {
-        var isTransition = false;
         var lastRaidTransitionTo = "None";
         if (resultRaid.result == ExitStatus.Transit
-            && TransitControllerAbstractClass.Exist<GClass1676>(out var transitController))
+            && TransitControllerAbstractClass.Exist<LocalGameTransitControllerClass>(out var transitController))
         {
-            if (transitController.localRaidSettings_0.location != "None")
-            {
-                isTransition = true;
-                var locationTransit = transitController.alreadyTransits[resultRaid.ProfileId];
-                lastRaidTransitionTo = DataUtils.GetPrettyMapName(locationTransit.location.ToLower());
-                
-                LeaderboardPlugin.logger.LogWarning($"Player transit to map PRETTY {lastRaidTransitionTo}");
-                LeaderboardPlugin.logger.LogWarning($"Player transit to map RAW {locationTransit.location}");
-                callback.Invoke(lastRaidTransitionTo, isTransition);
-                return;
-            }
-            callback.Invoke(lastRaidTransitionTo, isTransition);
+            var locationTransit = transitController.alreadyTransits[resultRaid.ProfileId];
+            lastRaidTransitionTo = GetPrettyMapName(locationTransit.location.ToLower());
+            
+            LeaderboardPlugin.logger.LogWarning($"Player transit to map PRETTY {lastRaidTransitionTo}");
+            LeaderboardPlugin.logger.LogWarning($"Player transit to map RAW {locationTransit.location}");
+            callback.Invoke(lastRaidTransitionTo, true);
             return;
         }
-        callback.Invoke(lastRaidTransitionTo, isTransition);
-        return;
+        callback.Invoke(lastRaidTransitionTo, false);
     }
     
     /// <summary>

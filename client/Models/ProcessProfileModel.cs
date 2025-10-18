@@ -1,14 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using Comfort.Common;
 using EFT;
+using EFT.Quests;
 using EFT.UI;
 using Newtonsoft.Json;
 using SPTLeaderboard.Data;
 using SPTLeaderboard.Utils;
-using UnityEngine;
-using TraderData = SPTLeaderboard.Data.TraderData;
 
 namespace SPTLeaderboard.Models;
 
@@ -16,7 +16,7 @@ public class ProcessProfileModel
 {
     public static ProcessProfileModel Instance { get; private set; }
 
-    public void ProcessAndSendProfile(GClass1959 resultRaid, LocalRaidSettings localRaidSettings, HitsData hitsData, List<float> dataDistanceHits)
+    public void ProcessAndSendProfile(LocalRaidSettings localRaidSettings, RaidEndDescriptorClass resultRaid)
     {
         if (!SettingsModel.Instance.EnableSendData.Value || PlayerHelper.GetLimitViolationsSilent(PlayerHelper.GetEquipmentData()))
             return;
@@ -30,7 +30,9 @@ public class ProcessProfileModel
                 
                 var pmcData = session.GetProfileBySide(ESideType.Pmc);
                 var scavData = session.GetProfileBySide(ESideType.Savage);
-
+                
+                #region AgressorProcess
+                
                 string nameKiller = "";
                 if (resultRaid.result == ExitStatus.Killed)
                 {
@@ -40,6 +42,8 @@ public class ProcessProfileModel
                         nameKiller = PlayerHelper.TryGetAgressorName(scavData);
                     }
                 }
+                
+                #endregion
                 
                 var gameVersion = session.Profile.Info.GameVersion;
                 var lastRaidLocationRaw = localRaidSettings.location;
@@ -61,8 +65,68 @@ public class ProcessProfileModel
                 {
                     isScavRaid = profileData.Info.Side == "Savage";
                 }
+
+                #region Quests process
+                
+                var completedQuests = new Dictionary<string, QuestInfoData>();
+                if (!isScavRaid)
+                {
+                    foreach (var quest in pmcData.QuestsData)
+                    {
+                        var successTime = 0;
+                        foreach (var timestamp in quest.StatusStartTimestamps.Where(timestamp =>
+                                     timestamp.Key == EQuestStatus.Success))
+                        {
+                            successTime = (int)timestamp.Value;
+                        }
+                        
+                        var questInfo = new QuestInfoData
+                        {
+                            AcceptTime = quest.StartTime,
+                            FinishTime = successTime
+                        };
+                        if (!completedQuests.ContainsKey(quest.Id))
+                            completedQuests.Add(quest.Id, questInfo);
+                    }
+                }
+                
+                #endregion
                 
                 bool discFromRaid = resultRaid.result == ExitStatus.Left;
+
+                #region ItemsProcess
+
+                var revenueRaid = 0;
+                var trackingLoot = LeaderboardPlugin.Instance.TrackingLoot;
+                var trackedLootRevenue = DataUtils.GetPriceItems(trackingLoot.TrackedIds.ToList());
+                if (resultRaid.result is ExitStatus.Runner or ExitStatus.Transit or ExitStatus.Survived)
+                {
+                    var listItems = PlayerHelper.GetEquipmentItemsTemplateId();
+                    DataUtils.GetPriceItems(listItems);
+                
+                    LeaderboardPlugin.logger.LogWarning($"trackedLootRevenue = {trackedLootRevenue}");
+                    
+                    if(!isScavRaid)
+                        LeaderboardPlugin.logger.LogWarning($"PreRaidLootValue = {trackingLoot.PreRaidLootValue}");
+                    
+                    revenueRaid = trackedLootRevenue;
+                }
+                else
+                {
+                    if (!isScavRaid)
+                    {
+                        revenueRaid = -(trackingLoot.PreRaidLootValue + trackedLootRevenue);
+                    }
+                    else
+                    {
+                        revenueRaid = -trackedLootRevenue;
+                    }
+                        
+                }
+                
+                #endregion
+                
+                #region Transition Process
                 
                 var isTransition = false;
                 var lastRaidTransitionTo = "None";
@@ -72,6 +136,8 @@ public class ProcessProfileModel
                     lastRaidTransitionTo = s;
                     isTransition = b;
                 });
+                
+                #endregion
 
                 var allAchievementsDict = pmcData.AchievementsData.ToDictionary(
                     pair => pair.Key.ToString(),
@@ -79,7 +145,7 @@ public class ProcessProfileModel
                 );
                 
                 #region CheckGodBalaclava
-                
+
                 var allItemsRaw = pmcData.Inventory.GetPlayerItems();
                 var allItems = allItemsRaw.ToList();
                 
@@ -115,17 +181,17 @@ public class ProcessProfileModel
                 
                 var AverageShot = 0.0f;
                 var LongestShot = 0;
-                if (dataDistanceHits.Count > 1)
-                {
-                    AverageShot = dataDistanceHits.Average();
-                    AverageShot = (float)Math.Round(AverageShot, 1);
+                var LongestHeadshot = 0;
 
-                    LongestShot = (int)dataDistanceHits.Max();
+                AverageShot = (float)Math.Round(HitsTracker.Instance.GetAverageShot(), 1);
+                LongestShot = (int)HitsTracker.Instance.GetLongestShot();
+                LongestHeadshot = (int)HitsTracker.Instance.GetLongestHeadshot();
 #if DEBUG || BETA
-                    LeaderboardPlugin.logger.LogWarning($"[Session Counter] AverageShot {AverageShot}");
-                    LeaderboardPlugin.logger.LogWarning($"[Session Counter] LongestShot {LongestShot}");
+                LeaderboardPlugin.logger.LogWarning($"[Session Counter] AverageShot {AverageShot}");
+                LeaderboardPlugin.logger.LogWarning($"[Session Counter] LongestShot {LongestShot}");
+                LeaderboardPlugin.logger.LogWarning($"[Session Counter] LongestHeadshot {LongestHeadshot}");
 #endif
-                }
+                
                 
                 #region PMCStats
                 
@@ -136,6 +202,11 @@ public class ProcessProfileModel
                 var CurrentHealth = pmcData.Health.BodyParts.Where(
                     bodyPart => bodyPart.Value?.Health != null).
                     Sum(bodyPart => bodyPart.Value.Health.Current);
+
+                var CurrentEnergy = pmcData.Health.Energy.Current;
+                var CurrentHydration = pmcData.Health.Hydration.Current;
+                var MaxEnergy = pmcData.Health.Energy.Maximum;
+                var MaxHydration = pmcData.Health.Hydration.Maximum;
                 
                 var KilledPmc = session.Profile.Stats.Eft.SessionCounters.GetInt(SessionCounterTypesAbstractClass.KilledPmc);
                 var KilledSavage = session.Profile.Stats.Eft.SessionCounters.GetInt(SessionCounterTypesAbstractClass.KilledSavage);
@@ -144,12 +215,13 @@ public class ProcessProfileModel
                 var ExpLooting = session.Profile.Stats.Eft.SessionCounters.GetInt(SessionCounterTypesAbstractClass.ExpLooting);
                 var HitCount = session.Profile.Stats.Eft.SessionCounters.GetInt(SessionCounterTypesAbstractClass.HitCount);
                 var TotalDamage = (int)session.Profile.Stats.Eft.SessionCounters.GetFloat(SessionCounterTypesAbstractClass.CauseBodyDamage);
+                var DamageTaken = (int)session.Profile.Stats.Eft.SessionCounters.GetFloat(SessionCounterTypesAbstractClass.BloodLoss);
                 
                 
 #if DEBUG || BETA
                 LeaderboardPlugin.logger.LogWarning($"Death coordinates {PlayerHelper.Instance.LastDeathPosition}");
 #endif
-                
+                var hideoutData = new HideoutData();
                 if (!isScavRaid)
                 {
 #if DEBUG || BETA
@@ -162,6 +234,25 @@ public class ProcessProfileModel
                     LeaderboardPlugin.logger.LogWarning($"[Session Counter] ExpLooting {ExpLooting}");
                     LeaderboardPlugin.logger.LogWarning($"[Session Counter] HitCount {HitCount}");
 #endif
+                    
+                    #region Hideout
+
+                    var areasPmc = (pmcData.Hideout.Areas).ToList();
+                    hideoutData = new HideoutData();
+                    foreach (var areaPmc in areasPmc)
+                    {
+                        if (areaPmc.AreaType != EAreaType.NotSet)
+                        {
+                            var propertyName = areaPmc.AreaType.ToString();
+                            var property = typeof(HideoutData).GetProperty(propertyName);
+                            if (property != null && property.PropertyType == typeof(int))
+                            {
+                                property.SetValue(hideoutData, areaPmc.Level);
+                            }
+                        }
+                    }
+
+                    #endregion
                 }
 
                 #endregion
@@ -204,35 +295,36 @@ public class ProcessProfileModel
                 
                 #region StatTrack
 
-                var statTrackIsUsed = StatTrackInterop.Loaded();
+                // var statTrackIsUsed = StatTrackInterop.Loaded();
+                var statTrackIsUsed = false;
                 Dictionary<string, Dictionary<string, WeaponInfo>> processedStatTrackData = new Dictionary<string, Dictionary<string, WeaponInfo>>();
                 
-                if (!SettingsModel.Instance.EnableModSupport.Value && !statTrackIsUsed)
-                {
-                    LeaderboardPlugin.logger.LogWarning(
-                        $"StatTrack process data skip. StatTrack Find? : {statTrackIsUsed} | Enabled Mod Support? : {SettingsModel.Instance.EnableModSupport.Value}");
-                    processedStatTrackData = null;
-                }
-                else
-                {
-                    LeaderboardPlugin.logger.LogWarning($"Loaded StatTrack plugin {statTrackIsUsed}");
-                    
-                    var dataStatTrack = StatTrackInterop.LoadFromServer();
-                    if (dataStatTrack != null)
-                    {
-#if DEBUG || BETA
-                        LeaderboardPlugin.logger.LogWarning(
-                            $"Data raw StatTrack {JsonConvert.SerializeObject(dataStatTrack).ToJson()}");
-#endif
-                        processedStatTrackData = StatTrackInterop.GetAllValidWeapons(profileID ,dataStatTrack);
-#if DEBUG || BETA
-                        if (processedStatTrackData != null)
-                        {
-                            LeaderboardPlugin.logger.LogWarning("processedStatTrackData != null: Data -> "+JsonConvert.SerializeObject(processedStatTrackData).ToJson());
-                        }
-#endif
-                    }
-                }
+//                 if (!SettingsModel.Instance.EnableModSupport.Value && !statTrackIsUsed)
+//                 {
+//                     LeaderboardPlugin.logger.LogWarning(
+//                         $"StatTrack process data skip. StatTrack Find? : {statTrackIsUsed} | Enabled Mod Support? : {SettingsModel.Instance.EnableModSupport.Value}");
+//                     processedStatTrackData = null;
+//                 }
+//                 else
+//                 {
+//                     LeaderboardPlugin.logger.LogWarning($"Loaded StatTrack plugin {statTrackIsUsed}");
+//                     
+//                     var dataStatTrack = StatTrackInterop.LoadFromServer();
+//                     if (dataStatTrack != null)
+//                     {
+// #if DEBUG || BETA
+//                         LeaderboardPlugin.logger.LogWarning(
+//                             $"Data raw StatTrack {JsonConvert.SerializeObject(dataStatTrack).ToJson()}");
+// #endif
+//                         processedStatTrackData = StatTrackInterop.GetAllValidWeapons(profileID ,dataStatTrack);
+// #if DEBUG || BETA
+//                         if (processedStatTrackData != null)
+//                         {
+//                             LeaderboardPlugin.logger.LogWarning("processedStatTrackData != null: Data -> "+JsonConvert.SerializeObject(processedStatTrackData).ToJson());
+//                         }
+// #endif
+//                     }
+//                 }
 
                 #endregion
                 
@@ -259,29 +351,8 @@ public class ProcessProfileModel
                     DBinInv = haveDevItems,
                     IsCasual = SettingsModel.Instance.ModCasualMode.Value
                 };
-
-                if (!SettingsModel.Instance.PublicProfile.Value)
-                {
-                    var privateProfileData = new PrivateProfileData(baseData);
-
-#if DEBUG
-                    LeaderboardPlugin.logger.LogWarning(
-                        $"DATA privateProfileData {JsonConvert.SerializeObject(privateProfileData)}");
-#endif
-                    
-#if BETA
-                    var betaDataPrivateProfile = PrivateProfileData.MakeBetaCopy(privateProfileData);
-                    betaDataPrivateProfile.ModInt = "BETA";
-                    betaDataPrivateProfile.Mods = ["BETA"];
-                    betaDataPrivateProfile.Token = "BETA";
-                    
-                    LeaderboardPlugin.logger.LogWarning(
-                        $"DATA privateProfileData {JsonConvert.SerializeObject(betaDataPrivateProfile)}");
-#endif
-
-                    LeaderboardPlugin.SendRaidData(privateProfileData);
-                }
-                else if (SettingsModel.Instance.PublicProfile.Value && !isScavRaid)
+                
+                if (!isScavRaid)
                 {
                     var traderInfoData = DataUtils.GetTraderInfo(pmcData);
                     
@@ -292,13 +363,15 @@ public class ProcessProfileModel
                         IsTransition = isTransition,
                         IsUsingStattrack = statTrackIsUsed,
                         LastRaidEXP = ExpLooting,
+                        HideoutData = hideoutData,
                         LastRaidHits = HitCount,
                         LastRaidMap = lastRaidLocation,
                         LastRaidMapRaw = lastRaidLocationRaw,
                         LastRaidTransitionTo = lastRaidTransitionTo,
-                        RaidHits = hitsData,
+                        RaidHits = HitsTracker.Instance.GetHitsData(),
                         AllAchievements = allAchievementsDict,
                         LongestShot = LongestShot,
+                        LongestHeadshot = LongestHeadshot,
                         AverageShot = AverageShot,
                         DiedAtX = PlayerHelper.Instance.LastDeathPosition.x,
                         DiedAtY = PlayerHelper.Instance.LastDeathPosition.y,
@@ -308,12 +381,18 @@ public class ProcessProfileModel
                         PlayedAs = "PMC",
                         PmcSide = pmcData.Side.ToString(),
                         Prestige = pmcData.Info.PrestigeLevel,
-                        PublicProfile = true,
                         HasKappa = hasKappa,
-                        ScavLevel = scavData.Info.Level, 
+                        ScavLevel = scavData.Info.Level,
                         RaidDamage = TotalDamage,
+                        DamageTaken = DamageTaken,
                         RegistrationDate = session.Profile.Info.RegistrationDate,
-                        TraderInfo = traderInfoData
+                        TraderInfo = traderInfoData,
+                        Quests = completedQuests,
+                        RevenueRaid = revenueRaid,
+                        Energy = CurrentEnergy,
+                        Hydration = CurrentHydration,
+                        MaxEnergy = MaxEnergy,
+                        MaxHydration = MaxHydration
                     };
                     
 #if DEBUG
@@ -331,7 +410,7 @@ public class ProcessProfileModel
 
                     LeaderboardPlugin.SendRaidData(pmcProfileData);
                 }
-                else if (SettingsModel.Instance.PublicProfile.Value && isScavRaid)
+                else
                 {
                     var traderInfoData = DataUtils.GetTraderInfo(pmcData);
                     
@@ -346,9 +425,10 @@ public class ProcessProfileModel
                         LastRaidMap = lastRaidLocation,
                         LastRaidMapRaw = lastRaidLocationRaw,
                         LastRaidTransitionTo = lastRaidTransitionTo,
-                        RaidHits = hitsData,
+                        RaidHits = HitsTracker.Instance.GetHitsData(),
                         AllAchievements = allAchievementsDict,
                         LongestShot = LongestShot,
+                        LongestHeadshot = LongestHeadshot,
                         AverageShot = AverageShot,
                         DiedAtX = PlayerHelper.Instance.LastDeathPosition.x,
                         DiedAtY = PlayerHelper.Instance.LastDeathPosition.y,
@@ -358,12 +438,15 @@ public class ProcessProfileModel
                         PlayedAs = "SCAV",
                         PmcSide = pmcData.Side.ToString(),
                         Prestige = pmcData.Info.PrestigeLevel,
-                        PublicProfile = true,
-                        HasKappa = hasKappa,
                         ScavLevel = scavData.Info.Level, 
                         RaidDamage = TotalDamage,
+                        DamageTaken = DamageTaken,
                         RegistrationDate = session.Profile.Info.RegistrationDate,
-                        TraderInfo = traderInfoData
+                        TraderInfo = traderInfoData,
+                        Quests = completedQuests,
+                        RevenueRaid = revenueRaid,
+                        MaxEnergy = MaxEnergy,
+                        MaxHydration = MaxHydration
                     };
                     
 #if DEBUG
