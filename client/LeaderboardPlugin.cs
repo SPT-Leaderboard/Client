@@ -148,12 +148,12 @@ namespace SPTLeaderboard
         {
             var request = NetworkApiRequestModel.Create(GlobalData.IconUrl);
             var session = PlayerHelper.GetSession();
-            request.OnSuccess = (response, code, reqId) =>
+            request.OnSuccess = (response, code) =>
             {
-                logger.LogInfo($"Request OnSuccess {response} ID: {reqId}");
+                logger.LogInfo($"Request OnSuccess {response}");
             };
 
-            request.OnFail = (error, code, reqId) =>
+            request.OnFail = (error, code) =>
             {
                 ServerErrorHandler.HandleError(error, code);
             };
@@ -192,9 +192,9 @@ namespace SPTLeaderboard
         {
             var request = NetworkApiRequestModel.Create(GlobalData.ProfileUrl);
 
-            request.OnSuccess = (response, code, reqId) =>
+            request.OnSuccess = (response, code) =>
             {
-                logger.LogInfo($"Request OnSuccess {response} ID: {reqId}");
+                logger.LogInfo($"Request OnSuccess {response}");
                 if (SettingsModel.Instance.ShowPointsNotification.Value)
                 {
                     try
@@ -216,7 +216,7 @@ namespace SPTLeaderboard
                 }
             };
 
-            request.OnFail = (error, code, reqId) =>
+            request.OnFail = (error, code) =>
             {
                 ServerErrorHandler.HandleError(error, code);
             };
@@ -250,12 +250,12 @@ namespace SPTLeaderboard
         {
             var request = NetworkApiRequestModel.Create(GlobalData.PreRaidUrl);
 
-            request.OnSuccess = (response, code, reqId) =>
+            request.OnSuccess = (response, code) =>
             {
-                logger.LogInfo($"Request OnSuccess {response} ID: {reqId}");
+                logger.LogInfo($"Request OnSuccess {response}");
             };
 
-            request.OnFail = (error, code, reqId) =>
+            request.OnFail = (error, code) =>
             {
                 ServerErrorHandler.HandleError(error, code);
             };

@@ -23,7 +23,7 @@ public class PlayerHelper
 
         if (throwIfNull && session is null)
         {
-            LeaderboardPlugin.logger.LogWarning("Trying to access the Session when it's null");
+            LeaderboardPlugin.logger.LogWarning("[GetSession] Trying to access the Session when it's null");
         }
 
         return session;
@@ -35,7 +35,7 @@ public class PlayerHelper
 
         if (throwIfNull && profile is null)
         {
-            LeaderboardPlugin.logger.LogWarning("Trying to access the Profile when it's null");
+            LeaderboardPlugin.logger.LogWarning("[GetProfile] Trying to access the Profile when it's null");
         }
         
         return GetSession()?.Profile;
