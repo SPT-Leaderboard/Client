@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using Comfort.Common;
 using EFT;
@@ -43,7 +42,7 @@ public class ProcessProfileModel
 
         var raidInfo = GetRaidInfo(localRaidSettings, resultRaid, session.Profile);
 
-        
+
         ProcessAndSendProfileData(sessionData, raidInfo, isScavRaid, resultRaid);
     }
 
@@ -82,6 +81,7 @@ public class ProcessProfileModel
         {
             isScavRaid = profileData.Info.Side == "Savage";
         }
+
         return isScavRaid;
     }
 
@@ -93,7 +93,7 @@ public class ProcessProfileModel
         var profileId = session.Profile.Id;
         var pmcData = session.GetProfileBySide(ESideType.Pmc);
         var scavData = session.GetProfileBySide(ESideType.Savage);
-        
+
         return (profileId, pmcData, scavData);
     }
 
@@ -106,7 +106,7 @@ public class ProcessProfileModel
         var gameVersion = profile.Info.GameVersion;
         var lastRaidLocationRaw = localRaidSettings.location;
         var lastRaidLocation = DataUtils.GetPrettyMapName(lastRaidLocationRaw.ToLower());
-        
+
         return (gameVersion, lastRaidLocationRaw, lastRaidLocation);
     }
 
@@ -129,18 +129,20 @@ public class ProcessProfileModel
         var allAchievementsDict = GetAllAchievements(pmcData);
         var (haveDevItems, hasKappa) = ValidatePlayerItems(pmcData);
         var (averageShot, longestShot, longestHeadshot) = GetShotStatistics();
-        var (maxHealth, currentHealth, currentEnergy, currentHydration, maxEnergy, maxHydration) = GetHealthStats(pmcData);
-        var (killedPmc, killedSavage, killedBoss, expLooting, hitCount, totalDamage, damageTaken) = GetSessionStats(pmcData, isScavRaid, scavData);
+        var (maxHealth, currentHealth, currentEnergy, currentHydration, maxEnergy, maxHydration) =
+            GetHealthStats(pmcData);
+        var (killedPmc, killedSavage, killedBoss, expLooting, hitCount, totalDamage, damageTaken) =
+            GetSessionStats(pmcData, isScavRaid, scavData);
         var hideoutData = GetHideoutData(pmcData, isScavRaid);
         var listModsPlayer = GetModsList();
         var (statTrackIsUsed, processedStatTrackData) = ProcessStatTrackData(profileId);
         LeaderboardPlugin.logger.LogWarning("ProcessAndSendProfileData 1");
-        CreateAndSendProfileData(profileId, gameVersion, lastRaidLocationRaw, lastRaidLocation, 
-            isScavRaid, completedQuests, nameKiller, discFromRaid, revenueRaid, isTransition, 
-            lastRaidTransitionTo, allAchievementsDict, haveDevItems, hasKappa, averageShot, 
-            longestShot, longestHeadshot, maxHealth, currentHealth, currentEnergy, currentHydration, 
-            maxEnergy, maxHydration, killedPmc, killedSavage, killedBoss, expLooting, hitCount, 
-            totalDamage, damageTaken, hideoutData, listModsPlayer, statTrackIsUsed, 
+        CreateAndSendProfileData(profileId, gameVersion, lastRaidLocationRaw, lastRaidLocation,
+            isScavRaid, completedQuests, nameKiller, discFromRaid, revenueRaid, isTransition,
+            lastRaidTransitionTo, allAchievementsDict, haveDevItems, hasKappa, averageShot,
+            longestShot, longestHeadshot, maxHealth, currentHealth, currentEnergy, currentHydration,
+            maxEnergy, maxHydration, killedPmc, killedSavage, killedBoss, expLooting, hitCount,
+            totalDamage, damageTaken, hideoutData, listModsPlayer, statTrackIsUsed,
             processedStatTrackData, pmcData, scavData, resultRaid);
     }
 
@@ -149,27 +151,27 @@ public class ProcessProfileModel
     /// </summary>
     private Dictionary<string, QuestInfoData> ProcessQuests(Profile pmcData, bool isScavRaid)
     {
-                var completedQuests = new Dictionary<string, QuestInfoData>();
+        var completedQuests = new Dictionary<string, QuestInfoData>();
         if (isScavRaid)
             return completedQuests;
 
-                    foreach (var quest in pmcData.QuestsData)
-                    {
+        foreach (var quest in pmcData.QuestsData)
+        {
             var successTime = quest.StatusStartTimestamps
                 .Where(timestamp => timestamp.Key == EQuestStatus.Success)
                 .Select(timestamp => (int)timestamp.Value)
                 .FirstOrDefault();
-                        
-                        var questInfo = new QuestInfoData
-                        {
-                            AcceptTime = quest.StartTime,
-                            FinishTime = successTime
-                        };
-            
-                        if (!completedQuests.ContainsKey(quest.Id))
-                            completedQuests.Add(quest.Id, questInfo);
-                    }
-        
+
+            var questInfo = new QuestInfoData
+            {
+                AcceptTime = quest.StartTime,
+                FinishTime = successTime
+            };
+
+            if (!completedQuests.ContainsKey(quest.Id))
+                completedQuests.Add(quest.Id, questInfo);
+        }
+
         return completedQuests;
     }
 
@@ -186,7 +188,7 @@ public class ProcessProfileModel
         {
             nameKiller = PlayerHelper.TryGetAgressorName(scavData);
         }
-        
+
         return nameKiller;
     }
 
@@ -197,9 +199,10 @@ public class ProcessProfileModel
     {
         var trackingLoot = LeaderboardPlugin.Instance.TrackingLoot;
         var trackedLootRevenue = DataUtils.GetPriceItems(trackingLoot.TrackedIds.ToList());
-        
+
 #if DEBUG
-        LeaderboardPlugin.logger.LogWarning($"List tracked {trackingLoot.TrackedIds.Count} items: {JsonConvert.SerializeObject(trackingLoot.TrackedIds.ToList())}");
+        LeaderboardPlugin.logger.LogWarning(
+            $"List tracked {trackingLoot.TrackedIds.Count} items: {JsonConvert.SerializeObject(trackingLoot.TrackedIds.ToList())}");
 #endif
 
         if (resultRaid.result is ExitStatus.Runner or ExitStatus.Transit or ExitStatus.Survived)
@@ -237,7 +240,7 @@ public class ProcessProfileModel
             lastRaidTransitionTo = s;
             isTransition = b;
         });
-        
+
         return (isTransition, lastRaidTransitionTo);
     }
 
@@ -259,10 +262,10 @@ public class ProcessProfileModel
     {
         var allItemsRaw = pmcData.Inventory.GetPlayerItems();
         var allItems = allItemsRaw.ToList();
-        
+
         var haveDevItems = DataUtils.CheckDevItems(allItems);
         var hasKappa = DataUtils.CheckHasKappa(allItems);
-        
+
         if (haveDevItems)
         {
             LocalizationModel.NotificationWarning(LocalizationModel.Instance.GetLocaleErrorText(ErrorType.DEVITEMS),
@@ -280,7 +283,7 @@ public class ProcessProfileModel
             return (true, hasKappa);
 #endif
         }
-        
+
         return (false, hasKappa);
     }
 
@@ -292,25 +295,26 @@ public class ProcessProfileModel
         var averageShot = (float)Math.Round(HitsTracker.Instance.GetAverageShot(), 1);
         var longestShot = (int)HitsTracker.Instance.GetLongestShot();
         var longestHeadshot = (int)HitsTracker.Instance.GetLongestHeadshot();
-        
+
 #if DEBUG || BETA
         LeaderboardPlugin.logger.LogWarning($"[Session Counter] AverageShot {averageShot}");
         LeaderboardPlugin.logger.LogWarning($"[Session Counter] LongestShot {longestShot}");
         LeaderboardPlugin.logger.LogWarning($"[Session Counter] LongestHeadshot {longestHeadshot}");
 #endif
-        
+
         return (averageShot, longestShot, longestHeadshot);
     }
 
     /// <summary>
     /// Gets health statistics
     /// </summary>
-    private (float maxHealth, float currentHealth, float currentEnergy, float currentHydration, float maxEnergy, float maxHydration) GetHealthStats(Profile pmcData)
+    private (float maxHealth, float currentHealth, float currentEnergy, float currentHydration, float maxEnergy, float
+        maxHydration) GetHealthStats(Profile pmcData)
     {
         var maxHealth = pmcData.Health.BodyParts
             .Where(bodyPart => bodyPart.Value?.Health != null)
             .Sum(bodyPart => bodyPart.Value.Health.Maximum);
-                            
+
         var currentHealth = pmcData.Health.BodyParts
             .Where(bodyPart => bodyPart.Value?.Health != null)
             .Sum(bodyPart => bodyPart.Value.Health.Current);
@@ -319,25 +323,27 @@ public class ProcessProfileModel
         var currentHydration = pmcData.Health.Hydration.Current;
         var maxEnergy = pmcData.Health.Energy.Maximum;
         var maxHydration = pmcData.Health.Hydration.Maximum;
-        
+
         return (maxHealth, currentHealth, currentEnergy, currentHydration, maxEnergy, maxHydration);
     }
 
     /// <summary>
     /// Gets session statistics
     /// </summary>
-    private (int killedPmc, int killedSavage, int killedBoss, int expLooting, int hitCount, int totalDamage, int damageTaken) GetSessionStats(
-        Profile pmcData, bool isScavRaid, Profile scavData)
+    private (int killedPmc, int killedSavage, int killedBoss, int expLooting, int hitCount, int totalDamage, int
+        damageTaken) GetSessionStats(
+            Profile pmcData, bool isScavRaid, Profile scavData)
     {
         int killedPmc, killedSavage, killedBoss, expLooting, hitCount, totalDamage, damageTaken;
-        
+
         if (isScavRaid)
         {
             killedPmc = scavData.Stats.Eft.SessionCounters.GetInt(SessionCounterTypesAbstractClass.KilledPmc);
             killedSavage = scavData.Stats.Eft.SessionCounters.GetInt(SessionCounterTypesAbstractClass.KilledSavage);
             killedBoss = scavData.Stats.Eft.SessionCounters.GetInt(SessionCounterTypesAbstractClass.KilledBoss);
             hitCount = scavData.Stats.Eft.SessionCounters.GetInt(SessionCounterTypesAbstractClass.HitCount);
-            totalDamage = (int)scavData.Stats.Eft.SessionCounters.GetFloat(SessionCounterTypesAbstractClass.CauseBodyDamage);
+            totalDamage =
+                (int)scavData.Stats.Eft.SessionCounters.GetFloat(SessionCounterTypesAbstractClass.CauseBodyDamage);
             expLooting = 0;
             damageTaken = 0;
 
@@ -357,7 +363,8 @@ public class ProcessProfileModel
             killedBoss = pmcData.Stats.Eft.SessionCounters.GetInt(SessionCounterTypesAbstractClass.KilledBoss);
             expLooting = pmcData.Stats.Eft.SessionCounters.GetInt(SessionCounterTypesAbstractClass.ExpLooting);
             hitCount = pmcData.Stats.Eft.SessionCounters.GetInt(SessionCounterTypesAbstractClass.HitCount);
-            totalDamage = (int)pmcData.Stats.Eft.SessionCounters.GetFloat(SessionCounterTypesAbstractClass.CauseBodyDamage);
+            totalDamage =
+                (int)pmcData.Stats.Eft.SessionCounters.GetFloat(SessionCounterTypesAbstractClass.CauseBodyDamage);
             damageTaken = (int)pmcData.Stats.Eft.SessionCounters.GetFloat(SessionCounterTypesAbstractClass.BloodLoss);
 
 #if DEBUG || BETA
@@ -371,12 +378,12 @@ public class ProcessProfileModel
             LeaderboardPlugin.logger.LogWarning($"[Session Counter] HitCount {hitCount}");
 #endif
         }
-        
+
         if (hitCount <= 0)
         {
             hitCount = 0;
         }
-        
+
         return (killedPmc, killedSavage, killedBoss, expLooting, hitCount, totalDamage, damageTaken);
     }
 
@@ -390,7 +397,7 @@ public class ProcessProfileModel
 
         var areasPmc = pmcData.Hideout.Areas.ToList();
         var hideoutData = new HideoutData();
-        
+
         foreach (var areaPmc in areasPmc)
         {
             if (areaPmc.AreaType != EAreaType.NotSet)
@@ -403,7 +410,7 @@ public class ProcessProfileModel
                 }
             }
         }
-        
+
         return hideoutData;
     }
 
@@ -422,14 +429,16 @@ public class ProcessProfileModel
     /// <summary>
     /// Processes StatTrack data
     /// </summary>
-    private (bool statTrackIsUsed, Dictionary<string, Dictionary<string, WeaponInfo>> processedStatTrackData) ProcessStatTrackData(string profileId)
+    private (bool statTrackIsUsed, Dictionary<string, Dictionary<string, WeaponInfo>> processedStatTrackData)
+        ProcessStatTrackData(string profileId)
     {
         var statTrackIsUsed = false;
-        Dictionary<string, Dictionary<string, WeaponInfo>> processedStatTrackData = new Dictionary<string, Dictionary<string, WeaponInfo>>();
-        
+        Dictionary<string, Dictionary<string, WeaponInfo>> processedStatTrackData =
+            new Dictionary<string, Dictionary<string, WeaponInfo>>();
+
         // Commented because StatTrack not exists on 4.0
         // var statTrackIsUsed = StatTrackInterop.Loaded();
-        
+
         return (statTrackIsUsed, processedStatTrackData);
     }
 
@@ -461,7 +470,7 @@ public class ProcessProfileModel
                 allAchievementsDict, longestShot, longestHeadshot, averageShot, killedBoss, killedSavage,
                 processedStatTrackData, pmcData, scavData, totalDamage, damageTaken, completedQuests,
                 revenueRaid, maxEnergy, maxHydration);
-            
+
             SendProfileData(scavProfileData, "SCAV");
         }
         else
@@ -472,7 +481,7 @@ public class ProcessProfileModel
                 killedBoss, killedSavage, processedStatTrackData, pmcData, scavData, hasKappa,
                 totalDamage, damageTaken, completedQuests, revenueRaid, currentEnergy, currentHydration,
                 maxEnergy, maxHydration);
-            
+
             SendProfileData(pmcProfileData, "PMC");
         }
     }
@@ -523,7 +532,7 @@ public class ProcessProfileModel
         float currentHydration, float maxEnergy, float maxHydration)
     {
         var traderInfoData = DataUtils.GetTraderInfo(pmcData);
-        
+
         return new AdditiveProfileData(baseData)
         {
             DiscFromRaid = discFromRaid,
@@ -576,7 +585,7 @@ public class ProcessProfileModel
         int revenueRaid, float maxEnergy, float maxHydration)
     {
         var traderInfoData = DataUtils.GetTraderInfo(pmcData);
-        
+
         return new AdditiveProfileData(baseData)
         {
             DiscFromRaid = discFromRaid,
@@ -633,13 +642,14 @@ public class ProcessProfileModel
 
         LeaderboardPlugin.SendRaidData(profileData);
     }
-    
+
     public static ProcessProfileModel Create()
     {
         if (Instance != null)
         {
             return Instance;
         }
+
         return Instance = new ProcessProfileModel();
     }
 }
