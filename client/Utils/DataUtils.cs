@@ -91,28 +91,34 @@ public static class DataUtils
     {
         var price = 0;
 
-        var data = new ItemsData()
+        if (listItems != null)
         {
-            Items = listItems
-        };
+            if (listItems.Count > 0)
+            {
+                var data = new ItemsData()
+                {
+                    Items = listItems
+                };
         
-        try
-        {
-            var json = RequestHandler.PostJson("/SPTLB/GetItemPrices", JsonConvert.SerializeObject(data));
+                try
+                {
+                    var json = RequestHandler.PostJson("/SPTLB/GetItemPrices", JsonConvert.SerializeObject(data));
             
-            if (string.IsNullOrWhiteSpace(json))
-                return price;
+                    if (string.IsNullOrWhiteSpace(json))
+                        return price;
 
-            price = int.Parse(json);
+                    price = int.Parse(json);
             
-            LeaderboardPlugin.logger.LogWarning($"GetPriceItems Response = {price}");
+                    LeaderboardPlugin.logger.LogWarning($"GetPriceItems Response = {price}");
+                }
+                catch (Exception ex)
+                {
+                    LeaderboardPlugin.logger.LogWarning($"GetPriceItems failed: {ex}");
+                    return price;
+                }
+            }
         }
-        catch (Exception ex)
-        {
-            LeaderboardPlugin.logger.LogWarning($"GetPriceItems failed: {ex}");
-            return price;
-        }
-
+        
         return price;
     }
     
