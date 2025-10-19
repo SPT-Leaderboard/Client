@@ -25,7 +25,7 @@ public class ProcessProfileModel
     {
         if (!ShouldProcessProfile())
             return;
-        
+
         if (!Singleton<PreloaderUI>.Instantiated)
             return;
 
@@ -38,8 +38,11 @@ public class ProcessProfileModel
             return;
 
         var isScavRaid = DetermineRaidType(session.Profile, profileData);
+
         var sessionData = GetSessionData(session);
+
         var raidInfo = GetRaidInfo(localRaidSettings, resultRaid, session.Profile);
+
         
         ProcessAndSendProfileData(sessionData, raidInfo, isScavRaid, resultRaid);
     }
@@ -49,12 +52,8 @@ public class ProcessProfileModel
     /// </summary>
     private bool ShouldProcessProfile()
     {
-        if (PlayerHelper.GetLimitViolationsSilent(PlayerHelper.GetEquipmentData()))
-        {
-            return false;
-        }
-
-        return !SettingsModel.Instance.EnableSendData.Value;
+        return SettingsModel.Instance.EnableSendData.Value ||
+               !PlayerHelper.GetLimitViolationsSilent(PlayerHelper.GetEquipmentData());
     }
 
     /// <summary>
@@ -135,7 +134,7 @@ public class ProcessProfileModel
         var hideoutData = GetHideoutData(pmcData, isScavRaid);
         var listModsPlayer = GetModsList();
         var (statTrackIsUsed, processedStatTrackData) = ProcessStatTrackData(profileId);
-
+        LeaderboardPlugin.logger.LogWarning("ProcessAndSendProfileData 1");
         CreateAndSendProfileData(profileId, gameVersion, lastRaidLocationRaw, lastRaidLocation, 
             isScavRaid, completedQuests, nameKiller, discFromRaid, revenueRaid, isTransition, 
             lastRaidTransitionTo, allAchievementsDict, haveDevItems, hasKappa, averageShot, 
