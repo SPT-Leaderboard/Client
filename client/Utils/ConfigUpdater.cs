@@ -13,13 +13,13 @@ namespace SPTLeaderboard.Utils
             {
                 EquipmentData newConfig;
                 var request = NetworkApiRequestModel.CreateGet(GlobalData.ConfigUrl);
-                request.OnSuccess = (response, code) =>
+                request.OnSuccess = (response, code, reqId) =>
                 {
                     newConfig = JsonConvert.DeserializeObject<EquipmentData>(response);
                 
                     if (newConfig != null)
                     {
-                        LeaderboardPlugin.logger.LogInfo($"Request GET OnSuccess {response}");
+                        LeaderboardPlugin.logger.LogInfo($"Request GET OnSuccess {response} ID: {reqId}");
                     
 #if DEBUG
                         LeaderboardPlugin.logger.LogInfo($"{JsonConvert.SerializeObject(newConfig)}");

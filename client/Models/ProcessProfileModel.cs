@@ -98,17 +98,20 @@ public class ProcessProfileModel
 
                 var revenueRaid = 0;
                 var trackingLoot = LeaderboardPlugin.Instance.TrackingLoot;
+                var trackingLootItems = trackingLoot.TrackedIds.ToList();
+                
+#if DEBUG
+                LeaderboardPlugin.logger.LogWarning($"List tracked {trackingLootItems.Count} items: {JsonConvert.SerializeObject(trackingLootItems)}");
+#endif
+                
                 var trackedLootRevenue = DataUtils.GetPriceItems(trackingLoot.TrackedIds.ToList());
                 if (resultRaid.result is ExitStatus.Runner or ExitStatus.Transit or ExitStatus.Survived)
                 {
-                    var listItems = PlayerHelper.GetEquipmentItemsTemplateId();
-                    DataUtils.GetPriceItems(listItems);
-                
+#if DEBUG
                     LeaderboardPlugin.logger.LogWarning($"trackedLootRevenue = {trackedLootRevenue}");
-                    
                     if(!isScavRaid)
                         LeaderboardPlugin.logger.LogWarning($"PreRaidLootValue = {trackingLoot.PreRaidLootValue}");
-                    
+#endif
                     revenueRaid = trackedLootRevenue;
                 }
                 else

@@ -16,8 +16,8 @@ namespace SPTLeaderboard.Models
         private string _jsonBody;
         private string _httpMethod = UnityWebRequest.kHttpVerbPOST;
 
-        public Action<string, long> OnSuccess;
-        public Action<string, long> OnFail;
+        public Action<string, long, string> OnSuccess;
+        public Action<string, long, string> OnFail;
         
         private bool _isComplete;
         
@@ -138,7 +138,7 @@ namespace SPTLeaderboard.Models
 
             if (request.result == UnityWebRequest.Result.Success)
             {
-                OnSuccess?.Invoke(request.downloadHandler.text, request.responseCode);
+                OnSuccess?.Invoke(request.downloadHandler.text, request.responseCode, reqId);
                 Destroy(gameObject);
             }
             else
@@ -148,7 +148,7 @@ namespace SPTLeaderboard.Models
                 if (isTimeout && _retryCount < _maxRetries)
                 {
                     _retryCount++;
-                    LeaderboardPlugin.logger.LogWarning($"Timeout, retrying {_retryCount}/{_maxRetries}...");
+                    LeaderboardPlugin.logger.LogWarning($"Timeout, retrying {_retryCount}/{_maxRetries}... ID: {reqId}");
                     _isComplete = false;
                     yield return new WaitForSeconds(0.5f);
                     StartCoroutine(RunBaseRequest());
@@ -160,9 +160,9 @@ namespace SPTLeaderboard.Models
                         LeaderboardPlugin.logger.LogWarning("After five tries, nothing came out");
                     }
 #if DEBUG || BETA           
-                    LeaderboardPlugin.logger.LogWarning($"OnFail response {request.downloadHandler.text}");
+                    LeaderboardPlugin.logger.LogWarning($"OnFail response {request.downloadHandler.text} ID: {reqId}");
 #endif
-                    OnFail?.Invoke(request.error, request.responseCode);
+                    OnFail?.Invoke(request.error, request.responseCode, reqId);
                     Destroy(gameObject);
                 }
             }

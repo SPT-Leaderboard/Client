@@ -15,6 +15,10 @@ public class TrackingLoot
     {
         if (TrackedIds.Add(item.TemplateId.ToString()))
         {
+#if DEBUG
+            LeaderboardPlugin.logger.LogWarning($"[TrackingLoot][Add] Item TemplateId {item.TemplateId.ToString()}");
+            LeaderboardPlugin.logger.LogWarning($"[TrackingLoot][Add] Item Id {item.Id.ToString()}");
+#endif
             return true;
         }
         return false;
@@ -24,6 +28,10 @@ public class TrackingLoot
     {
         if (TrackedIds.Remove(item.TemplateId.ToString()))
         {
+#if DEBUG
+            LeaderboardPlugin.logger.LogWarning($"[TrackingLoot][Remove] Item {item.TemplateId.ToString()}");
+            LeaderboardPlugin.logger.LogWarning($"[TrackingLoot][Remove] Item Id {item.Id.ToString()}");
+#endif
             return true;
         }
         return false;

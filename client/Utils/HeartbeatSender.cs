@@ -31,12 +31,12 @@ namespace SPTLeaderboard.Utils
 
                     var request = NetworkApiRequestModel.Create(GlobalData.HeartbeatUrl);
 
-                    request.OnSuccess = (response, code) =>
+                    request.OnSuccess = (response, code, reqId) =>
                     {
-                        LeaderboardPlugin.logger.LogWarning($"Request OnSuccess {response}");
+                        LeaderboardPlugin.logger.LogWarning($"Request OnSuccess {response} ID: {reqId}");
                     };
 
-                    request.OnFail = (error, code) => { ServerErrorHandler.HandleError(error, code); };
+                    request.OnFail = (error, code, reqId) => { ServerErrorHandler.HandleError(error, code); };
 
                     var data = new PlayerHeartbeatData
                     {
@@ -76,12 +76,12 @@ namespace SPTLeaderboard.Utils
 
                 var request = NetworkApiRequestModel.Create(GlobalData.HeartbeatUrl);
 
-                request.OnSuccess = (response, code) =>
+                request.OnSuccess = (response, code, reqId) =>
                 {
-                    LeaderboardPlugin.logger.LogWarning($"Request OnSuccess {response}");
+                    LeaderboardPlugin.logger.LogWarning($"Request OnSuccess {response} ID: {reqId}");
                 };
 
-                request.OnFail = (error, code) => { ServerErrorHandler.HandleError(error, code); };
+                request.OnFail = (error, code, reqId) => { ServerErrorHandler.HandleError(error, code); };
 
                 var data = new PlayerHeartbeatRaidData
                 {

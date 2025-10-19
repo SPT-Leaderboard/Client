@@ -61,7 +61,9 @@ public static class DataUtils
         try
         {
             string json = RequestHandler.GetJson("/launcher/server/serverModsUsedByProfile");
+#if DEBUG
             LeaderboardPlugin.logger.LogWarning($"GetServerMods: {json}");
+#endif
             if (string.IsNullOrWhiteSpace(json))
                 return listServerMods;
             
