@@ -79,9 +79,9 @@ public class PlayerHelper
         return listEquipment.Where(i => i is not null).Select(item => item.Id.ToString()).ToList();
     }
     
-    public static List<string> GetEquipmentItemsTemplateId(){
+    public static List<string> GetEquipmentItemsTemplateId(ESideType sideType){
         var session = GetSession();
-        var pmcData = session?.GetProfileBySide(ESideType.Pmc);
+        var pmcData = session?.GetProfileBySide(sideType);
         var listEquipment = pmcData.Inventory.GetItemsInSlots(SlotsToSearch);
 
         return listEquipment.Where(i => i is not null).Where(i => !i.Parent.IsSpecialSlotAddress()).Select(item => item.TemplateId.ToString()).ToList();
