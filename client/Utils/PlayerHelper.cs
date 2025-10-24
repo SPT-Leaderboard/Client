@@ -28,7 +28,9 @@ public class PlayerHelper
         EquipmentSlot.Pockets,
         EquipmentSlot.Eyewear,
         EquipmentSlot.FaceCover,
-        EquipmentSlot.Earpiece];
+        EquipmentSlot.Earpiece,
+        EquipmentSlot.SecuredContainer,
+        EquipmentSlot.ArmBand];
     
     public static ISession GetSession(bool throwIfNull = false)
     {

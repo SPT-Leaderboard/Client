@@ -22,12 +22,20 @@ namespace SPTLeaderboard.Patches
                 return true;
 
             LeaderboardPlugin.Instance.StopInRaidHeartbeat();
-            ProcessProfileModel.Create().ProcessAndSendProfile(settings, results);
             
             HeartbeatSender.Send(results.result == ExitStatus.Transit ? PlayerState.IN_TRANSIT : PlayerState.RAID_END);
             
             LeaderboardPlugin.logger.LogWarning("[State] Player ended raid");
             return true;
+        }
+
+        [PatchPostfix]
+        static void Postfix(LocalRaidSettings settings, RaidEndDescriptorClass results,
+            FlatItemsDataClass[] lostInsuredItems, Dictionary<string, FlatItemsDataClass[]> transferItems,
+            object __instance)
+        {
+            LeaderboardPlugin.Instance.TrackingLoot.OnEndRaid();
+            ProcessProfileModel.Create().ProcessAndSendProfile(settings, results);
         }
     }
 }
