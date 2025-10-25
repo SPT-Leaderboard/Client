@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using EFT;
 using EFT.InventoryLogic;
 
 namespace SPTLeaderboard.Utils;
@@ -9,7 +10,8 @@ public class TrackingLoot
 {
     public HashSet<string> TrackedIds = new HashSet<string>();
     
-    public int PreRaidLootValue = 0;
+    public int PreRaidLootValue { get; private set; } = 0;
+    public int PostRaidLootValue { get; private set; } = 0;
 
     public bool Add(Item item)
     {
@@ -39,19 +41,13 @@ public class TrackingLoot
 
     private void Clear() => TrackedIds.Clear();
 
-    public void OnStartRaid()
+    public void OnStartRaid(ESideType sideType)
     {
-        Clear();
-        PreRaidLootValue = 0;
-        
-        LeaderboardPlugin.Instance.BeforeRaidPlayerEquipment.Clear();
-        
-        var listItems = PlayerHelper.GetEquipmentItemsTemplateId();
-        PreRaidLootValue = DataUtils.GetPriceItems(listItems);
-        
-        foreach (var item in PlayerHelper.GetEquipmentItemsIds())
-        {
-            LeaderboardPlugin.Instance.BeforeRaidPlayerEquipment.Add(item);
-        }
+        PreRaidLootValue = DataUtils.GetPriceItems(PlayerHelper.GetEquipmentItemsTemplateId(sideType));
+    }
+
+    public void OnEndRaid(ESideType sideType)
+    {
+        PostRaidLootValue = DataUtils.GetPriceItems(PlayerHelper.GetEquipmentItemsTemplateId(sideType));
     }
 }

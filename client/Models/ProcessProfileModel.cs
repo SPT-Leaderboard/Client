@@ -197,34 +197,15 @@ public class ProcessProfileModel
     /// </summary>
     private int CalculateRaidRevenue(RaidEndDescriptorClass resultRaid, bool isScavRaid)
     {
-        var trackingLoot = LeaderboardPlugin.Instance.TrackingLoot;
-        var trackedLootRevenue = DataUtils.GetPriceItems(trackingLoot.TrackedIds.ToList());
-
-#if DEBUG
-        LeaderboardPlugin.logger.LogWarning(
-            $"List tracked {trackingLoot.TrackedIds.Count} items: {JsonConvert.SerializeObject(trackingLoot.TrackedIds.ToList())}");
-#endif
-
-        if (resultRaid.result is ExitStatus.Runner or ExitStatus.Transit or ExitStatus.Survived)
+        if (isScavRaid)
         {
-#if DEBUG
-            LeaderboardPlugin.logger.LogWarning($"trackedLootRevenue = {trackedLootRevenue}");
-            if (!isScavRaid)
-                LeaderboardPlugin.logger.LogWarning($"PreRaidLootValue = {trackingLoot.PreRaidLootValue}");
-#endif
-            return trackedLootRevenue;
+            return (LeaderboardPlugin.Instance.TrackingLoot.PreRaidLootValue +
+                    LeaderboardPlugin.Instance.TrackingLoot.PostRaidLootValue) -
+                   LeaderboardPlugin.Instance.TrackingLoot.PreRaidLootValue;
         }
-        else
-        {
-            if (!isScavRaid)
-            {
-                return -(trackingLoot.PreRaidLootValue + trackedLootRevenue);
-            }
-            else
-            {
-                return -trackedLootRevenue;
-            }
-        }
+
+        return LeaderboardPlugin.Instance.TrackingLoot.PostRaidLootValue -
+               LeaderboardPlugin.Instance.TrackingLoot.PreRaidLootValue;
     }
 
     /// <summary>

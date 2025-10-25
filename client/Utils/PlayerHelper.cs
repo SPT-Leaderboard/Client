@@ -8,6 +8,7 @@ using SPT.Reflection.Utils;
 using SPTLeaderboard.Data;
 using SPTLeaderboard.Models;
 using UnityEngine;
+using SpecialSlot = GClass3391;
 
 namespace SPTLeaderboard.Utils;
 
@@ -16,6 +17,20 @@ public class PlayerHelper
     private static PlayerHelper _instance;
 
     public static PlayerHelper Instance => _instance ??= new PlayerHelper();
+    
+    private static EquipmentSlot[] SlotsToSearch = [
+        EquipmentSlot.FirstPrimaryWeapon,
+        EquipmentSlot.SecondPrimaryWeapon,
+        EquipmentSlot.Holster,
+        EquipmentSlot.Backpack,
+        EquipmentSlot.TacticalVest,
+        EquipmentSlot.ArmorVest,
+        EquipmentSlot.Pockets,
+        EquipmentSlot.Eyewear,
+        EquipmentSlot.FaceCover,
+        EquipmentSlot.Earpiece,
+        EquipmentSlot.SecuredContainer,
+        EquipmentSlot.ArmBand];
     
     public static ISession GetSession(bool throwIfNull = false)
     {
@@ -59,17 +74,17 @@ public class PlayerHelper
     public static List<string> GetEquipmentItemsIds(){
         var session = GetSession();
         var pmcData = session?.GetProfileBySide(ESideType.Pmc);
-        var listEquipment = pmcData.Inventory.GetPlayerItems(EPlayerItems.Equipment);
+        var listEquipment = pmcData.Inventory.GetItemsInSlots(SlotsToSearch);
         
-        return listEquipment.Select(item => item.Id).Select(dummy => dummy).ToList();
+        return listEquipment.Where(i => i is not null).Select(item => item.Id.ToString()).ToList();
     }
     
-    public static List<string> GetEquipmentItemsTemplateId(){
+    public static List<string> GetEquipmentItemsTemplateId(ESideType sideType){
         var session = GetSession();
-        var pmcData = session?.GetProfileBySide(ESideType.Pmc);
-        var listEquipment = pmcData.Inventory.GetPlayerItems(EPlayerItems.Equipment);
-        
-        return listEquipment.Select(item => item.TemplateId).Select(dummy => (string)dummy).ToList();
+        var pmcData = session?.GetProfileBySide(sideType);
+        var listEquipment = pmcData.Inventory.GetItemsInSlots(SlotsToSearch);
+
+        return listEquipment.Where(i => i is not null).Where(i => !i.Parent.IsSpecialSlotAddress()).Select(item => item.TemplateId.ToString()).ToList();
     }
     
     #region Equipment
