@@ -338,6 +338,7 @@ public static class DataUtils
             "tarkovstreets" => "Streets of Tarkov",
             "sandbox" => "Ground Zero - Low",
             "sandbox_high" => "Ground Zero - High",
+            "labyrinth" => "The Labyrinth",
             _ => "UNKNOWN"
         };
     }
