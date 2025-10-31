@@ -5,6 +5,9 @@ namespace SPTLeaderboard.Data;
 
 public class PreRaidData
 {
+    [JsonProperty("profile_id")]
+    public string ProfileId { get; set; }
+    
     [JsonProperty("ver")]
     public string VersionMod { get; set; }
     
