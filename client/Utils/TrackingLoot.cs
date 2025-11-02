@@ -11,9 +11,9 @@ public class TrackingLoot
 {
     public HashSet<string> LootedIds = new HashSet<string>();
     public HashSet<string> PreRaidIds = new HashSet<string>();
-    private bool PreRaidItemsChanged = false;
-    
     public int PreRaidLootValue { get; private set; } = 0;
+    
+    public int PostRaidEquipValue { get; private set; } = 0;
     public int PostRaidLootValue { get; private set; } = 0;
 
     public void Add(Item item)
@@ -32,7 +32,6 @@ public class TrackingLoot
         if (PreRaidIds.Remove(item.TemplateId.ToString()))
         {
             LeaderboardPlugin.logger.LogInfo($"[TrackingLoot][Remove][PreRaidEquipment] Item {item.TemplateId.ToString()}");
-            PreRaidItemsChanged = true;
         }
         
         if (LootedIds.Remove(item.TemplateId.ToString()))
@@ -47,7 +46,6 @@ public class TrackingLoot
     private void Clear()
     {
         PreRaidIds.Clear();
-        PreRaidItemsChanged = false;
         LootedIds.Clear();
     }
 
@@ -65,48 +63,35 @@ public class TrackingLoot
 
     public void OnEndRaid(ESideType sideType, Action callback)
     {
+        PostRaidEquipValue = 0;
         PostRaidLootValue = 0;
         
         if (sideType == ESideType.Pmc)
         {
-            if (PreRaidItemsChanged)
+            DataUtils.GetPriceItems(PreRaidIds.ToList(), equipmentValue =>
             {
-                // PMC with changed items: get Equipment price, then Loot price
-                DataUtils.GetPriceItems(PreRaidIds.ToList(), equipmentValue =>
+                PostRaidEquipValue = equipmentValue;
+                LeaderboardPlugin.logger.LogInfo($"[TrackingLoot][OnEndRaid] PMC Equipment = {equipmentValue}");
+                
+                DataUtils.GetPriceItems(LootedIds.ToList(), lootValue =>
                 {
-                    PostRaidLootValue += equipmentValue;
-                    LeaderboardPlugin.logger.LogInfo($"[TrackingLoot][OnEndRaid] PMC Equipment = {equipmentValue}");
-                    
-                    DataUtils.GetPriceItems(LootedIds.ToList(), lootValue =>
-                    {
-                        PostRaidLootValue += lootValue;
-                        LeaderboardPlugin.logger.LogInfo($"[TrackingLoot][OnEndRaid] PMC Loot = {lootValue}");
-                        LeaderboardPlugin.logger.LogInfo($"[TrackingLoot][OnEndRaid] All price requests completed. Final PostRaidLootValue = {PostRaidLootValue}");
-                        callback?.Invoke();
-                    });
-                });
-            }
-            else
-            {
-                // PMC without changed items: get all items price at once
-                DataUtils.GetPriceItems(PlayerHelper.GetEquipmentItemsTemplateId(sideType), value =>
-                {
-                    PostRaidLootValue = value;
-                    LeaderboardPlugin.logger.LogInfo($"[TrackingLoot][OnEndRaid] PMC ALL = {value}");
+                    PostRaidLootValue = lootValue;
+                    LeaderboardPlugin.logger.LogInfo($"[TrackingLoot][OnEndRaid] PMC Loot = {lootValue}");
+                    LeaderboardPlugin.logger.LogInfo($"[TrackingLoot][OnEndRaid] All price requests completed. Final PostRaidLootValue = {PostRaidLootValue}");
                     callback?.Invoke();
                 });
-            }
+            });
         }
         else
         {
             DataUtils.GetPriceItems(PreRaidIds.ToList(), equipmentValue =>
             {
-                PostRaidLootValue += equipmentValue;
+                PostRaidEquipValue = equipmentValue;
                 LeaderboardPlugin.logger.LogInfo($"[TrackingLoot][OnEndRaid] SCAV Equipment = {equipmentValue}");
                 
                 DataUtils.GetPriceItems(LootedIds.ToList(), lootValue =>
                 {
-                    PostRaidLootValue += lootValue;
+                    PostRaidLootValue = lootValue;
                     LeaderboardPlugin.logger.LogInfo($"[TrackingLoot][OnEndRaid] SCAV Loot = {lootValue}");
                     LeaderboardPlugin.logger.LogInfo($"[TrackingLoot][OnEndRaid] All price requests completed. Final PostRaidLootValue = {PostRaidLootValue}");
                     callback?.Invoke();
