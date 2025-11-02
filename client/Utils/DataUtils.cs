@@ -124,8 +124,8 @@ public static class DataUtils
             ProfileID = PlayerHelper.GetProfile().ProfileId,
             Version = GlobalData.Version,
             Token = EncryptionModel.Instance.Token,
-            Method = "pve/handbook",
-            PricesType = "null"
+            Method = "all",
+            PricesType = "lowest"
         };
         var jsonData = JsonConvert.SerializeObject(data);
 
