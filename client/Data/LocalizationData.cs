@@ -8,7 +8,7 @@ public class LocalizationData
     {
         { "ch", "您因违反排行榜规则而被封禁" },
         { "cz", "Byli jste zabanováni za porušení pravidel žebříčku." },
-        { "en", "You have been banned from Leaderboard. Contact staff for more info." },
+        { "en", "You have been banned from Leaderboard. Contact administration for more info." },
         { "fr", "Vous avez été banni pour avoir enfreint les règles du classement." },
         { "ge", "Sie wurden wegen Verstoßes gegen die Bestenlistenregeln gesperrt." },
         { "hu", "Ki lettél tiltva a ranglista szabályainak megsértése miatt." },
@@ -29,7 +29,7 @@ public class LocalizationData
     {
         { "ch", "您因违反排行榜规则而被封禁" },
         { "cz", "Byli jste zabanováni za porušení pravidel žebříčku." },
-        { "en", "You have been banned from Leaderboard. Contact staff for more info." },
+        { "en", "You have been banned from Leaderboard. Contact administration for more info." },
         { "fr", "Vous avez été banni pour avoir enfreint les règles du classement." },
         { "ge", "Sie wurden wegen Verstoßes gegen die Bestenlistenregeln gesperrt." },
         { "hu", "Ki lettél tiltva a ranglista szabályainak megsértése miatt." },
@@ -50,7 +50,7 @@ public class LocalizationData
     {
         { "ch", "您向API发送了太多请求。 稍后再试。" },
         { "cz", "Odeslali jste příliš mnoho požadavků na API. Zkuste to znovu později." },
-        { "en", "You've sent too many requests to API. Try again later." },
+        { "en", "You've sent too many requests to the API. Try again later." },
         { "fr", "Vous avez envoyé trop de demandes à l'API. Réessayez plus tard." },
         { "ge", "Sie haben zu viele Anfragen an die API gesendet. Versuchen Sie es später noch einmal." },
         { "hu", "Túl sok kérést küldött az API-nak. Próbálja újra később." },
@@ -71,7 +71,7 @@ public class LocalizationData
     {
         { "ch", "排行榜条目被拒。违反许可协议/服务条款 1.2" },
         { "cz", "Záznam do žebříčku byl zamítnut. Porušení LA/TOS 1.2" },
-        { "en", "Leaderboard entry denied. Violation of LA/TOS 1.2" },
+        { "en", "Leaderboard entry denied due violation of LA/TOS 1.2." },
         { "fr", "Entrée au classement refusée. Violation du CLUF/CGU 1.2" },
         { "ge", "Eintrag in die Bestenliste abgelehnt. Verstoß gegen LA/TOS 1.2" },
         { "hu", "Ranglista-bejegyzés elutasítva. LA/TOS 1.2 megsértése" },
@@ -92,7 +92,7 @@ public class LocalizationData
     {
         { "ch", "令牌不适用于当前资料。它可能正被其他玩家使用。" },
         { "cz", "Token neodpovídá aktuálnímu profilu. Možná jej používá jiný hráč." },
-        { "en", "The token does not match the current profile. Make sure you have the same token as before." },
+        { "en", "Current secret token does not match your profile on the Leaderboard. Make sure you have the same token as before." },
         { "fr", "Le jeton ne correspond pas au profil actuel. Il est peut-être utilisé par un autre joueur." },
         { "ge", "Das Token passt nicht zum aktuellen Profil. Es könnte von einem anderen Spieler verwendet werden." },
         { "hu", "A token nem illik a jelenlegi profilhoz. Lehet, hogy egy másik játékos használja." },
@@ -113,7 +113,7 @@ public class LocalizationData
     {
         { "ch", "您的令牌被拒绝为不安全。请尝试另一个或重新生成。" },
         { "cz", "Váš token byl zamítnut jako nebezpečný. Zkuste jiný nebo jej znovu vygenerujte." },
-        { "en", "Your token was marked as unsafe. Try a different one, or generate a new one." },
+        { "en", "Your token was marked as unsafe. Try a different secret token, or generate a new one." },
         { "fr", "Votre jeton a été rejeté comme non sécurisé. Essayez-en un autre ou générez-en un nouveau." },
         { "ge", "Ihr Token wurde als unsicher abgelehnt. Versuchen Sie einen anderen oder generieren Sie einen neuen." },
         { "hu", "A token elutasításra került, mert nem biztonságos. Próbáljon meg egy másikat, vagy generáljon egy újat." },
@@ -176,7 +176,7 @@ public class LocalizationData
     {
         { "ch", "玩家名称过长。请在游戏设置中缩短。" },
         { "cz", "Jméno hráče je příliš dlouhé. Zkraťte ho v nastavení hry." },
-        { "en", "The player name is too long. Please shorten it in the game settings." },
+        { "en", "Your player name is too long. Please shorten it in the game settings." },
         { "fr", "Le nom du joueur est trop long. Veuillez le raccourcir dans les paramètres du jeu." },
         { "ge", "Der Spielername ist zu lang. Bitte kürzen Sie ihn in den Spieleinstellungen." },
         { "hu", "A játékos neve túl hosszú. Rövidítse le a játék beállításaiban." },
@@ -197,7 +197,7 @@ public class LocalizationData
     {
         { "ch", "玩家名称包含禁止的字符或词语。请在游戏设置中修改。" },
         { "cz", "Jméno hráče obsahuje zakázané znaky nebo slova. Změňte ho v nastavení hry." },
-        { "en", "The player name contains forbidden characters or words. Please change it in the game settings." },
+        { "en", "Your player name contains forbidden characters or words. Please change it in the game settings." },
         { "fr", "Le nom du joueur contient des caractères ou mots interdits. Veuillez le modifier dans les paramètres du jeu." },
         { "ge", "Der Spielername enthält unzulässige Zeichen oder Wörter. Bitte ändern Sie ihn in den Spieleinstellungen." },
         { "hu", "A játékos neve tiltott karaktereket vagy szavakat tartalmaz. Módosítsa a játék beállításaiban." },
@@ -218,7 +218,7 @@ public class LocalizationData
     {
         { "ch", "检测到开发者物品。突袭数据将不会被上传。" },
         { "cz", "Byl u vás nalezen vývojářský předmět. Údaje z nájezdu nebudou odeslány." },
-        { "en", "Developer item(s) detected. Raid data will not be submitted." },
+        { "en", "Developer item(s) detected. Your next raids will not be submitted to Leaderboard. Please remove any restricted items from your inventory." },
         { "fr", "Un objet de développeur a été détecté. Les données du raid ne seront pas envoyées." },
         { "ge", "Ein Entwicklergegenstand wurde gefunden. Raid-Daten werden nicht gesendet." },
         { "hu", "Fejlesztői tárgyat észleltünk. A rajtaütés adatai nem kerülnek elküldésre." },
@@ -239,7 +239,7 @@ public class LocalizationData
     {
         { "ch", "{0} 太大了。突袭数据将不会被发送。" },
         { "cz", "{0} je příliš velký. Údaje z nájezdu nebudou odeslány." },
-        { "en", "{0} is too large. Raid data will not be submitted." },
+        { "en", "{0} is too large. Your next raids will not be submitted to Leaderboard." },
         { "fr", "{0} est trop grand. Les données du raid ne seront pas envoyées." },
         { "ge", "{0} ist zu groß. Raid-Daten werden nicht übermittelt." },
         { "hu", "{0} túl nagy. A rajtaütési adatok nem kerülnek elküldésre." },
@@ -260,7 +260,7 @@ public class LocalizationData
     {
         { "ch", "突袭结束！已获得 {0} 排行榜金币" },     // Chinese
         { "cz", "Nájezd skončil! Získali jste {0} žebříčkových mincí" },     // Czech
-        { "en", "Raid finished! You earned {0} leaderboard coins" },     // English
+        { "en", "Raid finished! You've earned {0} leaderboard coins" },     // English
         { "fr", "Raid terminé ! Vous avez gagné {0} pièces de classement" },     // French
         { "ge", "Überfall beendet! Du hast {0} Ranglisten-Münzen erhalten" },     // German
         { "hu", "A rajtaütés véget ért! Szereztél {0} ranglista érmét" },     // Hungarian
