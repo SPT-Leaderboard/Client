@@ -1,5 +1,9 @@
 ﻿using System;
+using Comfort.Common;
+using EFT;
 using EFT.Communications;
+using Newtonsoft.Json;
+using SPTLeaderboard.Data;
 using SPTLeaderboard.Models;
 
 namespace SPTLeaderboard.Utils
@@ -13,9 +17,63 @@ namespace SPTLeaderboard.Utils
             var typeError = GetTypeError(statusCode);
             if (typeError != ErrorType.SILENT_ERROR)
             {
-                LocalizationModel.NotificationWarning(LocalizationModel.Instance.GetLocaleErrorText(typeError),
-                    GetDurationType(typeError));
+                string notificationMessage = GetNotificationMessage(typeError, responseBody, statusCode);
+                LocalizationModel.NotificationWarning(notificationMessage, GetDurationType(typeError));
             }
+        }
+
+        private static string GetNotificationMessage(ErrorType errorType, string responseBody, long statusCode)
+        {
+            // Special handling for error 699 with banned mods
+            if (statusCode == 699 && !string.IsNullOrEmpty(responseBody))
+            {
+                try
+                {
+                    var errorData = JsonConvert.DeserializeObject<ErrorBannedModsData>(responseBody);
+                    if (errorData?.BlockedMods != null && errorData.BlockedMods.Length > 0)
+                    {
+                        string baseMessage = LocalizationModel.Instance.GetLocaleErrorText(errorType);
+                        string modsList = string.Join(", ", errorData.BlockedMods);
+                        string bannedModsLabel = GetBannedModsLabel(modsList);
+                        return $"{baseMessage}\n{bannedModsLabel}";
+                    }
+                }
+                catch (JsonException ex)
+                {
+                    LeaderboardPlugin.logger.LogWarning($"Failed to parse banned mods error response: {ex.Message}");
+                }
+            }
+
+            return LocalizationModel.Instance.GetLocaleErrorText(errorType);
+        }
+
+        private static string GetBannedModsLabel(string modsList)
+        {
+            string currentLanguage = GetCurrentLanguage();
+            if (LocalizationData.BannedMods.TryGetValue(currentLanguage, out var label))
+            {
+                return string.Format(label, modsList);
+            }
+
+            // Fallback to English
+            return string.Format(LocalizationData.BannedMods["en"], modsList);
+        }
+
+        private static string GetCurrentLanguage()
+        {
+            try
+            {
+                if (Singleton<SharedGameSettingsClass>.Instance?.Game?.Settings?.Language != null)
+                {
+                    return Singleton<SharedGameSettingsClass>.Instance.Game.Settings.Language;
+                }
+            }
+            catch
+            {
+                // Fallback to English
+            }
+
+            return "en";
         }
 
         private static ErrorType GetTypeError(long errorCode) =>

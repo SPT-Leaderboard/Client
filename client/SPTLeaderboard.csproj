@@ -126,6 +126,7 @@
     </ItemGroup>
     <ItemGroup>
         <Compile Include="Data\BaseData.cs" />
+        <Compile Include="Data\ErrorBannedModsData.cs" />
         <Compile Include="Data\HideoutData.cs" />
         <Compile Include="Data\HitsDistanceData.cs" />
         <Compile Include="Data\ItemsDataGlobal.cs" />
