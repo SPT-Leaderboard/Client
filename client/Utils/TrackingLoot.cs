@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using EFT;
 using EFT.InventoryLogic;
 
@@ -8,46 +9,109 @@ namespace SPTLeaderboard.Utils;
 // Taken from https://github.com/HiddenCirno/ShowLootValue
 public class TrackingLoot
 {
-    public HashSet<string> TrackedIds = new HashSet<string>();
+    public HashSet<string> LootedIds = new HashSet<string>();
+    public HashSet<string> PreRaidIds = new HashSet<string>();
+    private bool PreRaidItemsChanged = false;
     
     public int PreRaidLootValue { get; private set; } = 0;
     public int PostRaidLootValue { get; private set; } = 0;
 
-    public bool Add(Item item)
+    public void Add(Item item)
     {
-        if (TrackedIds.Add(item.TemplateId.ToString()))
+        if (LootedIds.Add(item.TemplateId.ToString()))
         {
 #if DEBUG
-            LeaderboardPlugin.logger.LogWarning($"[TrackingLoot][Add] Item TemplateId {item.TemplateId.ToString()}");
-            LeaderboardPlugin.logger.LogWarning($"[TrackingLoot][Add] Item Id {item.Id.ToString()}");
+            LeaderboardPlugin.logger.LogInfo($"[TrackingLoot][Add] Item TemplateId {item.TemplateId.ToString()}");
+            LeaderboardPlugin.logger.LogInfo($"[TrackingLoot][Add] Item Id {item.Id}");
 #endif
-            return true;
         }
-        return false;
     }
 
-    public bool Remove(Item item)
+    public void Remove(Item item)
     {
-        if (TrackedIds.Remove(item.TemplateId.ToString()))
+        if (PreRaidIds.Remove(item.TemplateId.ToString()))
+        {
+            LeaderboardPlugin.logger.LogInfo($"[TrackingLoot][Remove][PreRaidEquipment] Item {item.TemplateId.ToString()}");
+            PreRaidItemsChanged = true;
+        }
+        
+        if (LootedIds.Remove(item.TemplateId.ToString()))
         {
 #if DEBUG
-            LeaderboardPlugin.logger.LogWarning($"[TrackingLoot][Remove] Item {item.TemplateId.ToString()}");
-            LeaderboardPlugin.logger.LogWarning($"[TrackingLoot][Remove] Item Id {item.Id.ToString()}");
+            LeaderboardPlugin.logger.LogInfo($"[TrackingLoot][Remove] Item {item.TemplateId.ToString()}");
+            LeaderboardPlugin.logger.LogInfo($"[TrackingLoot][Remove] Item Id {item.Id}");
 #endif
-            return true;
         }
-        return false;
     }
 
-    private void Clear() => TrackedIds.Clear();
+    private void Clear()
+    {
+        PreRaidIds.Clear();
+        PreRaidItemsChanged = false;
+        LootedIds.Clear();
+    }
 
     public void OnStartRaid(ESideType sideType)
     {
-        PreRaidLootValue = DataUtils.GetPriceItems(PlayerHelper.GetEquipmentItemsTemplateId(sideType));
+        Clear();
+        
+        PreRaidIds = PlayerHelper.GetEquipmentItemsTemplateId(sideType).ToHashSet();
+        DataUtils.GetPriceItems(PlayerHelper.GetEquipmentItemsTemplateId(sideType), value =>
+        {
+            PreRaidLootValue = value;
+            LeaderboardPlugin.logger.LogInfo($"[TrackingLoot][OnStartRaid] Cost Equipment = {PreRaidLootValue}");
+        });
     }
 
-    public void OnEndRaid(ESideType sideType)
+    public void OnEndRaid(ESideType sideType, Action callback)
     {
-        PostRaidLootValue = DataUtils.GetPriceItems(PlayerHelper.GetEquipmentItemsTemplateId(sideType));
+        PostRaidLootValue = 0;
+        
+        if (sideType == ESideType.Pmc)
+        {
+            if (PreRaidItemsChanged)
+            {
+                // PMC with changed items: get Equipment price, then Loot price
+                DataUtils.GetPriceItems(PreRaidIds.ToList(), equipmentValue =>
+                {
+                    PostRaidLootValue += equipmentValue;
+                    LeaderboardPlugin.logger.LogInfo($"[TrackingLoot][OnEndRaid] PMC Equipment = {equipmentValue}");
+                    
+                    DataUtils.GetPriceItems(LootedIds.ToList(), lootValue =>
+                    {
+                        PostRaidLootValue += lootValue;
+                        LeaderboardPlugin.logger.LogInfo($"[TrackingLoot][OnEndRaid] PMC Loot = {lootValue}");
+                        LeaderboardPlugin.logger.LogInfo($"[TrackingLoot][OnEndRaid] All price requests completed. Final PostRaidLootValue = {PostRaidLootValue}");
+                        callback?.Invoke();
+                    });
+                });
+            }
+            else
+            {
+                // PMC without changed items: get all items price at once
+                DataUtils.GetPriceItems(PlayerHelper.GetEquipmentItemsTemplateId(sideType), value =>
+                {
+                    PostRaidLootValue = value;
+                    LeaderboardPlugin.logger.LogInfo($"[TrackingLoot][OnEndRaid] PMC ALL = {value}");
+                    callback?.Invoke();
+                });
+            }
+        }
+        else
+        {
+            DataUtils.GetPriceItems(PreRaidIds.ToList(), equipmentValue =>
+            {
+                PostRaidLootValue += equipmentValue;
+                LeaderboardPlugin.logger.LogInfo($"[TrackingLoot][OnEndRaid] SCAV Equipment = {equipmentValue}");
+                
+                DataUtils.GetPriceItems(LootedIds.ToList(), lootValue =>
+                {
+                    PostRaidLootValue += lootValue;
+                    LeaderboardPlugin.logger.LogInfo($"[TrackingLoot][OnEndRaid] SCAV Loot = {lootValue}");
+                    LeaderboardPlugin.logger.LogInfo($"[TrackingLoot][OnEndRaid] All price requests completed. Final PostRaidLootValue = {PostRaidLootValue}");
+                    callback?.Invoke();
+                });
+            });
+        }
     }
 }

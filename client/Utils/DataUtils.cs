@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
+using System.Threading.Tasks;
 using BepInEx;
 using BepInEx.Bootstrap;
 using Comfort.Common;
@@ -14,6 +15,7 @@ using SPT.Common.Utils;
 using SPT.Reflection.Utils;
 using SPTLeaderboard.Data;
 using SPTLeaderboard.Enums;
+using SPTLeaderboard.Models;
 using UnityEngine;
 using TraderData = SPTLeaderboard.Data.TraderData;
 
@@ -82,14 +84,96 @@ public static class DataUtils
 
         return listServerMods;
     }
-
-    
     
     /// <summary>
     /// Get final price from list items
     /// </summary>
     /// <returns></returns>
-    public static int GetPriceItems(List<string> listItems)
+    public static void GetPriceItems(List<string> listItems, Action<int> callback)
+    {
+        GetPriceItemsGlobal(listItems, value =>
+        {
+            if (value <= 0)
+            {
+                int localPrice = GetPriceItemsLocal(listItems);
+                callback?.Invoke(localPrice);
+            }
+            else
+            {
+                callback?.Invoke(value);
+            }
+        });
+    }
+
+    
+    /// <summary>
+    /// Get final price from list items GLOBAL SERVER
+    /// </summary>
+    /// <returns></returns>
+    private static void GetPriceItemsGlobal(List<string> listItems, Action<int> callback)
+    {
+        if (listItems == null || listItems.Count == 0)
+        {
+            callback?.Invoke(0);
+            return;
+        }
+
+        var data = new ItemsDataGlobal
+        {
+            Items = listItems,
+            ProfileID = PlayerHelper.GetProfile().ProfileId,
+            Version = GlobalData.Version,
+            Token = EncryptionModel.Instance.Token,
+            Method = "pve/handbook",
+            PricesType = "null"
+        };
+        var jsonData = JsonConvert.SerializeObject(data);
+
+#if DEBUG
+        LeaderboardPlugin.logger.LogWarning($"[GetPriceItemsGlobal] Data = {jsonData}");
+#endif
+        try
+        {
+            var request = NetworkApiRequestModel.Create(GlobalData.PriceUrl);
+            request.SetData(jsonData);
+            request.OnSuccess = (response, code) =>
+            {
+                var priceData = JsonConvert.DeserializeObject<PriceData>(response);
+
+                if (priceData != null && priceData.Success)
+                {
+                    LeaderboardPlugin.logger.LogInfo($"Request GET OnSuccess {response}");
+                    int price = priceData.TotalPrice;
+                    callback?.Invoke(price);
+                }
+                else
+                {
+                    // If request succeeded but price not received, return 0
+                    callback?.Invoke(0);
+                }
+            };
+            request.OnFail = (error, code) =>
+            {
+                // On error return 0 to trigger fallback to Local
+                LeaderboardPlugin.logger.LogWarning($"GetPriceItemsGlobal failed: {error}");
+                callback?.Invoke(0);
+            };
+            request.Send();
+        }
+        catch (Exception ex)
+        {
+            LeaderboardPlugin.logger.LogWarning($"Error getting price: {ex.Message}");
+            // On exception also return 0 for fallback
+            callback?.Invoke(0);
+        }
+    }
+
+    
+    /// <summary>
+    /// Get final price from list items SPT SERVER
+    /// </summary>
+    /// <returns></returns>
+    public static int GetPriceItemsLocal(List<string> listItems)
     {
         var price = 0;
 
@@ -101,7 +185,9 @@ public static class DataUtils
                 {
                     Items = listItems
                 };
-        
+#if DEBUG
+                LeaderboardPlugin.logger.LogWarning($"[GetPriceItemsLocal] Data = {JsonConvert.SerializeObject(data)}");
+#endif
                 try
                 {
                     var json = RequestHandler.PostJson("/SPTLB/GetItemPrices", JsonConvert.SerializeObject(data));
@@ -111,52 +197,14 @@ public static class DataUtils
 
                     price = int.Parse(json);
             
-                    LeaderboardPlugin.logger.LogWarning($"GetPriceItems Response = {price}");
+                    LeaderboardPlugin.logger.LogWarning($"[GetPriceItemsLocal] Response = {price}");
                 }
                 catch (Exception ex)
                 {
-                    LeaderboardPlugin.logger.LogWarning($"GetPriceItems failed: {ex}");
+                    LeaderboardPlugin.logger.LogWarning($"[GetPriceItemsLocal] failed: {ex}");
                     return price;
                 }
             }
-        }
-        
-        return price;
-    }
-    
-    /// <summary>
-    /// Get price from item
-    /// </summary>
-    /// <returns></returns>
-    public static int GetPriceItem(MongoID item)
-    {
-        var price = 0;
-
-        var listItems = new List<string>()
-        {
-            item.ToString()
-        };
-        
-        var data = new ItemsData()
-        {
-            Items = listItems
-        };
-        
-        try
-        {
-            var json = RequestHandler.PostJson("/SPTLB/GetItemPrices", JsonConvert.SerializeObject(data));
-
-            if (string.IsNullOrWhiteSpace(json))
-                return price;
-
-            price = int.Parse(json);
-            
-            LeaderboardPlugin.logger.LogWarning($"GetPriceItems Response = {price}");
-        }
-        catch (Exception ex)
-        {
-            LeaderboardPlugin.logger.LogWarning($"GetPriceItems failed: {ex}");
-            return price;
         }
         
         return price;
