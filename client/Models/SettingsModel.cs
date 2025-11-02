@@ -141,7 +141,7 @@ namespace SPTLeaderboard.Models
 			PhpEndpoint = configFile.Bind(
 				"1. Settings", 
 				"Server Endpoint", 
-				"sptlb.yuyui.moe", 
+				"https://sptlb.yuyui.moe", 
 				new ConfigDescription(
 					"DO NOT TOUCH UNLESS YOU KNOW WHAT YOU ARE DOING.\n Domain (or both subdomain + domain) used for PHP requests",
 					null, 

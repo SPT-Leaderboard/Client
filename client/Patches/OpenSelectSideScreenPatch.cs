@@ -47,6 +47,7 @@ namespace SPTLeaderboard.Patches
             
             var preRaidData = new PreRaidData
             {
+                ProfileId = PlayerHelper.GetProfile().ProfileId,
                 VersionMod = GlobalData.Version,
                 IsCasual = SettingsModel.Instance.ModCasualMode.Value,
 #if DEBUG
