@@ -124,7 +124,7 @@ public class ProcessProfileModel
         var completedQuests = ProcessQuests(pmcData, isScavRaid);
         var nameKiller = GetKillerName(resultRaid, pmcData, scavData);
         var discFromRaid = resultRaid.result == ExitStatus.Left;
-        var revenueRaid = CalculateRaidRevenue(isScavRaid);
+        var revenueRaid = CalculateRaidRevenue(resultRaid, isScavRaid);
         var (isTransition, lastRaidTransitionTo) = GetTransitionData(resultRaid);
         var allAchievementsDict = GetAllAchievements(pmcData);
         var (haveDevItems, hasKappa) = ValidatePlayerItems(pmcData);
@@ -195,17 +195,30 @@ public class ProcessProfileModel
     /// <summary>
     /// Calculates raid revenue
     /// </summary>
-    private int CalculateRaidRevenue(bool isScavRaid)
+    private int CalculateRaidRevenue(RaidEndDescriptorClass resultRaid, bool isScavRaid)
     {
-        if (isScavRaid)
+        if (resultRaid.result is ExitStatus.Runner or ExitStatus.Transit or ExitStatus.Survived)
         {
-            return (LeaderboardPlugin.Instance.TrackingLoot.PreRaidLootValue +
-                    LeaderboardPlugin.Instance.TrackingLoot.PostRaidLootValue) -
-                   LeaderboardPlugin.Instance.TrackingLoot.PreRaidLootValue;
-        }
+            if (isScavRaid)
+            {
+                // 6. SCAV survived - just get prices of all items the SCAV got
+                return LeaderboardPlugin.Instance.TrackingLoot.PostRaidLootValue + LeaderboardPlugin.Instance.TrackingLoot.PostRaidEquipValue;
+            }
 
-        return LeaderboardPlugin.Instance.TrackingLoot.PostRaidLootValue -
-               LeaderboardPlugin.Instance.TrackingLoot.PreRaidLootValue;
+            // 5. PMC survived - compare with pre-raid gear and prices (like usual)
+            return LeaderboardPlugin.Instance.TrackingLoot.PreRaidLootValue;
+        }
+        else
+        {
+            if (isScavRaid)
+            {
+                // 1. Set PROFIT gain to 0 if player DIED in a SCAV raid.
+                return 0;
+            }
+
+            // 4. PMC died
+            return -LeaderboardPlugin.Instance.TrackingLoot.PreRaidLootValue;
+        }
     }
 
     /// <summary>
