@@ -28,9 +28,7 @@ public class PlayerHelper
         EquipmentSlot.Pockets,
         EquipmentSlot.Eyewear,
         EquipmentSlot.FaceCover,
-        EquipmentSlot.Earpiece,
-        EquipmentSlot.SecuredContainer,
-        EquipmentSlot.ArmBand];
+        EquipmentSlot.Earpiece];
     
     public static ISession GetSession(bool throwIfNull = false)
     {
@@ -69,14 +67,6 @@ public class PlayerHelper
     public static Vector3 ConvertToMapPosition(Vector3 unityPosition)
     {
         return new Vector3(unityPosition.x, unityPosition.z, unityPosition.y);
-    }
-    
-    public static List<string> GetEquipmentItemsIds(){
-        var session = GetSession();
-        var pmcData = session?.GetProfileBySide(ESideType.Pmc);
-        var listEquipment = pmcData.Inventory.GetItemsInSlots(SlotsToSearch);
-        
-        return listEquipment.Where(i => i is not null).Select(item => item.Id.ToString()).ToList();
     }
     
     public static List<string> GetEquipmentItemsTemplateId(ESideType sideType){

@@ -128,6 +128,7 @@
         <Compile Include="Data\BaseData.cs" />
         <Compile Include="Data\HideoutData.cs" />
         <Compile Include="Data\HitsDistanceData.cs" />
+        <Compile Include="Data\ItemsDataGlobal.cs" />
         <Compile Include="Data\LoginRequestData.cs" />
         <Compile Include="Data\ItemsData.cs" />
         <Compile Include="Data\PreRaidData.cs" />
@@ -139,6 +140,7 @@
         <Compile Include="Data\LocalizationData.cs" />
         <Compile Include="Data\PlayerHeartbeatData.cs" />
         <Compile Include="Data\AdditiveProfileData.cs" />
+        <Compile Include="Data\PriceData.cs" />
         <Compile Include="Data\ProfileData.cs" />
         <Compile Include="Data\QuestInfoData.cs" />
         <Compile Include="Data\ResponseRaidData.cs" />

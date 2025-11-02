@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Timers;
 using BepInEx;
 using BepInEx.Logging;
+using EFT;
 using Newtonsoft.Json;
 using SPTLeaderboard.Data;
 using SPTLeaderboard.Enums;
@@ -31,8 +32,6 @@ namespace SPTLeaderboard
         public bool cachedPlayerModelPreview = false;
         public bool engLocaleLoaded = false;
         public bool configUpdated = false;
-
-        public HashSet<string> BeforeRaidPlayerEquipment = new HashSet<string>();
 
         public static ManualLogSource logger;
 
