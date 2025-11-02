@@ -277,6 +277,27 @@ public class LocalizationData
         { "ro", "Raid încheiat! Ai câștigat {0} monede de clasament" }     // Romanian
     };
     
+    public static Dictionary<string, string> BannedMods = new() //Banned mods list label
+    {
+        { "ch", "被禁用的模组：{0}" },     // Chinese
+        { "cz", "Zakázané mody: {0}" },     // Czech
+        { "en", "Banned mods: {0}" },     // English
+        { "fr", "Mods interdits : {0}" },     // French
+        { "ge", "Verbotene Mods: {0}" },     // German
+        { "hu", "Tiltott modok: {0}" },     // Hungarian
+        { "it", "Mod vietati: {0}" },     // Italian
+        { "jp", "禁止されたMOD：{0}" },     // Japanese
+        { "kr", "금지된 모드: {0}" },     // Korean
+        { "pl", "Zakazane mody: {0}" },     // Polish
+        { "po", "Mods banidos: {0}" },     // Portuguese
+        { "sk", "Zakázané mody: {0}" },     // Slovak
+        { "es", "Mods prohibidos: {0}" },     // Spanish (ES)
+        { "es-mx", "Mods prohibidos: {0}" },     // Spanish (MX)
+        { "tu", "Yasaklı modlar: {0}" },     // Turkish
+        { "ru", "Забаненные моды: {0}" },     // Russian
+        { "ro", "Moduri interzise: {0}" }     // Romanian
+    };
+    
     // Template for translating
     // public static Dictionary<string, string> TEMPLATE = new Dictionary<string, string>
     // {
