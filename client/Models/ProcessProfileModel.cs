@@ -124,7 +124,7 @@ public class ProcessProfileModel
         var completedQuests = ProcessQuests(pmcData, isScavRaid);
         var nameKiller = GetKillerName(resultRaid, pmcData, scavData);
         var discFromRaid = resultRaid.result == ExitStatus.Left;
-        var revenueRaid = CalculateRaidRevenue(resultRaid, isScavRaid);
+        var revenueRaid = CalculateRaidRevenue(isScavRaid);
         var (isTransition, lastRaidTransitionTo) = GetTransitionData(resultRaid);
         var allAchievementsDict = GetAllAchievements(pmcData);
         var (haveDevItems, hasKappa) = ValidatePlayerItems(pmcData);
@@ -136,7 +136,7 @@ public class ProcessProfileModel
         var hideoutData = GetHideoutData(pmcData, isScavRaid);
         var listModsPlayer = GetModsList();
         var (statTrackIsUsed, processedStatTrackData) = ProcessStatTrackData(profileId);
-        LeaderboardPlugin.logger.LogWarning("ProcessAndSendProfileData 1");
+        
         CreateAndSendProfileData(profileId, gameVersion, lastRaidLocationRaw, lastRaidLocation,
             isScavRaid, completedQuests, nameKiller, discFromRaid, revenueRaid, isTransition,
             lastRaidTransitionTo, allAchievementsDict, haveDevItems, hasKappa, averageShot,
@@ -195,7 +195,7 @@ public class ProcessProfileModel
     /// <summary>
     /// Calculates raid revenue
     /// </summary>
-    private int CalculateRaidRevenue(RaidEndDescriptorClass resultRaid, bool isScavRaid)
+    private int CalculateRaidRevenue(bool isScavRaid)
     {
         if (isScavRaid)
         {
