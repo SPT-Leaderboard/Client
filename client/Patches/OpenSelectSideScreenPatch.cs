@@ -51,7 +51,7 @@ namespace SPTLeaderboard.Patches
                 VersionMod = GlobalData.Version,
                 IsCasual = SettingsModel.Instance.ModCasualMode.Value,
 #if DEBUG
-                Mods = SettingsModel.Instance.Debug.Value ? ["IhanaMies-LootValueBackend", "SpecialSlots"] : modsPlayer,
+                Mods = SettingsModel.Instance.Debug.Value ? ["DEBUGSPTLB"] : modsPlayer,
 #else
                 Mods = modsPlayer,
 #endif

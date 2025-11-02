@@ -482,7 +482,7 @@ public class ProcessProfileModel
             IsScav = isScavRaid,
             LastPlayed = DataUtils.CurrentTimestamp,
 #if DEBUG
-            Mods = SettingsModel.Instance.Debug.Value ? ["IhanaMies-LootValueBackend", "SpecialSlots"] : listModsPlayer,
+            Mods = SettingsModel.Instance.Debug.Value ? ["DEBUGSPTLB"] : listModsPlayer,
 #else
             Mods = listModsPlayer,
 #endif
