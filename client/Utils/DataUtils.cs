@@ -66,9 +66,9 @@ public static class DataUtils
 
             ServerProfileInfo serverProfileInfo = Json.Deserialize<ServerProfileInfo>(json);
 
-            if (serverProfileInfo?.sptData?.Mods != null)
+            if (serverProfileInfo?.SptModsData?.Mods != null)
             {
-                foreach (var serverMod in serverProfileInfo.sptData.Mods)
+                foreach (var serverMod in serverProfileInfo.SptModsData.Mods)
                 {
                     if (serverMod?.Name != null)
                         listServerMods.Add(serverMod.Name);

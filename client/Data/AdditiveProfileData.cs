@@ -71,12 +71,15 @@ namespace SPTLeaderboard.Data
         
         [JsonProperty("isTransition")]
         public bool IsTransition { get; set; }
-        
+
         [JsonProperty("isUsingStattrack")]
-        public bool IsUsingStattrack { get; set; }
+        public bool IsUsingStattrack { get; set; } = false;
         
         [JsonProperty("lastRaidEXP")]
         public int LastRaidEXP { get; set; }
+
+        [JsonProperty("hideout")]
+        public HideoutData HideoutData { get; set; } = null;
         
         [JsonProperty("lastRaidHits")]
         public int LastRaidHits { get; set; }
@@ -98,6 +101,9 @@ namespace SPTLeaderboard.Data
         
         [JsonProperty("longestShot")]
         public int LongestShot { get; set; }
+        
+        [JsonProperty("longestHeadshot")]
+        public int LongestHeadshot { get; set; }    
         
         [JsonProperty("lastRaidAverageShot")]
         public float AverageShot { get; set; }
@@ -135,6 +141,9 @@ namespace SPTLeaderboard.Data
         [JsonProperty("raidDamage")]
         public int RaidDamage { get; set; }
         
+        [JsonProperty("damageTaken")]
+        public int DamageTaken { get; set; }
+        
         [JsonProperty("registrationDate")]
         public long RegistrationDate { get; set; }
         
@@ -143,6 +152,24 @@ namespace SPTLeaderboard.Data
 
         [JsonProperty("traderInfo")]
         public Dictionary<string, TraderData> TraderInfo { get; set; } = null;
+
+        [JsonProperty("completed_quests")]
+        public Dictionary<string, QuestInfoData> Quests { get; set; } = new();
+
+        [JsonProperty("profitGain")]
+        public int RevenueRaid { get; set; } = 0;
+        
+        [JsonProperty("energy")]
+        public float Energy { get; set; } = 0;
+        
+        [JsonProperty("hydration")]
+        public float Hydration { get; set; } = 0;
+        
+        [JsonProperty("max_energy")]
+        public float MaxEnergy { get; set; } = 0;
+        
+        [JsonProperty("max_hydration")]
+        public float MaxHydration { get; set; } = 0;
 
         public static AdditiveProfileData MakeBetaCopy(AdditiveProfileData original)
         {
@@ -172,6 +199,7 @@ namespace SPTLeaderboard.Data
                 IsTransition = original.IsTransition,
                 IsUsingStattrack = original.IsUsingStattrack,
                 LastRaidEXP = original.LastRaidEXP,
+                HideoutData = original.HideoutData,
                 LastRaidHits = original.LastRaidHits,
                 LastRaidMap = original.LastRaidMap,
                 LastRaidMapRaw = original.LastRaidMapRaw,
@@ -179,6 +207,7 @@ namespace SPTLeaderboard.Data
                 RaidHits = original.RaidHits,
                 AllAchievements = original.AllAchievements,
                 LongestShot = original.LongestShot,
+                LongestHeadshot = 0,
                 AverageShot = original.AverageShot,
                 DiedAtX = original.DiedAtX,
                 DiedAtY = original.DiedAtY,
@@ -191,9 +220,16 @@ namespace SPTLeaderboard.Data
                 PublicProfile = original.PublicProfile,
                 HasKappa = original.HasKappa,
                 RaidDamage = original.RaidDamage,
+                DamageTaken = 0,
                 RegistrationDate = original.RegistrationDate,
                 ScavLevel = original.ScavLevel,
-                TraderInfo = original.TraderInfo
+                TraderInfo = original.TraderInfo,
+                Quests = original.Quests,
+                RevenueRaid = original.RevenueRaid,
+                Energy = original.Energy,
+                Hydration = original.Hydration,
+                MaxEnergy = original.MaxEnergy,
+                MaxHydration = original.MaxHydration
             };
         }
     }
