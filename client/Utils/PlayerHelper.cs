@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 using Comfort.Common;
 using EFT;
 using EFT.Communications;
@@ -15,6 +16,18 @@ public class PlayerHelper
     private static PlayerHelper _instance;
 
     public static PlayerHelper Instance => _instance ??= new PlayerHelper();
+    
+    private static EquipmentSlot[] SlotsToSearch = [
+        EquipmentSlot.FirstPrimaryWeapon,
+        EquipmentSlot.SecondPrimaryWeapon,
+        EquipmentSlot.Holster,
+        EquipmentSlot.Backpack,
+        EquipmentSlot.TacticalVest,
+        EquipmentSlot.ArmorVest,
+        EquipmentSlot.Pockets,
+        EquipmentSlot.Eyewear,
+        EquipmentSlot.FaceCover,
+        EquipmentSlot.Earpiece];
     
     public static ISession GetSession(bool throwIfNull = false)
     {
@@ -53,6 +66,14 @@ public class PlayerHelper
     public static Vector3 ConvertToMapPosition(Vector3 unityPosition)
     {
         return new Vector3(unityPosition.x, unityPosition.z, unityPosition.y);
+    }
+    
+    public static List<string> GetEquipmentItemsTemplateId(ESideType sideType){
+        var session = GetSession();
+        var pmcData = session?.GetProfileBySide(sideType);
+        var listEquipment = pmcData.Inventory.GetItemsInSlots(SlotsToSearch);
+
+        return listEquipment.Where(i => i is not null).Where(i => !i.Parent.IsSpecialSlotAddress()).Select(item => item.TemplateId.ToString()).ToList();
     }
     
     #region Equipment

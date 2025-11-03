@@ -8,11 +8,13 @@ using BepInEx.Bootstrap;
 using Comfort.Common;
 using EFT;
 using EFT.InventoryLogic;
+using Newtonsoft.Json;
 using SPT.Common.Http;
 using SPT.Common.Utils;
 using SPT.Reflection.Utils;
 using SPTLeaderboard.Data;
 using SPTLeaderboard.Enums;
+using SPTLeaderboard.Models;
 using UnityEngine;
 using TraderData = SPTLeaderboard.Data.TraderData;
 
@@ -82,6 +84,87 @@ public static class DataUtils
 
         return listServerMods;
     }
+    
+        
+    /// <summary>
+    /// Get final price from list items
+    /// </summary>
+    /// <returns></returns>
+    public static void GetPriceItems(List<string> listItems, Action<int> callback)
+    {
+        GetPriceItemsGlobal(listItems, value =>
+        {
+            if (value <= 0)
+            {
+                int localPrice = -1;
+                callback?.Invoke(localPrice);
+            }
+            else
+            {
+                callback?.Invoke(value);
+            }
+        });
+    }
+
+    
+    /// <summary>
+    /// Get final price from list items GLOBAL SERVER
+    /// </summary>
+    /// <returns></returns>
+    private static void GetPriceItemsGlobal(List<string> listItems, Action<int> callback)
+    {
+        if (listItems == null || listItems.Count == 0)
+        {
+            callback?.Invoke(-1);
+            return;
+        }
+
+        var data = new ItemsDataGlobal
+        {
+            Items = listItems,
+            ProfileID = PlayerHelper.GetProfile().Id,
+            Version = GlobalData.Version,
+            Token = EncryptionModel.Instance.Token,
+            Method = "all",
+            PricesType = "lowest"
+        };
+        var jsonData = JsonConvert.SerializeObject(data);
+
+#if DEBUG
+        LeaderboardPlugin.logger.LogWarning($"[GetPriceItemsGlobal] Data = {jsonData}");
+#endif
+        try
+        {
+            var request = NetworkApiRequestModel.Create(GlobalData.PriceUrl);
+            request.SetData(jsonData);
+            request.OnSuccess = (response, code) =>
+            {
+                var priceData = JsonConvert.DeserializeObject<PriceData>(response);
+
+                if (priceData != null && priceData.Success)
+                {
+                    LeaderboardPlugin.logger.LogInfo($"Request GET OnSuccess {response}");
+                    int price = priceData.TotalPrice;
+                    callback?.Invoke(price);
+                }
+                else
+                {
+                    callback?.Invoke(-1);
+                }
+            };
+            request.OnFail = (error, code) =>
+            {
+                LeaderboardPlugin.logger.LogWarning($"GetPriceItemsGlobal failed: {error}");
+                callback?.Invoke(-1);
+            };
+            request.Send();
+        }
+        catch (Exception ex)
+        {
+            LeaderboardPlugin.logger.LogWarning($"Error getting price: {ex.Message}");
+            callback?.Invoke(-1);
+        }
+    }
 
     public static List<string> GetUserMods()
     {
@@ -126,20 +209,27 @@ public static class DataUtils
         return flag;
     }
 
-    public static void Load(Action<bool> callback)
+    public static void CheckFikaCore(Action<bool> callback)
     {
-        BaseUnityPlugin FikaCoreBLYAT;
-        TryGetPlugin("com.fika.core", out FikaCoreBLYAT);
-        FikaCore = FikaCoreBLYAT;
-        IsLoaded = true;
+        TryGetPlugin("com.fika.core", out var FikaCoreTemp);
+        FikaCore = FikaCoreTemp;
+        IsCheckedFikaCore = true;
         callback.Invoke(FikaCore != null);
     }
     
-    public static bool IsFika = FikaCore != null;
+    public static void CheckFikaHeadless(Action<bool> callback)
+    {
+        TryGetPlugin("com.fika.headless", out var FikaHeadlessTemp);
+        FikaHeadless = FikaHeadlessTemp;
+        IsCheckedFikaHeadless = true;
+        callback.Invoke(FikaHeadless != null);
+    }
     
-    public static bool IsLoaded = false;
+    public static bool IsCheckedFikaCore;
+    public static bool IsCheckedFikaHeadless;
     
     public static BaseUnityPlugin FikaCore;
+    public static BaseUnityPlugin FikaHeadless;
     
     public static Type GetPluginType(BaseUnityPlugin plugin, string typePath)
     {

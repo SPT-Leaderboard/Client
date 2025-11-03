@@ -1,7 +1,9 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Timers;
 using BepInEx;
 using BepInEx.Logging;
+using EFT;
 using Newtonsoft.Json;
 using SPTLeaderboard.Data;
 using SPTLeaderboard.Enums;
@@ -12,7 +14,7 @@ using UnityEngine;
 
 namespace SPTLeaderboard
 {
-    [BepInPlugin("harmonyzt.SPTLeaderboard", "SPTLeaderboard", "4.1.2")]
+    [BepInPlugin("harmonyzt.SPTLeaderboard", "SPTLeaderboard", "5.0.1")]
     public class LeaderboardPlugin : BaseUnityPlugin
     {
         public static LeaderboardPlugin Instance { get; private set; }
@@ -21,14 +23,15 @@ namespace SPTLeaderboard
         private LocalizationModel _localization;
         private EncryptionModel _encrypt;
         private IconSaver _iconSaver;
+        private TrackingLoot _trackingLoot = new();
         
         private Timer _inRaidHeartbeatTimer;
         private Timer _preRaidCheckTimer;
         
         public bool canPreRaidCheck = true;
-        public bool cachedPlayerModelPreview = false;
-        public bool engLocaleLoaded = false;
-        public bool configUpdated = false;
+        public bool cachedPlayerModelPreview;
+        public bool engLocaleLoaded;
+        public bool configUpdated;
 
         public static ManualLogSource logger;
 
@@ -36,6 +39,26 @@ namespace SPTLeaderboard
         {
             logger = Logger;
             logger.LogInfo("Loading...");
+            
+            #region Checking Headless
+            
+            bool isFikaHeadless = false;
+            if (!DataUtils.IsCheckedFikaHeadless)
+            {
+                DataUtils.CheckFikaHeadless(found => { isFikaHeadless = found; });
+            }
+            else
+            {
+                isFikaHeadless = DataUtils.FikaHeadless != null;
+            }
+
+            if (isFikaHeadless)
+            {
+                logger.LogWarning("FIKA HEADLESS is found. SPTLeaderboard initialization disabled");
+                return;
+            }
+            
+            #endregion
             
             _settings = SettingsModel.Create(Config);
             _encrypt = EncryptionModel.Create();
@@ -53,13 +76,15 @@ namespace SPTLeaderboard
             new OnInitPlayerPatch().Enable();
             new OnEnemyDamagePatch().Enable();
             new PlayerOnDeadPatch().Enable();
+            new OnPlayerAddedItem().Enable();
+            new OnPlayerRemovedItem().Enable();
             
-            if (!DataUtils.IsLoaded)
+            if (!DataUtils.IsCheckedFikaCore)
             {
-                DataUtils.Load(callback=>
+                DataUtils.CheckFikaCore(callback =>
                 {
                     if (!callback) return;
-                    
+
                     new OnCoopApplyShotFourPatch().Enable();
                     logger.LogInfo("FIKA is found. Enable patch for hit hook");
                 });
@@ -74,7 +99,7 @@ namespace SPTLeaderboard
             Instance = this;
             logger.LogInfo("Successful loaded!");
         }
-        
+
         #region Icons
         
         /// <summary>
@@ -336,5 +361,7 @@ namespace SPTLeaderboard
         }
         
         #endregion
+        
+        public TrackingLoot TrackingLoot=> _trackingLoot;
     }
 }
