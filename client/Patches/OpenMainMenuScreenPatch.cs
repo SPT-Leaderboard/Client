@@ -41,7 +41,14 @@ namespace SPTLeaderboard.Patches
                 }
                 else
                 {
-                    LeaderboardPlugin.Instance.engLocaleLoaded = true;
+                    if (LocalizationModel.GetLocaleName("5ea03f7400685063ec28bfa8 ShortName") != "Unknown")
+                    {
+                        LeaderboardPlugin.Instance.engLocaleLoaded = true;
+                    }
+                    else
+                    {
+                        _ = LocalizationModel.Instance.LoadEnglishLocaleAsync();
+                    }
                 }
             }
 
