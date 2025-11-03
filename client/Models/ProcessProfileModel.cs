@@ -201,22 +201,18 @@ public class ProcessProfileModel
         {
             if (isScavRaid)
             {
-                // 6. SCAV survived - just get prices of all items the SCAV got
                 return LeaderboardPlugin.Instance.TrackingLoot.PostRaidLootValue + LeaderboardPlugin.Instance.TrackingLoot.PostRaidEquipValue;
             }
-
-            // 5. PMC survived - compare with pre-raid gear and prices (like usual)
+            
             return LeaderboardPlugin.Instance.TrackingLoot.PreRaidLootValue;
         }
         else
         {
             if (isScavRaid)
             {
-                // 1. Set PROFIT gain to 0 if player DIED in a SCAV raid.
                 return 0;
             }
-
-            // 4. PMC died
+            
             return -LeaderboardPlugin.Instance.TrackingLoot.PreRaidLootValue;
         }
     }
