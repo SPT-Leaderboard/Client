@@ -27,7 +27,6 @@ namespace SPTLeaderboard.Models
 		public ConfigEntry<bool> EnableSendData;
 		public ConfigEntry<bool> ShowPointsNotification;
 		public ConfigEntry<bool> ModCasualMode;
-		public ConfigEntry<bool> PublicProfile;
 		public ConfigEntry<bool> EnableModSupport;
 		public ConfigEntry<int> ConnectionTimeout;
 		public ConfigEntry<string> PhpEndpoint;
@@ -114,18 +113,6 @@ namespace SPTLeaderboard.Models
 						Order = 6
 					}));
 			
-			PublicProfile = configFile.Bind(
-				"1. Settings", 
-				"Public Profile", 
-				true, 
-				new ConfigDescription(
-					"If you want to share more Profile SPT stats with anyone and the leaderboard - set to true\n This also allows your server to send heartbeats to API",
-					null, 
-					new ConfigurationManagerAttributes
-					{
-						Order = 5
-					}));
-			
 			EnableModSupport = configFile.Bind(
 				"1. Settings", 
 				"Mod Support", 
@@ -154,7 +141,7 @@ namespace SPTLeaderboard.Models
 			PhpEndpoint = configFile.Bind(
 				"1. Settings", 
 				"Server Endpoint", 
-				"sptlb.yuyui.moe", 
+				"https://sptlb.yuyui.moe", 
 				new ConfigDescription(
 					"DO NOT TOUCH UNLESS YOU KNOW WHAT YOU ARE DOING.\n Domain (or both subdomain + domain) used for PHP requests",
 					null, 
