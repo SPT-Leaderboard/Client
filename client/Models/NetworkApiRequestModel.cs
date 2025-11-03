@@ -162,7 +162,10 @@ namespace SPTLeaderboard.Models
 #if DEBUG || BETA           
                     LeaderboardPlugin.logger.LogWarning($"OnFail response {request.downloadHandler.text}");
 #endif
-                    OnFail?.Invoke(request.error, request.responseCode);
+                    string errorData = !string.IsNullOrEmpty(request.downloadHandler?.text) 
+                        ? request.downloadHandler.text 
+                        : request.error ?? "Unknown error";
+                    OnFail?.Invoke(errorData, request.responseCode);
                     Destroy(gameObject);
                 }
             }

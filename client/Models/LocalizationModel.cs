@@ -154,6 +154,7 @@ namespace SPTLeaderboard.Models
                 ErrorType.NSFW_NAME => LocalizationData.Error_NsfwName,
                 ErrorType.DEVITEMS => LocalizationData.Error_DevItems,
                 ErrorType.API_BANNED => LocalizationData.Error_API_BANNED,
+                ErrorType.BANNED => LocalizationData.Error_BANNED,
                 ErrorType.API_TOO_MANY_REQUESTS => LocalizationData.Error_API_TOO_MUCH_REQUESTS,
                 _ => throw new ArgumentOutOfRangeException(nameof(errorType), errorType, null)
             };
@@ -181,7 +182,7 @@ namespace SPTLeaderboard.Models
         {
             try
             {
-                LeaderboardPlugin.logger.LogInfo("Request to load english locale");
+                LeaderboardPlugin.logger.LogInfo("Request to load FULL english locale");
                 var session = PlayerHelper.GetSession();
                 Dictionary<string, string> result = await session.GetLocalization("en");
                 LocaleManagerClass.LocaleManagerClass.UpdateLocales("en", result);
