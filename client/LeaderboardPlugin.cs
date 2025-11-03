@@ -40,6 +40,27 @@ namespace SPTLeaderboard
             logger = Logger;
             logger.LogInfo("Loading...");
             
+            if (!DataUtils.IsCheckedFikaHeadless)
+            {
+                DataUtils.CheckFikaHeadless(callback =>
+                {
+                    if (!callback) return;
+
+                    logger.LogInfo("FIKA HEADLESS is found. Disable processes in SPTLB");
+                });
+            }
+            
+            if (!DataUtils.IsCheckedFikaCore)
+            {
+                DataUtils.CheckFikaCore(callback =>
+                {
+                    if (!callback) return;
+
+                    new OnCoopApplyShotFourPatch().Enable();
+                    logger.LogInfo("FIKA is found. Enable patch for hit hook");
+                });
+            }
+            
             _settings = SettingsModel.Create(Config);
             _encrypt = EncryptionModel.Create();
             _localization = LocalizationModel.Create();
@@ -58,17 +79,6 @@ namespace SPTLeaderboard
             new PlayerOnDeadPatch().Enable();
             new OnPlayerAddedItem().Enable();
             new OnPlayerRemovedItem().Enable();
-
-            if (!DataUtils.IsLoaded)
-            {
-                DataUtils.Load(callback=>
-                {
-                    if (!callback) return;
-                    
-                    new OnCoopApplyShotFourPatch().Enable();
-                    logger.LogInfo("FIKA is found. Enable patch for hit hook");
-                });
-            }
             
 #if DEBUG
             // Enable patches for overlay with hits

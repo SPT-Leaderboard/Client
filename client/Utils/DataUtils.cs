@@ -253,19 +253,27 @@ public static class DataUtils
         return flag;
     }
 
-    public static void Load(Action<bool> callback)
+    public static void CheckFikaCore(Action<bool> callback)
     {
         TryGetPlugin("com.fika.core", out var FikaCoreTemp);
         FikaCore = FikaCoreTemp;
-        IsLoaded = true;
+        IsCheckedFikaCore = true;
         callback.Invoke(FikaCore != null);
     }
     
-    public static bool IsFika = FikaCore != null;
+    public static void CheckFikaHeadless(Action<bool> callback)
+    {
+        TryGetPlugin("com.fika.headless", out var FikaHeadlessTemp);
+        FikaHeadless = FikaHeadlessTemp;
+        IsCheckedFikaHeadless = true;
+        callback.Invoke(FikaHeadless != null);
+    }
     
-    public static bool IsLoaded = false;
+    public static bool IsCheckedFikaCore;
+    public static bool IsCheckedFikaHeadless;
     
     public static BaseUnityPlugin FikaCore;
+    public static BaseUnityPlugin FikaHeadless;
     
     public static Type GetPluginType(BaseUnityPlugin plugin, string typePath)
     {
