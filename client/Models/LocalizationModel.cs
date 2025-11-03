@@ -182,7 +182,7 @@ namespace SPTLeaderboard.Models
         {
             try
             {
-                LeaderboardPlugin.logger.LogInfo("Request to load english locale");
+                LeaderboardPlugin.logger.LogInfo("Request to load FULL english locale");
                 var session = PlayerHelper.GetSession();
                 Dictionary<string, string> result = await session.GetLocalization("en");
                 LocaleManagerClass.LocaleManagerClass.UpdateLocales("en", result);
