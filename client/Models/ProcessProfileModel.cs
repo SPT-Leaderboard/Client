@@ -136,7 +136,7 @@ public class ProcessProfileModel
         var hideoutData = GetHideoutData(pmcData, isScavRaid);
         var listModsPlayer = GetModsList();
         var (statTrackIsUsed, processedStatTrackData) = ProcessStatTrackData(profileId);
-        
+
         CreateAndSendProfileData(profileId, gameVersion, lastRaidLocationRaw, lastRaidLocation,
             isScavRaid, completedQuests, nameKiller, discFromRaid, revenueRaid, isTransition,
             lastRaidTransitionTo, allAchievementsDict, haveDevItems, hasKappa, averageShot,
@@ -201,9 +201,10 @@ public class ProcessProfileModel
         {
             if (isScavRaid)
             {
-                return LeaderboardPlugin.Instance.TrackingLoot.PostRaidLootValue + LeaderboardPlugin.Instance.TrackingLoot.PostRaidEquipValue;
+                return LeaderboardPlugin.Instance.TrackingLoot.PostRaidLootValue +
+                       LeaderboardPlugin.Instance.TrackingLoot.PostRaidEquipValue;
             }
-            
+
             return LeaderboardPlugin.Instance.TrackingLoot.PreRaidLootValue;
         }
         else
@@ -212,7 +213,7 @@ public class ProcessProfileModel
             {
                 return 0;
             }
-            
+
             return -LeaderboardPlugin.Instance.TrackingLoot.PreRaidLootValue;
         }
     }
@@ -320,9 +321,9 @@ public class ProcessProfileModel
     /// <summary>
     /// Gets session statistics
     /// </summary>
-    private (int killedPmc, int killedSavage, int killedBoss, int expLooting, int hitCount, int totalDamage, int
-        damageTaken) GetSessionStats(
-            Profile pmcData, bool isScavRaid, Profile scavData)
+    private (int killedPmc, int killedSavage, int killedBoss, int expLooting,
+        int hitCount, int totalDamage, int damageTaken)
+        GetSessionStats(Profile pmcData, bool isScavRaid, Profile scavData)
     {
         int killedPmc, killedSavage, killedBoss, expLooting, hitCount, totalDamage, damageTaken;
 
@@ -420,14 +421,40 @@ public class ProcessProfileModel
     /// Processes StatTrack data
     /// </summary>
     private (bool statTrackIsUsed, Dictionary<string, Dictionary<string, WeaponInfo>> processedStatTrackData)
-        ProcessStatTrackData(string profileId)
+    ProcessStatTrackData(string profileId)
     {
-        var statTrackIsUsed = false;
+        var statTrackIsUsed = StatTrackInterop.Loaded();
         Dictionary<string, Dictionary<string, WeaponInfo>> processedStatTrackData =
             new Dictionary<string, Dictionary<string, WeaponInfo>>();
 
-        // Commented because StatTrack not exists on 4.0
-        // var statTrackIsUsed = StatTrackInterop.Loaded();
+        if (!SettingsModel.Instance.EnableModSupport.Value && !statTrackIsUsed)
+        {
+            LeaderboardPlugin.logger.LogInfo(
+                $"StatTrack process data skip. StatTrack Find? : {statTrackIsUsed} | Enabled Mod Support? : {SettingsModel.Instance.EnableModSupport.Value}");
+        }
+        else
+        {
+#if DEBUG || BETA
+            LeaderboardPlugin.logger.LogWarning($"Loaded StatTrack plugin {statTrackIsUsed}");
+#endif
+
+            var dataStatTrack = StatTrackInterop.LoadFromServer();
+            if (dataStatTrack != null)
+            {
+#if DEBUG || BETA
+                LeaderboardPlugin.logger.LogWarning(
+                    $"Data raw StatTrack {JsonConvert.SerializeObject(dataStatTrack).ToJson()}");
+#endif
+                processedStatTrackData = StatTrackInterop.GetAllValidWeapons(profileId, dataStatTrack);
+#if DEBUG || BETA
+                if (processedStatTrackData != null)
+                {
+                    LeaderboardPlugin.logger.LogWarning("processedStatTrackData != null: Data -> " +
+                                                        JsonConvert.SerializeObject(processedStatTrackData).ToJson());
+                }
+#endif
+            }
+        }
 
         return (statTrackIsUsed, processedStatTrackData);
     }

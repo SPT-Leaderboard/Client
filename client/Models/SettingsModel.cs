@@ -27,7 +27,7 @@ namespace SPTLeaderboard.Models
 		public ConfigEntry<bool> EnableSendData;
 		public ConfigEntry<bool> ShowPointsNotification;
 		public ConfigEntry<bool> ModCasualMode;
-		// public ConfigEntry<bool> EnableModSupport;
+		public ConfigEntry<bool> EnableModSupport;
 		public ConfigEntry<int> ConnectionTimeout;
 		public ConfigEntry<string> PhpEndpoint;
 		public ConfigEntry<string> PhpPath;
@@ -113,17 +113,17 @@ namespace SPTLeaderboard.Models
 						Order = 6
 					}));
 			
-			// EnableModSupport = configFile.Bind(
-			// 	"1. Settings", 
-			// 	"Mod Support", 
-			// 	true, 
-			// 	new ConfigDescription(
-			// 		"Enable mod support to send extra data for your profile\n Mod automatically detects mods that it supports\n Currently supports: \n Stattrack by AcidPhantasm (extra weapon stats at battlepass tab and weapon mastery)",
-			// 		null, 
-			// 		new ConfigurationManagerAttributes
-			// 		{
-			// 			Order = 4
-			// 		}));
+			EnableModSupport = configFile.Bind(
+				"1. Settings", 
+				"Mod Support", 
+				true, 
+				new ConfigDescription(
+					"Enable mod support to send extra data for your profile\n Mod automatically detects mods that it supports\n Currently supports: \n Stattrack by AcidPhantasm (extra weapon stats at battlepass tab and weapon mastery)",
+					null, 
+					new ConfigurationManagerAttributes
+					{
+						Order = 4
+					}));
 			
 			ConnectionTimeout = configFile.Bind(
 				"1. Settings", 

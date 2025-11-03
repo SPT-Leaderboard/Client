@@ -11,7 +11,7 @@ namespace SPTLeaderboard.Utils;
 
 public static class StatTrackInterop
 {
-    public static readonly Version RequiredVersion = new Version(1, 2, 2);
+    public static readonly Version RequiredVersion = new Version(2, 0, 0);
 
     public static Dictionary<string, Dictionary<string, CustomizedObject>> WeaponInfoOutOfRaid { get; set; } = new Dictionary<string, Dictionary<string, CustomizedObject>>();
     
