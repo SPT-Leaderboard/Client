@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
+using System.Threading.Tasks;
 using BepInEx;
 using BepInEx.Bootstrap;
 using Comfort.Common;
@@ -85,7 +86,6 @@ public static class DataUtils
         return listServerMods;
     }
     
-        
     /// <summary>
     /// Get final price from list items
     /// </summary>
@@ -106,7 +106,7 @@ public static class DataUtils
         });
     }
 
-    
+
     /// <summary>
     /// Get final price from list items GLOBAL SERVER
     /// </summary>
@@ -356,27 +356,19 @@ public static class DataUtils
 
     public static void TryGetTransitionData(GClass1959 resultRaid, Action<string, bool> callback)
     {
-        var isTransition = false;
         var lastRaidTransitionTo = "None";
         if (resultRaid.result == ExitStatus.Transit
             && TransitControllerAbstractClass.Exist<GClass1676>(out var transitController))
         {
-            if (transitController.localRaidSettings_0.location != "None")
-            {
-                isTransition = true;
-                var locationTransit = transitController.alreadyTransits[resultRaid.ProfileId];
-                lastRaidTransitionTo = DataUtils.GetPrettyMapName(locationTransit.location.ToLower());
-                
-                LeaderboardPlugin.logger.LogWarning($"Player transit to map PRETTY {lastRaidTransitionTo}");
-                LeaderboardPlugin.logger.LogWarning($"Player transit to map RAW {locationTransit.location}");
-                callback.Invoke(lastRaidTransitionTo, isTransition);
-                return;
-            }
-            callback.Invoke(lastRaidTransitionTo, isTransition);
+            var locationTransit = transitController.alreadyTransits[resultRaid.ProfileId];
+            lastRaidTransitionTo = GetPrettyMapName(locationTransit.location.ToLower());
+            
+            LeaderboardPlugin.logger.LogWarning($"Player transit to map PRETTY {lastRaidTransitionTo}");
+            LeaderboardPlugin.logger.LogWarning($"Player transit to map RAW {locationTransit.location}");
+            callback.Invoke(lastRaidTransitionTo, true);
             return;
         }
-        callback.Invoke(lastRaidTransitionTo, isTransition);
-        return;
+        callback.Invoke(lastRaidTransitionTo, false);
     }
     
     /// <summary>
