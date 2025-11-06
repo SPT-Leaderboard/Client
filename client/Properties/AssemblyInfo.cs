@@ -1,8 +1,8 @@
 ﻿using System.Reflection;
 using System.Runtime.InteropServices;
 
-[assembly: AssemblyVersion("4.1.2")]
-[assembly: AssemblyFileVersion("4.1.2")]
+[assembly: AssemblyVersion("4.1.3")]
+[assembly: AssemblyFileVersion("4.1.3")]
 
 [assembly: AssemblyTitle("SPT.Leaderboard")]
 [assembly: AssemblyProduct("SPT.Leaderboard")]
