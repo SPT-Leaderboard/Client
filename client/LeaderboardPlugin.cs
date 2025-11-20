@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Security.Cryptography;
+using System.Text;
 using System.Timers;
 using BepInEx;
 using BepInEx.Logging;
@@ -34,6 +36,12 @@ namespace SPTLeaderboard
         public bool configUpdated;
 
         public static ManualLogSource logger;
+        
+        private static readonly object _raidDataLock = new object();
+        private static bool _isSendingRaidData = false;
+        private static string _lastSentDataHash = null;
+        private static DateTime _lastSentDataTime = DateTime.MinValue;
+        private const int HASH_EXPIRY_SECONDS = 120;
 
         private void Awake()
         {
@@ -209,10 +217,42 @@ namespace SPTLeaderboard
         /// </remarks>
         public static void SendRaidData(object data)
         {
+            string jsonBody = JsonConvert.SerializeObject(data);
+            
+            string dataHash = DataUtils.ComputeHash(jsonBody);
+            
+            lock (_raidDataLock)
+            {
+                bool isHashExpired = (DateTime.Now - _lastSentDataTime).TotalSeconds > HASH_EXPIRY_SECONDS;
+                
+                if (_lastSentDataHash == dataHash && !isHashExpired)
+                {
+                    logger.LogWarning("SendRaidData: Duplicate data detected, skipping send (same data already sent recently)");
+                    return;
+                }
+                
+                if (_isSendingRaidData)
+                {
+                    logger.LogWarning("SendRaidData: Request already in progress, skipping duplicate call");
+                    return;
+                }
+                
+                _isSendingRaidData = true;
+                _lastSentDataHash = dataHash;
+                _lastSentDataTime = DateTime.Now;
+            }
+
             var request = NetworkApiRequestModel.Create(GlobalData.ProfileUrl);
 
             request.OnSuccess = (response, code) =>
             {
+                lock (_raidDataLock)
+                {
+                    _isSendingRaidData = false;
+                    
+                    _lastSentDataTime = DateTime.Now;
+                }
+                
                 logger.LogInfo($"Request OnSuccess {response}");
                 if (SettingsModel.Instance.ShowPointsNotification.Value)
                 {
@@ -237,10 +277,16 @@ namespace SPTLeaderboard
 
             request.OnFail = (error, code) =>
             {
+                lock (_raidDataLock)
+                {
+                    _isSendingRaidData = false;
+
+                    _lastSentDataHash = null;
+                    _lastSentDataTime = DateTime.MinValue;
+                }
+                
                 ServerErrorHandler.HandleError(error, code);
             };
-
-            string jsonBody = JsonConvert.SerializeObject(data);
             
 #if DEBUG
             if (SettingsModel.Instance.Debug.Value)
