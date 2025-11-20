@@ -26,9 +26,8 @@ namespace SPTLeaderboard.Models
         private int _retryCount = 0;
         private int _maxRetries = 2;
         
-        // Статические поля для отслеживания отправленных данных по URL
-        private static readonly Dictionary<string, (string hash, DateTime time)> _sentDataHashes = new Dictionary<string, (string, DateTime)>();
-        private static readonly object _hashLock = new object();
+        private static readonly Dictionary<string, (string hash, DateTime time)> _sentDataHashes = new();
+        private static readonly object _hashLock = new();
         private const int HASH_EXPIRY_SECONDS = 120;
         
         /// <summary>
