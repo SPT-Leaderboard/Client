@@ -235,6 +235,27 @@ public class LocalizationData
         { "ro", "A fost detectat un obiect de dezvoltator. Datele raidului nu vor fi trimise." }
     };
     
+    public static Dictionary<string, string> Error_InvalidStats = new() // 711
+    {
+        { "ch", "检测到不合理的最大能量或最大水分值。突袭数据将不会被上传。" },
+        { "cz", "Byla zjištěna nepřiměřeně vysoká maximální energie nebo hydratace. Údaje z nájezdu nebudou odeslány." },
+        { "en", "Unreasonably high max energy or max hydration detected. Your next raids will not be submitted to Leaderboard." },
+        { "fr", "Énergie maximale ou hydratation maximale anormalement élevée détectée. Les données du raid ne seront pas envoyées." },
+        { "ge", "Unangemessen hohe maximale Energie oder maximale Hydratation erkannt. Raid-Daten werden nicht gesendet." },
+        { "hu", "Észlelhetetlenül magas maximális energia vagy maximális hidratáció észlelve. A rajtaütés adatai nem kerülnek elküldésre." },
+        { "it", "Rilevata energia massima o idratazione massima irragionevolmente alta. I dati del raid non verranno inviati." },
+        { "jp", "不合理に高い最大エネルギーまたは最大水分が検出されました。レイドデータは送信されません。" },
+        { "kr", "비합리적으로 높은 최대 에너지 또는 최대 수분이 감지되었습니다. 레이드 데이터는 전송되지 않습니다." },
+        { "pl", "Wykryto nieuzasadnione wysokie maksymalne energie lub nawodnienie. Dane z rajdu nie zostaną wysłane." },
+        { "po", "Energia máxima ou hidratação máxima excessivamente alta detectada. Os dados da incursão não serão enviados." },
+        { "sk", "Bola zistená neprimerane vysoká maximálna energia alebo hydratácia. Údaje z nájazdu nebudú odoslané." },
+        { "es", "Se detectó energía máxima o hidratación máxima irrazonablemente alta. Los datos de la incursión no se enviarán." },
+        { "es-mx", "Se detectó energía máxima o hidratación máxima irrazonablemente alta. Los datos del asalto no se enviarán." },
+        { "tu", "Makul olmayan derecede yüksek maksimum enerji veya maksimum hidrasyon tespit edildi. Baskın verileri gönderilmeyecek." },
+        { "ru", "Обнаружены необоснованно высокие значения максимальной энергии или максимальной гидратации. Данные рейда не будут отправлены." },
+        { "ro", "A fost detectată energie maximă sau hidratare maximă nerezonabil de mare. Datele raidului nu vor fi trimise." }
+    };
+    
     public static Dictionary<string, string> Error_Capacity = new() //Error after check capacity storages violation
     {
         { "ch", "{0} 太大了。突袭数据将不会被发送。" },

@@ -88,6 +88,7 @@ namespace SPTLeaderboard.Utils
                 231 => ErrorType.SCAV_ONLY_PUBLIC,
                 232 => ErrorType.CHAR_LIMIT,
                 707 => ErrorType.NSFW_NAME,
+                711 => ErrorType.INVALID_STATS,
                 800 => ErrorType.API_BANNED,
                 801 => ErrorType.API_TOO_MANY_REQUESTS,
                 802 => ErrorType.BANNED,
@@ -105,6 +106,7 @@ namespace SPTLeaderboard.Utils
                 ErrorType.SCAV_ONLY_PUBLIC => ENotificationDurationType.Default,
                 ErrorType.CHAR_LIMIT => ENotificationDurationType.Long,
                 ErrorType.NSFW_NAME => ENotificationDurationType.Long,
+                ErrorType.INVALID_STATS => ENotificationDurationType.Long,
                 ErrorType.DEVITEMS => ENotificationDurationType.Long,
                 ErrorType.API_BANNED => ENotificationDurationType.Infinite,
                 ErrorType.BANNED => ENotificationDurationType.Infinite,
@@ -128,6 +130,7 @@ namespace SPTLeaderboard.Utils
         CAPACITY,
         API_BANNED,
         BANNED,
-        API_TOO_MANY_REQUESTS
+        API_TOO_MANY_REQUESTS,
+        INVALID_STATS
     }
 }
