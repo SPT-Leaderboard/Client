@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections;
+using System.Collections.Generic;
 using System.Text;
+using SPTLeaderboard.Utils;
 using UnityEngine;
 using UnityEngine.Networking;
 
@@ -23,6 +25,11 @@ namespace SPTLeaderboard.Models
         
         private int _retryCount = 0;
         private int _maxRetries = 2;
+        
+        // Статические поля для отслеживания отправленных данных по URL
+        private static readonly Dictionary<string, (string hash, DateTime time)> _sentDataHashes = new Dictionary<string, (string, DateTime)>();
+        private static readonly object _hashLock = new object();
+        private const int HASH_EXPIRY_SECONDS = 120;
         
         /// <summary>
         /// Sets the maximum number of retries when a request times out.
@@ -107,6 +114,31 @@ namespace SPTLeaderboard.Models
                 yield break;
             }
             
+            if (_httpMethod == UnityWebRequest.kHttpVerbPOST && !string.IsNullOrEmpty(_jsonBody))
+            {
+                string dataHash = DataUtils.ComputeHash(_jsonBody);
+                string hashKey = $"{_url}:{dataHash}";
+                
+                lock (_hashLock)
+                {
+                    if (_sentDataHashes.TryGetValue(hashKey, out var hashInfo))
+                    {
+                        bool isHashExpired = (DateTime.Now - hashInfo.time).TotalSeconds > HASH_EXPIRY_SECONDS;
+                        
+                        if (!isHashExpired)
+                        {
+                            LeaderboardPlugin.logger.LogWarning($"NetworkApiRequestModel: Duplicate data detected for URL {_url}, skipping send (same data already sent recently)");
+                            Destroy(gameObject);
+                            yield break;
+                        }
+                        else
+                        {
+                            _sentDataHashes.Remove(hashKey);
+                        }
+                    }
+                }
+            }
+            
             _isComplete = true;
             
             UnityWebRequest request;
@@ -138,6 +170,17 @@ namespace SPTLeaderboard.Models
 
             if (request.result == UnityWebRequest.Result.Success)
             {
+                if (_httpMethod == UnityWebRequest.kHttpVerbPOST && !string.IsNullOrEmpty(_jsonBody))
+                {
+                    string dataHash = DataUtils.ComputeHash(_jsonBody);
+                    string hashKey = $"{_url}:{dataHash}";
+                    
+                    lock (_hashLock)
+                    {
+                        _sentDataHashes[hashKey] = (dataHash, DateTime.Now);
+                    }
+                }
+                
                 OnSuccess?.Invoke(request.downloadHandler.text, request.responseCode);
                 Destroy(gameObject);
             }
@@ -159,6 +202,18 @@ namespace SPTLeaderboard.Models
                     {
                         LeaderboardPlugin.logger.LogWarning("After five tries, nothing came out");
                     }
+                    
+                    if (_httpMethod == UnityWebRequest.kHttpVerbPOST && !string.IsNullOrEmpty(_jsonBody))
+                    {
+                        string dataHash = DataUtils.ComputeHash(_jsonBody);
+                        string hashKey = $"{_url}:{dataHash}";
+                        
+                        lock (_hashLock)
+                        {
+                            _sentDataHashes.Remove(hashKey);
+                        }
+                    }
+                    
 #if DEBUG || BETA           
                     LeaderboardPlugin.logger.LogWarning($"OnFail response {request.downloadHandler.text}");
 #endif
