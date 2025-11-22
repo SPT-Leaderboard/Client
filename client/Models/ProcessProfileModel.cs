@@ -134,7 +134,7 @@ public class ProcessProfileModel
         var (killedPmc, killedSavage, killedBoss, expLooting, hitCount, totalDamage, damageTaken) =
             GetSessionStats(pmcData, isScavRaid, scavData);
         var hideoutData = GetHideoutData(pmcData, isScavRaid);
-        var listModsPlayer = GetModsList();
+        var listModsPlayer = DataUtils.GetModsList();
         var (statTrackIsUsed, processedStatTrackData) = ProcessStatTrackData(profileId);
 
         CreateAndSendProfileData(profileId, gameVersion, lastRaidLocationRaw, lastRaidLocation,
@@ -403,18 +403,6 @@ public class ProcessProfileModel
         }
 
         return hideoutData;
-    }
-
-    /// <summary>
-    /// Gets mods list
-    /// </summary>
-    private List<string> GetModsList()
-    {
-        return DataUtils.GetServerMods()
-            .Concat(DataUtils.GetUserMods())
-            .Concat(DataUtils.GetBepinexMods())
-            .Concat(DataUtils.GetBepinexDll())
-            .ToList();
     }
 
     /// <summary>

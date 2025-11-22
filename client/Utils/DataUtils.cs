@@ -55,10 +55,23 @@ public static class DataUtils
     }
     
     /// <summary>
+    /// Gets mods list
+    /// </summary>
+    public static List<string> GetModsList()
+    {
+        return GetServerMods()
+            .Concat(GetUserMods())
+            .Concat(GetBepinexMods())
+            .Concat(GetBepinexDll())
+            .Concat(GetClientMods())
+            .ToList();
+    }
+    
+    /// <summary>
     /// Get list loaded mods from server for user
     /// </summary>
     /// <returns></returns>
-    public static List<string> GetServerMods()
+    private static List<string> GetServerMods()
     {
         List<string> listServerMods = new List<string>();
 
@@ -85,6 +98,15 @@ public static class DataUtils
         }
 
         return listServerMods;
+    }
+
+    /// <summary>
+    /// Get list loaded mods in client
+    /// </summary>
+    /// <returns></returns>
+    private static List<string> GetClientMods()
+    {
+        return Chainloader.PluginInfos.Select(pluginInfo => pluginInfo.Value.Metadata.GUID).ToList();
     }
     
     /// <summary>
