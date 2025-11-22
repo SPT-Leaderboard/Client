@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using System.Reflection;
+using EFT;
 using EFT.HealthSystem;
 using EFT.InventoryLogic;
 using EFT.UI;
@@ -39,11 +40,16 @@ namespace SPTLeaderboard.Patches
                 return true;
             }
 
-            var modsPlayer = DataUtils.GetServerMods()
-                .Concat(DataUtils.GetDirectories(GlobalData.UserModsPath))
-                .Concat(DataUtils.GetDirectories(BepInEx.Paths.PluginPath))
-                .Concat(DataUtils.GetDirectories(BepInEx.Paths.PluginPath))
-                .ToList();
+            var modsPlayer = DataUtils.GetModsList();
+            
+            var session = PlayerHelper.GetSession();
+            
+            var pmcData = session.GetProfileBySide(ESideType.Pmc);
+            
+            var currentEnergy = pmcData.Health.Energy.Current;
+            var currentHydration = pmcData.Health.Hydration.Current;
+            var maxEnergy = pmcData.Health.Energy.Maximum;
+            var maxHydration = pmcData.Health.Hydration.Maximum;
             
             var preRaidData = new PreRaidData
             {
@@ -55,7 +61,11 @@ namespace SPTLeaderboard.Patches
 #else
                 Mods = modsPlayer,
 #endif
-                Hash = EncryptionModel.Instance.GetHashMod()
+                Hash = EncryptionModel.Instance.GetHashMod(),
+                MaxHydration = maxHydration,
+                MaxEnergy = maxEnergy,
+                Hydration = currentHydration,
+                Energy = currentEnergy
             };
             
             LeaderboardPlugin.SendPreRaidData(preRaidData);
