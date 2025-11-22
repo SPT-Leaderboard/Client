@@ -218,7 +218,7 @@ public class LocalizationData
     {
         { "ch", "检测到开发者物品。突袭数据将不会被上传。" },
         { "cz", "Byl u vás nalezen vývojářský předmět. Údaje z nájezdu nebudou odeslány." },
-        { "en", "Developer item(s) detected. Your next raids will not be submitted to Leaderboard. Please remove any restricted items from your inventory." },
+        { "en", "Developer item(s) detected. Your next raids will not be submitted to the Leaderboard. Please remove any restricted items from your inventory." },
         { "fr", "Un objet de développeur a été détecté. Les données du raid ne seront pas envoyées." },
         { "ge", "Ein Entwicklergegenstand wurde gefunden. Raid-Daten werden nicht gesendet." },
         { "hu", "Fejlesztői tárgyat észleltünk. A rajtaütés adatai nem kerülnek elküldésre." },
@@ -239,7 +239,7 @@ public class LocalizationData
     {
         { "ch", "检测到不合理的最大能量或最大水分值。突袭数据将不会被上传。" },
         { "cz", "Byla zjištěna nepřiměřeně vysoká maximální energie nebo hydratace. Údaje z nájezdu nebudou odeslány." },
-        { "en", "Unreasonably high max energy or max hydration detected. Your next raids will not be submitted to Leaderboard." },
+        { "en", "Unreasonably high max energy or max hydration detected. Your next raids will not be submitted to the Leaderboard." },
         { "fr", "Énergie maximale ou hydratation maximale anormalement élevée détectée. Les données du raid ne seront pas envoyées." },
         { "ge", "Unangemessen hohe maximale Energie oder maximale Hydratation erkannt. Raid-Daten werden nicht gesendet." },
         { "hu", "Észlelhetetlenül magas maximális energia vagy maximális hidratáció észlelve. A rajtaütés adatai nem kerülnek elküldésre." },
@@ -260,7 +260,7 @@ public class LocalizationData
     {
         { "ch", "{0} 太大了。突袭数据将不会被发送。" },
         { "cz", "{0} je příliš velký. Údaje z nájezdu nebudou odeslány." },
-        { "en", "{0} is too large. Your next raids will not be submitted to Leaderboard." },
+        { "en", "{0} is too large. Your next raids will not be submitted to the Leaderboard." },
         { "fr", "{0} est trop grand. Les données du raid ne seront pas envoyées." },
         { "ge", "{0} ist zu groß. Raid-Daten werden nicht übermittelt." },
         { "hu", "{0} túl nagy. A rajtaütési adatok nem kerülnek elküldésre." },
