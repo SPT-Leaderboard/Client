@@ -204,7 +204,7 @@ public class ProcessProfileModel
                        LeaderboardPlugin.Instance.TrackingLoot.PostRaidEquipValue;
             }
 
-            return LeaderboardPlugin.Instance.TrackingLoot.PreRaidLootValue;
+            return LeaderboardPlugin.Instance.TrackingLoot.PostRaidLootValue;
         }
         else
         {
