@@ -5,7 +5,8 @@ using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
+using System.Threading;
+using Cysharp.Threading.Tasks;
 using BepInEx;
 using BepInEx.Bootstrap;
 using Comfort.Common;
@@ -475,7 +476,23 @@ public static class DataUtils
     }
     
     /// <summary>
-    /// Computes a hash of the data to detect duplicates
+    /// Computes a hash of the data to detect duplicates (async version - runs in background thread)
+    /// </summary>
+    public static async UniTask<string> ComputeHashAsync(string input, CancellationToken cancellationToken = default)
+    {
+        // Run hash computation in background thread to avoid blocking main thread
+        return await UniTask.RunOnThreadPool(() =>
+        {
+            using (var sha256 = SHA256.Create())
+            {
+                byte[] hashBytes = sha256.ComputeHash(Encoding.UTF8.GetBytes(input));
+                return Convert.ToBase64String(hashBytes);
+            }
+        }, cancellationToken: cancellationToken);
+    }
+    
+    /// <summary>
+    /// Computes a hash of the data to detect duplicates (synchronous version - use async version when possible)
     /// </summary>
     public static string ComputeHash(string input)
     {

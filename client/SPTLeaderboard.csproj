@@ -19,6 +19,7 @@
     <PropertyGroup>
         <TarkovDir Condition=" '$(TarkovDir)' == '' ">C:\Games\SPT\</TarkovDir>
         <TarkovPluginsSPTDir>$(TarkovDir)BepInEx\plugins\spt\</TarkovPluginsSPTDir>
+        <TarkovPluginsDir>$(TarkovDir)BepInEx\plugins\</TarkovPluginsDir>
         <TarkovManagedDir>$(TarkovDir)EscapeFromTarkov_Data\Managed\</TarkovManagedDir>
         <TarkovBepInExCoreDir>$(TarkovDir)BepInEx\core\</TarkovBepInExCoreDir>
     </PropertyGroup>
@@ -93,6 +94,9 @@
         <Reference Include="System.Data"/>
         <Reference Include="System.Net.Http"/>
         <Reference Include="System.Xml"/>
+        <Reference Include="UniTask">
+          <HintPath>$(TarkovPluginsDir)\UnityToolkit\UniTask.dll</HintPath>
+        </Reference>
         <Reference Include="Unity.TextMeshPro, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
             <SpecificVersion>False</SpecificVersion>
             <HintPath>$(TarkovManagedDir)Unity.TextMeshPro.dll</HintPath>

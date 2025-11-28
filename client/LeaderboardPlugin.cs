@@ -2,7 +2,9 @@
 using System.Collections.Generic;
 using System.Security.Cryptography;
 using System.Text;
+using System.Threading;
 using System.Timers;
+using Cysharp.Threading.Tasks;
 using BepInEx;
 using BepInEx.Logging;
 using EFT;
@@ -13,6 +15,7 @@ using SPTLeaderboard.Models;
 using SPTLeaderboard.Patches;
 using SPTLeaderboard.Utils;
 using UnityEngine;
+using Timer = System.Timers.Timer;
 
 namespace SPTLeaderboard
 {
@@ -217,9 +220,31 @@ namespace SPTLeaderboard
         /// </remarks>
         public static void SendRaidData(object data)
         {
-            string jsonBody = JsonConvert.SerializeObject(data);
+            SendRaidDataAsync(data, CancellationToken.None).Forget();
+        }
+        
+        /// <summary>
+        /// Sends the raid and profile data to the server (async version).
+        /// </summary>
+        private static async UniTaskVoid SendRaidDataAsync(object data, CancellationToken cancellationToken)
+        {
+            // Serialize and compute hash in background thread to avoid blocking main thread
+            string jsonBody;
+            string dataHash;
             
-            string dataHash = DataUtils.ComputeHash(jsonBody);
+            try
+            {
+                (jsonBody, dataHash) = await UniTask.RunOnThreadPool(() =>
+                {
+                    string json = JsonConvert.SerializeObject(data);
+                    string hash = DataUtils.ComputeHash(json);
+                    return (json, hash);
+                }, cancellationToken: cancellationToken);
+            }
+            catch (OperationCanceledException)
+            {
+                return;
+            }
             
             lock (_raidDataLock)
             {
@@ -258,17 +283,25 @@ namespace SPTLeaderboard
                 {
                     try
                     {
-                        var responseData =  JsonConvert.DeserializeObject<ResponseRaidData>(response.ToString());
-                        
-                        if (responseData.Response == "success")
+                        // Deserialize in background thread to avoid blocking
+                        UniTask.RunOnThreadPool(() =>
                         {
-                            if (responseData.AddedToBalance > 0)
+                            var responseData = JsonConvert.DeserializeObject<ResponseRaidData>(response.ToString());
+                            
+                            if (responseData.Response == "success")
                             {
-                                LocalizationModel.Notification(LocalizationModel.Instance.GetLocaleCoin(responseData.AddedToBalance));
+                                if (responseData.AddedToBalance > 0)
+                                {
+                                    // Switch back to main thread for UI operations
+                                    UniTask.Post(() =>
+                                    {
+                                        LocalizationModel.Notification(LocalizationModel.Instance.GetLocaleCoin(responseData.AddedToBalance));
+                                    });
+                                }
                             }
-                        }
+                        }).Forget();
                     }
-                    catch (Exception ex)
+                    catch (Exception)
                     {
                        //
                     }

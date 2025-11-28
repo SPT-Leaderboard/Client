@@ -1,7 +1,8 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading;
+using Cysharp.Threading.Tasks;
 using SPTLeaderboard.Utils;
 using UnityEngine;
 using UnityEngine.Networking;
@@ -89,33 +90,33 @@ namespace SPTLeaderboard.Models
         /// </summary>
         public void Send()
         {
-            StartCoroutine(RunBaseRequest());
+            RunBaseRequestAsync(this.GetCancellationTokenOnDestroy()).Forget();
         }
 
         /// <summary>
-        /// Internal coroutine that executes the HTTP request and handles success, failure, and retries.
+        /// Internal async method that executes the HTTP request and handles success, failure, and retries.
         /// </summary>
         /// <remarks>
         /// - Calls <see cref="OnSuccess"/> if the request succeeds.  
         /// - Calls <see cref="OnFail"/> if the request fails or exceeds retry attempts.  
         /// - Automatically destroys the GameObject after completion.
         /// </remarks>
-        private IEnumerator RunBaseRequest()
+        private async UniTaskVoid RunBaseRequestAsync(CancellationToken cancellationToken = default)
         {
             if (_httpMethod == UnityWebRequest.kHttpVerbPOST && string.IsNullOrEmpty(_jsonBody))
             {
                 LeaderboardPlugin.logger.LogWarning("Data is null or empty, skipping POST request");
-                yield break;
+                return;
             }
             
             if (_isComplete)
             {
-                yield break;
+                return;
             }
             
             if (_httpMethod == UnityWebRequest.kHttpVerbPOST && !string.IsNullOrEmpty(_jsonBody))
             {
-                string dataHash = DataUtils.ComputeHash(_jsonBody);
+                string dataHash = await DataUtils.ComputeHashAsync(_jsonBody, cancellationToken);
                 string hashKey = $"{_url}:{dataHash}";
                 
                 lock (_hashLock)
@@ -128,7 +129,7 @@ namespace SPTLeaderboard.Models
                         {
                             LeaderboardPlugin.logger.LogWarning($"NetworkApiRequestModel: Duplicate data detected for URL {_url}, skipping send (same data already sent recently)");
                             Destroy(gameObject);
-                            yield break;
+                            return;
                         }
                         else
                         {
@@ -165,13 +166,27 @@ namespace SPTLeaderboard.Models
 
             request.timeout = SettingsModel.Instance.ConnectionTimeout.Value;
 
-            yield return request.SendWebRequest();
+            // Start the request
+            var operation = request.SendWebRequest();
+            
+            // Wait for completion using polling to avoid AssetBundleModule dependency
+            while (!operation.isDone && !cancellationToken.IsCancellationRequested)
+            {
+                await UniTask.Yield(cancellationToken);
+            }
+            
+            if (cancellationToken.IsCancellationRequested)
+            {
+                request.Dispose();
+                Destroy(gameObject);
+                return;
+            }
 
             if (request.result == UnityWebRequest.Result.Success)
             {
                 if (_httpMethod == UnityWebRequest.kHttpVerbPOST && !string.IsNullOrEmpty(_jsonBody))
                 {
-                    string dataHash = DataUtils.ComputeHash(_jsonBody);
+                    string dataHash = await DataUtils.ComputeHashAsync(_jsonBody, cancellationToken);
                     string hashKey = $"{_url}:{dataHash}";
                     
                     lock (_hashLock)
@@ -181,6 +196,7 @@ namespace SPTLeaderboard.Models
                 }
                 
                 OnSuccess?.Invoke(request.downloadHandler.text, request.responseCode);
+                request.Dispose();
                 Destroy(gameObject);
             }
             else
@@ -192,8 +208,9 @@ namespace SPTLeaderboard.Models
                     _retryCount++;
                     LeaderboardPlugin.logger.LogWarning($"Timeout, retrying {_retryCount}/{_maxRetries}...");
                     _isComplete = false;
-                    yield return new WaitForSeconds(0.5f);
-                    StartCoroutine(RunBaseRequest());
+                    request.Dispose();
+                    await UniTask.Delay(TimeSpan.FromSeconds(0.5f), cancellationToken: cancellationToken);
+                    RunBaseRequestAsync(cancellationToken).Forget();
                 }
                 else
                 {
@@ -204,7 +221,7 @@ namespace SPTLeaderboard.Models
                     
                     if (_httpMethod == UnityWebRequest.kHttpVerbPOST && !string.IsNullOrEmpty(_jsonBody))
                     {
-                        string dataHash = DataUtils.ComputeHash(_jsonBody);
+                        string dataHash = await DataUtils.ComputeHashAsync(_jsonBody, cancellationToken);
                         string hashKey = $"{_url}:{dataHash}";
                         
                         lock (_hashLock)
@@ -220,6 +237,7 @@ namespace SPTLeaderboard.Models
                         ? request.downloadHandler.text 
                         : request.error ?? "Unknown error";
                     OnFail?.Invoke(errorData, request.responseCode);
+                    request.Dispose();
                     Destroy(gameObject);
                 }
             }

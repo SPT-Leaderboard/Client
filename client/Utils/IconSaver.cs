@@ -1,7 +1,8 @@
 ﻿using System;
-using System.Collections;
+using System.Threading;
 using UnityEngine;
 using System.IO;
+using Cysharp.Threading.Tasks;
 using Comfort.Common;
 using EFT;
 using EFT.Communications;
@@ -64,8 +65,8 @@ namespace SPTLeaderboard.Utils
                         ISession backEndSession = PatchConstants.BackEndSession;
                         if (backEndSession?.Profile != null)
                         {
-                            StaticManager.Instance.StartCoroutine(WaitForLoadingComplete());
-                            _targetPlayerModelView.Show(PatchConstants.BackEndSession.Profile, null, null, 0f, null, false).ConfigureAwait(false);
+                            WaitForLoadingCompleteAsync(this.GetCancellationTokenOnDestroy()).Forget();
+                            _targetPlayerModelView.Show(PatchConstants.BackEndSession.Profile, null, null, 0f, null, false).AsUniTask().Forget();
                         }
                         else
                         {
@@ -90,7 +91,7 @@ namespace SPTLeaderboard.Utils
         /// <param name="rawImage"></param>
         /// <param name="filePath"></param>
         /// <returns></returns>
-        private bool CaptureFromRenderTexture(RawImage rawImage, string filePath)
+        private async UniTask<bool> CaptureFromRenderTextureAsync(RawImage rawImage, string filePath, CancellationToken cancellationToken = default)
         {
             Texture source = rawImage.texture;
             if (source is not RenderTexture renderTexture)
@@ -116,6 +117,9 @@ namespace SPTLeaderboard.Utils
                 LeaderboardPlugin.SendProfileIcon(croppedTexture, true);
                 
                 byte[] bytes = croppedTexture.EncodeToPNG();
+                
+                // Yield to allow other operations before file write
+                await UniTask.Yield(cancellationToken);
                 File.WriteAllBytes(filePath, bytes);
                 
                 Destroy(texture2D);
@@ -141,34 +145,35 @@ namespace SPTLeaderboard.Utils
         /// </summary>
         public void PlayerModelLoaded()
         {
+            PlayerModelLoadedAsync(this.GetCancellationTokenOnDestroy()).Forget();
+        }
+
+        private async UniTaskVoid PlayerModelLoadedAsync(CancellationToken cancellationToken = default)
+        {
             RawImage rawImage = clonePlayerModelViewObj.GetComponent<RawImage>();
 
             if (rawImage)
             {
-                if (CaptureFromRenderTexture(rawImage, GlobalData.LeaderboardFullImagePath))
+                bool success = await CaptureFromRenderTextureAsync(rawImage, GlobalData.LeaderboardFullImagePath, cancellationToken);
+                
+                if (success)
                 {
                     LeaderboardPlugin.logger.LogInfo("Saved fullbody icon");
-                    _isShowed = false;
-                    _targetPlayerModelView.Close();
-                    Destroy(clonePlayerModelViewObj);
-                    clonePlayerModelViewObj = null;
-                    _targetPlayerModelView = null;
                 }
                 else
                 {
                     LeaderboardPlugin.logger.LogWarning("Not saved fullbody icon");
-                    _isShowed = false;
-                    _targetPlayerModelView.Close();
-                    Destroy(clonePlayerModelViewObj);
-                    clonePlayerModelViewObj = null;
-                    _targetPlayerModelView = null;
                 }
             }
             else
             {
                 LeaderboardPlugin.logger.LogWarning("RawImage not found in PlayerModelView");
+            }
+
+            if (!cancellationToken.IsCancellationRequested)
+            {
                 _isShowed = false;
-                _targetPlayerModelView.Close();
+                _targetPlayerModelView?.Close();
                 Destroy(clonePlayerModelViewObj);
                 clonePlayerModelViewObj = null;
                 _targetPlayerModelView = null;
@@ -365,18 +370,25 @@ namespace SPTLeaderboard.Utils
         /// <summary>
         /// Little latency for capture screenshot FullBody
         /// </summary>
-        /// <returns></returns>
-        private IEnumerator WaitForLoadingComplete()
+        private async UniTaskVoid WaitForLoadingCompleteAsync(CancellationToken cancellationToken = default)
         {
-            while (!_targetPlayerModelView.LoadingComplete)
+            while (!_targetPlayerModelView.LoadingComplete && !cancellationToken.IsCancellationRequested)
             {
-                yield return null;
+                await UniTask.Yield(cancellationToken);
+            }
+
+            if (cancellationToken.IsCancellationRequested)
+            {
+                return;
             }
 
             _isShowed = true;
-            yield return new WaitForSeconds(2f);
+            await UniTask.Delay(TimeSpan.FromSeconds(2f), cancellationToken: cancellationToken);
 
-            PlayerModelLoaded();
+            if (!cancellationToken.IsCancellationRequested)
+            {
+                PlayerModelLoaded();
+            }
         }
         
         private Vector3 GetOffScreenPosition(float offset = 500f)

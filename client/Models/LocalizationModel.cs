@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
+using Cysharp.Threading.Tasks;
 using Comfort.Common;
 using EFT;
 using EFT.Communications;
@@ -179,13 +179,13 @@ namespace SPTLeaderboard.Models
         /// <summary>
         /// Request eng lcoalization for non-eng users
         /// </summary>
-        public async Task LoadEnglishLocaleAsync()
+        public async UniTask LoadEnglishLocaleAsync()
         {
             try
             {
                 LeaderboardPlugin.logger.LogInfo("Request to load FULL english locale");
                 var session = PlayerHelper.GetSession();
-                Dictionary<string, string> result = await session.GetLocalization("en");
+                Dictionary<string, string> result = await session.GetLocalization("en").AsUniTask();
                 LocaleManagerClass.LocaleManagerClass.UpdateLocales("en", result);
             }
             catch (Exception e)
