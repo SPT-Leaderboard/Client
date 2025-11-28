@@ -169,7 +169,6 @@ namespace SPTLeaderboard.Models
             // Start the request
             var operation = request.SendWebRequest();
             
-            // Wait for completion using polling to avoid AssetBundleModule dependency
             while (!operation.isDone && !cancellationToken.IsCancellationRequested)
             {
                 await UniTask.Yield(cancellationToken);

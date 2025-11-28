@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Reflection;
+using Cysharp.Threading.Tasks;
 using EFT;
 using SPT.Reflection.Patching;
 using SPTLeaderboard.Enums;
@@ -36,7 +37,7 @@ namespace SPTLeaderboard.Patches
         {
             LeaderboardPlugin.Instance.TrackingLoot.OnEndRaid(settings.playerSide, () =>
             {
-                ProcessProfileModel.Create().ProcessAndSendProfile(settings, results);
+                ProcessProfileModel.Create().ProcessAndSendProfileAsync(settings, results).Forget();
             });
         }
     }

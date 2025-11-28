@@ -8,6 +8,7 @@ using EFT.UI;
 using Newtonsoft.Json;
 using SPTLeaderboard.Data;
 using SPTLeaderboard.Utils;
+using Cysharp.Threading.Tasks;
 
 namespace SPTLeaderboard.Models;
 
@@ -20,7 +21,7 @@ public class ProcessProfileModel
     /// </summary>
     /// <param name="localRaidSettings">Local raid settings</param>
     /// <param name="resultRaid">Raid result</param>
-    public void ProcessAndSendProfile(LocalRaidSettings localRaidSettings, RaidEndDescriptorClass resultRaid)
+    public async UniTask ProcessAndSendProfileAsync(LocalRaidSettings localRaidSettings, RaidEndDescriptorClass resultRaid)
     {
         if (!ShouldProcessProfile())
             return;
@@ -32,18 +33,17 @@ public class ProcessProfileModel
         if (session.Profile == null)
             return;
 
-        var profileData = DeserializeProfileData(resultRaid);
+        var profileData = await UniTask.RunOnThreadPool(() => DeserializeProfileData(resultRaid));
         if (profileData == null)
             return;
 
         var isScavRaid = DetermineRaidType(session.Profile, profileData);
-
         var sessionData = GetSessionData(session);
-
         var raidInfo = GetRaidInfo(localRaidSettings, resultRaid, session.Profile);
 
-
-        ProcessAndSendProfileData(sessionData, raidInfo, isScavRaid, resultRaid);
+        // Обработка данных в фоновом потоке
+        await UniTask.RunOnThreadPool(() => 
+            ProcessAndSendProfileData(sessionData, raidInfo, isScavRaid, resultRaid));
     }
 
     /// <summary>
@@ -259,8 +259,11 @@ public class ProcessProfileModel
 
         if (haveDevItems)
         {
-            LocalizationModel.NotificationWarning(LocalizationModel.Instance.GetLocaleErrorText(ErrorType.DEVITEMS),
-                ServerErrorHandler.GetDurationType(ErrorType.DEVITEMS));
+            UniTask.Post(() =>
+            {
+                LocalizationModel.NotificationWarning(LocalizationModel.Instance.GetLocaleErrorText(ErrorType.DEVITEMS),
+                    ServerErrorHandler.GetDurationType(ErrorType.DEVITEMS));
+            });
 #if DEBUG
             if (SettingsModel.Instance.Debug.Value)
             {
