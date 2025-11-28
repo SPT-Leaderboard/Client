@@ -279,33 +279,29 @@ namespace SPTLeaderboard
                 }
                 
                 logger.LogInfo($"Request OnSuccess {response}");
-                if (SettingsModel.Instance.ShowPointsNotification.Value)
+
+                try
                 {
-                    try
+                    var responseData = JsonConvert.DeserializeObject<ResponseRaidData>(response.ToString());
+                    
+                    if (responseData.Response == "success")
                     {
-                        // Deserialize in background thread to avoid blocking
-                        UniTask.RunOnThreadPool(() =>
+                        if (responseData.AddedToBalance > 0 && SettingsModel.Instance.ShowPointsNotification.Value)
                         {
-                            var responseData = JsonConvert.DeserializeObject<ResponseRaidData>(response.ToString());
-                            
-                            if (responseData.Response == "success")
-                            {
-                                if (responseData.AddedToBalance > 0)
-                                {
-                                    // Switch back to main thread for UI operations
-                                    UniTask.Post(() =>
-                                    {
-                                        LocalizationModel.Notification(LocalizationModel.Instance.GetLocaleCoin(responseData.AddedToBalance));
-                                    });
-                                }
-                            }
-                        }).Forget();
-                    }
-                    catch (Exception)
-                    {
-                       //
+                            LocalizationModel.Notification(LocalizationModel.Instance.GetLocaleCoin(responseData.AddedToBalance));
+                        }
+
+                        if (responseData.BattlePassEXP > 0 && SettingsModel.Instance.ShowExperienceNotification.Value)
+                        {
+                            LocalizationModel.Notification(LocalizationModel.Instance.GetLocaleExperience(responseData.BattlePassEXP));
+                        }
                     }
                 }
+                catch (Exception)
+                {
+                    //
+                }
+            
             };
 
             request.OnFail = (error, code) =>

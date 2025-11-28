@@ -297,6 +297,27 @@ public class LocalizationData
         { "ru", "Рейд окончен! Начислено {0} лидерборд коинов" },     // Russian
         { "ro", "Raid încheiat! Ai câștigat {0} monede de clasament" }     // Romanian
     };
+
+    public static Dictionary<string, string> AddBattlePassXP = new() //Message earn xp
+    {
+        { "ch", "获得战斗通行证经验值: {0}" },     // Chinese
+        { "cz", "Získáno BattlePass EXP: {0}" },     // Czech
+        { "en", "Gained BattlePass EXP: {0}" },     // English
+        { "fr", "EXP BattlePass gagné : {0}" },     // French
+        { "ge", "BattlePass EXP erhalten: {0}" },     // German
+        { "hu", "BattlePass EXP megszerzése: {0}" },     // Hungarian
+        { "it", "EXP BattlePass ottenuto: {0}" },     // Italian
+        { "jp", "バトルパスEXP獲得: {0}" },     // Japanese
+        { "kr", "배틀패스 경험치 획득: {0}" },     // Korean
+        { "pl", "Zdobyto BattlePass EXP: {0}" },     // Polish
+        { "po", "EXP BattlePass ganho: {0}" },     // Portuguese
+        { "sk", "Získané BattlePass EXP: {0}" },     // Slovak
+        { "es", "EXP BattlePass obtenido: {0}" },     // Spanish (ES)
+        { "es-mx", "EXP BattlePass obtenido: {0}" },     // Spanish (MX)
+        { "tu", "BattlePass EXP kazanıldı: {0}" },     // Turkish
+        { "ru", "Получено BattlePass EXP: {0}" },     // Russian
+        { "ro", "EXP BattlePass câștigat: {0}" }     // Romanian
+    };
     
     public static Dictionary<string, string> BannedMods = new() //Banned mods list label
     {

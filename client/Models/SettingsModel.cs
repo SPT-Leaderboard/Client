@@ -26,6 +26,7 @@ namespace SPTLeaderboard.Models
 		
 		public ConfigEntry<bool> EnableSendData;
 		public ConfigEntry<bool> ShowPointsNotification;
+		public ConfigEntry<bool> ShowExperienceNotification;
 		public ConfigEntry<bool> ModCasualMode;
 		public ConfigEntry<bool> EnableModSupport;
 		public ConfigEntry<int> ConnectionTimeout;
@@ -101,6 +102,18 @@ namespace SPTLeaderboard.Models
 						Order = 7
 					}));
 			
+			ShowExperienceNotification = configFile.Bind(
+				"1. Settings", 
+				"Show Notification Experience", 
+				true, 
+				new ConfigDescription(
+					"When turned on, display a notification about the issuance of leaderboard experience at the end of the raid.",
+					null, 
+					new ConfigurationManagerAttributes
+					{
+						Order = 6
+					}));
+
 			ModCasualMode = configFile.Bind(
 				"1. Settings", 
 				"Casual mode", 
@@ -110,7 +123,7 @@ namespace SPTLeaderboard.Models
 					null, 
 					new ConfigurationManagerAttributes
 					{
-						Order = 6
+						Order = 5
 					}));
 			
 			EnableModSupport = configFile.Bind(

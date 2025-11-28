@@ -77,6 +77,19 @@ namespace SPTLeaderboard.Models
             var localeCoin = string.Format(addCoin, value);
             return localeCoin;
         }
+
+         public string GetLocaleExperience(int value = 0)
+        {
+            if (LocalizationData.AddBattlePassXP.TryGetValue(CurrentLanguage(), out var textAddBattlePassXP))
+            {
+                var formatedText = string.Format(textAddBattlePassXP, value);
+                return formatedText;
+            }
+            
+            var addCoin = LocalizationData.AddBattlePassXP["en"]; 
+            var localeCoin = string.Format(addCoin, value);
+            return localeCoin;
+        }
         
         /// <summary>
         /// Get localization by id with current locale in LocaleManagerClass EFT
