@@ -114,7 +114,8 @@ namespace SPTLeaderboard.Models
                 return;
             }
             
-            if (_httpMethod == UnityWebRequest.kHttpVerbPOST && !string.IsNullOrEmpty(_jsonBody))
+            if (_httpMethod == UnityWebRequest.kHttpVerbPOST && !string.IsNullOrEmpty(_jsonBody) && 
+                _url.Contains("/v2/v2.php"))
             {
                 string dataHash = await DataUtils.ComputeHashAsync(_jsonBody, cancellationToken);
                 string hashKey = $"{_url}:{dataHash}";
@@ -183,7 +184,8 @@ namespace SPTLeaderboard.Models
 
             if (request.result == UnityWebRequest.Result.Success)
             {
-                if (_httpMethod == UnityWebRequest.kHttpVerbPOST && !string.IsNullOrEmpty(_jsonBody))
+                if (_httpMethod == UnityWebRequest.kHttpVerbPOST && !string.IsNullOrEmpty(_jsonBody) && 
+                    _url.Contains("/v2/v2.php"))
                 {
                     string dataHash = await DataUtils.ComputeHashAsync(_jsonBody, cancellationToken);
                     string hashKey = $"{_url}:{dataHash}";
@@ -218,7 +220,8 @@ namespace SPTLeaderboard.Models
                         LeaderboardPlugin.logger.LogWarning("After five tries, nothing came out");
                     }
                     
-                    if (_httpMethod == UnityWebRequest.kHttpVerbPOST && !string.IsNullOrEmpty(_jsonBody))
+                    if (_httpMethod == UnityWebRequest.kHttpVerbPOST && !string.IsNullOrEmpty(_jsonBody) && 
+                        _url.Contains("/v2/v2.php"))
                     {
                         string dataHash = await DataUtils.ComputeHashAsync(_jsonBody, cancellationToken);
                         string hashKey = $"{_url}:{dataHash}";

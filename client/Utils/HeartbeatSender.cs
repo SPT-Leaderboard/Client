@@ -59,7 +59,6 @@ namespace SPTLeaderboard.Utils
                     request.SetData(jsonBody);
                     request.Send();
 
-                    // Кэшируем отправку
                     _lastSendTime = now;
                     _lastSentState = playerState;
                 }

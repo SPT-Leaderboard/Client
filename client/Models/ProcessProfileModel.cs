@@ -41,7 +41,6 @@ public class ProcessProfileModel
         var sessionData = GetSessionData(session);
         var raidInfo = GetRaidInfo(localRaidSettings, resultRaid, session.Profile);
 
-        // Обработка данных в фоновом потоке
         await UniTask.RunOnThreadPool(() => 
             ProcessAndSendProfileData(sessionData, raidInfo, isScavRaid, resultRaid));
     }
