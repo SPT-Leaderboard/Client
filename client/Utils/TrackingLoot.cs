@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Cysharp.Threading.Tasks;
 using EFT;
 using EFT.InventoryLogic;
 
@@ -63,40 +64,34 @@ public class TrackingLoot
 
     public void OnEndRaid(ESideType sideType, Action callback)
     {
+        OnEndRaidAsync(sideType).ContinueWith(() => callback?.Invoke()).Forget();
+    }
+
+    public async UniTask OnEndRaidAsync(ESideType sideType)
+    {
         PostRaidEquipValue = 0;
         PostRaidLootValue = 0;
         
-        if (sideType == ESideType.Pmc)
+        var equipmentTask = GetPriceItemsAsync(PreRaidIds.ToList());
+        var lootTask = GetPriceItemsAsync(LootedIds.ToList());
+        
+        PostRaidEquipValue = await equipmentTask;
+        PostRaidLootValue = await lootTask;
+        
+        LeaderboardPlugin.logger.LogInfo($"[TrackingLoot][OnEndRaid] {(sideType == ESideType.Pmc ? "PMC" : "SCAV")} Equipment = {PostRaidEquipValue}");
+        LeaderboardPlugin.logger.LogInfo($"[TrackingLoot][OnEndRaid] {(sideType == ESideType.Pmc ? "PMC" : "SCAV")} Loot = {PostRaidLootValue}");
+        LeaderboardPlugin.logger.LogInfo($"[TrackingLoot][OnEndRaid] All price requests completed. Final PostRaidLootValue = {PostRaidLootValue}");
+    }
+
+    private UniTask<int> GetPriceItemsAsync(List<string> items)
+    {
+        var tcs = new UniTaskCompletionSource<int>();
+        
+        DataUtils.GetPriceItems(items, value =>
         {
-            DataUtils.GetPriceItems(PreRaidIds.ToList(), equipmentValue =>
-            {
-                PostRaidEquipValue = equipmentValue;
-                LeaderboardPlugin.logger.LogInfo($"[TrackingLoot][OnEndRaid] PMC Equipment = {equipmentValue}");
-                
-                DataUtils.GetPriceItems(LootedIds.ToList(), lootValue =>
-                {
-                    PostRaidLootValue = lootValue;
-                    LeaderboardPlugin.logger.LogInfo($"[TrackingLoot][OnEndRaid] PMC Loot = {lootValue}");
-                    LeaderboardPlugin.logger.LogInfo($"[TrackingLoot][OnEndRaid] All price requests completed. Final PostRaidLootValue = {PostRaidLootValue}");
-                    callback?.Invoke();
-                });
-            });
-        }
-        else
-        {
-            DataUtils.GetPriceItems(PreRaidIds.ToList(), equipmentValue =>
-            {
-                PostRaidEquipValue = equipmentValue;
-                LeaderboardPlugin.logger.LogInfo($"[TrackingLoot][OnEndRaid] SCAV Equipment = {equipmentValue}");
-                
-                DataUtils.GetPriceItems(LootedIds.ToList(), lootValue =>
-                {
-                    PostRaidLootValue = lootValue;
-                    LeaderboardPlugin.logger.LogInfo($"[TrackingLoot][OnEndRaid] SCAV Loot = {lootValue}");
-                    LeaderboardPlugin.logger.LogInfo($"[TrackingLoot][OnEndRaid] All price requests completed. Final PostRaidLootValue = {PostRaidLootValue}");
-                    callback?.Invoke();
-                });
-            });
-        }
+            tcs.TrySetResult(value);
+        });
+        
+        return tcs.Task;
     }
 }

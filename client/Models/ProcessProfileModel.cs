@@ -33,6 +33,8 @@ public class ProcessProfileModel
         if (session.Profile == null)
             return;
 
+        var trackingLootTask = LeaderboardPlugin.Instance.TrackingLoot.OnEndRaidAsync(localRaidSettings.playerSide);
+
         var profileData = await UniTask.RunOnThreadPool(() => DeserializeProfileData(resultRaid));
         if (profileData == null)
             return;
@@ -40,6 +42,8 @@ public class ProcessProfileModel
         var isScavRaid = DetermineRaidType(session.Profile, profileData);
         var sessionData = GetSessionData(session);
         var raidInfo = GetRaidInfo(localRaidSettings, resultRaid, session.Profile);
+
+        await trackingLootTask;
 
         await UniTask.RunOnThreadPool(() => 
             ProcessAndSendProfileData(sessionData, raidInfo, isScavRaid, resultRaid));

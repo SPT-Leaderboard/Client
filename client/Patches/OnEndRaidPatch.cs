@@ -35,10 +35,7 @@ namespace SPTLeaderboard.Patches
             FlatItemsDataClass[] lostInsuredItems, Dictionary<string, FlatItemsDataClass[]> transferItems,
             object __instance)
         {
-            LeaderboardPlugin.Instance.TrackingLoot.OnEndRaid(settings.playerSide, () =>
-            {
-                ProcessProfileModel.Create().ProcessAndSendProfileAsync(settings, results).Forget();
-            });
+            ProcessProfileModel.Create().ProcessAndSendProfileAsync(settings, results).Forget();
         }
     }
 }
