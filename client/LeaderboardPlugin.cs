@@ -47,6 +47,8 @@ namespace SPTLeaderboard
         private static DateTime _lastSentDataTime = DateTime.MinValue;
         private const int HASH_EXPIRY_SECONDS = 120;
 
+        public RaidSettingsData SavedRaidSettingsData = new RaidSettingsData();
+
         private void Awake()
         {
             logger = Logger;
@@ -90,6 +92,7 @@ namespace SPTLeaderboard
             new PlayerOnDeadPatch().Enable();
             new OnPlayerAddedItem().Enable();
             new OnPlayerRemovedItem().Enable();
+            new RaidSettingsHookPatch().Enable();
             
             if (!DataUtils.IsCheckedFikaCore)
             {

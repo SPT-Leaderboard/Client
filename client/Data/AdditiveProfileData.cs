@@ -61,6 +61,8 @@ namespace SPTLeaderboard.Data
         [JsonProperty("isCasual")]
         public bool IsCasual { get; set; } = baseData.IsCasual;
         
+        [JsonProperty("RaidSettings")]
+        public RaidSettingsData RaidSettingsData = baseData.RaidSettingsData;
         #endregion
         
         [JsonProperty("discFromRaid")]

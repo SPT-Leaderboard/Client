@@ -526,7 +526,8 @@ public class ProcessProfileModel
             SptVersion = DataUtils.GetSptVersion(),
             Token = EncryptionModel.Instance.Token,
             DBinInv = haveDevItems,
-            IsCasual = SettingsModel.Instance.ModCasualMode.Value
+            IsCasual = SettingsModel.Instance.ModCasualMode.Value,
+            RaidSettingsData = LeaderboardPlugin.Instance.SavedRaidSettingsData
         };
     }
 
