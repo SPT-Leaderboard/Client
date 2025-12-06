@@ -414,12 +414,14 @@ public class ProcessProfileModel
     /// <summary>
     /// Processes StatTrack data
     /// </summary>
-    private (bool statTrackIsUsed, Dictionary<string, Dictionary<string, WeaponInfo>> processedStatTrackData)
+    private (bool statTrackIsUsed, Dictionary<string, WeaponInfo> processedStatTrackData)
     ProcessStatTrackData(string profileId)
     {
         var statTrackIsUsed = StatTrackInterop.Loaded();
         Dictionary<string, Dictionary<string, WeaponInfo>> processedStatTrackData =
             new Dictionary<string, Dictionary<string, WeaponInfo>>();
+        Dictionary<string, WeaponInfo> fixResultStattrack =
+            new Dictionary<string, WeaponInfo>();
 
         if (!SettingsModel.Instance.EnableModSupport.Value && !statTrackIsUsed)
         {
@@ -445,12 +447,13 @@ public class ProcessProfileModel
                 {
                     LeaderboardPlugin.logger.LogWarning("processedStatTrackData != null: Data -> " +
                                                         JsonConvert.SerializeObject(processedStatTrackData).ToJson());
+                    fixResultStattrack = processedStatTrackData[profileId];
                 }
 #endif
             }
         }
 
-        return (statTrackIsUsed, processedStatTrackData);
+        return (statTrackIsUsed, fixResultStattrack);
     }
 
     /// <summary>
@@ -465,7 +468,7 @@ public class ProcessProfileModel
         float currentEnergy, float currentHydration, float maxEnergy, float maxHydration,
         int killedPmc, int killedSavage, int killedBoss, int expLooting, int hitCount,
         int totalDamage, int damageTaken, HideoutData hideoutData, List<string> listModsPlayer,
-        bool statTrackIsUsed, Dictionary<string, Dictionary<string, WeaponInfo>> processedStatTrackData,
+        bool statTrackIsUsed, Dictionary<string, WeaponInfo> processedStatTrackData,
         Profile pmcData, Profile scavData, RaidEndDescriptorClass resultRaid)
     {
         if (haveDevItems)
@@ -538,7 +541,7 @@ public class ProcessProfileModel
         bool isTransition, bool statTrackIsUsed, int expLooting, HideoutData hideoutData, int hitCount,
         string lastRaidLocation, string lastRaidLocationRaw, string lastRaidTransitionTo,
         Dictionary<string, int> allAchievementsDict, int longestShot, int longestHeadshot, float averageShot,
-        int killedBoss, int killedSavage, Dictionary<string, Dictionary<string, WeaponInfo>> processedStatTrackData,
+        int killedBoss, int killedSavage, Dictionary<string, WeaponInfo> processedStatTrackData,
         Profile pmcData, Profile scavData, bool hasKappa, int totalDamage, int damageTaken,
         Dictionary<string, QuestInfoData> completedQuests, int revenueRaid, float currentEnergy,
         float currentHydration, float maxEnergy, float maxHydration)
@@ -592,7 +595,7 @@ public class ProcessProfileModel
         bool isTransition, bool statTrackIsUsed, int hitCount, string lastRaidLocation,
         string lastRaidLocationRaw, string lastRaidTransitionTo, Dictionary<string, int> allAchievementsDict,
         int longestShot, int longestHeadshot, float averageShot, int killedBoss, int killedSavage,
-        Dictionary<string, Dictionary<string, WeaponInfo>> processedStatTrackData, Profile pmcData,
+        Dictionary<string, WeaponInfo> processedStatTrackData, Profile pmcData,
         Profile scavData, int totalDamage, int damageTaken, Dictionary<string, QuestInfoData> completedQuests,
         int revenueRaid, float maxEnergy, float maxHydration)
     {

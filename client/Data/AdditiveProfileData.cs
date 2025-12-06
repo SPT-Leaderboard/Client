@@ -123,7 +123,7 @@ namespace SPTLeaderboard.Data
         public int BossKills { get; set; }
 
         [JsonProperty("modWeaponStats")]
-        public Dictionary<string, Dictionary<string, WeaponInfo>> ModWeaponStats { get; set; } = null;
+        public Dictionary<string, WeaponInfo> ModWeaponStats { get; set; } = null;
         
         [JsonProperty("playedAs")]
         public string PlayedAs { get; set; }
