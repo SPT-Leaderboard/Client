@@ -18,7 +18,7 @@ public static class GlobalData
     
     // URLs
     public static string HeartbeatUrl = $"{SettingsModel.Instance.PhpEndpoint.Value}{SettingsModel.Instance.PhpPath.Value}heartbeat/v2.php";
-    public static string ProfileUrl = $"{SettingsModel.Instance.PhpEndpoint.Value}{SettingsModel.Instance.PhpPath.Value}v2/v2.php";
+    public static string ProfileUrl = $"{SettingsModel.Instance.PhpEndpoint.Value}{SettingsModel.Instance.PhpPath.Value}v3/v3.php";
     public static string IconUrl = $"{SettingsModel.Instance.PhpEndpoint.Value}{SettingsModel.Instance.PhpPath.Value}client/avatar_processor.php";
     public static string PreRaidUrl = $"{SettingsModel.Instance.PhpEndpoint.Value}{SettingsModel.Instance.PhpPath.Value}client/api_sync.php";
     public static string ConfigUrl = $"{SettingsModel.Instance.PhpEndpoint.Value}{SettingsModel.Instance.PhpPath.Value}client/get_config.php";
