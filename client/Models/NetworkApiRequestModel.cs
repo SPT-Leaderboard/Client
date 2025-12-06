@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Threading;
 using Cysharp.Threading.Tasks;
+using SPTLeaderboard.Data;
 using SPTLeaderboard.Utils;
 using UnityEngine;
 using UnityEngine.Networking;
@@ -115,7 +116,7 @@ namespace SPTLeaderboard.Models
             }
             
             if (_httpMethod == UnityWebRequest.kHttpVerbPOST && !string.IsNullOrEmpty(_jsonBody) && 
-                _url.Contains("/v2/v2.php"))
+                _url == GlobalData.ProfileUrl)
             {
                 string dataHash = await DataUtils.ComputeHashAsync(_jsonBody, cancellationToken);
                 string hashKey = $"{_url}:{dataHash}";
