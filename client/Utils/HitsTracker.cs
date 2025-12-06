@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using SPTLeaderboard.Data;
 
 namespace SPTLeaderboard.Utils;
@@ -9,8 +10,8 @@ public class HitsTracker
     private static HitsTracker _instance;
     public static HitsTracker Instance => _instance ??= new HitsTracker();
 
-    private HitsData _data = new HitsData();
-    private List<float> _hitDistances = new List<float>();
+    private HitsData data = new ();
+    private HitsDistanceData hitDistances = new ();
 
     private HitsTracker() { }
 
@@ -19,25 +20,25 @@ public class HitsTracker
         switch (part)
         {
             case EBodyPart.Head:
-                _data.Head++;
+                data.Head++;
                 break;
             case EBodyPart.Chest:
-                _data.Chest++;
+                data.Chest++;
                 break;
             case EBodyPart.Stomach:
-                _data.Stomach++;
+                data.Stomach++;
                 break;
             case EBodyPart.LeftArm:
-                _data.LeftArm++;
+                data.LeftArm++;
                 break;
             case EBodyPart.RightArm:
-                _data.RightArm++;
+                data.RightArm++;
                 break;
             case EBodyPart.LeftLeg:
-                _data.LeftLeg++;
+                data.LeftLeg++;
                 break;
             case EBodyPart.RightLeg:
-                _data.RightLeg++;
+                data.RightLeg++;
                 break;
             case EBodyPart.Common:
                 break;
@@ -48,24 +49,56 @@ public class HitsTracker
     
     public void Clear()
     {
-        _data = new HitsData();
-        _hitDistances = new List<float>();
+        data = new HitsData();
+        hitDistances = new HitsDistanceData();
     }
 
     public HitsData GetHitsData()
     {
-        return _data;
+        return data;
     }
     
-    public void AddHit(float distance)
+    public float GetLongestShot()
     {
-        float roundedDistance = (float)Math.Round(distance, 1);
-        LeaderboardPlugin.logger.LogInfo($"[HitsTracker] Add hit with distance {roundedDistance}");
-        _hitDistances.Add(roundedDistance);
+        var hitLists = new List<List<float>> {
+            hitDistances.Head, hitDistances.Chest, hitDistances.Stomach,
+            hitDistances.LeftArm, hitDistances.RightArm, hitDistances.LeftLeg, hitDistances.RightLeg
+        };
+
+        var maxDistances = hitLists
+            .Where(list => list.Count > 0)
+            .Select(list => list.Max());
+
+        return maxDistances.Any() ? maxDistances.Max() : 0f;
+    }
+    
+    public float GetLongestHeadshot()
+    {
+        return hitDistances.Head.Any() ? hitDistances.Head.Max() : 0f;
+    }
+    
+    public float GetAverageShot()
+    {
+        var hitLists = new List<List<float>> {
+            hitDistances.Head, hitDistances.Chest, hitDistances.Stomach,
+            hitDistances.LeftArm, hitDistances.RightArm, hitDistances.LeftLeg, hitDistances.RightLeg
+        };
+
+        var averageDistances = hitLists
+            .Where(list => list.Count > 0)
+            .Select(list => list.Average());
+
+        return averageDistances.Any() ? averageDistances.Average() : 0f;
+    }
+    
+    public void AddHit(float distance, EBodyPart bodyPart)
+    {
+        var roundedDistance = (float)Math.Round(distance, 1);
+#if DEBUG || BETA
+        LeaderboardPlugin.logger.LogInfo($"[HitsTracker] Add hit with distance {roundedDistance} for {bodyPart.ToString()}");
+#endif
+        hitDistances.Add(roundedDistance, bodyPart);
     }
 
-    public List<float> GetHitDistances()
-    {
-        return _hitDistances;
-    }
+    
 }

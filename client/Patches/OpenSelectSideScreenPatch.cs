@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using System.Reflection;
+using EFT;
 using EFT.HealthSystem;
 using EFT.InventoryLogic;
 using EFT.UI;
@@ -20,7 +21,7 @@ namespace SPTLeaderboard.Patches
                 "Show",
                 BindingFlags.Instance | BindingFlags.Public,
                 null,
-                [typeof(MatchMakerSideSelectionScreen.GClass3629)],
+                [typeof(MatchMakerSideSelectionScreen.GClass3919)],
                 null
             );
 
@@ -39,25 +40,28 @@ namespace SPTLeaderboard.Patches
                 return true;
             }
 
-            var modsPlayer = DataUtils.GetServerMods()
-                .Concat(DataUtils.GetDirectories(GlobalData.UserModsPath))
-                .Concat(DataUtils.GetDirectories(BepInEx.Paths.PluginPath))
-                .Concat(DataUtils.GetDirectories(BepInEx.Paths.PluginPath))
-                .ToList();
+            var modsPlayer = DataUtils.GetModsList();
+            
+            var session = PlayerHelper.GetSession();
+            
+            var pmcData = session.GetProfileBySide(ESideType.Pmc);
+            
+            var currentEnergy = pmcData.Health.Energy.Current;
+            var currentHydration = pmcData.Health.Hydration.Current;
+            var maxEnergy = pmcData.Health.Energy.Maximum;
+            var maxHydration = pmcData.Health.Hydration.Maximum;
             
             var preRaidData = new PreRaidData
             {
+                ProfileId = PlayerHelper.GetProfile().ProfileId,
                 VersionMod = GlobalData.Version,
                 IsCasual = SettingsModel.Instance.ModCasualMode.Value,
-#if DEBUG
-                Mods = SettingsModel.Instance.Debug.Value ? ["IhanaMies-LootValueBackend", "SpecialSlots"] : modsPlayer,
-                Hash = SettingsModel.Instance.Debug.Value
-                    ? "445ca392f8b6b353a82962aee50a097e5a0eacb9fcbf20624e8cd7fe4862161b"
-                    : EncryptionModel.Instance.GetHashMod()
-#else
                 Mods = modsPlayer,
-                Hash = EncryptionModel.Instance.GetHashMod()
-#endif
+                Hash = EncryptionModel.Instance.GetHashMod(),
+                MaxHydration = maxHydration,
+                MaxEnergy = maxEnergy,
+                Hydration = currentHydration,
+                Energy = currentEnergy
             };
             
             LeaderboardPlugin.SendPreRaidData(preRaidData);

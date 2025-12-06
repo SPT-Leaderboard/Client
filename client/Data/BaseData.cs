@@ -58,5 +58,8 @@ namespace SPTLeaderboard.Data
 
         [JsonProperty("isCasual")]
         public bool IsCasual { get; set; }
+        
+        [JsonProperty("RaidSettings")]
+        public RaidSettingsData RaidSettingsData { get; set; }
     }
 }

@@ -2,17 +2,23 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Security.Cryptography;
+using System.Text;
 using System.Text.RegularExpressions;
+using System.Threading;
+using Cysharp.Threading.Tasks;
 using BepInEx;
 using BepInEx.Bootstrap;
 using Comfort.Common;
 using EFT;
 using EFT.InventoryLogic;
+using Newtonsoft.Json;
 using SPT.Common.Http;
 using SPT.Common.Utils;
 using SPT.Reflection.Utils;
 using SPTLeaderboard.Data;
 using SPTLeaderboard.Enums;
+using SPTLeaderboard.Models;
 using UnityEngine;
 using TraderData = SPTLeaderboard.Data.TraderData;
 
@@ -50,29 +56,41 @@ public static class DataUtils
     }
     
     /// <summary>
+    /// Gets mods list
+    /// </summary>
+    public static List<string> GetModsList()
+    {
+        return GetServerMods()
+            .Concat(GetUserMods())
+            .Concat(GetBepinexMods())
+            .Concat(GetBepinexDll())
+            .Concat(GetClientMods())
+            .ToList();
+    }
+    
+    /// <summary>
     /// Get list loaded mods from server for user
     /// </summary>
     /// <returns></returns>
-    public static List<string> GetServerMods()
+    private static List<string> GetServerMods()
     {
         List<string> listServerMods = new List<string>();
 
         try
         {
-            string json = RequestHandler.GetJson("/launcher/profile/info");
-
+            string json = RequestHandler.GetJson("/launcher/server/serverModsUsedByProfile");
+#if DEBUG
+            LeaderboardPlugin.logger.LogWarning($"GetServerMods: {json}");
+#endif
             if (string.IsNullOrWhiteSpace(json))
                 return listServerMods;
+            
+            List<ModItem> serverMods = Json.Deserialize<List<ModItem>>(json);
 
-            ServerProfileInfo serverProfileInfo = Json.Deserialize<ServerProfileInfo>(json);
-
-            if (serverProfileInfo?.sptData?.Mods != null)
+            if (serverMods != null)
             {
-                foreach (var serverMod in serverProfileInfo.sptData.Mods)
-                {
-                    if (serverMod?.Name != null)
-                        listServerMods.Add(serverMod.Name);
-                }
+                var listMods = serverMods.Select(mod => mod.Name).ToList();
+                listServerMods.AddRange(listMods);
             }
         }
         catch (Exception ex)
@@ -81,6 +99,140 @@ public static class DataUtils
         }
 
         return listServerMods;
+    }
+
+    /// <summary>
+    /// Get list loaded mods in client
+    /// </summary>
+    /// <returns></returns>
+    private static List<string> GetClientMods()
+    {
+        return Chainloader.PluginInfos.Select(pluginInfo => pluginInfo.Value.Metadata.GUID).ToList();
+    }
+    
+    /// <summary>
+    /// Get final price from list items
+    /// </summary>
+    /// <returns></returns>
+    public static void GetPriceItems(List<string> listItems, Action<int> callback)
+    {
+        GetPriceItemsGlobal(listItems, value =>
+        {
+            if (value <= 0)
+            {
+                int localPrice = GetPriceItemsLocal(listItems);
+                callback?.Invoke(localPrice);
+            }
+            else
+            {
+                callback?.Invoke(value);
+            }
+        });
+    }
+
+    
+    /// <summary>
+    /// Get final price from list items GLOBAL SERVER
+    /// </summary>
+    /// <returns></returns>
+    private static void GetPriceItemsGlobal(List<string> listItems, Action<int> callback)
+    {
+        if (listItems == null || listItems.Count == 0)
+        {
+            callback?.Invoke(0);
+            return;
+        }
+
+        var data = new ItemsDataGlobal
+        {
+            Items = listItems,
+            ProfileID = PlayerHelper.GetProfile().ProfileId,
+            Version = GlobalData.Version,
+            Token = EncryptionModel.Instance.Token,
+            Method = "all",
+            PricesType = "lowest"
+        };
+        var jsonData = JsonConvert.SerializeObject(data);
+
+#if DEBUG
+        LeaderboardPlugin.logger.LogWarning($"[GetPriceItemsGlobal] Data = {jsonData}");
+#endif
+        try
+        {
+            var request = NetworkApiRequestModel.Create(GlobalData.PriceUrl);
+            request.SetData(jsonData);
+            request.OnSuccess = (response, code) =>
+            {
+                var priceData = JsonConvert.DeserializeObject<PriceData>(response);
+
+                if (priceData != null && priceData.Success)
+                {
+                    LeaderboardPlugin.logger.LogInfo($"Request GET OnSuccess {response}");
+                    int price = priceData.TotalPrice;
+                    callback?.Invoke(price);
+                }
+                else
+                {
+                    // If request succeeded but price not received, return 0
+                    callback?.Invoke(0);
+                }
+            };
+            request.OnFail = (error, code) =>
+            {
+                // On error return 0 to trigger fallback to Local
+                LeaderboardPlugin.logger.LogWarning($"GetPriceItemsGlobal failed: {error}");
+                callback?.Invoke(0);
+            };
+            request.Send();
+        }
+        catch (Exception ex)
+        {
+            LeaderboardPlugin.logger.LogWarning($"Error getting price: {ex.Message}");
+            // On exception also return 0 for fallback
+            callback?.Invoke(0);
+        }
+    }
+
+    
+    /// <summary>
+    /// Get final price from list items SPT SERVER
+    /// </summary>
+    /// <returns></returns>
+    public static int GetPriceItemsLocal(List<string> listItems)
+    {
+        var price = 0;
+
+        if (listItems != null)
+        {
+            if (listItems.Count > 0)
+            {
+                var data = new ItemsData()
+                {
+                    Items = listItems
+                };
+#if DEBUG
+                LeaderboardPlugin.logger.LogWarning($"[GetPriceItemsLocal] Data = {JsonConvert.SerializeObject(data)}");
+#endif
+                try
+                {
+                    var json = RequestHandler.PostJson("/SPTLB/GetItemPrices", JsonConvert.SerializeObject(data));
+            
+                    if (string.IsNullOrWhiteSpace(json))
+                        return price;
+
+                    price = int.Parse(json);
+            
+                    LeaderboardPlugin.logger.LogWarning($"[GetPriceItemsLocal] Response = {price}");
+                }
+                catch (Exception ex)
+                {
+                    LeaderboardPlugin.logger.LogWarning($"[GetPriceItemsLocal] failed: {ex}");
+                    return price;
+                }
+            }
+        }
+        
+        return price;
     }
 
     public static List<string> GetUserMods()
@@ -126,20 +278,27 @@ public static class DataUtils
         return flag;
     }
 
-    public static void Load(Action<bool> callback)
+    public static void CheckFikaCore(Action<bool> callback)
     {
-        BaseUnityPlugin FikaCoreBLYAT;
-        TryGetPlugin("com.fika.core", out FikaCoreBLYAT);
-        FikaCore = FikaCoreBLYAT;
-        IsLoaded = true;
+        TryGetPlugin("com.fika.core", out var FikaCoreTemp);
+        FikaCore = FikaCoreTemp;
+        IsCheckedFikaCore = true;
         callback.Invoke(FikaCore != null);
     }
     
-    public static bool IsFika = FikaCore != null;
+    public static void CheckFikaHeadless(Action<bool> callback)
+    {
+        TryGetPlugin("com.fika.headless", out var FikaHeadlessTemp);
+        FikaHeadless = FikaHeadlessTemp;
+        IsCheckedFikaHeadless = true;
+        callback.Invoke(FikaHeadless != null);
+    }
     
-    public static bool IsLoaded = false;
+    public static bool IsCheckedFikaCore;
+    public static bool IsCheckedFikaHeadless;
     
     public static BaseUnityPlugin FikaCore;
+    public static BaseUnityPlugin FikaHeadless;
     
     public static Type GetPluginType(BaseUnityPlugin plugin, string typePath)
     {
@@ -260,33 +419,26 @@ public static class DataUtils
             "tarkovstreets" => "Streets of Tarkov",
             "sandbox" => "Ground Zero - Low",
             "sandbox_high" => "Ground Zero - High",
+            "labyrinth" => "The Labyrinth",
             _ => "UNKNOWN"
         };
     }
 
-    public static void TryGetTransitionData(GClass1959 resultRaid, Action<string, bool> callback)
+    public static void TryGetTransitionData(RaidEndDescriptorClass resultRaid, Action<string, bool> callback)
     {
-        var isTransition = false;
         var lastRaidTransitionTo = "None";
         if (resultRaid.result == ExitStatus.Transit
-            && TransitControllerAbstractClass.Exist<GClass1676>(out var transitController))
+            && TransitControllerAbstractClass.Exist<LocalGameTransitControllerClass>(out var transitController))
         {
-            if (transitController.localRaidSettings_0.location != "None")
-            {
-                isTransition = true;
-                var locationTransit = transitController.alreadyTransits[resultRaid.ProfileId];
-                lastRaidTransitionTo = DataUtils.GetPrettyMapName(locationTransit.location.ToLower());
-                
-                LeaderboardPlugin.logger.LogWarning($"Player transit to map PRETTY {lastRaidTransitionTo}");
-                LeaderboardPlugin.logger.LogWarning($"Player transit to map RAW {locationTransit.location}");
-                callback.Invoke(lastRaidTransitionTo, isTransition);
-                return;
-            }
-            callback.Invoke(lastRaidTransitionTo, isTransition);
+            var locationTransit = transitController.alreadyTransits[resultRaid.ProfileId];
+            lastRaidTransitionTo = GetPrettyMapName(locationTransit.location.ToLower());
+            
+            LeaderboardPlugin.logger.LogWarning($"Player transit to map PRETTY {lastRaidTransitionTo}");
+            LeaderboardPlugin.logger.LogWarning($"Player transit to map RAW {locationTransit.location}");
+            callback.Invoke(lastRaidTransitionTo, true);
             return;
         }
-        callback.Invoke(lastRaidTransitionTo, isTransition);
-        return;
+        callback.Invoke(lastRaidTransitionTo, false);
     }
     
     /// <summary>
@@ -321,5 +473,33 @@ public static class DataUtils
             }
         }
         return false;
+    }
+    
+    /// <summary>
+    /// Computes a hash of the data to detect duplicates (async version - runs in background thread)
+    /// </summary>
+    public static async UniTask<string> ComputeHashAsync(string input, CancellationToken cancellationToken = default)
+    {
+        // Run hash computation in background thread to avoid blocking main thread
+        return await UniTask.RunOnThreadPool(() =>
+        {
+            using (var sha256 = SHA256.Create())
+            {
+                byte[] hashBytes = sha256.ComputeHash(Encoding.UTF8.GetBytes(input));
+                return Convert.ToBase64String(hashBytes);
+            }
+        }, cancellationToken: cancellationToken);
+    }
+    
+    /// <summary>
+    /// Computes a hash of the data to detect duplicates (synchronous version - use async version when possible)
+    /// </summary>
+    public static string ComputeHash(string input)
+    {
+        using (var sha256 = SHA256.Create())
+        {
+            byte[] hashBytes = sha256.ComputeHash(Encoding.UTF8.GetBytes(input));
+            return Convert.ToBase64String(hashBytes);
+        }
     }
 }

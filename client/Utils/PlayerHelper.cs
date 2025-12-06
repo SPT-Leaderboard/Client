@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 using Comfort.Common;
 using EFT;
 using EFT.Communications;
@@ -7,6 +8,7 @@ using SPT.Reflection.Utils;
 using SPTLeaderboard.Data;
 using SPTLeaderboard.Models;
 using UnityEngine;
+using SpecialSlot = GClass3391;
 
 namespace SPTLeaderboard.Utils;
 
@@ -16,13 +18,25 @@ public class PlayerHelper
 
     public static PlayerHelper Instance => _instance ??= new PlayerHelper();
     
+    private static EquipmentSlot[] SlotsToSearch = [
+        EquipmentSlot.FirstPrimaryWeapon,
+        EquipmentSlot.SecondPrimaryWeapon,
+        EquipmentSlot.Holster,
+        EquipmentSlot.Backpack,
+        EquipmentSlot.TacticalVest,
+        EquipmentSlot.ArmorVest,
+        EquipmentSlot.Pockets,
+        EquipmentSlot.Eyewear,
+        EquipmentSlot.FaceCover,
+        EquipmentSlot.Earpiece];
+    
     public static ISession GetSession(bool throwIfNull = false)
     {
         var session = ClientAppUtils.GetClientApp().Session;
 
         if (throwIfNull && session is null)
         {
-            LeaderboardPlugin.logger.LogWarning("Trying to access the Session when it's null");
+            LeaderboardPlugin.logger.LogWarning("[GetSession] Trying to access the Session when it's null");
         }
 
         return session;
@@ -34,7 +48,7 @@ public class PlayerHelper
 
         if (throwIfNull && profile is null)
         {
-            LeaderboardPlugin.logger.LogWarning("Trying to access the Profile when it's null");
+            LeaderboardPlugin.logger.LogWarning("[GetProfile] Trying to access the Profile when it's null");
         }
         
         return GetSession()?.Profile;
@@ -53,6 +67,14 @@ public class PlayerHelper
     public static Vector3 ConvertToMapPosition(Vector3 unityPosition)
     {
         return new Vector3(unityPosition.x, unityPosition.z, unityPosition.y);
+    }
+    
+    public static List<string> GetEquipmentItemsTemplateId(ESideType sideType){
+        var session = GetSession();
+        var pmcData = session?.GetProfileBySide(sideType);
+        var listEquipment = pmcData.Inventory.GetItemsInSlots(SlotsToSearch);
+
+        return listEquipment.Where(i => i is not null).Where(i => !i.Parent.IsSpecialSlotAddress()).Select(item => item.TemplateId.ToString()).ToList();
     }
     
     #region Equipment
@@ -90,7 +112,7 @@ public class PlayerHelper
         if (item == null)
             return 0;
 
-        var capacity = item.Grids.Sum(CompoundItem.Class2227.class2227_0.method_10);
+        var capacity = item.Grids.Sum(CompoundItem.Class2341.class2341_0.method_10);
 #if DEBUG || BETA
         LeaderboardPlugin.logger.LogWarning($"Size {slot.ToString()} {capacity}");
 #endif
@@ -109,7 +131,7 @@ public class PlayerHelper
         if (item == null)
             return 0;
 
-        var capacity = item.Grids.Sum(CompoundItem.Class2227.class2227_0.method_10);
+        var capacity = item.Grids.Sum(CompoundItem.Class2341.class2341_0.method_10);
 #if DEBUG || BETA
         LeaderboardPlugin.logger.LogWarning($"Size Stash {capacity}");
 #endif
@@ -165,13 +187,13 @@ public class PlayerHelper
     public static string TryGetAgressorName(Profile profile)
     {
         string nameKiller = "";
-        GClass767 agressorData = profile.EftStats.Aggressor;
+        GClass788 agressorData = profile.EftStats.Aggressor;
         if (agressorData != null)
         {
                     
-            if (((GInterface187)agressorData).ProfileId != profile.Id)
+            if (((GInterface214)agressorData).ProfileId != profile.Id)
             {
-                if (((GInterface187)agressorData).ProfileId == "66f3fad50ec64d74847d049d")
+                if (((GInterface214)agressorData).ProfileId == "66f3fad50ec64d74847d049d")
                 {
                     nameKiller = LocalizationModel.GetLocaleName(agressorData.Name, false);
                 }

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
+using Cysharp.Threading.Tasks;
 using Comfort.Common;
 using EFT;
 using EFT.Communications;
@@ -74,6 +74,19 @@ namespace SPTLeaderboard.Models
             }
             
             var addCoin = LocalizationData.AddCoin["en"]; 
+            var localeCoin = string.Format(addCoin, value);
+            return localeCoin;
+        }
+
+         public string GetLocaleExperience(int value = 0)
+        {
+            if (LocalizationData.AddBattlePassXP.TryGetValue(CurrentLanguage(), out var textAddBattlePassXP))
+            {
+                var formatedText = string.Format(textAddBattlePassXP, value);
+                return formatedText;
+            }
+            
+            var addCoin = LocalizationData.AddBattlePassXP["en"]; 
             var localeCoin = string.Format(addCoin, value);
             return localeCoin;
         }
@@ -152,14 +165,16 @@ namespace SPTLeaderboard.Models
                 ErrorType.SCAV_ONLY_PUBLIC => LocalizationData.Error_ScavOnlyPublic,
                 ErrorType.CHAR_LIMIT => LocalizationData.Error_CharLimit,
                 ErrorType.NSFW_NAME => LocalizationData.Error_NsfwName,
+                ErrorType.INVALID_STATS => LocalizationData.Error_InvalidStats,
                 ErrorType.DEVITEMS => LocalizationData.Error_DevItems,
                 ErrorType.API_BANNED => LocalizationData.Error_API_BANNED,
+                ErrorType.BANNED => LocalizationData.Error_BANNED,
                 ErrorType.API_TOO_MANY_REQUESTS => LocalizationData.Error_API_TOO_MUCH_REQUESTS,
                 _ => throw new ArgumentOutOfRangeException(nameof(errorType), errorType, null)
             };
         }
         
-        public static string GetCorrectedNickname(GInterface187 profileData)
+        public static string GetCorrectedNickname(GInterface214 profileData)
         {
             return profileData.Side == EPlayerSide.Savage ? Transliterate(profileData.Nickname) : profileData.Nickname;
         }
@@ -171,19 +186,19 @@ namespace SPTLeaderboard.Models
         /// <returns></returns>
         private static string Transliterate(string text)
         {
-            return GClass930.dictionary_0.Aggregate(text, (current, key) => current.Replace(key.Key, key.Value));
+            return GClass953.Dictionary_0.Aggregate(text, (current, key) => current.Replace(key.Key, key.Value));
         }
 
         /// <summary>
         /// Request eng lcoalization for non-eng users
         /// </summary>
-        public async Task LoadEnglishLocaleAsync()
+        public async UniTask LoadEnglishLocaleAsync()
         {
             try
             {
-                LeaderboardPlugin.logger.LogInfo("Request to load english locale");
+                LeaderboardPlugin.logger.LogInfo("Request to load FULL english locale");
                 var session = PlayerHelper.GetSession();
-                Dictionary<string, string> result = await session.GetLocalization("en");
+                Dictionary<string, string> result = await session.GetLocalization("en").AsUniTask();
                 LocaleManagerClass.LocaleManagerClass.UpdateLocales("en", result);
             }
             catch (Exception e)

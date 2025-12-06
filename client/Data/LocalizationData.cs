@@ -4,11 +4,32 @@ namespace SPTLeaderboard.Data;
 
 public class LocalizationData
 {
-    public static Dictionary<string, string> Error_API_BANNED = new() // TODO: Get error code for this
+    public static Dictionary<string, string> Error_API_BANNED = new()
     {
         { "ch", "您因违反排行榜规则而被封禁" },
         { "cz", "Byli jste zabanováni za porušení pravidel žebříčku." },
-        { "en", "You have been banned from Leaderboard. Contact staff for more info." },
+        { "en", "You have been banned from Leaderboard. Contact administration for more info." },
+        { "fr", "Vous avez été banni pour avoir enfreint les règles du classement." },
+        { "ge", "Sie wurden wegen Verstoßes gegen die Bestenlistenregeln gesperrt." },
+        { "hu", "Ki lettél tiltva a ranglista szabályainak megsértése miatt." },
+        { "it", "Sei stato bannato per aver violato le regole della classifica." },
+        { "jp", "ランキングのルール違反によりBANされました" },
+        { "kr", "리더보드 규칙 위반으로 인해 이용이 제한되었습니다" },
+        { "pl", "Zostałeś zbanowany za naruszenie zasad rankingu." },
+        { "po", "Você foi banido por violar as regras da tabela de classificação." },
+        { "sk", "Boli ste zabanovaní za porušenie pravidiel rebríčka." },
+        { "es", "Has sido baneado por infringir las reglas del leaderboard." },
+        { "es-mx", "Has sido baneado por violar las reglas del leaderboard." },
+        { "tu", "Liderlik tablosu kurallarını ihlal ettiğiniz için yasaklandınız." },
+        { "ru", "Вы были забанены за нарушение правил SPT Leaderboard." },
+        { "ro", "Ai fost interzis pentru încălcarea regulilor clasamentului." }
+    };
+    
+    public static Dictionary<string, string> Error_BANNED = new() // TODO: Get error code for this
+    {
+        { "ch", "您因违反排行榜规则而被封禁" },
+        { "cz", "Byli jste zabanováni za porušení pravidel žebříčku." },
+        { "en", "You have been banned from Leaderboard. Contact administration for more info." },
         { "fr", "Vous avez été banni pour avoir enfreint les règles du classement." },
         { "ge", "Sie wurden wegen Verstoßes gegen die Bestenlistenregeln gesperrt." },
         { "hu", "Ki lettél tiltva a ranglista szabályainak megsértése miatt." },
@@ -29,7 +50,7 @@ public class LocalizationData
     {
         { "ch", "您向API发送了太多请求。 稍后再试。" },
         { "cz", "Odeslali jste příliš mnoho požadavků na API. Zkuste to znovu později." },
-        { "en", "You've sent too many requests to API. Try again later." },
+        { "en", "You've sent too many requests to the API. Try again later." },
         { "fr", "Vous avez envoyé trop de demandes à l'API. Réessayez plus tard." },
         { "ge", "Sie haben zu viele Anfragen an die API gesendet. Versuchen Sie es später noch einmal." },
         { "hu", "Túl sok kérést küldött az API-nak. Próbálja újra később." },
@@ -50,7 +71,7 @@ public class LocalizationData
     {
         { "ch", "排行榜条目被拒。违反许可协议/服务条款 1.2" },
         { "cz", "Záznam do žebříčku byl zamítnut. Porušení LA/TOS 1.2" },
-        { "en", "Leaderboard entry denied. Violation of LA/TOS 1.2" },
+        { "en", "Leaderboard entry denied due violation of LA/TOS 1.2." },
         { "fr", "Entrée au classement refusée. Violation du CLUF/CGU 1.2" },
         { "ge", "Eintrag in die Bestenliste abgelehnt. Verstoß gegen LA/TOS 1.2" },
         { "hu", "Ranglista-bejegyzés elutasítva. LA/TOS 1.2 megsértése" },
@@ -71,7 +92,7 @@ public class LocalizationData
     {
         { "ch", "令牌不适用于当前资料。它可能正被其他玩家使用。" },
         { "cz", "Token neodpovídá aktuálnímu profilu. Možná jej používá jiný hráč." },
-        { "en", "The token does not match the current profile. Make sure you have the same token as before." },
+        { "en", "Current secret token does not match your profile on the Leaderboard. Make sure you have the same token as before." },
         { "fr", "Le jeton ne correspond pas au profil actuel. Il est peut-être utilisé par un autre joueur." },
         { "ge", "Das Token passt nicht zum aktuellen Profil. Es könnte von einem anderen Spieler verwendet werden." },
         { "hu", "A token nem illik a jelenlegi profilhoz. Lehet, hogy egy másik játékos használja." },
@@ -92,7 +113,7 @@ public class LocalizationData
     {
         { "ch", "您的令牌被拒绝为不安全。请尝试另一个或重新生成。" },
         { "cz", "Váš token byl zamítnut jako nebezpečný. Zkuste jiný nebo jej znovu vygenerujte." },
-        { "en", "Your token was marked as unsafe. Try a different one, or generate a new one." },
+        { "en", "Your token was marked as unsafe. Try a different secret token, or generate a new one." },
         { "fr", "Votre jeton a été rejeté comme non sécurisé. Essayez-en un autre ou générez-en un nouveau." },
         { "ge", "Ihr Token wurde als unsicher abgelehnt. Versuchen Sie einen anderen oder generieren Sie einen neuen." },
         { "hu", "A token elutasításra került, mert nem biztonságos. Próbáljon meg egy másikat, vagy generáljon egy újat." },
@@ -155,7 +176,7 @@ public class LocalizationData
     {
         { "ch", "玩家名称过长。请在游戏设置中缩短。" },
         { "cz", "Jméno hráče je příliš dlouhé. Zkraťte ho v nastavení hry." },
-        { "en", "The player name is too long. Please shorten it in the game settings." },
+        { "en", "Your player name is too long. Please shorten it in the game settings." },
         { "fr", "Le nom du joueur est trop long. Veuillez le raccourcir dans les paramètres du jeu." },
         { "ge", "Der Spielername ist zu lang. Bitte kürzen Sie ihn in den Spieleinstellungen." },
         { "hu", "A játékos neve túl hosszú. Rövidítse le a játék beállításaiban." },
@@ -176,7 +197,7 @@ public class LocalizationData
     {
         { "ch", "玩家名称包含禁止的字符或词语。请在游戏设置中修改。" },
         { "cz", "Jméno hráče obsahuje zakázané znaky nebo slova. Změňte ho v nastavení hry." },
-        { "en", "The player name contains forbidden characters or words. Please change it in the game settings." },
+        { "en", "Your player name contains forbidden characters or words. Please change it in the game settings." },
         { "fr", "Le nom du joueur contient des caractères ou mots interdits. Veuillez le modifier dans les paramètres du jeu." },
         { "ge", "Der Spielername enthält unzulässige Zeichen oder Wörter. Bitte ändern Sie ihn in den Spieleinstellungen." },
         { "hu", "A játékos neve tiltott karaktereket vagy szavakat tartalmaz. Módosítsa a játék beállításaiban." },
@@ -197,7 +218,7 @@ public class LocalizationData
     {
         { "ch", "检测到开发者物品。突袭数据将不会被上传。" },
         { "cz", "Byl u vás nalezen vývojářský předmět. Údaje z nájezdu nebudou odeslány." },
-        { "en", "Developer item(s) detected. Raid data will not be submitted." },
+        { "en", "Developer item(s) detected. Your next raids will not be submitted to the Leaderboard. Please remove any restricted items from your inventory." },
         { "fr", "Un objet de développeur a été détecté. Les données du raid ne seront pas envoyées." },
         { "ge", "Ein Entwicklergegenstand wurde gefunden. Raid-Daten werden nicht gesendet." },
         { "hu", "Fejlesztői tárgyat észleltünk. A rajtaütés adatai nem kerülnek elküldésre." },
@@ -214,11 +235,32 @@ public class LocalizationData
         { "ro", "A fost detectat un obiect de dezvoltator. Datele raidului nu vor fi trimise." }
     };
     
+    public static Dictionary<string, string> Error_InvalidStats = new() // 711
+    {
+        { "ch", "检测到不合理的最大能量或最大水分值。突袭数据将不会被上传。" },
+        { "cz", "Byla zjištěna nepřiměřeně vysoká maximální energie nebo hydratace. Údaje z nájezdu nebudou odeslány." },
+        { "en", "Unreasonably high max energy or max hydration detected. Your next raids will not be submitted to the Leaderboard." },
+        { "fr", "Énergie maximale ou hydratation maximale anormalement élevée détectée. Les données du raid ne seront pas envoyées." },
+        { "ge", "Unangemessen hohe maximale Energie oder maximale Hydratation erkannt. Raid-Daten werden nicht gesendet." },
+        { "hu", "Észlelhetetlenül magas maximális energia vagy maximális hidratáció észlelve. A rajtaütés adatai nem kerülnek elküldésre." },
+        { "it", "Rilevata energia massima o idratazione massima irragionevolmente alta. I dati del raid non verranno inviati." },
+        { "jp", "不合理に高い最大エネルギーまたは最大水分が検出されました。レイドデータは送信されません。" },
+        { "kr", "비합리적으로 높은 최대 에너지 또는 최대 수분이 감지되었습니다. 레이드 데이터는 전송되지 않습니다." },
+        { "pl", "Wykryto nieuzasadnione wysokie maksymalne energie lub nawodnienie. Dane z rajdu nie zostaną wysłane." },
+        { "po", "Energia máxima ou hidratação máxima excessivamente alta detectada. Os dados da incursão não serão enviados." },
+        { "sk", "Bola zistená neprimerane vysoká maximálna energia alebo hydratácia. Údaje z nájazdu nebudú odoslané." },
+        { "es", "Se detectó energía máxima o hidratación máxima irrazonablemente alta. Los datos de la incursión no se enviarán." },
+        { "es-mx", "Se detectó energía máxima o hidratación máxima irrazonablemente alta. Los datos del asalto no se enviarán." },
+        { "tu", "Makul olmayan derecede yüksek maksimum enerji veya maksimum hidrasyon tespit edildi. Baskın verileri gönderilmeyecek." },
+        { "ru", "Обнаружены необоснованно высокие значения максимальной энергии или максимальной гидратации. Данные рейда не будут отправлены." },
+        { "ro", "A fost detectată energie maximă sau hidratare maximă nerezonabil de mare. Datele raidului nu vor fi trimise." }
+    };
+    
     public static Dictionary<string, string> Error_Capacity = new() //Error after check capacity storages violation
     {
         { "ch", "{0} 太大了。突袭数据将不会被发送。" },
         { "cz", "{0} je příliš velký. Údaje z nájezdu nebudou odeslány." },
-        { "en", "{0} is too large. Raid data will not be submitted." },
+        { "en", "{0} is too large. Your next raids will not be submitted to the Leaderboard." },
         { "fr", "{0} est trop grand. Les données du raid ne seront pas envoyées." },
         { "ge", "{0} ist zu groß. Raid-Daten werden nicht übermittelt." },
         { "hu", "{0} túl nagy. A rajtaütési adatok nem kerülnek elküldésre." },
@@ -239,7 +281,7 @@ public class LocalizationData
     {
         { "ch", "突袭结束！已获得 {0} 排行榜金币" },     // Chinese
         { "cz", "Nájezd skončil! Získali jste {0} žebříčkových mincí" },     // Czech
-        { "en", "Raid finished! You earned {0} leaderboard coins" },     // English
+        { "en", "Raid finished! You've earned {0} leaderboard coins" },     // English
         { "fr", "Raid terminé ! Vous avez gagné {0} pièces de classement" },     // French
         { "ge", "Überfall beendet! Du hast {0} Ranglisten-Münzen erhalten" },     // German
         { "hu", "A rajtaütés véget ért! Szereztél {0} ranglista érmét" },     // Hungarian
@@ -254,6 +296,48 @@ public class LocalizationData
         { "tu", "Baskın bitti! {0} liderlik parası kazandınız" },     // Turkish
         { "ru", "Рейд окончен! Начислено {0} лидерборд коинов" },     // Russian
         { "ro", "Raid încheiat! Ai câștigat {0} monede de clasament" }     // Romanian
+    };
+
+    public static Dictionary<string, string> AddBattlePassXP = new() //Message earn xp
+    {
+        { "ch", "获得战斗通行证经验值: {0}" },     // Chinese
+        { "cz", "Získáno BattlePass EXP: {0}" },     // Czech
+        { "en", "Gained BattlePass EXP: {0}" },     // English
+        { "fr", "EXP BattlePass gagné : {0}" },     // French
+        { "ge", "BattlePass EXP erhalten: {0}" },     // German
+        { "hu", "BattlePass EXP megszerzése: {0}" },     // Hungarian
+        { "it", "EXP BattlePass ottenuto: {0}" },     // Italian
+        { "jp", "バトルパスEXP獲得: {0}" },     // Japanese
+        { "kr", "배틀패스 경험치 획득: {0}" },     // Korean
+        { "pl", "Zdobyto BattlePass EXP: {0}" },     // Polish
+        { "po", "EXP BattlePass ganho: {0}" },     // Portuguese
+        { "sk", "Získané BattlePass EXP: {0}" },     // Slovak
+        { "es", "EXP BattlePass obtenido: {0}" },     // Spanish (ES)
+        { "es-mx", "EXP BattlePass obtenido: {0}" },     // Spanish (MX)
+        { "tu", "BattlePass EXP kazanıldı: {0}" },     // Turkish
+        { "ru", "Получено BattlePass EXP: {0}" },     // Russian
+        { "ro", "EXP BattlePass câștigat: {0}" }     // Romanian
+    };
+    
+    public static Dictionary<string, string> BannedMods = new() //Banned mods list label
+    {
+        { "ch", "被禁用的模组：{0}" },     // Chinese
+        { "cz", "Zakázané mody: {0}" },     // Czech
+        { "en", "Banned mods: {0}" },     // English
+        { "fr", "Mods interdits : {0}" },     // French
+        { "ge", "Verbotene Mods: {0}" },     // German
+        { "hu", "Tiltott modok: {0}" },     // Hungarian
+        { "it", "Mod vietati: {0}" },     // Italian
+        { "jp", "禁止されたMOD：{0}" },     // Japanese
+        { "kr", "금지된 모드: {0}" },     // Korean
+        { "pl", "Zakazane mody: {0}" },     // Polish
+        { "po", "Mods banidos: {0}" },     // Portuguese
+        { "sk", "Zakázané mody: {0}" },     // Slovak
+        { "es", "Mods prohibidos: {0}" },     // Spanish (ES)
+        { "es-mx", "Mods prohibidos: {0}" },     // Spanish (MX)
+        { "tu", "Yasaklı modlar: {0}" },     // Turkish
+        { "ru", "Забаненные моды: {0}" },     // Russian
+        { "ro", "Moduri interzise: {0}" }     // Romanian
     };
     
     // Template for translating

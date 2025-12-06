@@ -1,4 +1,6 @@
-﻿using System.Reflection;
+﻿using System;
+using System.Reflection;
+using EFT;
 using SPT.Reflection.Patching;
 using SPTLeaderboard.Models;
 using SPTLeaderboard.Utils;
@@ -9,17 +11,19 @@ namespace SPTLeaderboard.Patches
     internal class OnStartRaidPatch : ModulePatch
     {
         protected override MethodBase GetTargetMethod() =>
-            typeof(Class303).GetMethod(
+            typeof(Class308).GetMethod(
                 "LocalRaidStarted",
                 BindingFlags.Instance | BindingFlags.Public);
 
         [PatchPrefix]
-        static bool Prefix()
+        static bool Prefix(LocalRaidSettings settings)
         {
             if (!SettingsModel.Instance.EnableSendData.Value)
                 return true;
             
             HitsTracker.Instance.Clear();
+
+            LeaderboardPlugin.Instance.TrackingLoot.OnStartRaid(settings.playerSide);
             
             LeaderboardPlugin.Instance.CreateIconPlayer();
             LeaderboardPlugin.Instance.StartInRaidHeartbeat();

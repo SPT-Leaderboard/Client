@@ -11,7 +11,7 @@ namespace SPTLeaderboard.Utils;
 
 public static class StatTrackInterop
 {
-    public static readonly Version RequiredVersion = new Version(1, 2, 2);
+    public static readonly Version RequiredVersion = new Version(2, 0, 0);
 
     public static Dictionary<string, Dictionary<string, CustomizedObject>> WeaponInfoOutOfRaid { get; set; } = new Dictionary<string, Dictionary<string, CustomizedObject>>();
     
@@ -48,20 +48,20 @@ public static class StatTrackInterop
         return null;
     }
     
-    public static Dictionary<string, Dictionary<string, WeaponInfo>> GetAllValidWeapons(string sessionId, Dictionary<string, Dictionary<string, CustomizedObject>> info)
+    public static Dictionary<string, Dictionary<string, WeaponInfo>> GetAllValidWeapons(string playerId, Dictionary<string, Dictionary<string, CustomizedObject>> info)
     {
-        if (!info.ContainsKey(sessionId))
+        if (!info.ContainsKey(playerId))
         {
-            LeaderboardPlugin.logger.LogWarning($"[StatTrack] Not exists data for current session: {sessionId}");
+            LeaderboardPlugin.logger.LogWarning($"[StatTrack] Not exists data for current player: {playerId}");
             return null;
         }
 
         var result = new Dictionary<string, Dictionary<string, WeaponInfo>>
         {
-            [sessionId] = new Dictionary<string, WeaponInfo>()
+            [playerId] = new Dictionary<string, WeaponInfo>()
         };
 
-        foreach (var weaponInfo in info[sessionId])
+        foreach (var weaponInfo in info[playerId])
         {
             string weaponId = weaponInfo.Key;
             CustomizedObject weaponStats = weaponInfo.Value;
@@ -78,14 +78,14 @@ public static class StatTrackInterop
 #if DEBUG || BETA
             LeaderboardPlugin.logger.LogWarning($"[StatTrack] Add {weaponId + " ShortName"}");
 #endif
-            result[sessionId][weaponName] = new WeaponInfo
+            result[playerId][weaponName] = new WeaponInfo
             {
                 stats = weaponStats,
                 originalId = weaponId
             };
         }
 
-        if (result[sessionId].Count == 0)
+        if (result[playerId].Count == 0)
         {
 #if DEBUG || BETA
             LeaderboardPlugin.logger.LogWarning($"[StatTrack] list is empty. Return NULL");

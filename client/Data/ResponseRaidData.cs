@@ -9,4 +9,7 @@ public class ResponseRaidData
 
     [JsonProperty("addedToBalance")]
     public int AddedToBalance { get; set; } = 0;
+
+    [JsonProperty("battlePassEXP")]
+    public int BattlePassEXP { get; set; } = 0;
 }

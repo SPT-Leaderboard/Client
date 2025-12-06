@@ -6,22 +6,23 @@ namespace SPTLeaderboard.Data;
 
 public static class GlobalData
 {
-    public const string Version = "4.0.0";
+    public const string Version = "5.0.3";
     
 #if DEBUG || BETA
-    public const string SubVersion = "4";
+    public const string SubVersion = "40";
 #endif
     
-    public const string BaseSptVersion = "3.11.3";
+    public const string BaseSptVersion = "4.0";
     
     public const int HeartbeatCooldownSeconds = 60;
     
     // URLs
-    public static string HeartbeatUrl = $"https://{SettingsModel.Instance.PhpEndpoint.Value}{SettingsModel.Instance.PhpPath.Value}heartbeat/v2.php";
-    public static string ProfileUrl = $"https://{SettingsModel.Instance.PhpEndpoint.Value}{SettingsModel.Instance.PhpPath.Value}v2/v2.php";
-    public static string IconUrl = $"https://{SettingsModel.Instance.PhpEndpoint.Value}{SettingsModel.Instance.PhpPath.Value}client/avatar_processor.php";
-    public static string PreRaidUrl = $"https://{SettingsModel.Instance.PhpEndpoint.Value}{SettingsModel.Instance.PhpPath.Value}client/check_version.php";
-    public static string ConfigUrl = $"https://{SettingsModel.Instance.PhpEndpoint.Value}{SettingsModel.Instance.PhpPath.Value}client/get_config.php";
+    public static string HeartbeatUrl = $"{SettingsModel.Instance.PhpEndpoint.Value}{SettingsModel.Instance.PhpPath.Value}heartbeat/v2.php";
+    public static string ProfileUrl = $"{SettingsModel.Instance.PhpEndpoint.Value}{SettingsModel.Instance.PhpPath.Value}v3/v3.php";
+    public static string IconUrl = $"{SettingsModel.Instance.PhpEndpoint.Value}{SettingsModel.Instance.PhpPath.Value}client/avatar_processor.php";
+    public static string PreRaidUrl = $"{SettingsModel.Instance.PhpEndpoint.Value}{SettingsModel.Instance.PhpPath.Value}client/api_sync.php";
+    public static string ConfigUrl = $"{SettingsModel.Instance.PhpEndpoint.Value}{SettingsModel.Instance.PhpPath.Value}client/get_config.php";
+    public static string PriceUrl = $"{SettingsModel.Instance.PhpEndpoint.Value}{SettingsModel.Instance.PhpPath.Value}client/get_prices.php";
     
     // Paths
     public static string SptRootPath = Path.GetFullPath(Path.Combine(BepInEx.Paths.PluginPath, "..", "..")); 

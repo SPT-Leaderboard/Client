@@ -26,8 +26,8 @@ namespace SPTLeaderboard.Models
 		
 		public ConfigEntry<bool> EnableSendData;
 		public ConfigEntry<bool> ShowPointsNotification;
+		public ConfigEntry<bool> ShowExperienceNotification;
 		public ConfigEntry<bool> ModCasualMode;
-		public ConfigEntry<bool> PublicProfile;
 		public ConfigEntry<bool> EnableModSupport;
 		public ConfigEntry<int> ConnectionTimeout;
 		public ConfigEntry<string> PhpEndpoint;
@@ -102,24 +102,24 @@ namespace SPTLeaderboard.Models
 						Order = 7
 					}));
 			
+			ShowExperienceNotification = configFile.Bind(
+				"1. Settings", 
+				"Show Notification Experience", 
+				true, 
+				new ConfigDescription(
+					"When turned on, display a notification about the issuance of leaderboard experience at the end of the raid.",
+					null, 
+					new ConfigurationManagerAttributes
+					{
+						Order = 6
+					}));
+
 			ModCasualMode = configFile.Bind(
 				"1. Settings", 
 				"Casual mode", 
 				false, 
 				new ConfigDescription(
 					"Enabling this will switch you to a Casual Mode.\n You will not be ranked in the leaderboard and your stats won't count towards its progress.\n You'll be free off any leaderboard restrictions (except reasonable ones), have access to raid history and your profile like usual.\n DANGER - Once you played with this ON - YOU CANT GET BACK INTO RANKING.",
-					null, 
-					new ConfigurationManagerAttributes
-					{
-						Order = 6
-					}));
-			
-			PublicProfile = configFile.Bind(
-				"1. Settings", 
-				"Public Profile", 
-				true, 
-				new ConfigDescription(
-					"If you want to share more Profile SPT stats with anyone and the leaderboard - set to true\n This also allows your server to send heartbeats to API",
 					null, 
 					new ConfigurationManagerAttributes
 					{
@@ -153,8 +153,8 @@ namespace SPTLeaderboard.Models
 			
 			PhpEndpoint = configFile.Bind(
 				"1. Settings", 
-				"PHP Endpoint", 
-				"visuals.nullcore.net", 
+				"Server Endpoint", 
+				"https://sptlb.yuyui.moe", 
 				new ConfigDescription(
 					"DO NOT TOUCH UNLESS YOU KNOW WHAT YOU ARE DOING.\n Domain (or both subdomain + domain) used for PHP requests",
 					null, 
@@ -166,8 +166,8 @@ namespace SPTLeaderboard.Models
 			
 			PhpPath = configFile.Bind(
 				"1. Settings", 
-				"PHP Path", 
-				"/SPT/api/", 
+				"Server Path", 
+				"/api/main/", 
 				new ConfigDescription(
 					"DO NOT TOUCH UNLESS YOU KNOW WHAT YOU ARE DOING.\n Domain (or both subdomain + domain) used for PHP requests",
 					null, 

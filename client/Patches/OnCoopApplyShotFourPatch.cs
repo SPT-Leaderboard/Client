@@ -9,20 +9,20 @@ namespace SPTLeaderboard.Patches;
 
 public class OnCoopApplyShotFourPatch: ModulePatch
 {
-    protected override MethodBase GetTargetMethod() => DataUtils.GetPluginType(DataUtils.FikaCore, "Fika.Core.Coop.ObservedClasses.ObservedClientBridge")
+    protected override MethodBase GetTargetMethod() => DataUtils.GetPluginType(DataUtils.FikaCore, "Fika.Core.Main.ObservedClasses.PlayerBridge.ObservedClientBridge")
         .GetMethod("ApplyShot", BindingFlags.Instance | BindingFlags.Public);
     
     [PatchPostfix]
-    static void PostFix(DamageInfoStruct damageInfo, EBodyPart bodyPart, EBodyPartColliderType bodyPartCollider)
+    static void PostFix(DamageInfoStruct damageInfo, EBodyPart bodyPart, EBodyPartColliderType bodyPartCollider, EArmorPlateCollider armorPlateCollider, ShotIdStruct shotId)
     {
         if (!SettingsModel.Instance.EnableSendData.Value)
             return;
             
-#if DEBUG
+#if DEBUG || BETA
         LeaderboardPlugin.logger.LogWarning("[ProcessShot ObservedClientBridge] Hit");
 #endif
         IPlayerOwner player = damageInfo.Player;
-#if DEBUG
+#if DEBUG || BETA
         LeaderboardPlugin.logger.LogWarning($"[ProcessShot ObservedClientBridge] Nick -> {player?.Nickname}");
 #endif
         if ((Player)((player != null) ? player.iPlayer : null) != PlayerHelper.Instance.Player)
@@ -32,7 +32,7 @@ public class OnCoopApplyShotFourPatch: ModulePatch
         
         HitsTracker.Instance.IncreaseHit(bodyPart);
         
-#if DEBUG
+#if DEBUG || BETA
         OverlayDebug.Instance.UpdateOverlay();
         LeaderboardPlugin.logger.LogWarning($"[ProcessShot ObservedClientBridge] Hit BodyType {bodyPart.ToString()}");
         LeaderboardPlugin.logger.LogWarning($"[ProcessShot ObservedClientBridge] Hit EBodyPartColliderType {bodyPartCollider.ToString()}");
