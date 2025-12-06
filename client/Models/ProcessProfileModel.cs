@@ -442,14 +442,14 @@ public class ProcessProfileModel
                     $"Data raw StatTrack {JsonConvert.SerializeObject(dataStatTrack).ToJson()}");
 #endif
                 processedStatTrackData = StatTrackInterop.GetAllValidWeapons(profileId, dataStatTrack);
-#if DEBUG || BETA
                 if (processedStatTrackData != null)
                 {
+#if DEBUG || BETA
                     LeaderboardPlugin.logger.LogWarning("processedStatTrackData != null: Data -> " +
                                                         JsonConvert.SerializeObject(processedStatTrackData).ToJson());
+#endif
                     fixResultStattrack = processedStatTrackData[profileId];
                 }
-#endif
             }
         }
 
