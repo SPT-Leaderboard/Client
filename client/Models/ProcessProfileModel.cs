@@ -420,40 +420,48 @@ public class ProcessProfileModel
         var statTrackIsUsed = StatTrackInterop.Loaded();
         Dictionary<string, Dictionary<string, WeaponInfo>> processedStatTrackData =
             new Dictionary<string, Dictionary<string, WeaponInfo>>();
-        Dictionary<string, WeaponInfo> fixResultStattrack =
-            new Dictionary<string, WeaponInfo>();
 
         if (!SettingsModel.Instance.EnableModSupport.Value && !statTrackIsUsed)
         {
             LeaderboardPlugin.logger.LogInfo(
                 $"StatTrack process data skip. StatTrack Find? : {statTrackIsUsed} | Enabled Mod Support? : {SettingsModel.Instance.EnableModSupport.Value}");
+            return (statTrackIsUsed, null);
         }
-        else
+
+        LeaderboardPlugin.logger.LogInfo($"StatTrack processing started. Loaded: {statTrackIsUsed}, ProfileId: {profileId}");
+
+        var dataStatTrack = StatTrackInterop.LoadFromServer();
+        if (dataStatTrack == null)
         {
-#if DEBUG || BETA
-            LeaderboardPlugin.logger.LogWarning($"Loaded StatTrack plugin {statTrackIsUsed}");
-#endif
-
-            var dataStatTrack = StatTrackInterop.LoadFromServer();
-            if (dataStatTrack != null)
-            {
-#if DEBUG || BETA
-                LeaderboardPlugin.logger.LogWarning(
-                    $"Data raw StatTrack {JsonConvert.SerializeObject(dataStatTrack).ToJson()}");
-#endif
-                processedStatTrackData = StatTrackInterop.GetAllValidWeapons(profileId, dataStatTrack);
-                if (processedStatTrackData != null)
-                {
-#if DEBUG || BETA
-                    LeaderboardPlugin.logger.LogWarning("processedStatTrackData != null: Data -> " +
-                                                        JsonConvert.SerializeObject(processedStatTrackData).ToJson());
-#endif
-                    fixResultStattrack = processedStatTrackData[profileId];
-                }
-            }
+            LeaderboardPlugin.logger.LogWarning($"[StatTrack] Failed to load data from server for profile {profileId}");
+            return (statTrackIsUsed, null);
         }
 
-        return (statTrackIsUsed, fixResultStattrack);
+#if DEBUG || BETA
+        LeaderboardPlugin.logger.LogWarning(
+            $"Data raw StatTrack {JsonConvert.SerializeObject(dataStatTrack).ToJson()}");
+#endif
+
+        processedStatTrackData = StatTrackInterop.GetAllValidWeapons(profileId, dataStatTrack);
+        if (processedStatTrackData == null)
+        {
+            LeaderboardPlugin.logger.LogWarning($"[StatTrack] GetAllValidWeapons returned null for profile {profileId}");
+            return (statTrackIsUsed, null);
+        }
+
+        if (!processedStatTrackData.ContainsKey(profileId))
+        {
+            LeaderboardPlugin.logger.LogWarning($"[StatTrack] Processed data does not contain profile {profileId}");
+            return (statTrackIsUsed, null);
+        }
+
+#if DEBUG || BETA
+        LeaderboardPlugin.logger.LogWarning("processedStatTrackData != null: Data -> " +
+                                            JsonConvert.SerializeObject(processedStatTrackData).ToJson());
+#endif
+
+        LeaderboardPlugin.logger.LogInfo($"[StatTrack] Successfully processed data for profile {profileId}, weapons count: {processedStatTrackData[profileId].Count}");
+        return (true, processedStatTrackData[profileId]);
     }
 
     /// <summary>

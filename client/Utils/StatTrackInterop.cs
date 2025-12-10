@@ -87,9 +87,8 @@ public static class StatTrackInterop
 
         if (result[playerId].Count == 0)
         {
-#if DEBUG || BETA
-            LeaderboardPlugin.logger.LogWarning($"[StatTrack] list is empty. Return NULL");
-#endif
+            LeaderboardPlugin.logger.LogWarning($"[StatTrack] ListWeapons is empty");
+
             return null;
         }
 
