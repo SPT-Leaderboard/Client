@@ -61,12 +61,7 @@ public class TrackingLoot
             LeaderboardPlugin.logger.LogInfo($"[TrackingLoot][OnStartRaid] Cost Equipment = {PreRaidLootValue}");
         });
     }
-
-    public void OnEndRaid(ESideType sideType, Action callback)
-    {
-        OnEndRaidAsync(sideType).ContinueWith(() => callback?.Invoke()).Forget();
-    }
-
+    
     public async UniTask OnEndRaidAsync(ESideType sideType)
     {
         PostRaidEquipValue = 0;

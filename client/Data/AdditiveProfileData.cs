@@ -48,10 +48,7 @@ namespace SPTLeaderboard.Data
 
         [JsonProperty("sptVer")]
         public string SptVersion { get; set; } = baseData.SptVersion;
-
-        // [JsonProperty("teamTag")]
-        // public string TeamTag { get; set; }
-
+        
         [JsonProperty("token")]
         public string Token { get; set; } = baseData.Token;
 
@@ -63,6 +60,7 @@ namespace SPTLeaderboard.Data
         
         [JsonProperty("RaidSettings")]
         public RaidSettingsData RaidSettingsData = baseData.RaidSettingsData;
+        
         #endregion
         
         [JsonProperty("discFromRaid")]
@@ -172,6 +170,9 @@ namespace SPTLeaderboard.Data
         
         [JsonProperty("max_hydration")]
         public float MaxHydration { get; set; } = 0;
+        
+        [JsonProperty("revenue_items")]
+        public List<string> RevenueItems { get; set; } = [];
 
         public static AdditiveProfileData MakeBetaCopy(AdditiveProfileData original)
         {
@@ -231,7 +232,8 @@ namespace SPTLeaderboard.Data
                 Energy = original.Energy,
                 Hydration = original.Hydration,
                 MaxEnergy = original.MaxEnergy,
-                MaxHydration = original.MaxHydration
+                MaxHydration = original.MaxHydration,
+                RevenueItems = original.RevenueItems
             };
         }
     }

@@ -127,7 +127,7 @@ public class ProcessProfileModel
         var completedQuests = ProcessQuests(pmcData, isScavRaid);
         var nameKiller = GetKillerName(resultRaid, pmcData, scavData);
         var discFromRaid = resultRaid.result == ExitStatus.Left;
-        var revenueRaid = CalculateRaidRevenue(resultRaid, isScavRaid);
+        var (revenueRaid, revenueItems) = CalculateRaidRevenue(resultRaid, isScavRaid);
         var (isTransition, lastRaidTransitionTo) = GetTransitionData(resultRaid);
         var allAchievementsDict = GetAllAchievements(pmcData);
         var (haveDevItems, hasKappa) = ValidatePlayerItems(pmcData);
@@ -141,7 +141,7 @@ public class ProcessProfileModel
         var (statTrackIsUsed, processedStatTrackData) = ProcessStatTrackData(profileId);
 
         CreateAndSendProfileData(profileId, gameVersion, lastRaidLocationRaw, lastRaidLocation,
-            isScavRaid, completedQuests, nameKiller, discFromRaid, revenueRaid, isTransition,
+            isScavRaid, completedQuests, nameKiller, discFromRaid, revenueRaid, revenueItems, isTransition,
             lastRaidTransitionTo, allAchievementsDict, haveDevItems, hasKappa, averageShot,
             longestShot, longestHeadshot, maxHealth, currentHealth, currentEnergy, currentHydration,
             maxEnergy, maxHydration, killedPmc, killedSavage, killedBoss, expLooting, hitCount,
@@ -198,26 +198,26 @@ public class ProcessProfileModel
     /// <summary>
     /// Calculates raid revenue
     /// </summary>
-    private int CalculateRaidRevenue(RaidEndDescriptorClass resultRaid, bool isScavRaid)
+    private (int Revenue, List<string> Items) CalculateRaidRevenue(RaidEndDescriptorClass resultRaid, bool isScavRaid)
     {
         if (resultRaid.result is ExitStatus.Runner or ExitStatus.Transit or ExitStatus.Survived)
         {
             if (isScavRaid)
             {
-                return LeaderboardPlugin.Instance.TrackingLoot.PostRaidLootValue +
-                       LeaderboardPlugin.Instance.TrackingLoot.PostRaidEquipValue;
+                return (LeaderboardPlugin.Instance.TrackingLoot.PostRaidLootValue +
+                       LeaderboardPlugin.Instance.TrackingLoot.PostRaidEquipValue, LeaderboardPlugin.Instance.TrackingLoot.LootedIds.ToList());
             }
 
-            return LeaderboardPlugin.Instance.TrackingLoot.PostRaidLootValue;
+            return (LeaderboardPlugin.Instance.TrackingLoot.PostRaidLootValue, LeaderboardPlugin.Instance.TrackingLoot.LootedIds.ToList());
         }
         else
         {
             if (isScavRaid)
             {
-                return 0;
+                return (0, []);
             }
 
-            return -LeaderboardPlugin.Instance.TrackingLoot.PreRaidLootValue;
+            return (-LeaderboardPlugin.Instance.TrackingLoot.PreRaidLootValue, []);
         }
     }
 
@@ -470,7 +470,7 @@ public class ProcessProfileModel
     private void CreateAndSendProfileData(
         string profileId, string gameVersion, string lastRaidLocationRaw, string lastRaidLocation,
         bool isScavRaid, Dictionary<string, QuestInfoData> completedQuests, string nameKiller,
-        bool discFromRaid, int revenueRaid, bool isTransition, string lastRaidTransitionTo,
+        bool discFromRaid, int revenueRaid, List<string> revenueItems, bool isTransition, string lastRaidTransitionTo,
         Dictionary<string, int> allAchievementsDict, bool haveDevItems, bool hasKappa,
         float averageShot, int longestShot, int longestHeadshot, float maxHealth, float currentHealth,
         float currentEnergy, float currentHydration, float maxEnergy, float maxHydration,
@@ -491,7 +491,7 @@ public class ProcessProfileModel
                 statTrackIsUsed, hitCount, lastRaidLocation, lastRaidLocationRaw, lastRaidTransitionTo,
                 allAchievementsDict, longestShot, longestHeadshot, averageShot, killedBoss, killedSavage,
                 processedStatTrackData, pmcData, scavData, totalDamage, damageTaken, completedQuests,
-                revenueRaid, maxEnergy, maxHydration);
+                revenueRaid, maxEnergy, maxHydration, revenueItems);
 
             SendProfileData(scavProfileData, "SCAV");
         }
@@ -502,7 +502,7 @@ public class ProcessProfileModel
                 lastRaidTransitionTo, allAchievementsDict, longestShot, longestHeadshot, averageShot,
                 killedBoss, killedSavage, processedStatTrackData, pmcData, scavData, hasKappa,
                 totalDamage, damageTaken, completedQuests, revenueRaid, currentEnergy, currentHydration,
-                maxEnergy, maxHydration);
+                maxEnergy, maxHydration, revenueItems);
 
             SendProfileData(pmcProfileData, "PMC");
         }
@@ -552,7 +552,7 @@ public class ProcessProfileModel
         int killedBoss, int killedSavage, Dictionary<string, WeaponInfo> processedStatTrackData,
         Profile pmcData, Profile scavData, bool hasKappa, int totalDamage, int damageTaken,
         Dictionary<string, QuestInfoData> completedQuests, int revenueRaid, float currentEnergy,
-        float currentHydration, float maxEnergy, float maxHydration)
+        float currentHydration, float maxEnergy, float maxHydration, List<string> revenueItems)
     {
         var traderInfoData = DataUtils.GetTraderInfo(pmcData);
 
@@ -592,7 +592,8 @@ public class ProcessProfileModel
             Energy = currentEnergy,
             Hydration = currentHydration,
             MaxEnergy = maxEnergy,
-            MaxHydration = maxHydration
+            MaxHydration = maxHydration,
+            RevenueItems = revenueItems
         };
     }
 
@@ -605,7 +606,7 @@ public class ProcessProfileModel
         int longestShot, int longestHeadshot, float averageShot, int killedBoss, int killedSavage,
         Dictionary<string, WeaponInfo> processedStatTrackData, Profile pmcData,
         Profile scavData, int totalDamage, int damageTaken, Dictionary<string, QuestInfoData> completedQuests,
-        int revenueRaid, float maxEnergy, float maxHydration)
+        int revenueRaid, float maxEnergy, float maxHydration, List<string> revenueItems)
     {
         var traderInfoData = DataUtils.GetTraderInfo(pmcData);
 
@@ -641,7 +642,8 @@ public class ProcessProfileModel
             Quests = completedQuests,
             RevenueRaid = revenueRaid,
             MaxEnergy = maxEnergy,
-            MaxHydration = maxHydration
+            MaxHydration = maxHydration,
+            RevenueItems = revenueItems
         };
     }
 
