@@ -18,6 +18,7 @@
     </PropertyGroup>
     <PropertyGroup>
         <TarkovDir Condition=" '$(TarkovDir)' == '' ">C:\Games\SPT\</TarkovDir>
+        <TarkovDevDir Condition=" '$(TarkovDevDir)' == '' ">C:\Games\SPTDEV\</TarkovDevDir>
         <TarkovPluginsSPTDir>$(TarkovDir)BepInEx\plugins\spt\</TarkovPluginsSPTDir>
         <TarkovPluginsDir>$(TarkovDir)BepInEx\plugins\</TarkovPluginsDir>
         <TarkovManagedDir>$(TarkovDir)EscapeFromTarkov_Data\Managed\</TarkovManagedDir>
@@ -204,6 +205,7 @@
         </ItemGroup>
         <!-- Copies the output to tarkov game folder -->
         <Copy SourceFiles="@(OutputDLL)" DestinationFolder="$(TarkovDir)BepInEx\plugins\SPT-Leaderboard\%(RecursiveDir)" />
+        <Copy Condition="Exists('$(TarkovDevDir)')" SourceFiles="@(OutputDLL)" DestinationFolder="$(TarkovDevDir)BepInEx\plugins\SPT-Leaderboard\%(RecursiveDir)" />
         <!-- Delete previous build folder -->
         <RemoveDir Directories="$(ProjectDir)BuildScripts\Build" />
         <!-- Copy dll to build folder -->
