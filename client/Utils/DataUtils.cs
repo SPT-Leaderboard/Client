@@ -427,18 +427,49 @@ public static class DataUtils
     public static void TryGetTransitionData(RaidEndDescriptorClass resultRaid, Action<string, bool> callback)
     {
         var lastRaidTransitionTo = "None";
-        if (resultRaid.result == ExitStatus.Transit
-            && TransitControllerAbstractClass.Exist<LocalGameTransitControllerClass>(out var transitController))
+        
+        if (resultRaid.result != ExitStatus.Transit)
         {
-            var locationTransit = transitController.alreadyTransits[resultRaid.ProfileId];
-            lastRaidTransitionTo = GetPrettyMapName(locationTransit.location.ToLower());
-            
-            LeaderboardPlugin.logger.LogWarning($"Player transit to map PRETTY {lastRaidTransitionTo}");
-            LeaderboardPlugin.logger.LogWarning($"Player transit to map RAW {locationTransit.location}");
-            callback.Invoke(lastRaidTransitionTo, true);
+            callback.Invoke(lastRaidTransitionTo, false);
             return;
         }
-        callback.Invoke(lastRaidTransitionTo, false);
+        
+        TarkovApplication tarkovApplication;
+        if (!TarkovApplication.Exist(out tarkovApplication))
+        {
+            LeaderboardPlugin.logger.LogWarning($"[TryGetTransitionData] TarkovApplication does not exist, cannot retrieve transition status");
+            callback.Invoke(lastRaidTransitionTo, false);
+            return;
+        }
+
+        try
+        {
+            var location = tarkovApplication.transitionStatus.Location;
+            var inTransition = tarkovApplication.transitionStatus.InTransition;
+            
+            if (!inTransition)
+            {
+                LeaderboardPlugin.logger.LogInfo($"[TryGetTransitionData] Not in transition, skipping");
+                callback.Invoke(lastRaidTransitionTo, false);
+                return;
+            }
+            
+            if (string.IsNullOrEmpty(location))
+            {
+                LeaderboardPlugin.logger.LogWarning($"[TryGetTransitionData] Transition location is empty");
+                callback.Invoke(lastRaidTransitionTo, false);
+                return;
+            }
+            
+            lastRaidTransitionTo = GetPrettyMapName(location.ToLower());
+            LeaderboardPlugin.logger.LogInfo($"[TryGetTransitionData] Player transit to map: {lastRaidTransitionTo} (raw: {location})");
+            callback.Invoke(lastRaidTransitionTo, true);
+        }
+        catch (Exception ex)
+        {
+            LeaderboardPlugin.logger.LogError($"[TryGetTransitionData] Error accessing transitionStatus: {ex.Message}");
+            callback.Invoke(lastRaidTransitionTo, false);
+        }
     }
     
     /// <summary>

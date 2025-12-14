@@ -51,15 +51,9 @@ namespace SPTLeaderboard.Utils
         {
             if (clonePlayerModelViewObj != null)
             {
-#if DEBUG
-                LeaderboardPlugin.logger.LogWarning("Found obj PlayerModelView");
-#endif
                 _targetPlayerModelView = clonePlayerModelViewObj.GetComponentInChildren<PlayerModelView>();
                 if (_targetPlayerModelView)
                 {
-#if DEBUG
-                    LeaderboardPlugin.logger.LogWarning("Found component PlayerModelView");
-#endif
                     if (!_isShowed)
                     {
                         ISession backEndSession = PatchConstants.BackEndSession;
@@ -70,7 +64,7 @@ namespace SPTLeaderboard.Utils
                         }
                         else
                         {
-                            LeaderboardPlugin.logger.LogError("CreateFullIcon - BackEndSession.Profile is null. Cannot show player model view script.");
+                            LeaderboardPlugin.logger.LogError("CreateFullIcon - BackEndSession.Profile is null. Cannot show player model view.");
                         } 
                     }
                     else
@@ -127,7 +121,7 @@ namespace SPTLeaderboard.Utils
             }
             catch (Exception ex)
             {
-                NotificationManagerClass.DisplayMessageNotification("Error 4. Failed to save screenshot", ENotificationDurationType.Default, ENotificationIconType.Alert, null);
+                NotificationManagerClass.DisplayMessageNotification("Error to save screenshot", ENotificationDurationType.Default, ENotificationIconType.Alert, null);
                 LeaderboardPlugin.logger.LogError($"Error to save screenshot: {ex.Message}");
                 LeaderboardPlugin.logger.LogError($"{ex.StackTrace}");
                 return false;
