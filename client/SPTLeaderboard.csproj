@@ -134,9 +134,8 @@
         <Compile Include="Data\ErrorBannedModsData.cs" />
         <Compile Include="Data\HideoutData.cs" />
         <Compile Include="Data\HitsDistanceData.cs" />
-        <Compile Include="Data\ItemsDataGlobal.cs" />
+        <Compile Include="Data\ItemData.cs" />
         <Compile Include="Data\LoginRequestData.cs" />
-        <Compile Include="Data\ItemsData.cs" />
         <Compile Include="Data\PreRaidData.cs" />
         <Compile Include="Data\CustomizedObject.cs" />
         <Compile Include="Data\EquipmentData.cs" />

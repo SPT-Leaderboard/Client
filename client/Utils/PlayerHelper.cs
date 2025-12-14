@@ -69,12 +69,12 @@ public class PlayerHelper
         return new Vector3(unityPosition.x, unityPosition.z, unityPosition.y);
     }
     
-    public static List<string> GetEquipmentItemsTemplateId(ESideType sideType){
+    public static List<ItemData> GetEquipmentItems(ESideType sideType){
         var session = GetSession();
         var pmcData = session?.GetProfileBySide(sideType);
         var listEquipment = pmcData.Inventory.GetItemsInSlots(SlotsToSearch);
 
-        return listEquipment.Where(i => i is not null).Where(i => !i.Parent.IsSpecialSlotAddress()).Select(item => item.TemplateId.ToString()).ToList();
+        return listEquipment.Where(i => i is not null).Where(i => !i.Parent.IsSpecialSlotAddress()).Select(item => new ItemData(item.Id, item.TemplateId.ToString(), item.StackObjectsCount)).ToList();
     }
     
     #region Equipment
