@@ -206,7 +206,15 @@ namespace SPTLeaderboard
 #if DEBUG
             if (SettingsModel.Instance.Debug.Value)
             {
-                logger.LogWarning($"Request Image Data {jsonBody}");
+                var logData = new ImageData
+                {
+                    EncodedImage = "VeryMoreDataForLogsBlaBla",
+                    PlayerId = data.PlayerId,
+                    IsFullBody = data.IsFullBody,
+                    Token = data.Token
+                };
+                string logJsonBody = JsonConvert.SerializeObject(logData);
+                logger.LogWarning($"Request Image Data {logJsonBody}");
             }
 #endif
             request.SetData(jsonBody);
