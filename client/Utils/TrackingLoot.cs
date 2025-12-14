@@ -14,6 +14,29 @@ public class TrackingLoot
 
     public void Add(Item item)
     {
+        // Check if item with this ID already exists in PreRaidItems
+        var existingPreRaidItem = PreRaidItems.FirstOrDefault(x => x.Id == item.Id);
+        if (existingPreRaidItem != null)
+        {
+            existingPreRaidItem.Amount = item.StackObjectsCount;
+#if DEBUG
+            LeaderboardPlugin.logger.LogInfo($"[TrackingLoot][Update][PreRaidEquipment] Item TemplateId: {existingPreRaidItem.TemplateId}, Id: {existingPreRaidItem.Id}, New Amount: {existingPreRaidItem.Amount}");
+#endif
+            return;
+        }
+        
+        // Check if item with this ID already exists in LootedItems
+        var existingLootedItem = LootedItems.FirstOrDefault(x => x.Id == item.Id);
+        if (existingLootedItem != null)
+        {
+            existingLootedItem.Amount = item.StackObjectsCount;
+#if DEBUG
+            LeaderboardPlugin.logger.LogInfo($"[TrackingLoot][Update] Item TemplateId: {existingLootedItem.TemplateId}, Id: {existingLootedItem.Id}, New Amount: {existingLootedItem.Amount}");
+#endif
+            return;
+        }
+        
+        // If item not found, add new one
         if (PreRaidIdItems.Contains(item.Id))
         {
             var preItemData = new ItemData(
@@ -25,7 +48,7 @@ public class TrackingLoot
             PreRaidItems.Add(preItemData);
             
 #if DEBUG
-            LeaderboardPlugin.logger.LogInfo($"[TrackingLoot][Add][PreRaidEquipment] Item TemplateId {preItemData.TemplateId}, Id {preItemData.Id}, Amount {preItemData.Amount}");
+            LeaderboardPlugin.logger.LogInfo($"[TrackingLoot][Add][PreRaidEquipment] Item TemplateId: {preItemData.TemplateId}, Id: {preItemData.Id}, Amount: {preItemData.Amount}");
 #endif
         }
         else
@@ -40,7 +63,7 @@ public class TrackingLoot
 
 #if DEBUG
             LeaderboardPlugin.logger.LogInfo(
-                $"[TrackingLoot][Add] Item TemplateId {itemData.TemplateId}, Id {itemData.Id}, Amount {itemData.Amount}");
+                $"[TrackingLoot][Add] Item TemplateId: {itemData.TemplateId}, Id: {itemData.Id}, Amount: {itemData.Amount}");
 #endif
         }
     }
@@ -52,7 +75,7 @@ public class TrackingLoot
         {
             PreRaidItems.Remove(preRaidItem);
 #if DEBUG
-            LeaderboardPlugin.logger.LogInfo($"[TrackingLoot][Remove][PreRaidEquipment] Item TemplateId {preRaidItem.TemplateId}, Id {preRaidItem.Id}");
+            LeaderboardPlugin.logger.LogInfo($"[TrackingLoot][Remove][PreRaidEquipment] Item TemplateId: {preRaidItem.TemplateId}, Id: {preRaidItem.Id}");
 #endif
             return;
         }
@@ -62,7 +85,7 @@ public class TrackingLoot
         {
             LootedItems.Remove(lootedItem);
 #if DEBUG
-            LeaderboardPlugin.logger.LogInfo($"[TrackingLoot][Remove] Item TemplateId {lootedItem.TemplateId}, Id {lootedItem.Id}");
+            LeaderboardPlugin.logger.LogInfo($"[TrackingLoot][Remove] Item TemplateId: {lootedItem.TemplateId}, Id: {lootedItem.Id}");
 #endif
         }
     }
