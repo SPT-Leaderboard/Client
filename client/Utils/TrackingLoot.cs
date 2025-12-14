@@ -6,7 +6,6 @@ using SPTLeaderboard.Data;
 
 namespace SPTLeaderboard.Utils;
 
-// Taken from https://github.com/HiddenCirno/ShowLootValue
 public class TrackingLoot
 {
     public List<ItemData> LootedItems = new();
@@ -15,7 +14,6 @@ public class TrackingLoot
 
     public void Add(Item item)
     {
-        OverlayDebug.DebugGetProperties(item);
         if (PreRaidIdItems.Contains(item.Id))
         {
             var preItemData = new ItemData(
@@ -53,7 +51,9 @@ public class TrackingLoot
         if (preRaidItem != null)
         {
             PreRaidItems.Remove(preRaidItem);
+#if DEBUG
             LeaderboardPlugin.logger.LogInfo($"[TrackingLoot][Remove][PreRaidEquipment] Item TemplateId {preRaidItem.TemplateId}, Id {preRaidItem.Id}");
+#endif
             return;
         }
         
