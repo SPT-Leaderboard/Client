@@ -20,7 +20,7 @@ using Timer = System.Timers.Timer;
 namespace SPTLeaderboard
 {
     [BepInDependency("com.arys.unitytoolkit", "2.0.1")]
-    [BepInPlugin("harmonyzt.SPTLeaderboard", "SPTLeaderboard", "5.0.3")]
+    [BepInPlugin("harmonyzt.SPTLeaderboard", "SPTLeaderboard", "5.0.4")]
     public class LeaderboardPlugin : BaseUnityPlugin
     {
         public static LeaderboardPlugin Instance { get; private set; }
@@ -221,7 +221,15 @@ namespace SPTLeaderboard
 #if DEBUG
             if (SettingsModel.Instance.Debug.Value)
             {
-                logger.LogWarning($"Request Image Data {jsonBody}");
+                var logData = new ImageData
+                {
+                    EncodedImage = "VeryMoreDataForLogsBlaBla",
+                    PlayerId = data.PlayerId,
+                    IsFullBody = data.IsFullBody,
+                    Token = data.Token
+                };
+                string logJsonBody = JsonConvert.SerializeObject(logData);
+                logger.LogWarning($"Request Image Data {logJsonBody}");
             }
 #endif
             request.SetData(jsonBody);

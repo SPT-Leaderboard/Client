@@ -109,131 +109,6 @@ public static class DataUtils
     {
         return Chainloader.PluginInfos.Select(pluginInfo => pluginInfo.Value.Metadata.GUID).ToList();
     }
-    
-    /// <summary>
-    /// Get final price from list items
-    /// </summary>
-    /// <returns></returns>
-    public static void GetPriceItems(List<string> listItems, Action<int> callback)
-    {
-        GetPriceItemsGlobal(listItems, value =>
-        {
-            if (value <= 0)
-            {
-                int localPrice = GetPriceItemsLocal(listItems);
-                callback?.Invoke(localPrice);
-            }
-            else
-            {
-                callback?.Invoke(value);
-            }
-        });
-    }
-
-    
-    /// <summary>
-    /// Get final price from list items GLOBAL SERVER
-    /// </summary>
-    /// <returns></returns>
-    private static void GetPriceItemsGlobal(List<string> listItems, Action<int> callback)
-    {
-        if (listItems == null || listItems.Count == 0)
-        {
-            callback?.Invoke(0);
-            return;
-        }
-
-        var data = new ItemsDataGlobal
-        {
-            Items = listItems,
-            ProfileID = PlayerHelper.GetProfile().ProfileId,
-            Version = GlobalData.Version,
-            Token = EncryptionModel.Instance.Token,
-            Method = "all",
-            PricesType = "lowest"
-        };
-        var jsonData = JsonConvert.SerializeObject(data);
-
-#if DEBUG
-        LeaderboardPlugin.logger.LogWarning($"[GetPriceItemsGlobal] Data = {jsonData}");
-#endif
-        try
-        {
-            var request = NetworkApiRequestModel.Create(GlobalData.PriceUrl);
-            request.SetData(jsonData);
-            request.OnSuccess = (response, code) =>
-            {
-                var priceData = JsonConvert.DeserializeObject<PriceData>(response);
-
-                if (priceData != null && priceData.Success)
-                {
-                    LeaderboardPlugin.logger.LogInfo($"Request GET OnSuccess {response}");
-                    int price = priceData.TotalPrice;
-                    callback?.Invoke(price);
-                }
-                else
-                {
-                    // If request succeeded but price not received, return 0
-                    callback?.Invoke(0);
-                }
-            };
-            request.OnFail = (error, code) =>
-            {
-                // On error return 0 to trigger fallback to Local
-                LeaderboardPlugin.logger.LogWarning($"GetPriceItemsGlobal failed: {error}");
-                callback?.Invoke(0);
-            };
-            request.Send();
-        }
-        catch (Exception ex)
-        {
-            LeaderboardPlugin.logger.LogWarning($"Error getting price: {ex.Message}");
-            // On exception also return 0 for fallback
-            callback?.Invoke(0);
-        }
-    }
-
-    
-    /// <summary>
-    /// Get final price from list items SPT SERVER
-    /// </summary>
-    /// <returns></returns>
-    public static int GetPriceItemsLocal(List<string> listItems)
-    {
-        var price = 0;
-
-        if (listItems != null)
-        {
-            if (listItems.Count > 0)
-            {
-                var data = new ItemsData()
-                {
-                    Items = listItems
-                };
-#if DEBUG
-                LeaderboardPlugin.logger.LogWarning($"[GetPriceItemsLocal] Data = {JsonConvert.SerializeObject(data)}");
-#endif
-                try
-                {
-                    var json = RequestHandler.PostJson("/SPTLB/GetItemPrices", JsonConvert.SerializeObject(data));
-            
-                    if (string.IsNullOrWhiteSpace(json))
-                        return price;
-
-                    price = int.Parse(json);
-            
-                    LeaderboardPlugin.logger.LogWarning($"[GetPriceItemsLocal] Response = {price}");
-                }
-                catch (Exception ex)
-                {
-                    LeaderboardPlugin.logger.LogWarning($"[GetPriceItemsLocal] failed: {ex}");
-                    return price;
-                }
-            }
-        }
-        
-        return price;
-    }
 
     public static List<string> GetUserMods()
     {
@@ -427,18 +302,49 @@ public static class DataUtils
     public static void TryGetTransitionData(RaidEndDescriptorClass resultRaid, Action<string, bool> callback)
     {
         var lastRaidTransitionTo = "None";
-        if (resultRaid.result == ExitStatus.Transit
-            && TransitControllerAbstractClass.Exist<LocalGameTransitControllerClass>(out var transitController))
+        
+        if (resultRaid.result != ExitStatus.Transit)
         {
-            var locationTransit = transitController.alreadyTransits[resultRaid.ProfileId];
-            lastRaidTransitionTo = GetPrettyMapName(locationTransit.location.ToLower());
-            
-            LeaderboardPlugin.logger.LogWarning($"Player transit to map PRETTY {lastRaidTransitionTo}");
-            LeaderboardPlugin.logger.LogWarning($"Player transit to map RAW {locationTransit.location}");
-            callback.Invoke(lastRaidTransitionTo, true);
+            callback.Invoke(lastRaidTransitionTo, false);
             return;
         }
-        callback.Invoke(lastRaidTransitionTo, false);
+        
+        TarkovApplication tarkovApplication;
+        if (!TarkovApplication.Exist(out tarkovApplication))
+        {
+            LeaderboardPlugin.logger.LogWarning($"[TryGetTransitionData] TarkovApplication does not exist, cannot retrieve transition status");
+            callback.Invoke(lastRaidTransitionTo, false);
+            return;
+        }
+
+        try
+        {
+            var location = tarkovApplication.transitionStatus.Location;
+            var inTransition = tarkovApplication.transitionStatus.InTransition;
+            
+            if (!inTransition)
+            {
+                LeaderboardPlugin.logger.LogInfo($"[TryGetTransitionData] Not in transition, skipping");
+                callback.Invoke(lastRaidTransitionTo, false);
+                return;
+            }
+            
+            if (string.IsNullOrEmpty(location))
+            {
+                LeaderboardPlugin.logger.LogWarning($"[TryGetTransitionData] Transition location is empty");
+                callback.Invoke(lastRaidTransitionTo, false);
+                return;
+            }
+            
+            lastRaidTransitionTo = GetPrettyMapName(location.ToLower());
+            LeaderboardPlugin.logger.LogInfo($"[TryGetTransitionData] Player transit to map: {lastRaidTransitionTo} (raw: {location})");
+            callback.Invoke(lastRaidTransitionTo, true);
+        }
+        catch (Exception ex)
+        {
+            LeaderboardPlugin.logger.LogError($"[TryGetTransitionData] Error accessing transitionStatus: {ex.Message}");
+            callback.Invoke(lastRaidTransitionTo, false);
+        }
     }
     
     /// <summary>

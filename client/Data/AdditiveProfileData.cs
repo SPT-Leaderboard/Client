@@ -48,10 +48,7 @@ namespace SPTLeaderboard.Data
 
         [JsonProperty("sptVer")]
         public string SptVersion { get; set; } = baseData.SptVersion;
-
-        // [JsonProperty("teamTag")]
-        // public string TeamTag { get; set; }
-
+        
         [JsonProperty("token")]
         public string Token { get; set; } = baseData.Token;
 
@@ -63,6 +60,7 @@ namespace SPTLeaderboard.Data
         
         [JsonProperty("RaidSettings")]
         public RaidSettingsData RaidSettingsData = baseData.RaidSettingsData;
+        
         #endregion
         
         [JsonProperty("discFromRaid")]
@@ -157,9 +155,6 @@ namespace SPTLeaderboard.Data
 
         [JsonProperty("completed_quests")]
         public Dictionary<string, QuestInfoData> Quests { get; set; } = new();
-
-        [JsonProperty("profitGain")]
-        public int RevenueRaid { get; set; } = 0;
         
         [JsonProperty("energy")]
         public float Energy { get; set; } = 0;
@@ -172,6 +167,9 @@ namespace SPTLeaderboard.Data
         
         [JsonProperty("max_hydration")]
         public float MaxHydration { get; set; } = 0;
+        
+        [JsonProperty("revenue_items")]
+        public List<ItemData> RevenueItems { get; set; } = new();
 
         public static AdditiveProfileData MakeBetaCopy(AdditiveProfileData original)
         {
@@ -227,11 +225,11 @@ namespace SPTLeaderboard.Data
                 ScavLevel = original.ScavLevel,
                 TraderInfo = original.TraderInfo,
                 Quests = original.Quests,
-                RevenueRaid = original.RevenueRaid,
                 Energy = original.Energy,
                 Hydration = original.Hydration,
                 MaxEnergy = original.MaxEnergy,
-                MaxHydration = original.MaxHydration
+                MaxHydration = original.MaxHydration,
+                RevenueItems = original.RevenueItems
             };
         }
     }

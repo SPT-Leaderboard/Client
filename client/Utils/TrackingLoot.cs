@@ -1,97 +1,83 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using Cysharp.Threading.Tasks;
 using EFT;
 using EFT.InventoryLogic;
+using SPTLeaderboard.Data;
 
 namespace SPTLeaderboard.Utils;
 
-// Taken from https://github.com/HiddenCirno/ShowLootValue
 public class TrackingLoot
 {
-    public HashSet<string> LootedIds = new HashSet<string>();
-    public HashSet<string> PreRaidIds = new HashSet<string>();
-    public int PreRaidLootValue { get; private set; } = 0;
-    
-    public int PostRaidEquipValue { get; private set; } = 0;
-    public int PostRaidLootValue { get; private set; } = 0;
+    public List<ItemData> LootedItems = new();
+    public List<ItemData> PreRaidItems = new();
+    public List<string> PreRaidIdItems = new();
 
     public void Add(Item item)
     {
-        if (LootedIds.Add(item.TemplateId.ToString()))
+        if (PreRaidIdItems.Contains(item.Id))
         {
+            var preItemData = new ItemData(
+                item.Id,
+                item.TemplateId.ToString(),
+                item.StackObjectsCount
+            );
+            
+            PreRaidItems.Add(preItemData);
+            
 #if DEBUG
-            LeaderboardPlugin.logger.LogInfo($"[TrackingLoot][Add] Item TemplateId {item.TemplateId.ToString()}");
-            LeaderboardPlugin.logger.LogInfo($"[TrackingLoot][Add] Item Id {item.Id}");
+            LeaderboardPlugin.logger.LogInfo($"[TrackingLoot][Add][PreRaidEquipment] Item TemplateId {preItemData.TemplateId}, Id {preItemData.Id}, Amount {preItemData.Amount}");
+#endif
+        }
+        else
+        {
+            var itemData = new ItemData(
+                item.Id,
+                item.TemplateId.ToString(),
+                item.StackObjectsCount
+            );
+
+            LootedItems.Add(itemData);
+
+#if DEBUG
+            LeaderboardPlugin.logger.LogInfo(
+                $"[TrackingLoot][Add] Item TemplateId {itemData.TemplateId}, Id {itemData.Id}, Amount {itemData.Amount}");
 #endif
         }
     }
 
     public void Remove(Item item)
     {
-        if (PreRaidIds.Remove(item.TemplateId.ToString()))
+        var preRaidItem = PreRaidItems.FirstOrDefault(x => x.Id == item.Id);
+        if (preRaidItem != null)
         {
-            LeaderboardPlugin.logger.LogInfo($"[TrackingLoot][Remove][PreRaidEquipment] Item {item.TemplateId.ToString()}");
+            PreRaidItems.Remove(preRaidItem);
+#if DEBUG
+            LeaderboardPlugin.logger.LogInfo($"[TrackingLoot][Remove][PreRaidEquipment] Item TemplateId {preRaidItem.TemplateId}, Id {preRaidItem.Id}");
+#endif
+            return;
         }
         
-        if (LootedIds.Remove(item.TemplateId.ToString()))
+        var lootedItem = LootedItems.FirstOrDefault(x => x.Id == item.Id);
+        if (lootedItem != null)
         {
+            LootedItems.Remove(lootedItem);
 #if DEBUG
-            LeaderboardPlugin.logger.LogInfo($"[TrackingLoot][Remove] Item {item.TemplateId.ToString()}");
-            LeaderboardPlugin.logger.LogInfo($"[TrackingLoot][Remove] Item Id {item.Id}");
+            LeaderboardPlugin.logger.LogInfo($"[TrackingLoot][Remove] Item TemplateId {lootedItem.TemplateId}, Id {lootedItem.Id}");
 #endif
         }
     }
 
     private void Clear()
     {
-        PreRaidIds.Clear();
-        LootedIds.Clear();
+        PreRaidItems.Clear();
+        PreRaidIdItems.Clear();
+        LootedItems.Clear();
     }
 
     public void OnStartRaid(ESideType sideType)
     {
         Clear();
-        
-        PreRaidIds = PlayerHelper.GetEquipmentItemsTemplateId(sideType).ToHashSet();
-        DataUtils.GetPriceItems(PlayerHelper.GetEquipmentItemsTemplateId(sideType), value =>
-        {
-            PreRaidLootValue = value;
-            LeaderboardPlugin.logger.LogInfo($"[TrackingLoot][OnStartRaid] Cost Equipment = {PreRaidLootValue}");
-        });
-    }
-
-    public void OnEndRaid(ESideType sideType, Action callback)
-    {
-        OnEndRaidAsync(sideType).ContinueWith(() => callback?.Invoke()).Forget();
-    }
-
-    public async UniTask OnEndRaidAsync(ESideType sideType)
-    {
-        PostRaidEquipValue = 0;
-        PostRaidLootValue = 0;
-        
-        var equipmentTask = GetPriceItemsAsync(PreRaidIds.ToList());
-        var lootTask = GetPriceItemsAsync(LootedIds.ToList());
-        
-        PostRaidEquipValue = await equipmentTask;
-        PostRaidLootValue = await lootTask;
-        
-        LeaderboardPlugin.logger.LogInfo($"[TrackingLoot][OnEndRaid] {(sideType == ESideType.Pmc ? "PMC" : "SCAV")} Equipment = {PostRaidEquipValue}");
-        LeaderboardPlugin.logger.LogInfo($"[TrackingLoot][OnEndRaid] {(sideType == ESideType.Pmc ? "PMC" : "SCAV")} Loot = {PostRaidLootValue}");
-        LeaderboardPlugin.logger.LogInfo($"[TrackingLoot][OnEndRaid] All price requests completed. Final PostRaidLootValue = {PostRaidLootValue}");
-    }
-
-    private UniTask<int> GetPriceItemsAsync(List<string> items)
-    {
-        var tcs = new UniTaskCompletionSource<int>();
-        
-        DataUtils.GetPriceItems(items, value =>
-        {
-            tcs.TrySetResult(value);
-        });
-        
-        return tcs.Task;
+        PreRaidItems = PlayerHelper.GetEquipmentItems(sideType);
+        PreRaidIdItems = PreRaidItems.Select(item => item.Id).ToList();
     }
 }
