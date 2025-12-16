@@ -6,6 +6,7 @@ using SPTLeaderboard.Data;
 using SPTLeaderboard.Models;
 using SPTLeaderboard.Utils;
 using UnityEngine;
+using Logger = SPTLeaderboard.Utils.Logger;
 
 public class ZoneTracker: MonoBehaviour
 {
@@ -34,6 +35,7 @@ public class ZoneTracker: MonoBehaviour
         }
     }
 
+#if DEBUG
     public void CheckInput()
     {
         if (SettingsModel.Instance.KeyBind.Value.IsDown())
@@ -46,6 +48,7 @@ public class ZoneTracker: MonoBehaviour
             Redraw();
         }
     }
+#endif
 
     public void Disable()
     {
@@ -165,12 +168,9 @@ public class ZoneTracker: MonoBehaviour
                     {
                         ZonesEntered.Add(zone);
                     }
-                    #if DEBUG || BETA
-                    if (SettingsModel.Instance.Debug.Value)
-                    {
-                        LeaderboardPlugin.logger.LogWarning($"Игрок вошёл в зону: {zone.Name}");
-                    }
-                    #endif
+
+                    Logger.LogDebugWarning($"[ZoneTracker][Enter]: {CurrentZone}");
+                    
                 }
                 return;
             }
@@ -178,13 +178,8 @@ public class ZoneTracker: MonoBehaviour
 
         if (CurrentZone != null)
         {
+            Logger.LogDebugWarning($"[ZoneTracker][Exit]: {CurrentZone}");
             CurrentZone = null;
-#if DEBUG || BETA
-            if (SettingsModel.Instance.Debug.Value)
-            {
-                LeaderboardPlugin.logger.LogWarning($"Игрок покинул зону: {CurrentZone}");
-            }
-#endif
         }
     }
 }
