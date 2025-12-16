@@ -119,18 +119,20 @@ namespace SPTLeaderboard
 
         private void Update()
         {
-            if (Input.GetKeyDown(KeyCode.LeftControl))
+            HandleKeybind();
+        }
+
+        private void HandleKeybind()
+        {
+            bool allKeysPressed = Input.GetKey(KeyCode.LeftControl) && 
+                                  Input.GetKey(KeyCode.LeftShift) && 
+                                  Input.GetKey(KeyCode.D);
+            if (allKeysPressed)
             {
-                if (Input.GetKeyDown(KeyCode.LeftShift))
+                if (Input.GetKey(KeyCode.Space))
                 {
-                    if (Input.GetKeyDown(KeyCode.D))
-                    {
-                        if (Input.GetKeyDown(KeyCode.Space))
-                        {
-                            IsDebugLogsEnabled = !IsDebugLogsEnabled;
-                            LocalizationModel.NotificationWarning($"Advanced logs SPTLB is: {IsDebugLogsEnabled}");
-                        }
-                    }
+                    IsDebugLogsEnabled = !IsDebugLogsEnabled;
+                    LocalizationModel.NotificationWarning($"Advanced logs SPTLB is: {IsDebugLogsEnabled}");
                 }
             }
         }
