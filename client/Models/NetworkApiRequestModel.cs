@@ -7,6 +7,7 @@ using SPTLeaderboard.Data;
 using SPTLeaderboard.Utils;
 using UnityEngine;
 using UnityEngine.Networking;
+using Logger = SPTLeaderboard.Utils.Logger;
 
 namespace SPTLeaderboard.Models
 {
@@ -48,9 +49,8 @@ namespace SPTLeaderboard.Models
         /// <returns>A new <see cref="NetworkApiRequestModel"/> configured for POST.</returns>
         public static NetworkApiRequestModel Create(string url)
         {
-#if DEBUG || BETA
-            LeaderboardPlugin.logger.LogWarning($"[POST] Request Url -> '{url}'");
-#endif
+            Logger.LogDebugWarning($"[POST] Request Url -> '{url}'");
+
             var obj = new GameObject("[SPTLeaderboard] NetworkRequest");
             DontDestroyOnLoad(obj);
             var request = obj.AddComponent<NetworkApiRequestModel>();
@@ -66,9 +66,8 @@ namespace SPTLeaderboard.Models
         /// <returns>A new <see cref="NetworkApiRequestModel"/> configured for GET.</returns>
         public static NetworkApiRequestModel CreateGet(string url)
         {
-#if DEBUG || BETA
-            LeaderboardPlugin.logger.LogWarning($"[GET] Request Url -> '{url}'");
-#endif
+            Logger.LogDebugWarning($"[GET] Request Url -> '{url}'");
+
             var obj = new GameObject("[SPTLeaderboard] NetworkRequest");
             DontDestroyOnLoad(obj);
             var request = obj.AddComponent<NetworkApiRequestModel>();
@@ -106,7 +105,7 @@ namespace SPTLeaderboard.Models
         {
             if (_httpMethod == UnityWebRequest.kHttpVerbPOST && string.IsNullOrEmpty(_jsonBody))
             {
-                LeaderboardPlugin.logger.LogWarning("Data is null or empty, skipping POST request");
+                Logger.LogWarning("Data is null or empty, skipping POST request");
                 return;
             }
             
@@ -129,7 +128,7 @@ namespace SPTLeaderboard.Models
                         
                         if (!isHashExpired)
                         {
-                            LeaderboardPlugin.logger.LogWarning($"NetworkApiRequestModel: Duplicate data detected for URL {_url}, skipping send (same data already sent recently)");
+                            Logger.LogWarning($"NetworkApiRequestModel: Duplicate data detected for URL {_url}, skipping send (same data already sent recently)");
                             Destroy(gameObject);
                             return;
                         }
@@ -161,10 +160,8 @@ namespace SPTLeaderboard.Models
             request.downloadHandler ??= new DownloadHandlerBuffer();
             request.SetRequestHeader("X-SPT-Mod", "SPTLeaderboard");
             
-#if DEBUG || BETA
             var reqId = Guid.NewGuid().ToString();
-            LeaderboardPlugin.logger.LogWarning($"Request ID = {reqId}");
-#endif
+            Logger.LogDebugWarning($"Request ID = {reqId}");
 
             request.timeout = SettingsModel.Instance.ConnectionTimeout.Value;
 
@@ -208,7 +205,7 @@ namespace SPTLeaderboard.Models
                 if (isTimeout && _retryCount < _maxRetries)
                 {
                     _retryCount++;
-                    LeaderboardPlugin.logger.LogWarning($"Timeout, retrying {_retryCount}/{_maxRetries}...");
+                    Logger.LogDebugWarning($"Timeout, retrying {_retryCount}/{_maxRetries}...");
                     _isComplete = false;
                     request.Dispose();
                     await UniTask.Delay(TimeSpan.FromSeconds(0.5f), cancellationToken: cancellationToken);
@@ -218,7 +215,7 @@ namespace SPTLeaderboard.Models
                 {
                     if (_retryCount >= _maxRetries && isTimeout)
                     {
-                        LeaderboardPlugin.logger.LogWarning("After five tries, nothing came out");
+                        Logger.LogDebugWarning("After five tries, nothing came out");
                     }
                     
                     if (_httpMethod == UnityWebRequest.kHttpVerbPOST && !string.IsNullOrEmpty(_jsonBody) && 
@@ -233,9 +230,9 @@ namespace SPTLeaderboard.Models
                         }
                     }
                     
-#if DEBUG || BETA           
-                    LeaderboardPlugin.logger.LogWarning($"OnFail response {request.downloadHandler.text}");
-#endif
+  
+                    Logger.LogWarning($"OnFail response {request.downloadHandler.text}");
+
                     string errorData = !string.IsNullOrEmpty(request.downloadHandler?.text) 
                         ? request.downloadHandler.text 
                         : request.error ?? "Unknown error";

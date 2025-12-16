@@ -36,7 +36,7 @@ public class PlayerHelper
 
         if (throwIfNull && session is null)
         {
-            LeaderboardPlugin.logger.LogWarning("[GetSession] Trying to access the Session when it's null");
+            Logger.LogWarning("[GetSession] Trying to access the Session when it's null");
         }
 
         return session;
@@ -48,7 +48,7 @@ public class PlayerHelper
 
         if (throwIfNull && profile is null)
         {
-            LeaderboardPlugin.logger.LogWarning("[GetProfile] Trying to access the Profile when it's null");
+            Logger.LogWarning("[GetProfile] Trying to access the Profile when it's null");
         }
         
         return GetSession()?.Profile;
@@ -114,7 +114,7 @@ public class PlayerHelper
 
         var capacity = item.Grids.Sum(CompoundItem.Class2341.class2341_0.method_10);
 #if DEBUG || BETA
-        LeaderboardPlugin.logger.LogWarning($"Size {slot.ToString()} {capacity}");
+        Logger.LogWarning($"Size {slot.ToString()} {capacity}");
 #endif
         return capacity;
     }
@@ -133,7 +133,7 @@ public class PlayerHelper
 
         var capacity = item.Grids.Sum(CompoundItem.Class2341.class2341_0.method_10);
 #if DEBUG || BETA
-        LeaderboardPlugin.logger.LogWarning($"Size Stash {capacity}");
+        Logger.LogWarning($"Size Stash {capacity}");
 #endif
         return capacity;
     }
@@ -203,11 +203,11 @@ public class PlayerHelper
                 }
             }
                     
-            LeaderboardPlugin.logger.LogWarning($"Agressor Name {nameKiller}\n");
+            Logger.LogWarning($"Agressor Name {nameKiller}\n");
             return nameKiller;
         }
 
-        LeaderboardPlugin.logger.LogWarning($"Aggressor Data == null");
+        Logger.LogWarning($"Aggressor Data is null");
         return nameKiller;
     }
 }

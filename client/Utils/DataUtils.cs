@@ -60,6 +60,13 @@ public static class DataUtils
     /// </summary>
     public static List<string> GetModsList()
     {
+        Logger.LogDebugWarning("[Logs mods source]");
+        Logger.LogDebugWarning($"[ServerMods] {JsonConvert.SerializeObject(GetServerMods())}");
+        Logger.LogDebugWarning($"[UserMods] {JsonConvert.SerializeObject(GetUserMods())}");
+        Logger.LogDebugWarning($"[BepinexMods] {JsonConvert.SerializeObject(GetBepinexMods())}");
+        Logger.LogDebugWarning($"[BepinexDll] {JsonConvert.SerializeObject(GetBepinexDll())}");
+        Logger.LogDebugWarning($"[ClientMods] {JsonConvert.SerializeObject(GetClientMods())}");
+        
         return GetServerMods()
             .Concat(GetUserMods())
             .Concat(GetBepinexMods())
@@ -79,9 +86,7 @@ public static class DataUtils
         try
         {
             string json = RequestHandler.GetJson("/launcher/server/serverModsUsedByProfile");
-#if DEBUG
-            LeaderboardPlugin.logger.LogWarning($"GetServerMods: {json}");
-#endif
+
             if (string.IsNullOrWhiteSpace(json))
                 return listServerMods;
             
@@ -95,7 +100,7 @@ public static class DataUtils
         }
         catch (Exception ex)
         {
-            LeaderboardPlugin.logger.LogWarning($"GetServerMods failed: {ex}");
+            Logger.LogError($"GetServerMods failed: {ex}");
         }
 
         return listServerMods;
@@ -312,7 +317,7 @@ public static class DataUtils
         TarkovApplication tarkovApplication;
         if (!TarkovApplication.Exist(out tarkovApplication))
         {
-            LeaderboardPlugin.logger.LogWarning($"[TryGetTransitionData] TarkovApplication does not exist, cannot retrieve transition status");
+            Logger.LogWarning($"[TryGetTransitionData] TarkovApplication does not exist, cannot retrieve transition status");
             callback.Invoke(lastRaidTransitionTo, false);
             return;
         }
@@ -324,25 +329,25 @@ public static class DataUtils
             
             if (!inTransition)
             {
-                LeaderboardPlugin.logger.LogInfo($"[TryGetTransitionData] Not in transition, skipping");
+                Logger.LogInfo($"[TryGetTransitionData] Not in transition, skipping");
                 callback.Invoke(lastRaidTransitionTo, false);
                 return;
             }
             
             if (string.IsNullOrEmpty(location))
             {
-                LeaderboardPlugin.logger.LogWarning($"[TryGetTransitionData] Transition location is empty");
+                Logger.LogWarning($"[TryGetTransitionData] Transition location is empty");
                 callback.Invoke(lastRaidTransitionTo, false);
                 return;
             }
             
             lastRaidTransitionTo = GetPrettyMapName(location.ToLower());
-            LeaderboardPlugin.logger.LogInfo($"[TryGetTransitionData] Player transit to map: {lastRaidTransitionTo} (raw: {location})");
+            Logger.LogInfo($"[TryGetTransitionData] Player transit to map: {lastRaidTransitionTo} (raw: {location})");
             callback.Invoke(lastRaidTransitionTo, true);
         }
         catch (Exception ex)
         {
-            LeaderboardPlugin.logger.LogError($"[TryGetTransitionData] Error accessing transitionStatus: {ex.Message}");
+            Logger.LogError($"[TryGetTransitionData] Error accessing transitionStatus: {ex.Message}");
             callback.Invoke(lastRaidTransitionTo, false);
         }
     }

@@ -22,7 +22,6 @@ public static class GlobalData
     public static string IconUrl = $"{SettingsModel.Instance.PhpEndpoint.Value}{SettingsModel.Instance.PhpPath.Value}client/avatar_processor.php";
     public static string PreRaidUrl = $"{SettingsModel.Instance.PhpEndpoint.Value}{SettingsModel.Instance.PhpPath.Value}client/api_sync.php";
     public static string ConfigUrl = $"{SettingsModel.Instance.PhpEndpoint.Value}{SettingsModel.Instance.PhpPath.Value}client/get_config.php";
-    public static string PriceUrl = $"{SettingsModel.Instance.PhpEndpoint.Value}{SettingsModel.Instance.PhpPath.Value}client/get_prices.php";
     
     // Paths
     public static string SptRootPath = Path.GetFullPath(Path.Combine(BepInEx.Paths.PluginPath, "..", "..")); 

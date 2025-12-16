@@ -94,9 +94,9 @@ public class HitsTracker
     public void AddHit(float distance, EBodyPart bodyPart)
     {
         var roundedDistance = (float)Math.Round(distance, 1);
-#if DEBUG || BETA
-        LeaderboardPlugin.logger.LogInfo($"[HitsTracker] Add hit with distance {roundedDistance} for {bodyPart.ToString()}");
-#endif
+
+        Logger.LogDebugInfo($"[HitsTracker] Add hit with distance {roundedDistance} for {bodyPart.ToString()}");
+
         hitDistances.Add(roundedDistance, bodyPart);
     }
 

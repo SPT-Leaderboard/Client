@@ -189,6 +189,7 @@
         <Compile Include="Utils\IconSaver.cs" />
         <Compile Include="Utils\StatTrackInterop.cs" />
         <Compile Include="Utils\TrackingLoot.cs" />
+        <Compile Include="Utils\Logger.cs" />
     </ItemGroup>
     <ItemGroup>
       <None Include="Dependencies\Keys\sptld.snk" />
