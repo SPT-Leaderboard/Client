@@ -3,6 +3,7 @@ using System.IO;
 using System.Reflection;
 using System.Security.Cryptography;
 using SPTLeaderboard.Data;
+using SPTLeaderboard.Utils;
 
 namespace SPTLeaderboard.Models
 {
@@ -26,7 +27,7 @@ namespace SPTLeaderboard.Models
                         File.Copy(GlobalData.PathMigrationToken, GlobalData.PathToken);
                         LoadToken();
                         
-                        LeaderboardPlugin.logger.LogWarning(
+                        Logger.LogWarning(
                             $"Migrated token from server mod. WARNING: DO NOT SHARE IT WITH ANYONE! If you lose it, you will lose access to the Leaderboard until next season!");
                     }
                     else
@@ -34,20 +35,20 @@ namespace SPTLeaderboard.Models
                         _token = GenerateToken();
                         WriteTokenToFile(_token);
 
-                        LeaderboardPlugin.logger.LogWarning(
+                        Logger.LogWarning(
                             $"Generated your secret token, see mod directory. WARNING: DO NOT SHARE IT WITH ANYONE! If you lose it, you will lose access to the Leaderboard until next season!");
                     }
                 }
                 else
                 {
-                    LeaderboardPlugin.logger.LogWarning(
+                    Logger.LogWarning(
                         $"Your secret token was initialized by the mod. Remember to never show it to anyone!");
                     LoadToken();
                 }
             }
             catch (Exception e)
             {
-                LeaderboardPlugin.logger.LogError(
+                Logger.LogError(
                     $"Error handling token file: ${e.Message}");
                 _token = GenerateToken();
             }
@@ -102,7 +103,7 @@ namespace SPTLeaderboard.Models
             }
             catch (Exception)
             {
-                LeaderboardPlugin.logger.LogError($"Error check integrity mod");
+                Logger.LogError($"Error check integrity");
                 return "ERROR CHECK INTEGRITY";
             }
         }

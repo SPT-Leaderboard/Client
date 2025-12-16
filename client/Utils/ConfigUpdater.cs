@@ -19,11 +19,7 @@ namespace SPTLeaderboard.Utils
                 
                     if (newConfig != null)
                     {
-                        LeaderboardPlugin.logger.LogInfo($"Request GET OnSuccess {response}");
-                    
-#if DEBUG
-                        LeaderboardPlugin.logger.LogInfo($"{JsonConvert.SerializeObject(newConfig)}");
-#endif
+                        Logger.LogInfo($"Request GET OnSuccess {response}");
                     
                         if(newConfig.TacticalVest <= 0 || newConfig.Pockets <= 0 || newConfig.Backpack <= 0 || newConfig.SecuredContainer <= 0 || newConfig.Stash <= 0 )
                             return;
@@ -44,7 +40,7 @@ namespace SPTLeaderboard.Utils
             }
             catch (Exception ex)
             {
-                LeaderboardPlugin.logger.LogWarning($"Error update config: {ex.Message}");
+                Logger.LogError($"Error update config: {ex.Message}");
             }
         }
     }

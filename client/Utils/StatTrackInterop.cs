@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using BepInEx;
 using BepInEx.Bootstrap;
+using Comfort.Logs;
 using Newtonsoft.Json;
 using SPT.Common.Http;
 using SPTLeaderboard.Data;
@@ -52,7 +53,7 @@ public static class StatTrackInterop
     {
         if (!info.ContainsKey(playerId))
         {
-            LeaderboardPlugin.logger.LogWarning($"[StatTrack] Not exists data for current player: {playerId}");
+            Logger.LogWarning($"[StatTrack] Not exists data for current player: {playerId}");
             return null;
         }
 
@@ -70,14 +71,12 @@ public static class StatTrackInterop
             // Skip weapons with unknown names
             if (weaponName == "Unknown")
             {
-#if DEBUG || BETA
-                LeaderboardPlugin.logger.LogWarning($"[StatTrack] Not exists locale {weaponId + " ShortName"}");
-#endif
+                Logger.LogDebugWarning($"[StatTrack] Not exists locale {weaponId + " ShortName"}");
                 continue;
             }
-#if DEBUG || BETA
-            LeaderboardPlugin.logger.LogWarning($"[StatTrack] Add {weaponId + " ShortName"}");
-#endif
+
+            Logger.LogDebugWarning($"[StatTrack] Add {weaponId + " ShortName"}");
+
             result[playerId][weaponName] = new WeaponInfo
             {
                 stats = weaponStats,
@@ -87,7 +86,7 @@ public static class StatTrackInterop
 
         if (result[playerId].Count == 0)
         {
-            LeaderboardPlugin.logger.LogWarning($"[StatTrack] ListWeapons is empty");
+            Logger.LogWarning($"[StatTrack] ListWeapons is empty");
 
             return null;
         }

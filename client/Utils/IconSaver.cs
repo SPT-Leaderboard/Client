@@ -64,7 +64,7 @@ namespace SPTLeaderboard.Utils
                         }
                         else
                         {
-                            LeaderboardPlugin.logger.LogError("CreateFullIcon - BackEndSession.Profile is null. Cannot show player model view.");
+                            Logger.LogError("CreateFullIcon - BackEndSession.Profile is null. Cannot show player model view.");
                         } 
                     }
                     else
@@ -74,7 +74,7 @@ namespace SPTLeaderboard.Utils
                 }
                 else
                 {
-                    LeaderboardPlugin.logger.LogWarning("Not found component PlayerModelView");
+                    Logger.LogWarning("Not found component PlayerModelView");
                 }
             }
         }
@@ -90,7 +90,7 @@ namespace SPTLeaderboard.Utils
             Texture source = rawImage.texture;
             if (source is not RenderTexture renderTexture)
             {
-                LeaderboardPlugin.logger.LogError("The texture in RawImage is not a RenderTexture!");
+                Logger.LogError("The texture in RawImage is not a RenderTexture!");
                 return false;
             }
             
@@ -122,8 +122,8 @@ namespace SPTLeaderboard.Utils
             catch (Exception ex)
             {
                 NotificationManagerClass.DisplayMessageNotification("Error to save screenshot", ENotificationDurationType.Default, ENotificationIconType.Alert, null);
-                LeaderboardPlugin.logger.LogError($"Error to save screenshot: {ex.Message}");
-                LeaderboardPlugin.logger.LogError($"{ex.StackTrace}");
+                Logger.LogError($"Error to save screenshot: {ex.Message}");
+                Logger.LogError($"{ex.StackTrace}");
                 return false;
             }
             finally
@@ -152,16 +152,16 @@ namespace SPTLeaderboard.Utils
                 
                 if (success)
                 {
-                    LeaderboardPlugin.logger.LogInfo("Saved fullbody icon");
+                    Logger.LogInfo("Saved fullbody icon");
                 }
                 else
                 {
-                    LeaderboardPlugin.logger.LogWarning("Not saved fullbody icon");
+                    Logger.LogWarning("Not saved fullbody icon");
                 }
             }
             else
             {
-                LeaderboardPlugin.logger.LogWarning("RawImage not found in PlayerModelView");
+                Logger.LogWarning("RawImage not found in PlayerModelView");
             }
 
             if (!cancellationToken.IsCancellationRequested)
@@ -183,12 +183,12 @@ namespace SPTLeaderboard.Utils
             if (cachedPlayerModelViewObj == null)
             {
                 prefab = GameObject.Find("Common UI/Common UI/InventoryScreen/Overall Panel/LeftSide/CharacterPanel/PlayerModelView");
-                LeaderboardPlugin.logger.LogError("CreateClonedPlayerModelView - Cache not exists, create from original obj");
+                Logger.LogError("CreateClonedPlayerModelView - Cache not exists, create from original obj");
             }
             else
             {
                 prefab = cachedPlayerModelViewObj;
-                LeaderboardPlugin.logger.LogWarning("CreateClonedPlayerModelView - Prefab is cache.");
+                Logger.LogWarning("CreateClonedPlayerModelView - Prefab is cache.");
             }
             GameObject parent = GameObject.Find("Menu UI/UI/Matchmaker Time Has Come");
             
@@ -196,7 +196,7 @@ namespace SPTLeaderboard.Utils
             GameObject clonedPlayerModelObject;
             if (flag)
             {
-                LeaderboardPlugin.logger.LogError("CreateClonedPlayerModelView - Parent or Prefab is null.");
+                Logger.LogError("CreateClonedPlayerModelView - Parent or Prefab is null.");
                 clonedPlayerModelObject = null;
             }
             else
@@ -233,7 +233,7 @@ namespace SPTLeaderboard.Utils
                 }
                 catch (Exception ex)
                 {
-                    LeaderboardPlugin.logger.LogWarning($"Error while search obj in playerView\n{ex}");
+                    Logger.LogWarning($"Error while search obj in playerView\n{ex}");
                 }
                 
                 clonedPlayerModelObject = copyPlayerModel;
@@ -246,7 +246,7 @@ namespace SPTLeaderboard.Utils
         /// </summary>
         public void CachePlayerModelView()
         {
-            LeaderboardPlugin.logger.LogWarning($"CachePlayerModelView - Start caching...");
+            Logger.LogDebugWarning($"CachePlayerModelView - Start caching...");
             
             GameObject prefab = GameObject.Find("Common UI/Common UI/InventoryScreen/Overall Panel/LeftSide/CharacterPanel/PlayerModelView");
             GameObject parent = GameObject.Find("Common UI/Common UI/MenuScreen");
@@ -257,7 +257,7 @@ namespace SPTLeaderboard.Utils
             cachePlayerModel.transform.position = GetOffScreenPosition();
             cachedPlayerModelViewObj = cachePlayerModel;
             
-            LeaderboardPlugin.logger.LogWarning($"CachePlayerModelView - Cache created!");
+            Logger.LogWarning($"CachePlayerModelView - Cache created!");
             LeaderboardPlugin.Instance.cachedPlayerModelPreview = true;
         }
 
@@ -268,7 +268,7 @@ namespace SPTLeaderboard.Utils
             Texture2D texture = spriteToSave.texture;
             byte[] pngData = texture.EncodeToPNG();
             File.WriteAllBytes(filePath, pngData);
-            LeaderboardPlugin.logger.LogInfo($"Saved player icon in {filePath}");
+            Logger.LogInfo($"Saved player icon in {filePath}");
         }
         
         private void IconChangedState()
@@ -314,13 +314,13 @@ namespace SPTLeaderboard.Utils
 
             if (croppedWidth <= 0 || croppedHeight <= 0)
             {
-                LeaderboardPlugin.logger.LogWarning("[Screenshot] Nothing to crop horizontally, returning full image");
+                Logger.LogWarning("[Screenshot] Nothing to crop horizontally, returning full image");
                 return original;
             }
 
             if (left + croppedWidth > width)
             {
-                LeaderboardPlugin.logger.LogError("[Screenshot] Cropping region is out of bounds");
+                Logger.LogError("[Screenshot] Cropping region is out of bounds");
                 return original;
             }
 
@@ -343,7 +343,7 @@ namespace SPTLeaderboard.Utils
 
             if (original.width < targetWidth)
             {
-                LeaderboardPlugin.logger.LogWarning("Original width is less than target width. Returning original.");
+                Logger.LogWarning("Original width is less than target width. Returning original.");
                 return original;
             }
 
@@ -403,7 +403,7 @@ namespace SPTLeaderboard.Utils
                 }
                 else
                 {
-                    LeaderboardPlugin.logger.LogDebug(childName + " not found in " + parent.name + ".");
+                    Logger.LogError(childName + " not found in " + parent.name + ".");
                 }
             }
         }
@@ -414,7 +414,7 @@ namespace SPTLeaderboard.Utils
             var flag = clonePlayerModelViewObj == null;
             if (flag)
             {
-                LeaderboardPlugin.logger.LogWarning("HidePlayerModelExtraElements - modelObj is null.");
+                Logger.LogWarning("HidePlayerModelExtraElements - modelObj is null.");
             }
             else
             {

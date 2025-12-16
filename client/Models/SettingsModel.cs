@@ -156,7 +156,7 @@ namespace SPTLeaderboard.Models
 				"Server Endpoint", 
 				"https://sptlb.yuyui.moe", 
 				new ConfigDescription(
-					"DO NOT TOUCH UNLESS YOU KNOW WHAT YOU ARE DOING.\n Domain (or both subdomain + domain) used for PHP requests",
+					"DO NOT TOUCH UNLESS YOU KNOW WHAT YOU ARE DOING.\n Domain (or both subdomain + domain) used for requests",
 					null, 
 					new ConfigurationManagerAttributes
 					{
@@ -169,7 +169,7 @@ namespace SPTLeaderboard.Models
 				"Server Path", 
 				"/api/main/", 
 				new ConfigDescription(
-					"DO NOT TOUCH UNLESS YOU KNOW WHAT YOU ARE DOING.\n Domain (or both subdomain + domain) used for PHP requests",
+					"DO NOT TOUCH UNLESS YOU KNOW WHAT YOU ARE DOING.\n Domain (or both subdomain + domain) used for requests",
 					null, 
 					new ConfigurationManagerAttributes
 					{

@@ -8,6 +8,7 @@ using Cysharp.Threading.Tasks;
 using BepInEx;
 using BepInEx.Logging;
 using EFT;
+using EFT.Communications;
 using Newtonsoft.Json;
 using SPTLeaderboard.Data;
 using SPTLeaderboard.Enums;
@@ -44,18 +45,19 @@ namespace SPTLeaderboard
 
         public static ManualLogSource logger;
         
-        private static readonly object _raidDataLock = new object();
-        private static bool _isSendingRaidData = false;
-        private static string _lastSentDataHash = null;
+        private static readonly object _raidDataLock = new();
+        private static bool _isSendingRaidData;
+        private static string _lastSentDataHash;
         private static DateTime _lastSentDataTime = DateTime.MinValue;
         private const int HASH_EXPIRY_SECONDS = 120;
+        public static bool IsDebugLogsEnabled = false;
 
-        public RaidSettingsData SavedRaidSettingsData = new RaidSettingsData();
+        public RaidSettingsData SavedRaidSettingsData = new();
 
         private void Awake()
         {
             logger = Logger;
-            logger.LogInfo("Loading...");
+            Utils.Logger.LogInfo("Loading...");
             
             #region Checking Headless
             
@@ -71,7 +73,7 @@ namespace SPTLeaderboard
 
             if (isFikaHeadless)
             {
-                logger.LogWarning("FIKA HEADLESS is found. SPTLeaderboard initialization disabled");
+                Utils.Logger.LogWarning("FIKA HEADLESS is found. SPTLeaderboard initialization disabled");
                 return;
             }
             
@@ -104,7 +106,7 @@ namespace SPTLeaderboard
                     if (!callback) return;
 
                     new OnCoopApplyShotFourPatch().Enable();
-                    logger.LogInfo("FIKA is found. Enable patch for hit hook");
+                    Utils.Logger.LogInfo("FIKA is found. Enable patch for hit hook");
                 });
             }
             
@@ -115,7 +117,27 @@ namespace SPTLeaderboard
 #endif
             
             Instance = this;
-            logger.LogInfo("Successful loaded!");
+            Utils.Logger.LogInfo("Successful loaded!");
+        }
+
+        private void Update()
+        {
+            HandleKeybind();
+        }
+
+        private void HandleKeybind()
+        {
+            bool allKeysPressed = Input.GetKey(KeyCode.LeftControl) && 
+                                  Input.GetKey(KeyCode.LeftShift) && 
+                                  Input.GetKey(KeyCode.D);
+            if (allKeysPressed)
+            {
+                if (Input.GetKeyDown(KeyCode.Space))
+                {
+                    IsDebugLogsEnabled = !IsDebugLogsEnabled;
+                    LocalizationModel.NotificationWarning($"Advanced SPTLB Logs are: {IsDebugLogsEnabled}");
+                }
+            }
         }
         
 #if DEBUG
@@ -199,7 +221,7 @@ namespace SPTLeaderboard
             var session = PlayerHelper.GetSession();
             request.OnSuccess = (response, code) =>
             {
-                logger.LogInfo($"Request OnSuccess {response}");
+                Utils.Logger.LogInfo($"[SendProfileIcon] OnSuccess {response}");
             };
 
             request.OnFail = (error, code) =>
@@ -219,18 +241,15 @@ namespace SPTLeaderboard
             string jsonBody = JsonConvert.SerializeObject(data);
                     
 #if DEBUG
-            if (SettingsModel.Instance.Debug.Value)
+            var logData = new ImageData
             {
-                var logData = new ImageData
-                {
-                    EncodedImage = "VeryMoreDataForLogsBlaBla",
-                    PlayerId = data.PlayerId,
-                    IsFullBody = data.IsFullBody,
-                    Token = data.Token
-                };
-                string logJsonBody = JsonConvert.SerializeObject(logData);
-                logger.LogWarning($"Request Image Data {logJsonBody}");
-            }
+                EncodedImage = "VeryMoreDataForLogsBlaBla",
+                PlayerId = data.PlayerId,
+                IsFullBody = data.IsFullBody,
+                Token = data.Token
+            };
+            string logJsonBody = JsonConvert.SerializeObject(logData);
+            Utils.Logger.LogWarning($"[SendProfileIcon] Data {logJsonBody}");
 #endif
             request.SetData(jsonBody);
             request.Send();
@@ -279,13 +298,13 @@ namespace SPTLeaderboard
                 
                 if (_lastSentDataHash == dataHash && !isHashExpired)
                 {
-                    logger.LogWarning("SendRaidData: Duplicate data detected, skipping send (same data already sent recently)");
+                    Utils.Logger.LogWarning("SendRaidData: Duplicate data detected, skipping send (same data already sent recently)");
                     return;
                 }
                 
                 if (_isSendingRaidData)
                 {
-                    logger.LogWarning("SendRaidData: Request already in progress, skipping duplicate call");
+                    Utils.Logger.LogWarning("SendRaidData: Request already in progress, skipping duplicate call");
                     return;
                 }
                 
@@ -305,7 +324,7 @@ namespace SPTLeaderboard
                     _lastSentDataTime = DateTime.Now;
                 }
                 
-                logger.LogInfo($"Request OnSuccess {response}");
+                Utils.Logger.LogInfo($"[SendRaidDataAsync] OnSuccess {response}");
 
                 try
                 {
@@ -345,10 +364,7 @@ namespace SPTLeaderboard
             };
             
 #if DEBUG
-            if (SettingsModel.Instance.Debug.Value)
-            {
-                logger.LogWarning($"Request Data {jsonBody}");
-            }
+            Utils.Logger.LogWarning($"[SendRaidDataAsync] Data {jsonBody}");
 #endif
             
             request.SetData(jsonBody);
@@ -373,7 +389,7 @@ namespace SPTLeaderboard
 
             request.OnSuccess = (response, code) =>
             {
-                logger.LogInfo($"Request OnSuccess {response}");
+                Utils.Logger.LogInfo($"[SendPreRaidData] OnSuccess {response}");
             };
 
             request.OnFail = (error, code) =>
@@ -384,10 +400,7 @@ namespace SPTLeaderboard
             string jsonBody = JsonConvert.SerializeObject(data);
             
 #if DEBUG
-            if (SettingsModel.Instance.Debug.Value)
-            {
-                logger.LogWarning($"Request Data {jsonBody}");
-            }
+            Utils.Logger.LogWarning($"[SendPreRaidData] Data {jsonBody}");
 #endif
             
             request.SetData(jsonBody);
@@ -463,6 +476,6 @@ namespace SPTLeaderboard
         }
         #endregion
         
-        public TrackingLoot TrackingLoot=> _trackingLoot;
+        public TrackingLoot TrackingLoot => _trackingLoot;
     }
 }

@@ -96,23 +96,23 @@ public class OverlayDebug: MonoBehaviour
         {
             var itemType = item.GetType();
             var properties = itemType.GetProperties();
-            LeaderboardPlugin.logger.LogInfo($"[Debug] parameter properties count: {properties.Length}");
+            Logger.LogInfo($"[Debug] parameter properties count: {properties.Length}");
             foreach (var prop in properties)
             {
                 try
                 {
                     var value = prop.GetValue(item);
-                    LeaderboardPlugin.logger.LogInfo($"[Debug] parameter.{prop.Name} = {value}");
+                    Logger.LogInfo($"[Debug] parameter.{prop.Name} = {value}");
                 }
                 catch (Exception ex)
                 {
-                    LeaderboardPlugin.logger.LogWarning($"[Debug] Error reading property {prop.Name}: {ex.Message}");
+                    Logger.LogWarning($"[Debug] Error reading property {prop.Name}: {ex.Message}");
                 }
             }
         }
         catch (Exception ex)
         {
-            LeaderboardPlugin.logger.LogWarning($"[Debug] Error investigating parameter properties: {ex.Message}");
+            Logger.LogWarning($"[Debug] Error investigating parameter properties: {ex.Message}");
         }
     }
 }

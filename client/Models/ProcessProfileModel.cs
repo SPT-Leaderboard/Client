@@ -65,7 +65,7 @@ public class ProcessProfileModel
         }
         catch (Exception e)
         {
-            LeaderboardPlugin.logger.LogError($"[DeserializeProfileData] Cant parse data profile {e}");
+            Logger.LogError($"[DeserializeProfileData] Cant parse data profile {e}");
             return null;
         }
     }
@@ -281,11 +281,9 @@ public class ProcessProfileModel
         var longestShot = (int)HitsTracker.Instance.GetLongestShot();
         var longestHeadshot = (int)HitsTracker.Instance.GetLongestHeadshot();
 
-#if DEBUG || BETA
-        LeaderboardPlugin.logger.LogWarning($"[Session Counter] AverageShot {averageShot}");
-        LeaderboardPlugin.logger.LogWarning($"[Session Counter] LongestShot {longestShot}");
-        LeaderboardPlugin.logger.LogWarning($"[Session Counter] LongestHeadshot {longestHeadshot}");
-#endif
+        Logger.LogDebugWarning($"[Session Counter] AverageShot {averageShot}");
+        Logger.LogDebugWarning($"[Session Counter] LongestShot {longestShot}");
+        Logger.LogDebugWarning($"[Session Counter] LongestHeadshot {longestHeadshot}");
 
         return (averageShot, longestShot, longestHeadshot);
     }
@@ -332,14 +330,13 @@ public class ProcessProfileModel
             expLooting = 0;
             damageTaken = 0;
 
-#if DEBUG || BETA
-            LeaderboardPlugin.logger.LogWarning($"\n");
-            LeaderboardPlugin.logger.LogWarning($"[Session Counter] KilledPmc Scav {killedPmc}");
-            LeaderboardPlugin.logger.LogWarning($"[Session Counter] KilledSavage Scav {killedSavage}");
-            LeaderboardPlugin.logger.LogWarning($"[Session Counter] KilledBoss Scav {killedBoss}");
-            LeaderboardPlugin.logger.LogWarning($"[Session Counter] HitCount Scav {hitCount}");
-            LeaderboardPlugin.logger.LogWarning($"[Session Counter] CauseBodyDamage Scav {totalDamage}");
-#endif
+
+            Logger.LogDebugWarning($"\n");
+            Logger.LogDebugWarning($"[Session Counter] KilledPmc Scav {killedPmc}");
+            Logger.LogDebugWarning($"[Session Counter] KilledSavage Scav {killedSavage}");
+            Logger.LogDebugWarning($"[Session Counter] KilledBoss Scav {killedBoss}");
+            Logger.LogDebugWarning($"[Session Counter] HitCount Scav {hitCount}");
+            Logger.LogDebugWarning($"[Session Counter] CauseBodyDamage Scav {totalDamage}");
         }
         else
         {
@@ -352,16 +349,14 @@ public class ProcessProfileModel
                 (int)pmcData.Stats.Eft.SessionCounters.GetFloat(SessionCounterTypesAbstractClass.CauseBodyDamage);
             damageTaken = (int)pmcData.Stats.Eft.SessionCounters.GetFloat(SessionCounterTypesAbstractClass.BloodLoss);
 
-#if DEBUG || BETA
-            LeaderboardPlugin.logger.LogWarning($"Death coordinates {PlayerHelper.Instance.LastDeathPosition}");
-            LeaderboardPlugin.logger.LogWarning("\n");
-            LeaderboardPlugin.logger.LogWarning($"[Session Counter] KilledPmc {killedPmc}");
-            LeaderboardPlugin.logger.LogWarning($"[Session Counter] KilledSavage {killedSavage}");
-            LeaderboardPlugin.logger.LogWarning($"[Session Counter] KilledBoss {killedBoss}");
-            LeaderboardPlugin.logger.LogWarning($"[Session Counter] CauseBodyDamage {totalDamage}");
-            LeaderboardPlugin.logger.LogWarning($"[Session Counter] ExpLooting {expLooting}");
-            LeaderboardPlugin.logger.LogWarning($"[Session Counter] HitCount {hitCount}");
-#endif
+            Logger.LogDebugWarning($"Death coordinates {PlayerHelper.Instance.LastDeathPosition}");
+            Logger.LogDebugWarning("\n");
+            Logger.LogDebugWarning($"[Session Counter] KilledPmc {killedPmc}");
+            Logger.LogDebugWarning($"[Session Counter] KilledSavage {killedSavage}");
+            Logger.LogDebugWarning($"[Session Counter] KilledBoss {killedBoss}");
+            Logger.LogDebugWarning($"[Session Counter] CauseBodyDamage {totalDamage}");
+            Logger.LogDebugWarning($"[Session Counter] ExpLooting {expLooting}");
+            Logger.LogDebugWarning($"[Session Counter] HitCount {hitCount}");
         }
 
         if (hitCount <= 0)
@@ -411,44 +406,44 @@ public class ProcessProfileModel
 
         if (!SettingsModel.Instance.EnableModSupport.Value && !statTrackIsUsed)
         {
-            LeaderboardPlugin.logger.LogInfo(
+            Logger.LogInfo(
                 $"StatTrack process data skip. StatTrack Find? : {statTrackIsUsed} | Enabled Mod Support? : {SettingsModel.Instance.EnableModSupport.Value}");
             return (statTrackIsUsed, null);
         }
 
-        LeaderboardPlugin.logger.LogInfo($"StatTrack processing started. Loaded: {statTrackIsUsed}, ProfileId: {profileId}");
+        Logger.LogInfo($"StatTrack processing started. Loaded: {statTrackIsUsed}, ProfileId: {profileId}");
 
         var dataStatTrack = StatTrackInterop.LoadFromServer();
         if (dataStatTrack == null)
         {
-            LeaderboardPlugin.logger.LogWarning($"[StatTrack] Failed to load data from server for profile {profileId}");
+            Logger.LogWarning($"[StatTrack] Failed to load data from server for profile {profileId}");
             return (statTrackIsUsed, null);
         }
 
-#if DEBUG || BETA
-        LeaderboardPlugin.logger.LogWarning(
+
+        Logger.LogDebugWarning(
             $"Data raw StatTrack {JsonConvert.SerializeObject(dataStatTrack).ToJson()}");
-#endif
+
 
         processedStatTrackData = StatTrackInterop.GetAllValidWeapons(profileId, dataStatTrack);
         if (processedStatTrackData == null)
         {
-            LeaderboardPlugin.logger.LogWarning($"[StatTrack] GetAllValidWeapons returned null for profile {profileId}");
+            Logger.LogWarning($"[StatTrack] GetAllValidWeapons returned null for profile {profileId}");
             return (statTrackIsUsed, null);
         }
 
         if (!processedStatTrackData.ContainsKey(profileId))
         {
-            LeaderboardPlugin.logger.LogWarning($"[StatTrack] Processed data does not contain profile {profileId}");
+            Logger.LogWarning($"[StatTrack] Processed data does not contain profile {profileId}");
             return (statTrackIsUsed, null);
         }
 
-#if DEBUG || BETA
-        LeaderboardPlugin.logger.LogWarning("processedStatTrackData != null: Data -> " +
-                                            JsonConvert.SerializeObject(processedStatTrackData).ToJson());
-#endif
 
-        LeaderboardPlugin.logger.LogInfo($"[StatTrack] Successfully processed data for profile {profileId}, weapons count: {processedStatTrackData[profileId].Count}");
+        Logger.LogDebugWarning("processedStatTrackData != null: Data -> " +
+                                            JsonConvert.SerializeObject(processedStatTrackData).ToJson());
+
+
+        Logger.LogInfo($"[StatTrack] Successfully processed data for profile {profileId}, weapons count: {processedStatTrackData[profileId].Count}");
         return (true, processedStatTrackData[profileId]);
     }
 
@@ -637,17 +632,15 @@ public class ProcessProfileModel
     private void SendProfileData(AdditiveProfileData profileData, string profileType)
     {
 #if DEBUG
-        LeaderboardPlugin.logger.LogWarning($"DATA {profileType} {JsonConvert.SerializeObject(profileData)}");
+        Logger.LogDebugWarning($"DATA {profileType} {JsonConvert.SerializeObject(profileData)}");
 #endif
 
-#if BETA
-        var betaDataProfile = AdditiveProfileData.MakeBetaCopy(profileData);
-        betaDataProfile.ModInt = "BETA";
-        betaDataProfile.Mods = ["BETA"];
-        betaDataProfile.Token = "BETA";
+        var copyDataProfile = AdditiveProfileData.MakeCopy(profileData);
+        copyDataProfile.ModInt = "TESTDATA";
+        copyDataProfile.Mods = ["TESTDATA"];
+        copyDataProfile.Token = "TESTDATA";
         
-        LeaderboardPlugin.logger.LogWarning($"DATA {profileType} {JsonConvert.SerializeObject(betaDataProfile)}");
-#endif
+        Logger.LogDebugWarning($"DATA {profileType} {JsonConvert.SerializeObject(copyDataProfile)}");
 
         LeaderboardPlugin.SendRaidData(profileData);
     }

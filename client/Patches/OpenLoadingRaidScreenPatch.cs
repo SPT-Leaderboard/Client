@@ -27,7 +27,7 @@ namespace SPTLeaderboard.Patches
             if (!SettingsModel.Instance.EnableSendData.Value)
                 return true;
             
-            LeaderboardPlugin.logger.LogWarning("Player opened Loading raid screen");
+            Utils.Logger.LogDebugWarning("Player opened Loading raid screen");
             LeaderboardPlugin.Instance.CreateIconFullBodyPlayer();
             return true;
         }

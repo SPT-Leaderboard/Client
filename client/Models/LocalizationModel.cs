@@ -196,14 +196,14 @@ namespace SPTLeaderboard.Models
         {
             try
             {
-                LeaderboardPlugin.logger.LogInfo("Request to load FULL english locale");
+                Logger.LogInfo("Request to load FULL english locale");
                 var session = PlayerHelper.GetSession();
                 Dictionary<string, string> result = await session.GetLocalization("en").AsUniTask();
                 LocaleManagerClass.LocaleManagerClass.UpdateLocales("en", result);
             }
             catch (Exception e)
             {
-                LeaderboardPlugin.logger.LogError($"Fail Request load english locale: {e}");
+                Logger.LogError($"Fail Request load english locale: {e}");
             }
         }
 

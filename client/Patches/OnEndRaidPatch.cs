@@ -26,7 +26,7 @@ namespace SPTLeaderboard.Patches
             
             HeartbeatSender.Send(results.result == ExitStatus.Transit ? PlayerState.IN_TRANSIT : PlayerState.RAID_END);
             
-            LeaderboardPlugin.logger.LogWarning("[State] Player ended raid");
+            Utils.Logger.LogDebugWarning("[State] Player ended raid");
             return true;
         }
 

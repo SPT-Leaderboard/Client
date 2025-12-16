@@ -1,6 +1,5 @@
 ﻿using System;
 using Comfort.Common;
-using EFT;
 using EFT.Communications;
 using Newtonsoft.Json;
 using SPTLeaderboard.Data;
@@ -12,7 +11,7 @@ namespace SPTLeaderboard.Utils
     {
         public static void HandleError(string responseBody, long statusCode)
         {
-            LeaderboardPlugin.logger.LogError($"Server Error: {statusCode} | Response: {responseBody}");
+            Logger.LogError($"Server Error: {statusCode} | Response: {responseBody}");
 
             var typeError = GetTypeError(statusCode);
             if (typeError != ErrorType.SILENT_ERROR)
@@ -40,7 +39,7 @@ namespace SPTLeaderboard.Utils
                 }
                 catch (JsonException ex)
                 {
-                    LeaderboardPlugin.logger.LogWarning($"Failed to parse banned mods error response: {ex.Message}");
+                    Logger.LogWarning($"Failed to parse banned mods error response: {ex.Message}");
                 }
             }
 

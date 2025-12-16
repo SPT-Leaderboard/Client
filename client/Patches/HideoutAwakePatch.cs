@@ -22,7 +22,7 @@ namespace SPTLeaderboard.Patches
                 return;
             
             HeartbeatSender.Send(PlayerState.IN_HIDEOUT);
-            LeaderboardPlugin.logger.LogWarning("[State] Player entered in hideout");
+            Utils.Logger.LogDebugWarning("[State] Player entered in hideout");
         }
     }
 }

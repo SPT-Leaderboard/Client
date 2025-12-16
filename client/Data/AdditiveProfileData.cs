@@ -171,7 +171,7 @@ namespace SPTLeaderboard.Data
         [JsonProperty("revenue_items")]
         public List<ItemData> RevenueItems { get; set; } = new();
 
-        public static AdditiveProfileData MakeBetaCopy(AdditiveProfileData original)
+        public static AdditiveProfileData MakeCopy(AdditiveProfileData original)
         {
             return new AdditiveProfileData(new BaseData
             {

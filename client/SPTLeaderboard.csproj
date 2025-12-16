@@ -190,6 +190,7 @@
         <Compile Include="Utils\IconSaver.cs" />
         <Compile Include="Utils\StatTrackInterop.cs" />
         <Compile Include="Utils\TrackingLoot.cs" />
+        <Compile Include="Utils\Logger.cs" />
         <Compile Include="Utils\ZoneTracker.cs" />
     </ItemGroup>
     <ItemGroup>

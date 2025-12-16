@@ -19,7 +19,7 @@ namespace SPTLeaderboard.Patches
             OverlayDebug.Instance.Disable();
             ZoneTracker.Instance.Disable();
 #endif
-            LeaderboardPlugin.logger.LogWarning("Player dispose world");
+            Utils.Logger.LogDebugWarning("Player dispose world");
         }
     }
 }

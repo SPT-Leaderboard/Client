@@ -33,7 +33,7 @@ namespace SPTLeaderboard.Utils
 
                     request.OnSuccess = (response, code) =>
                     {
-                        LeaderboardPlugin.logger.LogWarning($"Request OnSuccess {response}");
+                        Logger.LogWarning($"[HeartbeatSender] OnSuccess {response}");
                     };
 
                     request.OnFail = (error, code) => { ServerErrorHandler.HandleError(error, code); };
@@ -50,10 +50,7 @@ namespace SPTLeaderboard.Utils
                     string jsonBody = JsonConvert.SerializeObject(data);
 
 #if DEBUG
-                    if (SettingsModel.Instance.Debug.Value)
-                    {
-                        LeaderboardPlugin.logger.LogWarning($"Request Data {jsonBody}");
-                    }
+                    Logger.LogDebugWarning($"Request Data {jsonBody}");
 #endif
 
                     request.SetData(jsonBody);
@@ -77,7 +74,7 @@ namespace SPTLeaderboard.Utils
 
                 request.OnSuccess = (response, code) =>
                 {
-                    LeaderboardPlugin.logger.LogWarning($"Request OnSuccess {response}");
+                    Logger.LogWarning($"[HeartbeatSender] SendInRaid OnSuccess {response}");
                 };
 
                 request.OnFail = (error, code) => { ServerErrorHandler.HandleError(error, code); };
@@ -99,7 +96,7 @@ namespace SPTLeaderboard.Utils
 #if DEBUG
                 if (SettingsModel.Instance.Debug.Value)
                 {
-                    LeaderboardPlugin.logger.LogWarning($"Request Data {jsonBody}");
+                    Logger.LogWarning($"[HeartbeatSender] SendInRaid Data {jsonBody}");
                 }
 #endif
 
