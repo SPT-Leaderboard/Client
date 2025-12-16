@@ -18,7 +18,7 @@ namespace SPTLeaderboard.Patches
 #if DEBUG
             OverlayDebug.Instance.Enable();
 #endif
-            LeaderboardPlugin.logger.LogWarning("Player started world");
+            Utils.Logger.LogDebugWarning("Player started world");
         }
     }
 }

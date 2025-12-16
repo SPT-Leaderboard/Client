@@ -1,14 +1,8 @@
-﻿using System;
-using System.Linq;
-using System.Reflection;
+﻿using System.Reflection;
 using EFT;
-using EFT.HealthSystem;
-using EFT.InventoryLogic;
-using EFT.UI;
 using EFT.UI.Matchmaker;
 using SPT.Reflection.Patching;
 using SPTLeaderboard.Data;
-using SPTLeaderboard.Enums;
 using SPTLeaderboard.Models;
 using SPTLeaderboard.Utils;
 
@@ -28,7 +22,7 @@ namespace SPTLeaderboard.Patches
         [PatchPrefix]
         static bool Prefix()
         {
-            LeaderboardPlugin.logger.LogWarning("Player opened select side screen");
+            Utils.Logger.LogDebugWarning("Player opened select side screen");
             if (!SettingsModel.Instance.EnableSendData.Value && PlayerHelper.HasRaidStarted())
                 return true;
 

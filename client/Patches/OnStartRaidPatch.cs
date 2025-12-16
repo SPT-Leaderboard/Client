@@ -27,7 +27,7 @@ namespace SPTLeaderboard.Patches
             
             LeaderboardPlugin.Instance.CreateIconPlayer();
             LeaderboardPlugin.Instance.StartInRaidHeartbeat();
-            LeaderboardPlugin.logger.LogWarning("[State] Player started raid");
+            Utils.Logger.LogDebugWarning("[State] Player started raid");
             PlayerHelper.Instance.LastDeathPosition = Vector3.zero;
             return true;
         }

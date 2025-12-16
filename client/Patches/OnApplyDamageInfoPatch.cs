@@ -19,13 +19,13 @@ namespace SPTLeaderboard.Patches
             if (!SettingsModel.Instance.EnableSendData.Value)
                 return true;
             
-#if DEBUG
-            LeaderboardPlugin.logger.LogWarning("[ProcessShot Local] Hit");
-#endif
+
+            Utils.Logger.LogDebugWarning("[ProcessShot Local] Hit");
+
             IPlayerOwner player = damageInfo.Player;
-#if DEBUG
-            LeaderboardPlugin.logger.LogWarning($"[ProcessShot Local] Nick -> {player?.Nickname}");
-#endif
+
+            Utils.Logger.LogDebugWarning($"[ProcessShot Local] Nick -> {player?.Nickname}");
+
             if ((Player)((player != null) ? player.iPlayer : null) != PlayerHelper.Instance.Player)
             {
                 return true;
@@ -34,9 +34,9 @@ namespace SPTLeaderboard.Patches
             HitsTracker.Instance.IncreaseHit(bodyPartType);
 #if DEBUG
             OverlayDebug.Instance.UpdateOverlay();
-            LeaderboardPlugin.logger.LogWarning($"[ProcessShot Local] Hit BodyType {bodyPartType.ToString()}");
-            LeaderboardPlugin.logger.LogWarning($"[ProcessShot Local] Hit EBodyPartColliderType {colliderType.ToString()}");
 #endif
+            Utils.Logger.LogDebugWarning($"[ProcessShot Local] Hit BodyType {bodyPartType.ToString()}");
+            Utils.Logger.LogDebugWarning($"[ProcessShot Local] Hit EBodyPartColliderType {colliderType.ToString()}");
             
             return true;
         }

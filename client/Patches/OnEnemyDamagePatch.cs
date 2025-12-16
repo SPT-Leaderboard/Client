@@ -44,9 +44,7 @@ namespace SPTLeaderboard.Patches
                 HitsTracker.Instance.AddHit(distance, bodyPart);
             }
             
-#if DEBUG || BETA
-            LeaderboardPlugin.logger.LogWarning($"[OnEnemyDamage Postfix] side={playerSide} role={role} body={bodyPart} dist={distance:0.0} heavy={isHeavyDamage}");
-#endif
+            Utils.Logger.LogDebugWarning($"[OnEnemyDamage Postfix] side={playerSide} role={role} body={bodyPart} dist={distance:0.0} heavy={isHeavyDamage}");
         }
     }
 }

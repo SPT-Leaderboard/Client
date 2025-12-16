@@ -40,7 +40,7 @@ namespace SPTLeaderboard.Patches
             if (!PlayerHelper.HasRaidStarted())
             {
                 HeartbeatSender.Send(PlayerState.IN_STASH);
-                LeaderboardPlugin.logger.LogWarning("[State] Player opened Inventory screen");
+                Utils.Logger.LogDebugWarning("[State] Player opened Inventory screen");
             }
 
             return true;
