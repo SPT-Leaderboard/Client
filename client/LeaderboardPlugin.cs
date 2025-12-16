@@ -129,7 +129,7 @@ namespace SPTLeaderboard
                                   Input.GetKey(KeyCode.D);
             if (allKeysPressed)
             {
-                if (Input.GetKey(KeyCode.Space))
+                if (Input.GetKeyDown(KeyCode.Space))
                 {
                     IsDebugLogsEnabled = !IsDebugLogsEnabled;
                     LocalizationModel.NotificationWarning($"Advanced logs SPTLB is: {IsDebugLogsEnabled}");
