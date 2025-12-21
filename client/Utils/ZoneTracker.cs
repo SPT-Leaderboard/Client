@@ -107,7 +107,7 @@ public class ZoneTracker: MonoBehaviour
     { 
         if (!File.Exists(GlobalData.ZonesConfig))
         {
-            LeaderboardPlugin.logger.LogWarning($"[ZoneManager] zones.json не найден: {GlobalData.ZonesConfig}");
+            Logger.LogWarning($"[ZoneManager] zones.json не найден: {GlobalData.ZonesConfig}");
             return;
         }
 
@@ -119,17 +119,17 @@ public class ZoneTracker: MonoBehaviour
             if (allZones != null && allZones.ContainsKey(mapName))
             {
                 Zones = allZones[mapName];
-                LeaderboardPlugin.logger.LogWarning($"[ZoneManager] Загружено {Zones.Count} зон для карты {mapName}");
+                Logger.LogWarning($"[ZoneManager] Загружено {Zones.Count} зон для карты {mapName}");
             }
             else
             {
                 Zones.Clear();
-                LeaderboardPlugin.logger.LogWarning($"[ZoneManager] Для карты {mapName} зон не найдено.");
+                Logger.LogWarning($"[ZoneManager] Для карты {mapName} зон не найдено.");
             }
         }
         catch (System.Exception ex)
         {
-            LeaderboardPlugin.logger.LogError($"[ZoneManager] Ошибка чтения JSON: {ex.Message}");
+            Logger.LogError($"[ZoneManager] Ошибка чтения JSON: {ex.Message}");
         }
     }
 
