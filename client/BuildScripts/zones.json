@@ -5,30 +5,30 @@
       "Name": "Tarkon",
       "Center": {
         "x": -214.0,
-        "y": 1.0,
+        "y": 10.0,
         "z": -120.0
       },
       "Size": {
         "x": 25.0,
-        "y": 10.0,
+        "y": 20.0,
         "z": 60.0
       },
-      "RotationVertical": 0.0
+      "RotationZ": 2.0
     },
     {
       "GUID": "c6953f74-7c77-4297-a5f3-35546d50d9e8",
       "Name": "Storage",
       "Center": {
-        "x": -285.0,
+        "x": -280.0,
         "y": 1.0,
         "z": -130.0
       },
       "Size": {
-        "x": 50.0,
+        "x": 60.0,
         "y": 25.0,
         "z": 120.0
       },
-      "RotationVertical": 0.0
+      "RotationZ": 2.0
     },
     {
       "GUID": "69fa5405-a00f-46ba-8f13-4965bc26b175",
@@ -43,7 +43,7 @@
         "y": 25.0,
         "z": 30.0
       },
-      "RotationVertical": 0.0
+      "RotationZ": 0.0
     },
     {
       "GUID": "6a603697-8214-4814-994e-a04890a9ee9b",
@@ -58,7 +58,7 @@
         "y": 25.0,
         "z": 30.0
       },
-      "RotationVertical": 0.0
+      "RotationZ": 0.0
     },
     {
       "GUID": "be233b7a-4d3a-4bab-9ed7-17ab7fd47ea1",
@@ -73,7 +73,7 @@
         "y": 25.0,
         "z": 30.0
       },
-      "RotationVertical": 0.0
+      "RotationZ": 8.0
     },
     {
       "GUID": "eb69305d-c41b-4348-9a73-1d1645d867ae",
@@ -88,22 +88,22 @@
         "y": 20.0,
         "z": 20.0
       },
-      "RotationVertical": 0.0
+      "RotationZ": 0.0
     },
     {
       "GUID": "6da6e66e-c33f-4fa0-8747-271c8d4671d3",
       "Name": "Склад 17",
       "Center": {
-        "x": 50.0,
+        "x": 48.0,
         "y": 1.0,
         "z": -61.0
       },
       "Size": {
-        "x": 50.0,
+        "x": 48.0,
         "y": 30.0,
         "z": 40.0
       },
-      "RotationVertical": 0.0
+      "RotationZ": -12.0
     },
     {
       "GUID": "ed4b6996-135d-4804-864b-5de6b5b71ade",
@@ -118,11 +118,11 @@
         "y": 30.0,
         "z": 40.0
       },
-      "RotationVertical": 0.0
+      "RotationZ": -12.0
     },
     {
       "GUID": "45165df7-dc57-4d80-bdab-cf213d6a664d",
-      "Name": "Repair мастерская",
+      "Name": "Repair workshop",
       "Center": {
         "x": 107.0,
         "y": 1.0,
@@ -133,7 +133,7 @@
         "y": 30.0,
         "z": 20.0
       },
-      "RotationVertical": 0.0
+      "RotationZ": -12.0
     },
     {
       "GUID": "6c4e953a-8daf-43de-9883-918a99d0ecc5",
@@ -146,9 +146,9 @@
       "Size": {
         "x": 20.0,
         "y": 15.0,
-        "z": 20.0
+        "z": 25.0
       },
-      "RotationVertical": 0.0
+      "RotationZ": -10.0
     },
     {
       "GUID": "5cd7734d-256f-48f1-92cc-c8778edf7001",
@@ -163,7 +163,7 @@
         "y": 20.0,
         "z": 65.0
       },
-      "RotationVertical": 0.0
+      "RotationZ": -10.0
     },
     {
       "GUID": "24f12f05-d676-4ece-b8d2-949ed6521196",
@@ -171,14 +171,14 @@
       "Center": {
         "x": 200.0,
         "y": 5.0,
-        "z": -11.0
+        "z": -15.0
       },
       "Size": {
         "x": 65.0,
         "y": 20.0,
-        "z": 30.0
+        "z": 25.0
       },
-      "RotationVertical": 0.0
+      "RotationZ": -10.0
     },
     {
       "GUID": "740b304c-fdb7-4f17-bc76-abb6b6d30fa4",
@@ -193,22 +193,22 @@
         "y": 20.0,
         "z": 65.0
       },
-      "RotationVertical": 0.0
+      "RotationZ": 0.0
     },
     {
       "GUID": "e34c8d5f-875b-415d-a750-e6f26beae24d",
       "Name": "Storage 4",
       "Center": {
-        "x": 337.0,
+        "x": 336.0,
         "y": 5.0,
-        "z": -65.0
+        "z": -63.0
       },
       "Size": {
         "x": 30.0,
         "y": 20.0,
-        "z": 70.0
+        "z": 67.0
       },
-      "RotationVertical": 0.0
+      "RotationZ": 8.0
     },
     {
       "GUID": "a8379dee-027f-4905-9ad3-5f9efc28bc37",
@@ -219,11 +219,11 @@
         "z": -95.0
       },
       "Size": {
-        "x": 60.0,
+        "x": 55.0,
         "y": 20.0,
-        "z": 35.0
+        "z": 30.0
       },
-      "RotationVertical": 0.0
+      "RotationZ": 10.0
     },
     {
       "GUID": "df5dd404-eb5d-47e7-a8a2-9792228ab916",
@@ -231,14 +231,14 @@
       "Center": {
         "x": 475.0,
         "y": 5.0,
-        "z": -64.0
+        "z": -69.0
       },
       "Size": {
         "x": 40.0,
         "y": 20.0,
-        "z": 55.0
+        "z": 50.0
       },
-      "RotationVertical": 0.0
+      "RotationZ": 10.0
     },
     {
       "GUID": "337af855-054a-4f8a-bda0-57bc371741fd",
@@ -249,11 +249,11 @@
         "z": 32.0
       },
       "Size": {
-        "x": 40.0,
+        "x": 30.0,
         "y": 20.0,
-        "z": 40.0
+        "z": 25.0
       },
-      "RotationVertical": 0.0
+      "RotationZ": 8.0
     },
     {
       "GUID": "2192a63b-b273-442b-915b-c66ce65536d8",
@@ -268,7 +268,7 @@
         "y": 20.0,
         "z": 30.0
       },
-      "RotationVertical": 0.0
+      "RotationZ": 35.0
     },
     {
       "GUID": "7579cc39-da02-4956-8a09-dbaf92d42cec",
@@ -279,11 +279,11 @@
         "z": 18.0
       },
       "Size": {
-        "x": 40.0,
+        "x": 30.0,
         "y": 20.0,
-        "z": 40.0
+        "z": 30.0
       },
-      "RotationVertical": 0.0
+      "RotationZ": 45.0
     },
     {
       "GUID": "abb7af31-7e43-4e36-a7db-3500f61f4c5e",
@@ -298,7 +298,7 @@
         "y": 20.0,
         "z": 50.0
       },
-      "RotationVertical": 0.0
+      "RotationZ": 8.0
     },
     {
       "GUID": "b93873c3-fcc7-47ad-bad4-0d96b4f5efaa",
@@ -313,7 +313,7 @@
         "y": 20.0,
         "z": 25.0
       },
-      "RotationVertical": 0.0
+      "RotationZ": 8.0
     },
     {
       "GUID": "66a119f6-34df-4064-b910-28b097273ca0",
@@ -328,7 +328,7 @@
         "y": 20.0,
         "z": 50.0
       },
-      "RotationVertical": 0.0
+      "RotationZ": 8.0
     },
     {
       "GUID": "fb8deece-3ded-4d17-bb9b-8ef95aa5ce32",
@@ -343,7 +343,7 @@
         "y": 20.0,
         "z": 20.0
       },
-      "RotationVertical": 0.0
+      "RotationZ": 0.0
     },
     {
       "GUID": "31fe9a76-5f7c-45e9-ba38-231f9be0b0b2",
@@ -358,7 +358,7 @@
         "y": 20.0,
         "z": 40.0
       },
-      "RotationVertical": 0.0
+      "RotationZ": 8.0
     },
     {
       "GUID": "64a8aff8-7f35-42a7-be5b-262e2df6e214",
@@ -373,7 +373,7 @@
         "y": 20.0,
         "z": 40.0
       },
-      "RotationVertical": 0.0
+      "RotationZ": 8.0
     },
     {
       "GUID": "42c473ba-eb42-45b3-a317-0b1fd69faff6",
@@ -388,7 +388,22 @@
         "y": 20.0,
         "z": 70.0
       },
-      "RotationVertical": 0.0
+      "RotationZ": 12.0
+    },
+    {
+      "GUID": "80653426-1249-4813-85d6-2abdde663427",
+      "Name": "Старая стройка",
+      "Center": {
+        "x": 80.0,
+        "y": 1.0,
+        "z": -12.0
+      },
+      "Size": {
+        "x": 22.0,
+        "y": 22.0,
+        "z": 22.0
+      },
+      "RotationZ": 5.0
     }
   ],
   "Factory": [
@@ -405,7 +420,7 @@
         "y": 5.0,
         "z": 10.0
       },
-      "RotationVertical": 0.0
+      "RotationZ": 0.0
     }
   ],
   "Night Factory": [
@@ -422,7 +437,7 @@
         "y": 5.0,
         "z": 10.0
       },
-      "RotationVertical": 0.0
+      "RotationZ": 0.0
     }
   ],
   "Interchange": [
@@ -439,7 +454,7 @@
         "y": 5.0,
         "z": 10.0
       },
-      "RotationVertical": 0.0
+      "RotationZ": 0.0
     }
   ],
   "Labs": [
@@ -456,7 +471,7 @@
         "y": 5.0,
         "z": 10.0
       },
-      "RotationVertical": 0.0
+      "RotationZ": 0.0
     }
   ],
   "Reserve": [
@@ -473,7 +488,7 @@
         "y": 5.0,
         "z": 10.0
       },
-      "RotationVertical": 0.0
+      "RotationZ": 0.0
     }
   ],
   "Shoreline": [
@@ -490,7 +505,7 @@
         "y": 5.0,
         "z": 10.0
       },
-      "RotationVertical": 0.0
+      "RotationZ": 0.0
     }
   ],
   "Woods": [
@@ -507,7 +522,7 @@
         "y": 5.0,
         "z": 10.0
       },
-      "RotationVertical": 0.0
+      "RotationZ": 0.0
     }
   ],
   "Lighthouse": [
@@ -524,7 +539,7 @@
         "y": 5.0,
         "z": 10.0
       },
-      "RotationVertical": 0.0
+      "RotationZ": 0.0
     }
   ],
   "Streets of Tarkov": [
@@ -541,7 +556,7 @@
         "y": 5.0,
         "z": 10.0
       },
-      "RotationVertical": 0.0
+      "RotationZ": 0.0
     }
   ],
   "Ground Zero - Low": [
@@ -558,7 +573,7 @@
         "y": 5.0,
         "z": 10.0
       },
-      "RotationVertical": 0.0
+      "RotationZ": 0.0
     }
   ],
   "Ground Zero - High": [
@@ -575,7 +590,7 @@
         "y": 5.0,
         "z": 10.0
       },
-      "RotationVertical": 0.0
+      "RotationZ": 0.0
     }
   ]
 }
