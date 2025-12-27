@@ -5,28 +5,49 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 using SPTLeaderboard.Data;
 using UnityEngine;
+// ReSharper disable InconsistentNaming
 
 namespace SPTLeaderboard.Utils.Zones
 {
     public class ZoneTracker : MonoBehaviour
     {
-        public string CurrentZone { get; private set; }
+        public ZoneData CurrentZone { get; private set; }
 
         private Dictionary<string, List<ZoneData>> allZones;
 
         public List<ZoneData> Zones = new();
-        public List<ZoneData> ZonesEntered = new();
+        public List<string> ZonesEntered = new();
         public Action<Dictionary<string, List<ZoneData>>> OnZonesLoaded;
-        public bool ShowOverlays { get; set; } = false;
+        public bool ShowOverlays { get; set; }
+
+        private float zoneEntryTime;
+        public Dictionary<string, float> ZoneTimes { get; private set; } = new();
+        public Action<string, float> OnZoneTimeUpdated;
+
 
 #if DEBUG || BETA
         private List<LineRenderer> debugViews = new();
         private List<ZoneOverlay> zoneOverlays = new();
 #endif
-
         public void Enable()
         {
             LeaderboardPlugin.Instance.FixedTick += CheckPlayerPosition;
+            LoadZones();
+            LoadZonesMap(DataUtils.GetPrettyMapName(DataUtils.GetRaidRawMap()));
+        }
+
+        public void LoadZonesMap(string mapName)
+        { 
+            if (allZones != null && allZones.ContainsKey(mapName))
+            {
+                Zones = allZones[mapName];
+                Logger.LogWarning($"[ZoneManager] Loaded {Zones.Count} zones for map {mapName}");
+            }
+            else
+            {
+                Zones.Clear();
+                Logger.LogWarning($"[ZoneManager] For map {mapName} zones not found.");
+            }
         }
 
         public void Disable()
@@ -41,11 +62,12 @@ namespace SPTLeaderboard.Utils.Zones
             debugViews = null;
 #endif
             Zones = null;
+            zoneEntryTime = 0f;
+            ZoneTimes = new();
             ZonesEntered = null;
             allZones = null;
             CurrentZone = null;
         }
-
 
         public void LoadZones()
         {
@@ -152,27 +174,49 @@ namespace SPTLeaderboard.Utils.Zones
             {
                 if (zone.GetBounds().Contains(pos))
                 {
-                    if (CurrentZone != zone.Name)
+                    if (CurrentZone != zone)
                     {
-                        CurrentZone = zone.Name;
-                        if (!ZonesEntered.Contains(zone))
+                        // Exit from previous zone - save time
+                        if (CurrentZone != null && zoneEntryTime > 0)
                         {
-                            ZonesEntered.Add(zone);
+                            float timeSpent = Time.fixedTime - zoneEntryTime;
+                            if (!ZoneTimes.ContainsKey(CurrentZone.GUID)) ZoneTimes[CurrentZone.GUID] = 0f;
+                            ZoneTimes[CurrentZone.GUID] += timeSpent;
+                            // OnZoneTimeUpdated?.Invoke(CurrentZone.GUID, ZoneTimes[CurrentZone.GUID]);
+                            Logger.LogDebugInfo(
+                                $"ZoneTracker: Exit {CurrentZone.Name}, total time: {ZoneTimes[CurrentZone.GUID]:F1}s");
                         }
 
-                        Logger.LogDebugWarning($"[ZoneTracker][Enter]: {CurrentZone}");
+                        // Enter in zone
+                        CurrentZone = zone;
+                        zoneEntryTime = Time.fixedTime;
+                        
+                        if (!ZonesEntered.Contains(zone.GUID))
+                        {
+                            ZonesEntered.Add(zone.GUID);
+                        }
+
+                        Logger.LogDebugWarning($"ZoneTracker: Enter {CurrentZone.Name}");
                     }
 
+                    // Player already in zone
                     return;
                 }
             }
 
-            if (CurrentZone != null)
+            // Exit from any zone
+            if (CurrentZone != null && zoneEntryTime > 0)
             {
-                Logger.LogDebugWarning($"[ZoneTracker][Exit]: {CurrentZone}");
+                float timeSpent = Time.fixedTime - zoneEntryTime;
+                if (!ZoneTimes.ContainsKey(CurrentZone.GUID)) ZoneTimes[CurrentZone.GUID] = 0f;
+                ZoneTimes[CurrentZone.GUID] += timeSpent;
+                // OnZoneTimeUpdated?.Invoke(CurrentZone.GUID, ZoneTimes[CurrentZone.GUID]);
+                Logger.LogDebugWarning($"ZoneTracker: Exit {CurrentZone.Name}, total time: {ZoneTimes[CurrentZone.GUID]:F1}s");
                 CurrentZone = null;
+                zoneEntryTime = 0f;
             }
         }
+
 
 #if DEBUG || BETA
         public void DrawZone(Vector3 Size, Vector3 Center)
@@ -431,7 +475,8 @@ namespace SPTLeaderboard.Utils.Zones
                 }
             }
 
-            Logger.LogDebugInfo($"[ZoneTracker] {createdCount} overlays created (total in the list: {zoneOverlays.Count})");
+            Logger.LogDebugInfo(
+                $"[ZoneTracker] {createdCount} overlays created (total in the list: {zoneOverlays.Count})");
         }
 #endif
     }

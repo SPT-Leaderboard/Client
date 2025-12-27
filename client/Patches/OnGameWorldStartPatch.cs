@@ -19,10 +19,18 @@ namespace SPTLeaderboard.Patches
         {
 #if DEBUG
             OverlayDebug.Instance.Enable();
-            
-            var zonesTrackerObj = new GameObject("[SPTLeaderboard] ZonesTracker");
-            Object.DontDestroyOnLoad(zonesTrackerObj);
-            LeaderboardPlugin.Instance.ZoneTracker = zonesTrackerObj.AddComponent<ZoneTracker>();
+
+            if (!LeaderboardPlugin.Instance.ZoneTracker)
+            {
+                var zonesTrackerObj = new GameObject("[SPTLeaderboard] ZonesTracker");
+                Object.DontDestroyOnLoad(zonesTrackerObj);
+                LeaderboardPlugin.Instance.ZoneTracker = zonesTrackerObj.AddComponent<ZoneTracker>();
+                LeaderboardPlugin.Instance.ZoneTracker.Enable();
+            }
+            else
+            {
+                LeaderboardPlugin.Instance.ZoneTracker.Enable();
+            }
             
             var zonesInterfaceObj = new GameObject("[SPTLeaderboard] ZonesInterface");
             Object.DontDestroyOnLoad(zonesInterfaceObj);

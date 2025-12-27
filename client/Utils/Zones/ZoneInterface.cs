@@ -521,5 +521,5 @@ namespace SPTLeaderboard.Utils.Zones
             }
         }
     }
-#endif
 }
+#endif

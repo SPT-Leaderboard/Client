@@ -33,8 +33,9 @@ namespace SPTLeaderboard
         public bool cachedPlayerModelPreview;
         public bool engLocaleLoaded;
         public bool configUpdated;
-
+#if DEBUG || BETA
         public Action Tick;
+#endif
         public Action FixedTick;
 
         public static ManualLogSource logger;
@@ -149,12 +150,12 @@ namespace SPTLeaderboard
             }
         }
         
-#if DEBUG
+
         private void FixedUpdate()
         {
             FixedTick?.Invoke();
         }
-#endif
+
 
         #region Icons
         

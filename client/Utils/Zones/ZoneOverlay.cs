@@ -86,5 +86,5 @@ namespace SPTLeaderboard.Utils.Zones
             _content.text = text;
         }
     }
-#endif
 }
+#endif
