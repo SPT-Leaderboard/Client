@@ -2,6 +2,8 @@
 using EFT;
 using SPT.Reflection.Patching;
 using SPTLeaderboard.Utils;
+using SPTLeaderboard.Utils.Zones;
+using UnityEngine;
 
 namespace SPTLeaderboard.Patches
 {
@@ -17,7 +19,18 @@ namespace SPTLeaderboard.Patches
         {
 #if DEBUG
             OverlayDebug.Instance.Disable();
-            ZoneTracker.Instance.Disable();
+            
+            if (LeaderboardPlugin.Instance.ZoneTracker)
+            {
+                Object.Destroy(LeaderboardPlugin.Instance.ZoneTracker.gameObject);
+                LeaderboardPlugin.Instance.ZoneTracker = null;
+            }
+            
+            if (LeaderboardPlugin.Instance.ZoneInterface)
+            {
+                Object.Destroy(LeaderboardPlugin.Instance.ZoneInterface.gameObject);
+                LeaderboardPlugin.Instance.ZoneInterface = null;
+            }
 #endif
             Utils.Logger.LogDebugWarning("Player dispose world");
         }

@@ -1,20 +1,15 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Security.Cryptography;
-using System.Text;
 using System.Threading;
-using System.Timers;
 using Cysharp.Threading.Tasks;
 using BepInEx;
 using BepInEx.Logging;
-using EFT;
-using EFT.Communications;
 using Newtonsoft.Json;
 using SPTLeaderboard.Data;
 using SPTLeaderboard.Enums;
 using SPTLeaderboard.Models;
 using SPTLeaderboard.Patches;
 using SPTLeaderboard.Utils;
+using SPTLeaderboard.Utils.Zones;
 using UnityEngine;
 using Timer = System.Timers.Timer;
 
@@ -30,7 +25,6 @@ namespace SPTLeaderboard
         private LocalizationModel _localization;
         private EncryptionModel _encrypt;
         private IconSaver _iconSaver;
-        private TrackingLoot _trackingLoot = new();
         
         private Timer _inRaidHeartbeatTimer;
         private Timer _preRaidCheckTimer;
@@ -98,7 +92,7 @@ namespace SPTLeaderboard
             new OnPlayerAddedItem().Enable();
             new OnPlayerRemovedItem().Enable();
             new RaidSettingsHookPatch().Enable();
-            
+
             if (!DataUtils.IsCheckedFikaCore)
             {
                 DataUtils.CheckFikaCore(callback =>
@@ -123,12 +117,16 @@ namespace SPTLeaderboard
         private void Update()
         {
             HandleKeybind();
+#if DEBUG
+            Tick?.Invoke();
+            HandleZonesInterfaceToggle();
+#endif
         }
 
         private void HandleKeybind()
         {
-            bool allKeysPressed = Input.GetKey(KeyCode.LeftControl) && 
-                                  Input.GetKey(KeyCode.LeftShift) && 
+            bool allKeysPressed = Input.GetKey(KeyCode.LeftControl) &&
+                                  Input.GetKey(KeyCode.LeftShift) &&
                                   Input.GetKey(KeyCode.D);
             if (allKeysPressed)
             {
@@ -139,13 +137,19 @@ namespace SPTLeaderboard
                 }
             }
         }
+
+        private void HandleZonesInterfaceToggle()
+        {
+            if (SettingsModel.Instance.ToggleZonesInterfaceKey.Value.IsDown())
+            {
+                ZoneCursorUtils.IsUiOpen = !ZoneCursorUtils.IsUiOpen;
+                Cursor.lockState = ZoneCursorUtils.IsUiOpen ? CursorLockMode.None : CursorLockMode.Locked;
+                Cursor.visible = ZoneCursorUtils.IsUiOpen;
+                LocalizationModel.NotificationWarning($"ZonesInterface: {ZoneCursorUtils.IsUiOpen}");
+            }
+        }
         
 #if DEBUG
-        private void Update()
-        {
-            Tick?.Invoke();
-        }
-
         private void FixedUpdate()
         {
             FixedTick?.Invoke();
@@ -476,6 +480,12 @@ namespace SPTLeaderboard
         }
         #endregion
         
-        public TrackingLoot TrackingLoot => _trackingLoot;
+        public TrackingLoot TrackingLoot { get; } = new();
+
+        public ZoneTracker ZoneTracker { get; set; }
+        
+#if DEBUG || BETA
+        public ZoneInterface ZoneInterface { get; set; }
+#endif
     }
 }

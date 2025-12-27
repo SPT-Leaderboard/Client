@@ -98,6 +98,9 @@
         <Reference Include="UniTask">
           <HintPath>$(TarkovPluginsDir)\UnityToolkit\UniTask.dll</HintPath>
         </Reference>
+        <Reference Include="Unity.Postprocessing.Runtime">
+          <HintPath>$(TarkovManagedDir)Unity.Postprocessing.Runtime.dll</HintPath>
+        </Reference>
         <Reference Include="Unity.TextMeshPro, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
             <SpecificVersion>False</SpecificVersion>
             <HintPath>$(TarkovManagedDir)Unity.TextMeshPro.dll</HintPath>
@@ -117,6 +120,9 @@
         </Reference>
         <Reference Include="UnityEngine.InputLegacyModule">
             <HintPath>$(TarkovManagedDir)UnityEngine.InputLegacyModule.dll</HintPath>
+        </Reference>
+        <Reference Include="UnityEngine.TextRenderingModule">
+          <HintPath>$(TarkovManagedDir)UnityEngine.TextRenderingModule.dll</HintPath>
         </Reference>
         <Reference Include="UnityEngine.UI, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
             <SpecificVersion>False</SpecificVersion>
@@ -191,7 +197,11 @@
         <Compile Include="Utils\StatTrackInterop.cs" />
         <Compile Include="Utils\TrackingLoot.cs" />
         <Compile Include="Utils\Logger.cs" />
-        <Compile Include="Utils\ZoneTracker.cs" />
+        <Compile Include="Utils\Zones\ZoneCursorUtils.cs" />
+        <Compile Include="Utils\Zones\ZoneVector3Converter.cs" />
+        <Compile Include="Utils\Zones\ZoneOverlay.cs" />
+        <Compile Include="Utils\Zones\ZoneTracker.cs" />
+        <Compile Include="Utils\Zones\ZoneInterface.cs" />
     </ItemGroup>
     <ItemGroup>
       <None Include="Dependencies\Keys\sptld.snk" />

@@ -2,6 +2,8 @@
 using EFT;
 using SPT.Reflection.Patching;
 using SPTLeaderboard.Utils;
+using SPTLeaderboard.Utils.Zones;
+using UnityEngine;
 
 namespace SPTLeaderboard.Patches
 {
@@ -17,7 +19,14 @@ namespace SPTLeaderboard.Patches
         {
 #if DEBUG
             OverlayDebug.Instance.Enable();
-            ZoneTracker.Instance.Enable();
+            
+            var zonesTrackerObj = new GameObject("[SPTLeaderboard] ZonesTracker");
+            Object.DontDestroyOnLoad(zonesTrackerObj);
+            LeaderboardPlugin.Instance.ZoneTracker = zonesTrackerObj.AddComponent<ZoneTracker>();
+            
+            var zonesInterfaceObj = new GameObject("[SPTLeaderboard] ZonesInterface");
+            Object.DontDestroyOnLoad(zonesInterfaceObj);
+            LeaderboardPlugin.Instance.ZoneInterface = zonesInterfaceObj.AddComponent<ZoneInterface>();
 #endif
             Utils.Logger.LogDebugWarning("Player started world");
         }

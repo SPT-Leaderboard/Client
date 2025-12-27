@@ -19,11 +19,16 @@ namespace SPTLeaderboard.Models
 		public ConfigEntry<float> PositionXDebug;
 		public ConfigEntry<float> PositionYDebug;
 		public ConfigEntry<int> FontSizeDebug;
+		public ConfigEntry<int> OverlayFontSize;
+		public ConfigEntry<float> OverlayMaxDist;
+		public ConfigEntry<float> OverlayUpDist;
 #endif
 #if DEBUG
 		public ConfigEntry<bool> Debug;
 #endif
-		
+
+		public ConfigEntry<KeyboardShortcut> ToggleZonesInterfaceKey;
+
 		public ConfigEntry<bool> EnableSendData;
 		public ConfigEntry<bool> ShowPointsNotification;
 		public ConfigEntry<bool> ShowExperienceNotification;
@@ -68,11 +73,50 @@ namespace SPTLeaderboard.Models
 				"FontSizeDebug",
 				28,
 				new ConfigDescription("FontSizeDebug", new AcceptableValueRange<int>(0, 200)));
+			
+			OverlayFontSize = configFile.Bind(
+				"2. Debug",
+				"OverlayFontSize",
+				18,
+				new ConfigDescription(
+					"Sets the font size of overlays.",
+					new AcceptableValueRange<int>(2, 32),
+					new ConfigurationManagerAttributes { }));
+			
+			OverlayMaxDist = configFile.Bind(
+				"2. Debug",
+				"OverlayMaxDist",
+				200f,
+				new ConfigDescription(
+					"Max distance to render an overlay",
+					new AcceptableValueRange<float>(0f, 1000f),
+					new ConfigurationManagerAttributes { }));
+			
+			OverlayUpDist = configFile.Bind(
+				"2. Debug",
+				"OverlayUpDist",
+				1.5f,
+				new ConfigDescription(
+					"Distance the overlay is above the objects",
+					new AcceptableValueRange<float>(0f, 5f),
+					new ConfigurationManagerAttributes { }));
+			
+			ToggleZonesInterfaceKey = configFile.Bind(
+				"1. Settings",
+				"Toggle Zones Interface Key",
+				new KeyboardShortcut(KeyCode.F2),
+				new ConfigDescription(
+					"Keybind to toggle ZonesInterface visibility",
+					null,
+					new ConfigurationManagerAttributes
+					{
+						Order = 9
+					}));
 #endif
 #if DEBUG
 			Debug = configFile.Bind(
 				"2. Debug",
-				"Debug", 
+				"Debug",
 				true,
 				new ConfigDescription(
 					"Display debug messages in console and log them inside SPT server .log file"));
