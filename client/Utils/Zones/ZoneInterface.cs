@@ -31,6 +31,7 @@ namespace SPTLeaderboard.Utils.Zones
         private string editedRotationZ = "0";
 
         private ZoneTracker _zoneZoneTracker;
+        private ZoneDebugRenderer _zoneDebugRenderer;
 
         static bool IsUIOpen
         {
@@ -41,9 +42,13 @@ namespace SPTLeaderboard.Utils.Zones
         void Start()
         {
             _zoneZoneTracker = LeaderboardPlugin.Instance.ZoneTracker;
+            
+            
             ZoneCursorUtils.Initialize();
             if (_zoneZoneTracker != null)
             {
+                _zoneDebugRenderer = gameObject.AddComponent<ZoneDebugRenderer>();
+                _zoneDebugRenderer.ZoneTracker = _zoneZoneTracker;
                 _zoneZoneTracker.OnZonesLoaded += OnZonesLoaded;
             }
             else
@@ -107,25 +112,25 @@ namespace SPTLeaderboard.Utils.Zones
             GUILayout.EndHorizontal();
 
             GUILayout.BeginHorizontal();
-            bool showOverlays = _zoneZoneTracker != null ? _zoneZoneTracker.ShowOverlays : false;
+            bool showOverlays = _zoneZoneTracker != null && _zoneDebugRenderer.ShowOverlays;
             bool newShowOverlays = GUILayout.Toggle(showOverlays, "Show overlay zones", GUILayout.Height(25));
-            if (_zoneZoneTracker != null && newShowOverlays != showOverlays)
+            if (_zoneDebugRenderer != null && newShowOverlays != showOverlays)
             {
-                _zoneZoneTracker.ShowOverlays = newShowOverlays;
+                _zoneDebugRenderer.ShowOverlays = newShowOverlays;
                 if (newShowOverlays)
                 {
                     if (selectedMap != null)
                     {
-                        _zoneZoneTracker.CreateOverlaysForCurrentZones(selectedMap);
+                        _zoneDebugRenderer.CreateOverlaysForCurrentZones(selectedMap);
                     }
                     else
                     {
-                        _zoneZoneTracker.CreateOverlaysForCurrentZones();
+                        _zoneDebugRenderer.CreateOverlaysForCurrentZones();
                     }
                 }
                 else
                 {
-                    _zoneZoneTracker.ClearOverlays();
+                    _zoneDebugRenderer.ClearOverlays();
                 }
             }
 
@@ -179,7 +184,7 @@ namespace SPTLeaderboard.Utils.Zones
                 {
                     if (_zoneZoneTracker != null)
                     {
-                        _zoneZoneTracker.DrawZonesForMap(selectedMap);
+                        _zoneDebugRenderer.DrawZonesForMap(selectedMap);
                     }
                     else
                     {
@@ -510,7 +515,7 @@ namespace SPTLeaderboard.Utils.Zones
         {
             if (_zoneZoneTracker != null && allZones != null)
             {
-                _zoneZoneTracker.SaveZones(allZones);
+                _zoneZoneTracker.ZoneRepository.SaveAllZones(allZones);
                 Logger.LogDebugInfo("[ZonesInterface] Zones saved");
                 LocalizationModel.Notification("Zones saved");
             }

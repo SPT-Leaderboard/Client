@@ -197,7 +197,9 @@
         <Compile Include="Utils\StatTrackInterop.cs" />
         <Compile Include="Utils\TrackingLoot.cs" />
         <Compile Include="Utils\Logger.cs" />
+        <Compile Include="Utils\Zones\ZoneRepository.cs" />
         <Compile Include="Utils\Zones\ZoneCursorUtils.cs" />
+        <Compile Include="Utils\Zones\ZoneDebugRenderer.cs" />
         <Compile Include="Utils\Zones\ZoneVector3Converter.cs" />
         <Compile Include="Utils\Zones\ZoneOverlay.cs" />
         <Compile Include="Utils\Zones\ZoneTracker.cs" />

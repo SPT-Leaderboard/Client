@@ -65,7 +65,12 @@ public class OverlayDebug: MonoBehaviour
             currentHitsData.RightArm, currentHitsData.LeftLeg, currentHitsData.RightLeg);
         if (PlayerHelper.Instance.Player != null)
         {
-            debugValues += $"Player Cords = ({PlayerHelper.Instance.Player.PlayerBones.transform.position.x}, {PlayerHelper.Instance.Player.PlayerBones.transform.position.y}, {PlayerHelper.Instance.Player.PlayerBones.transform.position.z})";
+            debugValues += $"Player Cords = ({PlayerHelper.Instance.Player.PlayerBones.transform.position.x}, {PlayerHelper.Instance.Player.PlayerBones.transform.position.y}, {PlayerHelper.Instance.Player.PlayerBones.transform.position.z})\n";
+        }
+        if (LeaderboardPlugin.Instance.ZoneTracker != null)
+        {
+            debugValues += $"Current Zone = {LeaderboardPlugin.Instance.ZoneTracker?.CurrentZone?.Name}\n";
+            debugValues += $"ZoneEntryTime = {LeaderboardPlugin.Instance.ZoneTracker?.ZoneEntryTime}\n";
         }
         
         _overlayText.text = debugValues;
