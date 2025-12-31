@@ -128,6 +128,7 @@ public class ZoneDebugRenderer: MonoBehaviour
         }
     }
 
+
     public void DrawZonesForMap(string mapName)
     {
         if (ZoneTracker.AllZones == null || !ZoneTracker.AllZones.ContainsKey(mapName))
@@ -149,19 +150,36 @@ public class ZoneDebugRenderer: MonoBehaviour
         {
             if (zone != null)
             {
-                DrawZone(zone.Size, zone.Center, zone.RotationZ);
-
-                if (ShowOverlays)
-                {
-                    CreateZoneOverlay(zone);
-                }
+                DrawZoneRecursive(zone);
             }
         }
 
         Logger.LogDebugInfo($"[ZoneTracker] Rendered {zones.Count} zones for map {mapName}");
     }
 
-    void CreateZoneOverlay(ZoneData zone)
+    void DrawZoneRecursive(ZoneData zone, int level = 0)
+    {
+        // Draw the main zone
+        DrawZone(zone.Size, zone.Center, zone.RotationZ);
+
+        if (ShowOverlays)
+        {
+            CreateZoneOverlay(zone, level);
+        }
+
+        if (zone.SubZones != null && zone.SubZones.Count > 0)
+        {
+            foreach (var subZone in zone.SubZones)
+            {
+                if (subZone != null)
+                {
+                    DrawZoneRecursive(subZone, level + 1);
+                }
+            }
+        }
+    }
+
+    void CreateZoneOverlay(ZoneData zone, int level = 0)
     {
         if (zone == null)
         {
@@ -180,13 +198,13 @@ public class ZoneDebugRenderer: MonoBehaviour
             }
         }
 
-        GameObject overlayObj = new GameObject($"ZoneOverlay_{zone.Name}_{zone.GUID}");
+        GameObject overlayObj = new GameObject($"ZoneOverlay_{zone.Name}_{zone.GUID}_Level{level}");
         ZoneOverlay zoneOverlay = overlayObj.AddComponent<ZoneOverlay>();
         zoneOverlay.transform.position = zone.Center;
-        zoneOverlay.Initialize(zone, cam);
+        zoneOverlay.Initialize(zone, cam, level);
         _zoneOverlays.Add(zoneOverlay);
 
-        Logger.LogDebugInfo($"[ZoneTracker] An overlay has been created for the zone: {zone.Name}");
+        Logger.LogDebugInfo($"[ZoneTracker] An overlay has been created for the zone: {zone.Name} (Level: {level})");
     }
 
     public void CreateOverlaysForCurrentZones(string categoryName = null)
@@ -219,8 +237,7 @@ public class ZoneDebugRenderer: MonoBehaviour
                     {
                         if (zone != null)
                         {
-                            CreateZoneOverlay(zone);
-                            createdCount++;
+                            createdCount += CreateZoneOverlaysRecursive(zone, 0);
                         }
                     }
                 }
@@ -235,13 +252,34 @@ public class ZoneDebugRenderer: MonoBehaviour
                         {
                             if (zone != null)
                             {
-                                CreateZoneOverlay(zone);
-                                createdCount++;
+                                createdCount += CreateZoneOverlaysRecursive(zone, 0);
                             }
                         }
                     }
                 }
             }
+        }
+
+        int CreateZoneOverlaysRecursive(ZoneData zone, int level = 0)
+        {
+            int count = 0;
+
+            CreateZoneOverlay(zone, level);
+            count++;
+
+            // Recursively create overlays for sub-zones
+            if (zone.SubZones != null && zone.SubZones.Count > 0)
+            {
+                foreach (var subZone in zone.SubZones)
+                {
+                    if (subZone != null)
+                    {
+                        count += CreateZoneOverlaysRecursive(subZone, level + 1);
+                    }
+                }
+            }
+
+            return count;
         }
 
         Logger.LogDebugInfo(

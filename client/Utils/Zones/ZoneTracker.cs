@@ -89,20 +89,43 @@ namespace SPTLeaderboard.Utils.Zones
             if (_zones == null || _zones.Count == 0)
                 return;
 
-            foreach (var zone in _zones)
+            ZoneData foundZone = FindZoneContainingPosition(pos, _zones);
+            if (foundZone != null)
+            {
+                if (CurrentZone != foundZone)
+                    EnterZone(foundZone);
+
+                return;
+            }
+
+            ExitCurrentZone();
+        }
+
+        private ZoneData FindZoneContainingPosition(Vector3 pos, List<ZoneData> zones)
+        {
+            foreach (var zone in zones)
             {
                 if (zone == null) continue;
 
+                // Check if position is in this zone
                 if (zone.GetBounds().Contains(pos))
                 {
-                    if (CurrentZone != zone)
-                        EnterZone(zone);
-                    
-                    return;
+                    // If this zone has sub-zones, recursively check them first
+                    if (zone.SubZones != null && zone.SubZones.Count > 0)
+                    {
+                        ZoneData subZone = FindZoneContainingPosition(pos, zone.SubZones);
+                        if (subZone != null)
+                        {
+                            return subZone;
+                        }
+                    }
+
+                    // No sub-zone contains the position, return this zone
+                    return zone;
                 }
             }
-            
-            ExitCurrentZone();
+
+            return null;
         }
 
         private void EnterZone(ZoneData newZone)

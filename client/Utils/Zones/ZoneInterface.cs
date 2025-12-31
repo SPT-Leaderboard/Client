@@ -16,6 +16,10 @@ namespace SPTLeaderboard.Utils.Zones
         private ZoneData selectedZone;
         private string selectedMap;
 
+        // Sub-zone navigation
+        private ZoneData currentParentZone;
+        private List<ZoneData> currentZoneHierarchy = new();
+
         private Vector2 mapsListScrollPosition = Vector2.zero;
         private Vector2 zonesListScrollPosition = Vector2.zero;
         private Vector2 detailsScrollPosition = Vector2.zero;
@@ -32,6 +36,11 @@ namespace SPTLeaderboard.Utils.Zones
 
         private ZoneTracker _zoneZoneTracker;
         private ZoneDebugRenderer _zoneDebugRenderer;
+
+        private bool _liveUpdateEnabled = true;
+        private string _lastCenterX, _lastCenterY, _lastCenterZ;
+        private string _lastSizeX, _lastSizeY, _lastSizeZ;
+        private string _lastRotationZ;
 
         static bool IsUIOpen
         {
@@ -102,7 +111,11 @@ namespace SPTLeaderboard.Utils.Zones
             if (selectedMap != null)
             {
                 int zoneCount = currentMapZones != null ? currentMapZones.Count : 0;
-                GUILayout.Label($"Map: {selectedMap} | Zones: {zoneCount}", GUILayout.Height(30));
+                int totalZones = GetTotalZoneCount(selectedMap);
+                string zoneText = currentParentZone == null ?
+                    $"Map: {selectedMap} | Zones: {zoneCount} (Total: {totalZones})" :
+                    $"Sub-zones: {zoneCount}";
+                GUILayout.Label(zoneText, GUILayout.Height(30));
             }
             else
             {
@@ -161,21 +174,44 @@ namespace SPTLeaderboard.Utils.Zones
             }
             else
             {
-                GUILayout.Label($"=== ZONES: {selectedMap} ===", GUI.skin.box);
+                string zonePath = BuildZonePathString();
+                GUILayout.Label($"=== ZONES: {selectedMap}{zonePath} ===", GUI.skin.box);
 
-                if (GUILayout.Button("← Back to select map", GUILayout.Height(30)))
+                if (currentParentZone != null)
                 {
-                    selectedMap = null;
-                    currentMapZones = null;
-                    selectedZoneIndex = -1;
-                    selectedZone = null;
+                    if (GUILayout.Button("← Back to parent zone", GUILayout.Height(30)))
+                    {
+                        NavigateToParentZone();
+                    }
+                }
+                else
+                {
+                    if (GUILayout.Button("← Back to select map", GUILayout.Height(30)))
+                    {
+                        selectedMap = null;
+                        currentMapZones = null;
+                        selectedZoneIndex = -1;
+                        selectedZone = null;
+                        currentParentZone = null;
+                        currentZoneHierarchy.Clear();
+                    }
                 }
 
                 GUILayout.Space(5);
 
-                if (GUILayout.Button("+ Add new zone", GUILayout.Height(30)))
+                if (currentParentZone == null)
                 {
-                    AddNewZone();
+                    if (GUILayout.Button("+ Add new zone", GUILayout.Height(30)))
+                    {
+                        AddNewZone();
+                    }
+                }
+                else
+                {
+                    if (GUILayout.Button("+ Add new sub-zone", GUILayout.Height(30)))
+                    {
+                        AddNewSubZone();
+                    }
                 }
 
                 GUILayout.Space(5);
@@ -233,13 +269,31 @@ namespace SPTLeaderboard.Utils.Zones
                         {
                             buttonText += $"\nGUID: {guidShort}...";
                         }
+                        
+                        bool hasSubZones = zone.SubZones != null && zone.SubZones.Count > 0;
+                        if (hasSubZones)
+                        {
+                            buttonText += $"\n[Sub-zones: {zone.SubZones.Count}]";
+                        }
 
-                        if (GUILayout.Button(buttonText, GUILayout.Height(50)))
+                        if (GUILayout.Button(buttonText, GUILayout.Height(hasSubZones ? 60 : 50)))
                         {
                             SelectZone(i);
                         }
 
                         GUI.backgroundColor = Color.white;
+                        
+                        if (hasSubZones && currentParentZone == null)
+                        {
+                            GUILayout.BeginHorizontal();
+                            GUILayout.Space(20);
+                            if (GUILayout.Button($"→ Enter {zone.Name}", GUILayout.Height(25)))
+                            {
+                                NavigateToSubZones(zone);
+                            }
+                            GUILayout.EndHorizontal();
+                            GUILayout.Space(5);
+                        }
                     }
                 }
 
@@ -250,6 +304,9 @@ namespace SPTLeaderboard.Utils.Zones
 
             GUILayout.BeginVertical();
             GUILayout.Label("=== DETAILS ZONE ===", GUI.skin.box);
+
+            // Live update toggle
+            _liveUpdateEnabled = GUILayout.Toggle(_liveUpdateEnabled, "Live Visual Updates", GUILayout.Height(25));
 
             if (selectedZone != null)
             {
@@ -276,7 +333,30 @@ namespace SPTLeaderboard.Utils.Zones
                 editedCenterY = GUILayout.TextField(editedCenterY);
                 GUILayout.Label("Z:", GUILayout.Width(20));
                 editedCenterZ = GUILayout.TextField(editedCenterZ);
+                if (GUILayout.Button("📍", GUILayout.Width(30), GUILayout.Height(20)))
+                {
+                    SetCenterToPlayerPosition();
+                    GUI.FocusControl(null); // Remove focus to ensure text fields update
+                }
                 GUILayout.EndHorizontal();
+
+                // Live update center if values changed
+                if (_liveUpdateEnabled && selectedZone != null &&
+                    (_lastCenterX != editedCenterX || _lastCenterY != editedCenterY || _lastCenterZ != editedCenterZ ||
+                     _lastSizeX != editedSizeX || _lastSizeY != editedSizeY || _lastSizeZ != editedSizeZ ||
+                     _lastRotationZ != editedRotationZ))
+                {
+                    UpdateZoneVisualWithEditedValues();
+
+                    // Update last values
+                    _lastCenterX = editedCenterX;
+                    _lastCenterY = editedCenterY;
+                    _lastCenterZ = editedCenterZ;
+                    _lastSizeX = editedSizeX;
+                    _lastSizeY = editedSizeY;
+                    _lastSizeZ = editedSizeZ;
+                    _lastRotationZ = editedRotationZ;
+                }
 
                 GUILayout.Space(5);
 
@@ -298,6 +378,42 @@ namespace SPTLeaderboard.Utils.Zones
                 GUILayout.EndScrollView();
 
                 GUILayout.Space(10);
+
+                // Sub-zone management buttons
+                if (selectedZone != null)
+                {
+                    if (currentParentZone == null) // Only show for main zones
+                    {
+                        if (GUILayout.Button("Add Sub-Zone", GUILayout.Height(30)))
+                        {
+                            AddSubZoneToSelectedZone();
+                        }
+
+                        // Only allow deleting main zones if they have no sub-zones
+                        bool canDelete = selectedZone.SubZones == null || selectedZone.SubZones.Count == 0;
+                        if (canDelete)
+                        {
+                            if (GUILayout.Button("Delete Zone", GUILayout.Height(30)))
+                            {
+                                DeleteSelectedZone();
+                            }
+                        }
+                        else
+                        {
+                            GUI.enabled = false;
+                            GUILayout.Button("Delete Zone (has sub-zones)", GUILayout.Height(30));
+                            GUI.enabled = true;
+                        }
+                    }
+
+                    if (currentParentZone != null) // Show for sub-zones
+                    {
+                        if (GUILayout.Button("Delete Sub-Zone", GUILayout.Height(30)))
+                        {
+                            DeleteSelectedSubZone();
+                        }
+                    }
+                }
 
                 if (GUILayout.Button("Apply changes", GUILayout.Height(35)))
                 {
@@ -351,6 +467,8 @@ namespace SPTLeaderboard.Utils.Zones
             currentMapZones = null;
             selectedZoneIndex = -1;
             selectedZone = null;
+            currentParentZone = null;
+            currentZoneHierarchy.Clear();
 
             int totalZones = 0;
             foreach (var map in allZones.Values)
@@ -388,6 +506,15 @@ namespace SPTLeaderboard.Utils.Zones
                 Logger.LogDebugInfo($"[ZonesInterface] Selected zone: {selectedZone.Name}, GUID: {selectedZone.GUID}");
 
                 SyncFieldsWithSelectedZone();
+
+                // Initialize last values for change detection
+                _lastCenterX = editedCenterX;
+                _lastCenterY = editedCenterY;
+                _lastCenterZ = editedCenterZ;
+                _lastSizeX = editedSizeX;
+                _lastSizeY = editedSizeY;
+                _lastSizeZ = editedSizeZ;
+                _lastRotationZ = editedRotationZ;
             }
         }
 
@@ -503,6 +630,12 @@ namespace SPTLeaderboard.Utils.Zones
                 LocalizationModel.Notification($"Changes applied to zone: {selectedZone.Name}");
                 Logger.LogDebugInfo(
                     $"[ZonesInterface] New values - Name: '{selectedZone.Name}', Center: {selectedZone.Center}, Size: {selectedZone.Size}, RotationZ: {selectedZone.RotationZ}");
+
+                // Auto-render zones after applying changes
+                if (_zoneDebugRenderer != null && selectedMap != null)
+                {
+                    _zoneDebugRenderer.DrawZonesForMap(selectedMap);
+                }
             }
             catch (System.Exception ex)
             {
@@ -524,6 +657,250 @@ namespace SPTLeaderboard.Utils.Zones
                 LocalizationModel.NotificationWarning("Cant save: Tracker not found or zones not loaded");
                 Logger.LogDebugInfo("[ZonesInterface] Cant save: Tracker not found or zones not loaded");
             }
+        }
+
+        string BuildZonePathString()
+        {
+            if (currentZoneHierarchy.Count == 0)
+                return "";
+
+            string path = " > ";
+            for (int i = 0; i < currentZoneHierarchy.Count; i++)
+            {
+                path += currentZoneHierarchy[i].Name;
+                if (i < currentZoneHierarchy.Count - 1)
+                    path += " > ";
+            }
+            return path;
+        }
+
+        void NavigateToParentZone()
+        {
+            if (currentZoneHierarchy.Count > 0)
+            {
+                currentZoneHierarchy.RemoveAt(currentZoneHierarchy.Count - 1);
+            }
+
+            if (currentZoneHierarchy.Count == 0)
+            {
+                currentParentZone = null;
+                currentMapZones = allZones[selectedMap] ?? new List<ZoneData>();
+            }
+            else
+            {
+                currentParentZone = currentZoneHierarchy[currentZoneHierarchy.Count - 1];
+                currentMapZones = currentParentZone.SubZones ?? new List<ZoneData>();
+            }
+
+            selectedZoneIndex = -1;
+            selectedZone = null;
+        }
+
+        void NavigateToSubZones(ZoneData zone)
+        {
+            currentZoneHierarchy.Add(zone);
+            currentParentZone = zone;
+            currentMapZones = zone.SubZones ?? new List<ZoneData>();
+            selectedZoneIndex = -1;
+            selectedZone = null;
+        }
+
+        void AddNewSubZone()
+        {
+            if (currentParentZone == null)
+            {
+                Logger.LogDebugInfo("[ZonesInterface] Not selected parent zone for adding sub-zone");
+                LocalizationModel.NotificationWarning("Not selected parent zone for adding sub-zone");
+                return;
+            }
+
+            ZoneData newSubZone = new ZoneData
+            {
+                GUID = System.Guid.NewGuid().ToString(),
+                Name = "Новая подзона",
+                Center = Vector3.zero,
+                Size = Vector3.one * 5f,
+                RotationZ = 0f
+            };
+
+            if (currentParentZone.SubZones == null)
+            {
+                currentParentZone.SubZones = new List<ZoneData>();
+            }
+
+            currentParentZone.SubZones.Add(newSubZone);
+            currentMapZones = currentParentZone.SubZones;
+
+            selectedZoneIndex = currentMapZones.Count - 1;
+            selectedZone = newSubZone;
+            SyncFieldsWithSelectedZone();
+
+            Logger.LogDebugInfo($"[ZonesInterface] Added new sub-zone in zone {currentParentZone.Name}");
+            LocalizationModel.Notification($"Added new sub-zone in zone {currentParentZone.Name}");
+        }
+
+        int GetTotalZoneCount(string mapName)
+        {
+            if (!allZones.ContainsKey(mapName) || allZones[mapName] == null)
+                return 0;
+
+            return CountZonesRecursive(allZones[mapName]);
+        }
+
+        int CountZonesRecursive(List<ZoneData> zones)
+        {
+            int count = zones.Count;
+            foreach (var zone in zones)
+            {
+                if (zone != null && zone.SubZones != null)
+                {
+                    count += CountZonesRecursive(zone.SubZones);
+                }
+            }
+            return count;
+        }
+
+        void AddSubZoneToSelectedZone()
+        {
+            if (selectedZone == null)
+            {
+                Logger.LogDebugInfo("[ZonesInterface] No zone selected for adding sub-zone");
+                LocalizationModel.NotificationWarning("No zone selected for adding sub-zone");
+                return;
+            }
+
+            ZoneData newSubZone = new ZoneData
+            {
+                GUID = System.Guid.NewGuid().ToString(),
+                Name = $"{selectedZone.Name} Sub-Zone",
+                Center = selectedZone.Center,
+                Size = selectedZone.Size * 0.5f, // Make sub-zones smaller by default
+                RotationZ = selectedZone.RotationZ
+            };
+
+            if (selectedZone.SubZones == null)
+            {
+                selectedZone.SubZones = new List<ZoneData>();
+            }
+
+            selectedZone.SubZones.Add(newSubZone);
+
+            Logger.LogDebugInfo($"[ZonesInterface] Added sub-zone '{newSubZone.Name}' to zone '{selectedZone.Name}'");
+            LocalizationModel.Notification($"Added sub-zone to {selectedZone.Name}");
+
+            // Refresh the display if we're currently viewing this zone's sub-zones
+            if (currentParentZone == selectedZone)
+            {
+                currentMapZones = selectedZone.SubZones;
+            }
+        }
+
+        void DeleteSelectedSubZone()
+        {
+            if (selectedZone == null || currentParentZone == null)
+            {
+                Logger.LogDebugInfo("[ZonesInterface] Cannot delete: no sub-zone selected or not in sub-zone view");
+                LocalizationModel.NotificationWarning("Cannot delete: no sub-zone selected");
+                return;
+            }
+
+            if (currentParentZone.SubZones == null || !currentParentZone.SubZones.Contains(selectedZone))
+            {
+                Logger.LogDebugInfo("[ZonesInterface] Selected zone not found in parent sub-zones");
+                LocalizationModel.NotificationWarning("Selected zone not found in parent");
+                return;
+            }
+
+            string zoneName = selectedZone.Name;
+            currentParentZone.SubZones.Remove(selectedZone);
+
+            // Update the current view
+            currentMapZones = currentParentZone.SubZones ?? new List<ZoneData>();
+            selectedZoneIndex = -1;
+            selectedZone = null;
+
+            Logger.LogDebugInfo($"[ZonesInterface] Deleted sub-zone '{zoneName}' from zone '{currentParentZone.Name}'");
+            LocalizationModel.Notification($"Deleted sub-zone {zoneName}");
+        }
+
+        void DeleteSelectedZone()
+        {
+            if (selectedZone == null || currentParentZone != null || selectedMap == null)
+            {
+                Logger.LogDebugInfo("[ZonesInterface] Cannot delete: invalid state for zone deletion");
+                LocalizationModel.NotificationWarning("Cannot delete zone in current state");
+                return;
+            }
+
+            if (!allZones.ContainsKey(selectedMap) || allZones[selectedMap] == null)
+            {
+                Logger.LogDebugInfo("[ZonesInterface] Map not found for zone deletion");
+                LocalizationModel.NotificationWarning("Map not found");
+                return;
+            }
+
+            var zoneList = allZones[selectedMap];
+            if (!zoneList.Contains(selectedZone))
+            {
+                Logger.LogDebugInfo("[ZonesInterface] Selected zone not found in map");
+                LocalizationModel.NotificationWarning("Zone not found in map");
+                return;
+            }
+
+            string zoneName = selectedZone.Name;
+            zoneList.Remove(selectedZone);
+
+            // Update the current view
+            currentMapZones = zoneList;
+            selectedZoneIndex = -1;
+            selectedZone = null;
+
+            Logger.LogDebugInfo($"[ZonesInterface] Deleted zone '{zoneName}' from map '{selectedMap}'");
+            LocalizationModel.Notification($"Deleted zone {zoneName}");
+        }
+
+        void SetCenterToPlayerPosition()
+        {
+            try
+            {
+                var player = PlayerHelper.Instance.Player;
+                if (player == null)
+                {
+                    Logger.LogDebugInfo("[ZonesInterface] Player not found for position setting");
+                    LocalizationModel.NotificationWarning("Player not found");
+                    return;
+                }
+
+                Vector3 playerPos = player.PlayerBones.transform.position;
+                editedCenterX = playerPos.x.ToString("F2");
+                editedCenterY = playerPos.y.ToString("F2");
+                editedCenterZ = playerPos.z.ToString("F2");
+
+                Logger.LogDebugInfo($"[ZonesInterface] Set zone center to player position: {playerPos}");
+                LocalizationModel.Notification($"Center set to player position");
+
+                // Update last values to prevent immediate re-trigger
+                _lastCenterX = editedCenterX;
+                _lastCenterY = editedCenterY;
+                _lastCenterZ = editedCenterZ;
+
+                // Update visual immediately
+                UpdateZoneVisualWithEditedValues();
+            }
+            catch (System.Exception ex)
+            {
+                Logger.LogDebugInfo($"[ZonesInterface] Error getting player position: {ex.Message}");
+                LocalizationModel.NotificationWarning($"Error getting player position: {ex.Message}");
+            }
+        }
+
+        void UpdateZoneVisualWithEditedValues()
+        {
+            if (selectedZone == null || _zoneDebugRenderer == null || selectedMap == null)
+                return;
+
+            // Simply re-render all zones for the current map
+            _zoneDebugRenderer.DrawZonesForMap(selectedMap);
         }
     }
 }
