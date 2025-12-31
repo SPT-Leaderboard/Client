@@ -9,15 +9,13 @@ namespace SPTLeaderboard.Utils.Zones
     public class ZoneTracker : MonoBehaviour
     {
         public ZoneData CurrentZone { get; private set; }
-        public IReadOnlyList<ZoneData> Zones => _zones;
-        public IReadOnlyDictionary<string, float> ZoneTimes => _zoneTimes;
         public IReadOnlyDictionary<string, List<ZoneData>> AllZones => _allZones;
         public ZoneRepository ZoneRepository => _zoneRepository;
 
         private readonly Dictionary<string, List<ZoneData>> _allZones = new();
         private List<ZoneData> _zones = new();
-        private readonly Dictionary<string, float> _zoneTimes = new();
-        private readonly List<string> _zonesEntered = new();
+
+        public ZoneTrackerData CurrentRaidData { get; set; } = new();
 
         public float ZoneEntryTime;
         private readonly ZoneRepository _zoneRepository = new(GlobalData.ZonesConfig);
@@ -39,7 +37,7 @@ namespace SPTLeaderboard.Utils.Zones
             if (_allZones.TryGetValue(mapName, out var mapZones) && mapZones != null)
             {
                 _zones = mapZones;
-                Logger.LogWarning($"[ZoneTracker] Loaded {Zones.Count} zones for map {mapName}");
+                Logger.LogWarning($"[ZoneTracker] Loaded {_zones.Count} zones for map {mapName}");
             }
             else
             {
@@ -51,13 +49,9 @@ namespace SPTLeaderboard.Utils.Zones
         public void Disable()
         {
             LeaderboardPlugin.Instance.FixedTick -= CheckPlayerPosition;
-#if DEBUG || BETA
-            
-#endif
             
             _zones.Clear();
-            _zoneTimes.Clear();
-            _zonesEntered.Clear();
+            CurrentRaidData = new ZoneTrackerData();
             CurrentZone = null;
             ZoneEntryTime = 0f;
         }
@@ -92,10 +86,10 @@ namespace SPTLeaderboard.Utils.Zones
 
         public void CheckPlayerPosition(Vector3 pos)
         {
-            if (Zones == null || Zones.Count == 0)
+            if (_zones == null || _zones.Count == 0)
                 return;
 
-            foreach (var zone in Zones)
+            foreach (var zone in _zones)
             {
                 if (zone == null) continue;
 
@@ -118,8 +112,8 @@ namespace SPTLeaderboard.Utils.Zones
             CurrentZone = newZone;
             ZoneEntryTime = Time.fixedTime;
 
-            if (!_zonesEntered.Contains(newZone.GUID))
-                _zonesEntered.Add(newZone.GUID);
+            if (!CurrentRaidData.ZonesEntered.Contains(newZone.GUID))
+                CurrentRaidData.ZonesEntered.Add(newZone.GUID);
 
             Logger.LogDebugWarning($"ZoneTracker: Enter {CurrentZone.Name}");
         }
@@ -130,11 +124,11 @@ namespace SPTLeaderboard.Utils.Zones
                 return;
 
             float timeSpent = Time.fixedTime - ZoneEntryTime;
-            if (!ZoneTimes.ContainsKey(CurrentZone.GUID))
-                _zoneTimes[CurrentZone.GUID] = 0f;
+            if (!CurrentRaidData.ZonesTimesSpend.ContainsKey(CurrentZone.GUID))
+                CurrentRaidData.ZonesTimesSpend[CurrentZone.GUID] = 0f;
 
-            _zoneTimes[CurrentZone.GUID] += timeSpent;
-            Logger.LogDebugWarning($"ZoneTracker: Exit {CurrentZone.Name}, total time: {ZoneTimes[CurrentZone.GUID]:F1}s");
+            CurrentRaidData.ZonesTimesSpend[CurrentZone.GUID] += timeSpent;
+            Logger.LogDebugWarning($"ZoneTracker: Exit {CurrentZone.Name}, total time: {CurrentRaidData.ZonesTimesSpend[CurrentZone.GUID]:F1}s");
 
             ZoneEntryTime = 0f;
             CurrentZone = null;

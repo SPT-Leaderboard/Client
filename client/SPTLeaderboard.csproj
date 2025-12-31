@@ -159,6 +159,7 @@
         <Compile Include="Data\ServerProfileInfo.cs" />
         <Compile Include="Data\WeaponInfo.cs" />
         <Compile Include="Data\ZoneData.cs" />
+        <Compile Include="Data\ZoneTrackerData.cs" />
         <Compile Include="Enums\PlayerState.cs" />
         <Compile Include="LeaderboardPlugin.cs" />
         <Compile Include="Models\ConfigurationManagerAttributes.cs" />

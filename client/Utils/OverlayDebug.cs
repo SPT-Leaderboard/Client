@@ -1,6 +1,5 @@
 ﻿#if DEBUG || BETA
 using System;
-using SPTLeaderboard.Data;
 using SPTLeaderboard.Models;
 using TMPro;
 using UnityEngine;
