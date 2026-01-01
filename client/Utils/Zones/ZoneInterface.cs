@@ -1,7 +1,9 @@
 ﻿#if DEBUG || BETA
+using System;
 using System.Collections.Generic;
+using SPTLeaderboard.Configuration;
 using SPTLeaderboard.Data;
-using SPTLeaderboard.Models;
+using SPTLeaderboard.Services;
 using UnityEngine;
 
 namespace SPTLeaderboard.Utils.Zones
@@ -41,6 +43,8 @@ namespace SPTLeaderboard.Utils.Zones
         private string _lastCenterX, _lastCenterY, _lastCenterZ;
         private string _lastSizeX, _lastSizeY, _lastSizeZ;
         private string _lastRotationZ;
+        private bool _wasUIOpen;
+        private PlayerRotateBlocker _rotateBlocker;
 
         static bool IsUIOpen
         {
@@ -63,12 +67,14 @@ namespace SPTLeaderboard.Utils.Zones
             else
             {
                 Logger.LogDebugInfo("[ZonesInterface] Tracker not found!");
-                LocalizationModel.NotificationWarning("Tracker not found!");
+                LocalizationService.NotificationWarning("Tracker not found!");
             }
         }
 
         void OnDestroy()
         {
+            _rotateBlocker?.Unlock();
+            _rotateBlocker = null;
             if (_zoneZoneTracker != null)
             {
                 _zoneZoneTracker.OnZonesLoaded -= OnZonesLoaded;
@@ -78,6 +84,41 @@ namespace SPTLeaderboard.Utils.Zones
         void LateUpdate()
         {
             if (IsUIOpen) ZoneCursorUtils.ApplyState(0, true);
+        }
+
+        private void Update()
+        {
+            if (Settings.Instance.ToggleZonesInterfaceKey.Value.IsDown())
+            {
+                IsUIOpen = !IsUIOpen;
+                Cursor.lockState = IsUIOpen ? CursorLockMode.None : CursorLockMode.Locked;
+                Cursor.visible = IsUIOpen;
+                LocalizationService.NotificationWarning($"ZonesInterface: {IsUIOpen}");
+            }
+            
+            if (_wasUIOpen != IsUIOpen)
+            {
+                if (IsUIOpen)
+                {
+                    if (!PlayerHelper.Instance.Player)
+                    {
+                        return;
+                    }
+
+                    if (_rotateBlocker == null && PlayerHelper.Instance.Player)
+                    {
+                        _rotateBlocker = new PlayerRotateBlocker(PlayerHelper.Instance.Player);
+                    }
+
+                    _rotateBlocker?.Lock();
+                }
+                else
+                {
+                    _rotateBlocker?.Unlock();
+                }
+
+                _wasUIOpen = IsUIOpen;
+            }
         }
 
         void OnGUI()
@@ -104,7 +145,7 @@ namespace SPTLeaderboard.Utils.Zones
                 else
                 {
                     Logger.LogDebugInfo("[ZonesInterface] Tracker not found!");
-                    LocalizationModel.NotificationWarning("Tracker not found!");
+                    LocalizationService.NotificationWarning("Tracker not found!");
                 }
             }
 
@@ -225,7 +266,7 @@ namespace SPTLeaderboard.Utils.Zones
                     else
                     {
                         Logger.LogDebugInfo("[ZonesInterface] Tracker not found!");
-                        LocalizationModel.NotificationWarning("Tracker not found!");
+                        LocalizationService.NotificationWarning("Tracker not found!");
                     }
                 }
 
@@ -458,7 +499,7 @@ namespace SPTLeaderboard.Utils.Zones
             if (zones == null)
             {
                 Logger.LogDebugInfo("[ZonesInterface] Received null instead of zones!");
-                LocalizationModel.NotificationWarning("Received null instead of zones!");
+                LocalizationService.NotificationWarning("Received null instead of zones!");
                 return;
             }
 
@@ -478,7 +519,7 @@ namespace SPTLeaderboard.Utils.Zones
             }
 
             Logger.LogDebugInfo($"[ZonesInterface] Uploaded {allZones.Count} maps, total {totalZones} zones");
-            LocalizationModel.Notification($"Uploaded {allZones.Count} maps, total {totalZones} zones");
+            LocalizationService.Notification($"Uploaded {allZones.Count} maps, total {totalZones} zones");
         }
 
         void SelectMap(string mapName)
@@ -523,20 +564,20 @@ namespace SPTLeaderboard.Utils.Zones
             if (selectedMap == null)
             {
                 Logger.LogDebugInfo("[ZonesInterface] Not selected map for adding zone");
-                LocalizationModel.NotificationWarning("Not selected map for adding zone");
+                LocalizationService.NotificationWarning("Not selected map for adding zone");
                 return;
             }
 
             if (allZones == null || !allZones.ContainsKey(selectedMap))
             {
                 Logger.LogDebugInfo($"[ZonesInterface] Map {selectedMap} not found in allZones");
-                LocalizationModel.NotificationWarning($"Map {selectedMap} not found in allZones");
+                LocalizationService.NotificationWarning($"Map {selectedMap} not found in allZones");
                 return;
             }
 
             ZoneData newZone = new ZoneData
             {
-                GUID = System.Guid.NewGuid().ToString(),
+                GUID = Guid.NewGuid().ToString(),
                 Name = "Новая зона",
                 Center = Vector3.zero,
                 Size = Vector3.one * 10f,
@@ -559,7 +600,7 @@ namespace SPTLeaderboard.Utils.Zones
             SyncFieldsWithSelectedZone();
 
             Logger.LogDebugInfo($"[ZonesInterface] Added new zone in map {selectedMap}");
-            LocalizationModel.Notification($"Added new zone in map {selectedMap}");
+            LocalizationService.Notification($"Added new zone in map {selectedMap}");
         }
 
         void SyncFieldsWithSelectedZone()
@@ -583,7 +624,7 @@ namespace SPTLeaderboard.Utils.Zones
             if (selectedZone == null)
             {
                 Logger.LogDebugInfo("[ZonesInterface] Not selected zone for applying changes");
-                LocalizationModel.NotificationWarning("Not selected zone for applying changes");
+                LocalizationService.NotificationWarning("Not selected zone for applying changes");
                 return;
             }
 
@@ -600,7 +641,7 @@ namespace SPTLeaderboard.Utils.Zones
                 else
                 {
                     Logger.LogDebugInfo("[ZonesInterface] Error parsing coords center");
-                    LocalizationModel.NotificationWarning("Error parsing coords center");
+                    LocalizationService.NotificationWarning("Error parsing coords center");
                 }
 
                 if (float.TryParse(editedSizeX, out float sx) &&
@@ -612,7 +653,7 @@ namespace SPTLeaderboard.Utils.Zones
                 else
                 {
                     Logger.LogDebugInfo("[ZonesInterface] Error parse scale");
-                    LocalizationModel.NotificationWarning("Error parse scale");
+                    LocalizationService.NotificationWarning("Error parse scale");
                 }
 
 
@@ -623,11 +664,11 @@ namespace SPTLeaderboard.Utils.Zones
                 else
                 {
                     Logger.LogDebugInfo("[ZonesInterface] Error parse rotation by axis Z");
-                    LocalizationModel.NotificationWarning("Error parse rotation by axis Z");
+                    LocalizationService.NotificationWarning("Error parse rotation by axis Z");
                 }
 
                 Logger.LogDebugInfo($"[ZonesInterface] Changes applied to zone: {selectedZone.Name}");
-                LocalizationModel.Notification($"Changes applied to zone: {selectedZone.Name}");
+                LocalizationService.Notification($"Changes applied to zone: {selectedZone.Name}");
                 Logger.LogDebugInfo(
                     $"[ZonesInterface] New values - Name: '{selectedZone.Name}', Center: {selectedZone.Center}, Size: {selectedZone.Size}, RotationZ: {selectedZone.RotationZ}");
 
@@ -637,10 +678,10 @@ namespace SPTLeaderboard.Utils.Zones
                     _zoneDebugRenderer.DrawZonesForMap(selectedMap);
                 }
             }
-            catch (System.Exception ex)
+            catch (Exception ex)
             {
                 Logger.LogDebugInfo($"[ZonesInterface] Error apply changes: {ex.Message}");
-                LocalizationModel.NotificationWarning($"Error apply changes: {ex.Message}");
+                LocalizationService.NotificationWarning($"Error apply changes: {ex.Message}");
             }
         }
 
@@ -650,11 +691,11 @@ namespace SPTLeaderboard.Utils.Zones
             {
                 _zoneZoneTracker.ZoneRepository.SaveAllZones(allZones);
                 Logger.LogDebugInfo("[ZonesInterface] Zones saved");
-                LocalizationModel.Notification("Zones saved");
+                LocalizationService.Notification("Zones saved");
             }
             else
             {
-                LocalizationModel.NotificationWarning("Cant save: Tracker not found or zones not loaded");
+                LocalizationService.NotificationWarning("Cant save: Tracker not found or zones not loaded");
                 Logger.LogDebugInfo("[ZonesInterface] Cant save: Tracker not found or zones not loaded");
             }
         }
@@ -710,13 +751,13 @@ namespace SPTLeaderboard.Utils.Zones
             if (currentParentZone == null)
             {
                 Logger.LogDebugInfo("[ZonesInterface] Not selected parent zone for adding sub-zone");
-                LocalizationModel.NotificationWarning("Not selected parent zone for adding sub-zone");
+                LocalizationService.NotificationWarning("Not selected parent zone for adding sub-zone");
                 return;
             }
 
             ZoneData newSubZone = new ZoneData
             {
-                GUID = System.Guid.NewGuid().ToString(),
+                GUID = Guid.NewGuid().ToString(),
                 Name = "Новая подзона",
                 Center = Vector3.zero,
                 Size = Vector3.one * 5f,
@@ -736,7 +777,7 @@ namespace SPTLeaderboard.Utils.Zones
             SyncFieldsWithSelectedZone();
 
             Logger.LogDebugInfo($"[ZonesInterface] Added new sub-zone in zone {currentParentZone.Name}");
-            LocalizationModel.Notification($"Added new sub-zone in zone {currentParentZone.Name}");
+            LocalizationService.Notification($"Added new sub-zone in zone {currentParentZone.Name}");
         }
 
         int GetTotalZoneCount(string mapName)
@@ -765,13 +806,13 @@ namespace SPTLeaderboard.Utils.Zones
             if (selectedZone == null)
             {
                 Logger.LogDebugInfo("[ZonesInterface] No zone selected for adding sub-zone");
-                LocalizationModel.NotificationWarning("No zone selected for adding sub-zone");
+                LocalizationService.NotificationWarning("No zone selected for adding sub-zone");
                 return;
             }
 
             ZoneData newSubZone = new ZoneData
             {
-                GUID = System.Guid.NewGuid().ToString(),
+                GUID = Guid.NewGuid().ToString(),
                 Name = $"{selectedZone.Name} Sub-Zone",
                 Center = selectedZone.Center,
                 Size = selectedZone.Size * 0.5f, // Make sub-zones smaller by default
@@ -786,7 +827,7 @@ namespace SPTLeaderboard.Utils.Zones
             selectedZone.SubZones.Add(newSubZone);
 
             Logger.LogDebugInfo($"[ZonesInterface] Added sub-zone '{newSubZone.Name}' to zone '{selectedZone.Name}'");
-            LocalizationModel.Notification($"Added sub-zone to {selectedZone.Name}");
+            LocalizationService.Notification($"Added sub-zone to {selectedZone.Name}");
 
             // Refresh the display if we're currently viewing this zone's sub-zones
             if (currentParentZone == selectedZone)
@@ -800,14 +841,14 @@ namespace SPTLeaderboard.Utils.Zones
             if (selectedZone == null || currentParentZone == null)
             {
                 Logger.LogDebugInfo("[ZonesInterface] Cannot delete: no sub-zone selected or not in sub-zone view");
-                LocalizationModel.NotificationWarning("Cannot delete: no sub-zone selected");
+                LocalizationService.NotificationWarning("Cannot delete: no sub-zone selected");
                 return;
             }
 
             if (currentParentZone.SubZones == null || !currentParentZone.SubZones.Contains(selectedZone))
             {
                 Logger.LogDebugInfo("[ZonesInterface] Selected zone not found in parent sub-zones");
-                LocalizationModel.NotificationWarning("Selected zone not found in parent");
+                LocalizationService.NotificationWarning("Selected zone not found in parent");
                 return;
             }
 
@@ -820,7 +861,7 @@ namespace SPTLeaderboard.Utils.Zones
             selectedZone = null;
 
             Logger.LogDebugInfo($"[ZonesInterface] Deleted sub-zone '{zoneName}' from zone '{currentParentZone.Name}'");
-            LocalizationModel.Notification($"Deleted sub-zone {zoneName}");
+            LocalizationService.Notification($"Deleted sub-zone {zoneName}");
         }
 
         void DeleteSelectedZone()
@@ -828,14 +869,14 @@ namespace SPTLeaderboard.Utils.Zones
             if (selectedZone == null || currentParentZone != null || selectedMap == null)
             {
                 Logger.LogDebugInfo("[ZonesInterface] Cannot delete: invalid state for zone deletion");
-                LocalizationModel.NotificationWarning("Cannot delete zone in current state");
+                LocalizationService.NotificationWarning("Cannot delete zone in current state");
                 return;
             }
 
             if (!allZones.ContainsKey(selectedMap) || allZones[selectedMap] == null)
             {
                 Logger.LogDebugInfo("[ZonesInterface] Map not found for zone deletion");
-                LocalizationModel.NotificationWarning("Map not found");
+                LocalizationService.NotificationWarning("Map not found");
                 return;
             }
 
@@ -843,7 +884,7 @@ namespace SPTLeaderboard.Utils.Zones
             if (!zoneList.Contains(selectedZone))
             {
                 Logger.LogDebugInfo("[ZonesInterface] Selected zone not found in map");
-                LocalizationModel.NotificationWarning("Zone not found in map");
+                LocalizationService.NotificationWarning("Zone not found in map");
                 return;
             }
 
@@ -856,7 +897,7 @@ namespace SPTLeaderboard.Utils.Zones
             selectedZone = null;
 
             Logger.LogDebugInfo($"[ZonesInterface] Deleted zone '{zoneName}' from map '{selectedMap}'");
-            LocalizationModel.Notification($"Deleted zone {zoneName}");
+            LocalizationService.Notification($"Deleted zone {zoneName}");
         }
 
         void SetCenterToPlayerPosition()
@@ -867,7 +908,7 @@ namespace SPTLeaderboard.Utils.Zones
                 if (player == null)
                 {
                     Logger.LogDebugInfo("[ZonesInterface] Player not found for position setting");
-                    LocalizationModel.NotificationWarning("Player not found");
+                    LocalizationService.NotificationWarning("Player not found");
                     return;
                 }
 
@@ -877,7 +918,7 @@ namespace SPTLeaderboard.Utils.Zones
                 editedCenterZ = playerPos.z.ToString("F2");
 
                 Logger.LogDebugInfo($"[ZonesInterface] Set zone center to player position: {playerPos}");
-                LocalizationModel.Notification($"Center set to player position");
+                LocalizationService.Notification("Center set to player position");
 
                 // Update last values to prevent immediate re-trigger
                 _lastCenterX = editedCenterX;
@@ -887,10 +928,10 @@ namespace SPTLeaderboard.Utils.Zones
                 // Update visual immediately
                 UpdateZoneVisualWithEditedValues();
             }
-            catch (System.Exception ex)
+            catch (Exception ex)
             {
                 Logger.LogDebugInfo($"[ZonesInterface] Error getting player position: {ex.Message}");
-                LocalizationModel.NotificationWarning($"Error getting player position: {ex.Message}");
+                LocalizationService.NotificationWarning($"Error getting player position: {ex.Message}");
             }
         }
 

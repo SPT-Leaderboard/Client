@@ -1,7 +1,6 @@
 ﻿#if DEBUG || BETA
-using System;
+using SPTLeaderboard.Configuration;
 using SPTLeaderboard.Data;
-using SPTLeaderboard.Models;
 using UnityEngine;
 
 namespace SPTLeaderboard.Utils.Zones
@@ -17,7 +16,7 @@ namespace SPTLeaderboard.Utils.Zones
         private Rect _rect;
 
         private bool isVisible;
-        private int zoneLevel = 0; // 0 = main zone, 1 = sub-zone, 2 = sub-sub-zone, etc.
+        private int zoneLevel; // 0 = main zone, 1 = sub-zone, 2 = sub-sub-zone, etc.
 
         public void Initialize(ZoneData zone, Camera camera, int level = 0)
         {
@@ -46,9 +45,9 @@ namespace SPTLeaderboard.Utils.Zones
             var pos = transform.position;
             var dist = Mathf.RoundToInt((transform.position - mainCamera.transform.position).magnitude);
 		
-            if (_content.text.Length <= 0 || !(dist < SettingsModel.Instance.OverlayMaxDist.Value)) return;
+            if (_content.text.Length <= 0 || !(dist < Settings.Instance.OverlayMaxDist.Value)) return;
 		
-            var screenPos = mainCamera.WorldToScreenPoint(pos + (Vector3.up * SettingsModel.Instance.OverlayUpDist.Value));
+            var screenPos = mainCamera.WorldToScreenPoint(pos + (Vector3.up * Settings.Instance.OverlayUpDist.Value));
         
             if (screenPos.z <= 0) return;
 		
@@ -70,7 +69,7 @@ namespace SPTLeaderboard.Utils.Zones
             guiStyle = new GUIStyle(GUI.skin.box)
             {
                 alignment = TextAnchor.MiddleLeft,
-                fontSize = SettingsModel.Instance.OverlayFontSize.Value,
+                fontSize = Settings.Instance.OverlayFontSize.Value,
                 margin = new RectOffset(3, 3, 3, 3),
                 richText = true
             };

@@ -3,19 +3,20 @@ using System.Collections.Generic;
 using System.Text;
 using System.Threading;
 using Cysharp.Threading.Tasks;
+using SPTLeaderboard.Configuration;
 using SPTLeaderboard.Data;
 using SPTLeaderboard.Utils;
 using UnityEngine;
 using UnityEngine.Networking;
 using Logger = SPTLeaderboard.Utils.Logger;
 
-namespace SPTLeaderboard.Models
+namespace SPTLeaderboard.Services
 {
     /// <summary>
     /// Handles HTTP network requests (GET/POST) with optional JSON payload, retries on timeout,
     /// and callbacks for success or failure.
     /// </summary>
-    public class NetworkApiRequestModel : MonoBehaviour
+    public class NetworkApiRequest : MonoBehaviour
     {
         private string _url;
         private string _jsonBody;
@@ -26,7 +27,7 @@ namespace SPTLeaderboard.Models
         
         private bool _isComplete;
         
-        private int _retryCount = 0;
+        private int _retryCount;
         private int _maxRetries = 2;
         
         private static readonly Dictionary<string, (string hash, DateTime time)> _sentDataHashes = new();
@@ -46,14 +47,14 @@ namespace SPTLeaderboard.Models
         /// Factory method to create a POST request instance.
         /// </summary>
         /// <param name="url">The URL to send the request to.</param>
-        /// <returns>A new <see cref="NetworkApiRequestModel"/> configured for POST.</returns>
-        public static NetworkApiRequestModel Create(string url)
+        /// <returns>A new <see cref="NetworkApiRequest"/> configured for POST.</returns>
+        public static NetworkApiRequest Create(string url)
         {
             Logger.LogDebugWarning($"[POST] Request Url -> '{url}'");
 
             var obj = new GameObject("[SPTLeaderboard] NetworkRequest");
             DontDestroyOnLoad(obj);
-            var request = obj.AddComponent<NetworkApiRequestModel>();
+            var request = obj.AddComponent<NetworkApiRequest>();
             request._url = url;
             request._httpMethod = UnityWebRequest.kHttpVerbPOST;
             return request;
@@ -63,14 +64,14 @@ namespace SPTLeaderboard.Models
         /// Factory method to create a GET request instance.
         /// </summary>
         /// <param name="url">The URL to send the request to.</param>
-        /// <returns>A new <see cref="NetworkApiRequestModel"/> configured for GET.</returns>
-        public static NetworkApiRequestModel CreateGet(string url)
+        /// <returns>A new <see cref="NetworkApiRequest"/> configured for GET.</returns>
+        public static NetworkApiRequest CreateGet(string url)
         {
             Logger.LogDebugWarning($"[GET] Request Url -> '{url}'");
 
             var obj = new GameObject("[SPTLeaderboard] NetworkRequest");
             DontDestroyOnLoad(obj);
-            var request = obj.AddComponent<NetworkApiRequestModel>();
+            var request = obj.AddComponent<NetworkApiRequest>();
             request._url = url;
             request._httpMethod = UnityWebRequest.kHttpVerbGET;
             return request;
@@ -132,10 +133,8 @@ namespace SPTLeaderboard.Models
                             Destroy(gameObject);
                             return;
                         }
-                        else
-                        {
-                            _sentDataHashes.Remove(hashKey);
-                        }
+
+                        _sentDataHashes.Remove(hashKey);
                     }
                 }
             }
@@ -163,7 +162,7 @@ namespace SPTLeaderboard.Models
             var reqId = Guid.NewGuid().ToString();
             Logger.LogDebugWarning($"Request ID = {reqId}");
 
-            request.timeout = SettingsModel.Instance.ConnectionTimeout.Value;
+            request.timeout = Settings.Instance.ConnectionTimeout.Value;
 
             // Start the request
             var operation = request.SendWebRequest();

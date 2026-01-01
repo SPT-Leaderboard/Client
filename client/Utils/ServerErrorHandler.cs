@@ -3,7 +3,8 @@ using Comfort.Common;
 using EFT.Communications;
 using Newtonsoft.Json;
 using SPTLeaderboard.Data;
-using SPTLeaderboard.Models;
+using SPTLeaderboard.Data.Response;
+using SPTLeaderboard.Services;
 
 namespace SPTLeaderboard.Utils
 {
@@ -17,7 +18,7 @@ namespace SPTLeaderboard.Utils
             if (typeError != ErrorType.SILENT_ERROR)
             {
                 string notificationMessage = GetNotificationMessage(typeError, responseBody, statusCode);
-                LocalizationModel.NotificationWarning(notificationMessage, GetDurationType(typeError));
+                LocalizationService.NotificationWarning(notificationMessage, GetDurationType(typeError));
             }
         }
 
@@ -31,7 +32,7 @@ namespace SPTLeaderboard.Utils
                     var errorData = JsonConvert.DeserializeObject<ErrorBannedModsData>(responseBody);
                     if (errorData?.BlockedMods != null && errorData.BlockedMods.Length > 0)
                     {
-                        string baseMessage = LocalizationModel.Instance.GetLocaleErrorText(errorType);
+                        string baseMessage = LocalizationService.Instance.GetLocaleErrorText(errorType);
                         string modsList = string.Join(", ", errorData.BlockedMods);
                         string bannedModsLabel = GetBannedModsLabel(modsList);
                         return $"{baseMessage}\n{bannedModsLabel}";
@@ -39,11 +40,11 @@ namespace SPTLeaderboard.Utils
                 }
                 catch (JsonException ex)
                 {
-                    Logger.LogWarning($"Failed to parse banned mods error response: {ex.Message}");
+                    Logger.LogDebugWarning($"Failed to parse banned mods error response: {ex.Message}");
                 }
             }
 
-            return LocalizationModel.Instance.GetLocaleErrorText(errorType);
+            return LocalizationService.Instance.GetLocaleErrorText(errorType);
         }
 
         private static string GetBannedModsLabel(string modsList)

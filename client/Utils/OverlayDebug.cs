@@ -1,6 +1,6 @@
 ﻿#if DEBUG || BETA
 using System;
-using SPTLeaderboard.Models;
+using SPTLeaderboard.Configuration;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -33,7 +33,7 @@ public class OverlayDebug: MonoBehaviour
 
         _overlayText = textObj.AddComponent<TextMeshProUGUI>();
         _overlayText.text = "Overlay initialized";
-        _overlayText.fontSize = SettingsModel.Instance.FontSizeDebug.Value;
+        _overlayText.fontSize = Settings.Instance.FontSizeDebug.Value;
         _overlayText.color = Color.white;
         _overlayText.alignment = TextAlignmentOptions.TopLeft;
         _overlayText.enableWordWrapping = false;
@@ -44,7 +44,7 @@ public class OverlayDebug: MonoBehaviour
         rectTransform.pivot = new Vector2(0, 1);
         rectTransform.sizeDelta = new Vector2(800, 200);
         
-        SetOverlayPosition(new Vector2(SettingsModel.Instance.PositionXDebug.Value, SettingsModel.Instance.PositionYDebug.Value));
+        SetOverlayPosition(new Vector2(Settings.Instance.PositionXDebug.Value, Settings.Instance.PositionYDebug.Value));
 
         LeaderboardPlugin.Instance.Tick += UpdateOverlay;
     }
@@ -69,7 +69,7 @@ public class OverlayDebug: MonoBehaviour
         if (LeaderboardPlugin.Instance.ZoneTracker != null)
         {
             debugValues += $"Current Zone = {LeaderboardPlugin.Instance.ZoneTracker?.CurrentZone?.Name}\n";
-            debugValues += $"ZoneEntryTime = {LeaderboardPlugin.Instance.ZoneTracker?.ZoneEntryTime}\n";
+            debugValues += $"Current Sub Zone = {LeaderboardPlugin.Instance.ZoneTracker?.CurrentSubZone?.Name}\n";
         }
         
         _overlayText.text = debugValues;

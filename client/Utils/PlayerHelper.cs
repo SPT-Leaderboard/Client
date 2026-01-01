@@ -2,13 +2,11 @@
 using System.Linq;
 using Comfort.Common;
 using EFT;
-using EFT.Communications;
 using EFT.InventoryLogic;
 using SPT.Reflection.Utils;
 using SPTLeaderboard.Data;
-using SPTLeaderboard.Models;
+using SPTLeaderboard.Services;
 using UnityEngine;
-using SpecialSlot = GClass3391;
 
 namespace SPTLeaderboard.Utils;
 
@@ -145,24 +143,24 @@ public class PlayerHelper
     public static void GetLimitViolations(EquipmentData input)
     {
         if (input.TacticalVest > GlobalData.EquipmentLimits.TacticalVest)
-            LocalizationModel.NotificationWarning(
-                LocalizationModel.Instance.GetLocaleErrorText(ErrorType.CAPACITY, "TacticalVest"));
+            LocalizationService.NotificationWarning(
+                LocalizationService.Instance.GetLocaleErrorText(ErrorType.CAPACITY, "TacticalVest"));
 
         if (input.Pockets > GlobalData.EquipmentLimits.Pockets)
-            LocalizationModel.NotificationWarning(
-                LocalizationModel.Instance.GetLocaleErrorText(ErrorType.CAPACITY, "Pockets"));
+            LocalizationService.NotificationWarning(
+                LocalizationService.Instance.GetLocaleErrorText(ErrorType.CAPACITY, "Pockets"));
 
         if (input.Backpack > GlobalData.EquipmentLimits.Backpack)
-            LocalizationModel.NotificationWarning(
-                LocalizationModel.Instance.GetLocaleErrorText(ErrorType.CAPACITY, "Backpack"));
+            LocalizationService.NotificationWarning(
+                LocalizationService.Instance.GetLocaleErrorText(ErrorType.CAPACITY, "Backpack"));
 
         if (input.SecuredContainer > GlobalData.EquipmentLimits.SecuredContainer)
-            LocalizationModel.NotificationWarning(
-                LocalizationModel.Instance.GetLocaleErrorText(ErrorType.CAPACITY, "SecuredContainer"));
+            LocalizationService.NotificationWarning(
+                LocalizationService.Instance.GetLocaleErrorText(ErrorType.CAPACITY, "SecuredContainer"));
         
         if (input.Stash > GlobalData.EquipmentLimits.Stash)
-            LocalizationModel.NotificationWarning(
-                LocalizationModel.Instance.GetLocaleErrorText(ErrorType.CAPACITY, "STASH"));
+            LocalizationService.NotificationWarning(
+                LocalizationService.Instance.GetLocaleErrorText(ErrorType.CAPACITY, "STASH"));
     }
     
     /// <summary>
@@ -195,19 +193,19 @@ public class PlayerHelper
             {
                 if (((GInterface214)agressorData).ProfileId == "66f3fad50ec64d74847d049d")
                 {
-                    nameKiller = LocalizationModel.GetLocaleName(agressorData.Name, false);
+                    nameKiller = LocalizationService.GetLocaleName(agressorData.Name, false);
                 }
                 else
                 {
-                    nameKiller = LocalizationModel.GetCorrectedNickname(agressorData);
+                    nameKiller = LocalizationService.GetCorrectedNickname(agressorData);
                 }
             }
                     
-            Logger.LogWarning($"Agressor Name {nameKiller}\n");
+            Logger.LogDebugWarning($"Agressor Name {nameKiller}\n");
             return nameKiller;
         }
 
-        Logger.LogWarning($"Aggressor Data is null");
+        Logger.LogDebugWarning("Aggressor Data is null");
         return nameKiller;
     }
 }

@@ -1,8 +1,7 @@
 ﻿using System.Reflection;
 using EFT;
-using HarmonyLib;
 using SPT.Reflection.Patching;
-using SPTLeaderboard.Models;
+using SPTLeaderboard.Configuration;
 using SPTLeaderboard.Utils;
 
 namespace SPTLeaderboard.Patches;
@@ -15,7 +14,7 @@ public class OnCoopApplyShotFourPatch: ModulePatch
     [PatchPostfix]
     static void PostFix(DamageInfoStruct damageInfo, EBodyPart bodyPart, EBodyPartColliderType bodyPartCollider, EArmorPlateCollider armorPlateCollider, ShotIdStruct shotId)
     {
-        if (!SettingsModel.Instance.EnableSendData.Value)
+        if (!Settings.Instance.EnableSendData.Value)
             return;
             
 

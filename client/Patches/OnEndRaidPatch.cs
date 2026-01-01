@@ -3,8 +3,9 @@ using System.Reflection;
 using Cysharp.Threading.Tasks;
 using EFT;
 using SPT.Reflection.Patching;
+using SPTLeaderboard.Configuration;
 using SPTLeaderboard.Enums;
-using SPTLeaderboard.Models;
+using SPTLeaderboard.Services;
 using SPTLeaderboard.Utils;
 
 namespace SPTLeaderboard.Patches
@@ -19,7 +20,7 @@ namespace SPTLeaderboard.Patches
         [PatchPrefix]
         static bool Prefix(LocalRaidSettings settings, RaidEndDescriptorClass results, FlatItemsDataClass[] lostInsuredItems, Dictionary<string, FlatItemsDataClass[]> transferItems, object __instance)
         {
-            if (!SettingsModel.Instance.EnableSendData.Value)
+            if (!Settings.Instance.EnableSendData.Value)
                 return true;
 
             LeaderboardPlugin.Instance.StopInRaidHeartbeat();
@@ -35,7 +36,7 @@ namespace SPTLeaderboard.Patches
             FlatItemsDataClass[] lostInsuredItems, Dictionary<string, FlatItemsDataClass[]> transferItems,
             object __instance)
         {
-            ProcessProfileModel.Create().ProcessAndSendProfileAsync(settings, results).Forget();
+            ProcessProfileService.Create().ProcessAndSendProfileAsync(settings, results).Forget();
         }
     }
 }

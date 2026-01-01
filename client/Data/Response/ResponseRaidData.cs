@@ -1,6 +1,6 @@
 using Newtonsoft.Json;
 
-namespace SPTLeaderboard.Data;
+namespace SPTLeaderboard.Data.Response;
 
 public class ResponseRaidData
 {
@@ -8,8 +8,8 @@ public class ResponseRaidData
     public string Response { get; set; } = "success";
 
     [JsonProperty("addedToBalance")]
-    public int AddedToBalance { get; set; } = 0;
+    public int AddedToBalance { get; set; }
 
     [JsonProperty("battlePassEXP")]
-    public int BattlePassEXP { get; set; } = 0;
+    public int BattlePassExp { get; set; }
 }

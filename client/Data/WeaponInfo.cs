@@ -1,4 +1,6 @@
-﻿namespace SPTLeaderboard.Data;
+﻿using SPTLeaderboard.Data.Internal;
+
+namespace SPTLeaderboard.Data;
 
 public class WeaponInfo
 {

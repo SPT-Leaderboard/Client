@@ -3,7 +3,7 @@ using System.Reflection;
 using EFT;
 using EFT.HealthSystem;
 using SPT.Reflection.Patching;
-using SPTLeaderboard.Models;
+using SPTLeaderboard.Configuration;
 using SPTLeaderboard.Utils;
 
 namespace SPTLeaderboard.Patches
@@ -36,7 +36,7 @@ namespace SPTLeaderboard.Patches
             HealthEffects enemyEffects,
             List<string> zoneIds)
         {
-            if (!SettingsModel.Instance.EnableSendData.Value)
+            if (!Settings.Instance.EnableSendData.Value)
                 return;
             
             if (!(damage.Weapon is ThrowWeapItemClass))

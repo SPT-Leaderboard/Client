@@ -43,8 +43,6 @@ public class HitsDistanceData
             case EBodyPart.RightLeg:
                 RightLeg.Add(value);
                 break;
-            default:
-                break;
         }
     }
 }

@@ -2,19 +2,19 @@
 using System.Collections.Generic;
 using BepInEx;
 using BepInEx.Bootstrap;
-using Comfort.Logs;
 using Newtonsoft.Json;
 using SPT.Common.Http;
 using SPTLeaderboard.Data;
-using SPTLeaderboard.Models;
+using SPTLeaderboard.Data.Internal;
+using SPTLeaderboard.Services;
 
 namespace SPTLeaderboard.Utils;
 
 public static class StatTrackInterop
 {
-    public static readonly Version RequiredVersion = new Version(2, 0, 0);
+    public static readonly Version RequiredVersion = new(2, 0, 0);
 
-    public static Dictionary<string, Dictionary<string, CustomizedObject>> WeaponInfoOutOfRaid { get; set; } = new Dictionary<string, Dictionary<string, CustomizedObject>>();
+    public static Dictionary<string, Dictionary<string, CustomizedObject>> WeaponInfoOutOfRaid { get; set; } = new();
     
     public static bool? StatTrackLoaded;
     
@@ -41,7 +41,7 @@ public static class StatTrackInterop
             }
             catch (Exception ex)
             {
-                LeaderboardPlugin.logger.LogError("[StatTrackInterop] Failed to load: " + ex.ToString());
+                LeaderboardPlugin.logger.LogError("[StatTrackInterop] Failed to load: " + ex);
                 return null;
             }
         }
@@ -59,14 +59,14 @@ public static class StatTrackInterop
 
         var result = new Dictionary<string, Dictionary<string, WeaponInfo>>
         {
-            [playerId] = new Dictionary<string, WeaponInfo>()
+            [playerId] = new()
         };
 
         foreach (var weaponInfo in info[playerId])
         {
             string weaponId = weaponInfo.Key;
             CustomizedObject weaponStats = weaponInfo.Value;
-            string weaponName = LocalizationModel.GetLocaleName(weaponId + " ShortName");
+            string weaponName = LocalizationService.GetLocaleName(weaponId + " ShortName");
 
             // Skip weapons with unknown names
             if (weaponName == "Unknown")
@@ -86,7 +86,7 @@ public static class StatTrackInterop
 
         if (result[playerId].Count == 0)
         {
-            Logger.LogWarning($"[StatTrack] ListWeapons is empty");
+            Logger.LogWarning("[StatTrack] ListWeapons is empty");
 
             return null;
         }

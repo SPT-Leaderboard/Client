@@ -1,14 +1,13 @@
 ﻿using System;
-using System.Threading;
-using UnityEngine;
 using System.IO;
-using Cysharp.Threading.Tasks;
+using System.Threading;
 using Comfort.Common;
-using EFT;
+using Cysharp.Threading.Tasks;
 using EFT.Communications;
 using EFT.UI;
 using SPT.Reflection.Utils;
 using SPTLeaderboard.Data;
+using UnityEngine;
 using UnityEngine.UI;
 
 namespace SPTLeaderboard.Utils
@@ -121,7 +120,7 @@ namespace SPTLeaderboard.Utils
             }
             catch (Exception ex)
             {
-                NotificationManagerClass.DisplayMessageNotification("Error to save screenshot", ENotificationDurationType.Default, ENotificationIconType.Alert, null);
+                NotificationManagerClass.DisplayMessageNotification("Error to save screenshot", ENotificationDurationType.Default, ENotificationIconType.Alert);
                 Logger.LogError($"Error to save screenshot: {ex.Message}");
                 Logger.LogError($"{ex.StackTrace}");
                 return false;
@@ -246,7 +245,7 @@ namespace SPTLeaderboard.Utils
         /// </summary>
         public void CachePlayerModelView()
         {
-            Logger.LogDebugWarning($"CachePlayerModelView - Start caching...");
+            Logger.LogDebugWarning("CachePlayerModelView - Start caching...");
             
             GameObject prefab = GameObject.Find("Common UI/Common UI/InventoryScreen/Overall Panel/LeftSide/CharacterPanel/PlayerModelView");
             GameObject parent = GameObject.Find("Common UI/Common UI/MenuScreen");
@@ -257,7 +256,7 @@ namespace SPTLeaderboard.Utils
             cachePlayerModel.transform.position = GetOffScreenPosition();
             cachedPlayerModelViewObj = cachePlayerModel;
             
-            Logger.LogWarning($"CachePlayerModelView - Cache created!");
+            Logger.LogWarning("CachePlayerModelView - Cache created!");
             LeaderboardPlugin.Instance.cachedPlayerModelPreview = true;
         }
 

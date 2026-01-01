@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.IO;
-using SPTLeaderboard.Models;
+using SPTLeaderboard.Configuration;
 
 namespace SPTLeaderboard.Data;
 
@@ -17,11 +17,11 @@ public static class GlobalData
     public const int HeartbeatCooldownSeconds = 60;
     
     // URLs
-    public static string HeartbeatUrl = $"{SettingsModel.Instance.PhpEndpoint.Value}{SettingsModel.Instance.PhpPath.Value}heartbeat/v2.php";
-    public static string ProfileUrl = $"{SettingsModel.Instance.PhpEndpoint.Value}{SettingsModel.Instance.PhpPath.Value}v3/v3.php";
-    public static string IconUrl = $"{SettingsModel.Instance.PhpEndpoint.Value}{SettingsModel.Instance.PhpPath.Value}client/avatar_processor.php";
-    public static string PreRaidUrl = $"{SettingsModel.Instance.PhpEndpoint.Value}{SettingsModel.Instance.PhpPath.Value}client/api_sync.php";
-    public static string ConfigUrl = $"{SettingsModel.Instance.PhpEndpoint.Value}{SettingsModel.Instance.PhpPath.Value}client/get_config.php";
+    public static string HeartbeatUrl = $"{Settings.Instance.PhpEndpoint.Value}{Settings.Instance.PhpPath.Value}heartbeat/v2.php";
+    public static string ProfileUrl = $"{Settings.Instance.PhpEndpoint.Value}{Settings.Instance.PhpPath.Value}v3/v3.php";
+    public static string IconUrl = $"{Settings.Instance.PhpEndpoint.Value}{Settings.Instance.PhpPath.Value}client/avatar_processor.php";
+    public static string PreRaidUrl = $"{Settings.Instance.PhpEndpoint.Value}{Settings.Instance.PhpPath.Value}client/api_sync.php";
+    public static string ConfigUrl = $"{Settings.Instance.PhpEndpoint.Value}{Settings.Instance.PhpPath.Value}client/get_config.php";
     
     // Paths
     public static string SptRootPath = Path.GetFullPath(Path.Combine(BepInEx.Paths.PluginPath, "..", "..")); 

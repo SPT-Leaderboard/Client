@@ -2,7 +2,6 @@
 using EFT;
 using SPT.Reflection.Patching;
 using SPTLeaderboard.Utils;
-using SPTLeaderboard.Utils.Zones;
 using UnityEngine;
 
 namespace SPTLeaderboard.Patches

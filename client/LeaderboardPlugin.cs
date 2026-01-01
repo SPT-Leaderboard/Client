@@ -1,13 +1,15 @@
 ﻿using System;
 using System.Threading;
-using Cysharp.Threading.Tasks;
 using BepInEx;
 using BepInEx.Logging;
+using Cysharp.Threading.Tasks;
 using Newtonsoft.Json;
+using SPTLeaderboard.Configuration;
 using SPTLeaderboard.Data;
+using SPTLeaderboard.Data.Response;
 using SPTLeaderboard.Enums;
-using SPTLeaderboard.Models;
 using SPTLeaderboard.Patches;
+using SPTLeaderboard.Services;
 using SPTLeaderboard.Utils;
 using SPTLeaderboard.Utils.Zones;
 using UnityEngine;
@@ -21,9 +23,9 @@ namespace SPTLeaderboard
     {
         public static LeaderboardPlugin Instance { get; private set; }
         
-        private SettingsModel _settings;
-        private LocalizationModel _localization;
-        private EncryptionModel _encrypt;
+        private Settings _settings;
+        private LocalizationService _localization;
+        private EncryptionService _encrypt;
         private IconSaver _iconSaver;
         
         private Timer _inRaidHeartbeatTimer;
@@ -45,7 +47,7 @@ namespace SPTLeaderboard
         private static string _lastSentDataHash;
         private static DateTime _lastSentDataTime = DateTime.MinValue;
         private const int HASH_EXPIRY_SECONDS = 120;
-        public static bool IsDebugLogsEnabled = false;
+        public static bool IsDebugLogsEnabled;
 
         public RaidSettingsData SavedRaidSettingsData = new();
 
@@ -74,9 +76,9 @@ namespace SPTLeaderboard
             
             #endregion
             
-            _settings = SettingsModel.Create(Config);
-            _encrypt = EncryptionModel.Create();
-            _localization = LocalizationModel.Create();
+            _settings = Settings.Create(Config);
+            _encrypt = EncryptionService.Create();
+            _localization = LocalizationService.Create();
             
             new LeaderboardVersionLabelPatch().Enable();
             new OpenMainMenuScreenPatch().Enable();
@@ -120,7 +122,6 @@ namespace SPTLeaderboard
             HandleKeybind();
 #if DEBUG
             Tick?.Invoke();
-            HandleZonesInterfaceToggle();
 #endif
         }
 
@@ -134,22 +135,10 @@ namespace SPTLeaderboard
                 if (Input.GetKeyDown(KeyCode.Space))
                 {
                     IsDebugLogsEnabled = !IsDebugLogsEnabled;
-                    LocalizationModel.NotificationWarning($"Advanced SPTLB Logs are: {IsDebugLogsEnabled}");
+                    LocalizationService.NotificationWarning($"Advanced SPTLB Logs are: {IsDebugLogsEnabled}");
                 }
             }
         }
-
-        private void HandleZonesInterfaceToggle()
-        {
-            if (SettingsModel.Instance.ToggleZonesInterfaceKey.Value.IsDown())
-            {
-                ZoneCursorUtils.IsUiOpen = !ZoneCursorUtils.IsUiOpen;
-                Cursor.lockState = ZoneCursorUtils.IsUiOpen ? CursorLockMode.None : CursorLockMode.Locked;
-                Cursor.visible = ZoneCursorUtils.IsUiOpen;
-                LocalizationModel.NotificationWarning($"ZonesInterface: {ZoneCursorUtils.IsUiOpen}");
-            }
-        }
-        
 
         private void FixedUpdate()
         {
@@ -222,7 +211,7 @@ namespace SPTLeaderboard
         /// </remarks>
         public static void SendProfileIcon(Texture2D texture, bool isFullBody)
         {
-            var request = NetworkApiRequestModel.Create(GlobalData.IconUrl);
+            var request = NetworkApiRequest.Create(GlobalData.IconUrl);
             var session = PlayerHelper.GetSession();
             request.OnSuccess = (response, code) =>
             {
@@ -241,7 +230,7 @@ namespace SPTLeaderboard
                 EncodedImage = encodedImage,
                 PlayerId = session.Profile.Id,
                 IsFullBody = isFullBody,
-                Token = EncryptionModel.Instance.Token
+                Token = EncryptionService.Instance.Token
             };
             string jsonBody = JsonConvert.SerializeObject(data);
                     
@@ -318,7 +307,7 @@ namespace SPTLeaderboard
                 _lastSentDataTime = DateTime.Now;
             }
 
-            var request = NetworkApiRequestModel.Create(GlobalData.ProfileUrl);
+            var request = NetworkApiRequest.Create(GlobalData.ProfileUrl);
 
             request.OnSuccess = (response, code) =>
             {
@@ -337,14 +326,14 @@ namespace SPTLeaderboard
                     
                     if (responseData.Response == "success")
                     {
-                        if (responseData.AddedToBalance > 0 && SettingsModel.Instance.ShowPointsNotification.Value)
+                        if (responseData.AddedToBalance > 0 && Settings.Instance.ShowPointsNotification.Value)
                         {
-                            LocalizationModel.Notification(LocalizationModel.Instance.GetLocaleCoin(responseData.AddedToBalance));
+                            LocalizationService.Notification(LocalizationService.Instance.GetLocaleCoin(responseData.AddedToBalance));
                         }
 
-                        if (responseData.BattlePassEXP > 0 && SettingsModel.Instance.ShowExperienceNotification.Value)
+                        if (responseData.BattlePassExp > 0 && Settings.Instance.ShowExperienceNotification.Value)
                         {
-                            LocalizationModel.Notification(LocalizationModel.Instance.GetLocaleExperience(responseData.BattlePassEXP));
+                            LocalizationService.Notification(LocalizationService.Instance.GetLocaleExperience(responseData.BattlePassExp));
                         }
                     }
                 }
@@ -390,7 +379,7 @@ namespace SPTLeaderboard
         /// </remarks>
         public static void SendPreRaidData(object data)
         {
-            var request = NetworkApiRequestModel.Create(GlobalData.PreRaidUrl);
+            var request = NetworkApiRequest.Create(GlobalData.PreRaidUrl);
 
             request.OnSuccess = (response, code) =>
             {

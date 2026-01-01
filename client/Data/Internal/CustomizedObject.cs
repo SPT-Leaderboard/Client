@@ -1,4 +1,4 @@
-﻿namespace SPTLeaderboard.Data;
+﻿namespace SPTLeaderboard.Data.Internal;
 
 public class CustomizedObject
 {

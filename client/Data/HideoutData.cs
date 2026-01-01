@@ -5,59 +5,59 @@ namespace SPTLeaderboard.Data;
 public class HideoutData
 {
     [JsonProperty("Vents")]
-    public int Vents { get; set; } = 0;
+    public int Vents { get; set; }
     [JsonProperty("Security")]
-    public int Security { get; set; } = 0;
+    public int Security { get; set; }
     [JsonProperty("WaterCloset")]
-    public int WaterCloset { get; set; } = 0;
+    public int WaterCloset { get; set; }
     [JsonProperty("Stash")]
-    public int Stash { get; set; } = 0;
+    public int Stash { get; set; }
     [JsonProperty("Generator")]
-    public int Generator { get; set; } = 0;
+    public int Generator { get; set; }
     [JsonProperty("Heating")]
-    public int Heating { get; set; } = 0;
+    public int Heating { get; set; }
     [JsonProperty("WaterCollector")]
-    public int WaterCollector { get; set; } = 0;
+    public int WaterCollector { get; set; }
     [JsonProperty("MedStation")]
-    public int MedStation { get; set; } = 0;
+    public int MedStation { get; set; }
     [JsonProperty("Kitchen")]
-    public int Kitchen { get; set; } = 0;
+    public int Kitchen { get; set; }
     [JsonProperty("RestSpace")]
-    public int RestSpace { get; set; } = 0;
+    public int RestSpace { get; set; }
     [JsonProperty("Workbench")]
-    public int Workbench { get; set; } = 0;
+    public int Workbench { get; set; }
     [JsonProperty("IntelligenceCenter")]
-    public int IntelligenceCenter { get; set; } = 0;
+    public int IntelligenceCenter { get; set; }
     [JsonProperty("ShootingRange")]
-    public int ShootingRange { get; set; } = 0;
+    public int ShootingRange { get; set; }
     [JsonProperty("Library")]
-    public int Library { get; set; } = 0;
+    public int Library { get; set; }
     [JsonProperty("ScavCase")]
-    public int ScavCase { get; set; } = 0;
+    public int ScavCase { get; set; }
     [JsonProperty("Illumination")]
-    public int Illumination { get; set; } = 0;
+    public int Illumination { get; set; }
     [JsonProperty("PlaceOfFame")]
-    public int PlaceOfFame { get; set; } = 0;
+    public int PlaceOfFame { get; set; }
     [JsonProperty("AirFilteringUnit")]
-    public int AirFilteringUnit { get; set; } = 0;
+    public int AirFilteringUnit { get; set; }
     [JsonProperty("SolarPower")]
-    public int SolarPower { get; set; } = 0;
+    public int SolarPower { get; set; }
     [JsonProperty("BoozeGenerator")]
-    public int BoozeGenerator { get; set; } = 0;
+    public int BoozeGenerator { get; set; }
     [JsonProperty("BitcoinFarm")]
-    public int BitcoinFarm { get; set; } = 0;
+    public int BitcoinFarm { get; set; }
     [JsonProperty("ChristmasIllumination")]
-    public int ChristmasIllumination { get; set; } = 0;
+    public int ChristmasIllumination { get; set; }
     [JsonProperty("EmergencyWall")]
-    public int EmergencyWall { get; set; } = 0;
+    public int EmergencyWall { get; set; }
     [JsonProperty("Gym")]
-    public int Gym { get; set; } = 0;
+    public int Gym { get; set; }
     [JsonProperty("WeaponStand")]
-    public int WeaponStand { get; set; } = 0;
+    public int WeaponStand { get; set; }
     [JsonProperty("WeaponStandSecondary")]
-    public int WeaponStandSecondary { get; set; } = 0;
+    public int WeaponStandSecondary { get; set; }
     [JsonProperty("EquipmentPresetsStand")]
-    public int EquipmentPresetsStand { get; set; } = 0;
+    public int EquipmentPresetsStand { get; set; }
     [JsonProperty("CircleOfCultists")]
-    public int CircleOfCultists { get; set; } = 0;
+    public int CircleOfCultists { get; set; }
 }

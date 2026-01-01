@@ -5,23 +5,23 @@ namespace SPTLeaderboard.Data;
 public class HitsData
 {
     [JsonProperty("head")]
-    public int Head { get; set; } = 0;
+    public int Head { get; set; }
     
     [JsonProperty("chest")]
-    public int Chest { get; set; } = 0;
+    public int Chest { get; set; }
     
     [JsonProperty("stomach")]
-    public int Stomach { get; set; } = 0;
+    public int Stomach { get; set; }
     
     [JsonProperty("leftArm")]
-    public int LeftArm { get; set; } = 0;
+    public int LeftArm { get; set; }
     
     [JsonProperty("rightArm")]
-    public int RightArm { get; set; } = 0;
+    public int RightArm { get; set; }
     
     [JsonProperty("leftLeg")]
-    public int LeftLeg { get; set; } = 0;
+    public int LeftLeg { get; set; }
     
     [JsonProperty("rightLeg")]
-    public int RightLeg { get; set; } = 0;
+    public int RightLeg { get; set; }
 }

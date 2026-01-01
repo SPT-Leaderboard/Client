@@ -34,7 +34,7 @@ public class ZoneDebugRenderer: MonoBehaviour
         corners[6] = Center + new Vector3(half.x, half.y, half.z);
         corners[7] = Center + new Vector3(half.x, half.y, -half.z);
 
-        int[,] edges = new int[,]
+        int[,] edges = new[,]
         {
             { 0, 1 }, { 1, 2 }, { 2, 3 }, { 3, 0 }, // низ
             { 4, 5 }, { 5, 6 }, { 6, 7 }, { 7, 4 }, // верх
@@ -109,7 +109,7 @@ public class ZoneDebugRenderer: MonoBehaviour
             }
         }
 
-        int[,] edges = new int[,]
+        int[,] edges = new[,]
         {
             { 0, 1 }, { 1, 2 }, { 2, 3 }, { 3, 0 }, // down
             { 4, 5 }, { 5, 6 }, { 6, 7 }, { 7, 4 }, // up
@@ -237,7 +237,7 @@ public class ZoneDebugRenderer: MonoBehaviour
                     {
                         if (zone != null)
                         {
-                            createdCount += CreateZoneOverlaysRecursive(zone, 0);
+                            createdCount += CreateZoneOverlaysRecursive(zone);
                         }
                     }
                 }
@@ -252,7 +252,7 @@ public class ZoneDebugRenderer: MonoBehaviour
                         {
                             if (zone != null)
                             {
-                                createdCount += CreateZoneOverlaysRecursive(zone, 0);
+                                createdCount += CreateZoneOverlaysRecursive(zone);
                             }
                         }
                     }

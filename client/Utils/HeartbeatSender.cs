@@ -2,9 +2,10 @@
 using Comfort.Common;
 using EFT.UI;
 using Newtonsoft.Json;
+using SPTLeaderboard.Configuration;
 using SPTLeaderboard.Data;
 using SPTLeaderboard.Enums;
-using SPTLeaderboard.Models;
+using SPTLeaderboard.Services;
 
 namespace SPTLeaderboard.Utils
 {
@@ -29,7 +30,7 @@ namespace SPTLeaderboard.Utils
                     if (session?.Profile == null)
                         return;
 
-                    var request = NetworkApiRequestModel.Create(GlobalData.HeartbeatUrl);
+                    var request = NetworkApiRequest.Create(GlobalData.HeartbeatUrl);
 
                     request.OnSuccess = (response, code) =>
                     {
@@ -44,7 +45,7 @@ namespace SPTLeaderboard.Utils
                         Timestamp = DataUtils.CurrentTimestamp,
                         Version = GlobalData.Version,
                         SessionId = session.Profile.Id,
-                        Token = EncryptionModel.Instance.Token
+                        Token = EncryptionService.Instance.Token
                     };
 
                     string jsonBody = JsonConvert.SerializeObject(data);
@@ -70,7 +71,7 @@ namespace SPTLeaderboard.Utils
                 if (session?.Profile == null)
                     return;
 
-                var request = NetworkApiRequestModel.Create(GlobalData.HeartbeatUrl);
+                var request = NetworkApiRequest.Create(GlobalData.HeartbeatUrl);
 
                 request.OnSuccess = (response, code) =>
                 {
@@ -88,13 +89,13 @@ namespace SPTLeaderboard.Utils
                     Map = DataUtils.GetRaidRawMap(),
                     Side = DataUtils.GetRaidPlayerSide(),
                     GameTime = DataUtils.GetRaidGameTime(),
-                    Token = EncryptionModel.Instance.Token
+                    Token = EncryptionService.Instance.Token
                 };
 
                 string jsonBody = JsonConvert.SerializeObject(data);
 
 #if DEBUG
-                if (SettingsModel.Instance.Debug.Value)
+                if (Settings.Instance.Debug.Value)
                 {
                     Logger.LogWarning($"[HeartbeatSender] SendInRaid Data {jsonBody}");
                 }

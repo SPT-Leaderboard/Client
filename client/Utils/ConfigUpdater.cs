@@ -1,7 +1,7 @@
 using System;
 using Newtonsoft.Json;
 using SPTLeaderboard.Data;
-using SPTLeaderboard.Models;
+using SPTLeaderboard.Services;
 
 namespace SPTLeaderboard.Utils
 {
@@ -12,7 +12,7 @@ namespace SPTLeaderboard.Utils
             try
             {
                 EquipmentData newConfig;
-                var request = NetworkApiRequestModel.CreateGet(GlobalData.ConfigUrl);
+                var request = NetworkApiRequest.CreateGet(GlobalData.ConfigUrl);
                 request.OnSuccess = (response, code) =>
                 {
                     newConfig = JsonConvert.DeserializeObject<EquipmentData>(response);

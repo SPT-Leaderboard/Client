@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using Newtonsoft.Json;
 
-namespace SPTLeaderboard.Data
+namespace SPTLeaderboard.Data.Internal
 {
     public class ProfileData
     {

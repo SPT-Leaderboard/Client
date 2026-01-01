@@ -2,8 +2,8 @@
 using EFT.Hideout;
 using HarmonyLib;
 using SPT.Reflection.Patching;
+using SPTLeaderboard.Configuration;
 using SPTLeaderboard.Enums;
-using SPTLeaderboard.Models;
 using SPTLeaderboard.Utils;
 
 namespace SPTLeaderboard.Patches
@@ -18,7 +18,7 @@ namespace SPTLeaderboard.Patches
         [PatchPostfix]
         private static void Postfix()
         {
-            if (!SettingsModel.Instance.EnableSendData.Value)
+            if (!Settings.Instance.EnableSendData.Value)
                 return;
             
             HeartbeatSender.Send(PlayerState.IN_HIDEOUT);

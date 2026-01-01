@@ -1,10 +1,8 @@
 ﻿using System.Reflection;
 using EFT;
-using EFT.Communications;
 using HarmonyLib;
 using SPT.Reflection.Patching;
 using SPTLeaderboard.Data;
-using SPTLeaderboard.Models;
 
 namespace SPTLeaderboard.Patches
 {

@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using SPTLeaderboard.Data;
 using UnityEngine;
+
 // ReSharper disable InconsistentNaming
 
 namespace SPTLeaderboard.Utils.Zones
@@ -9,23 +10,30 @@ namespace SPTLeaderboard.Utils.Zones
     public class ZoneTracker : MonoBehaviour
     {
         public ZoneData CurrentZone { get; private set; }
-        public IReadOnlyDictionary<string, List<ZoneData>> AllZones => _allZones;
-        public ZoneRepository ZoneRepository => _zoneRepository;
-
-        private readonly Dictionary<string, List<ZoneData>> _allZones = new();
-        private List<ZoneData> _zones = new();
-
-        public ZoneTrackerData CurrentRaidData { get; set; } = new();
-
-        public float ZoneEntryTime;
-        private readonly ZoneRepository _zoneRepository = new(GlobalData.ZonesConfig);
-
-        public Action<Dictionary<string, List<ZoneData>>> OnZonesLoaded;
-        public Action OnZoneTimeUpdated;
+        public ZoneData CurrentSubZone { get; private set; }
         
-
+        public float ZoneEntryTime;
+        public float SubZoneEntryTime;
+        
+        public Action OnZoneTimeUpdated;
+        public Action OnSubZoneTimeUpdated;
+        
+        public Dictionary<string, List<ZoneData>> AllZones => _allZones;
+        public ZoneRepository ZoneRepository => _zoneRepository;
+        public ZoneTrackerData CurrentRaidData { get; set; } = new();
+        
+        public Action<Dictionary<string, List<ZoneData>>> OnZonesLoaded;
+        private List<ZoneData> _zones = new();
+        private readonly Dictionary<string, List<ZoneData>> _allZones = new();
+        private readonly ZoneRepository _zoneRepository = new(GlobalData.ZonesConfig);
+        
         public void Enable()
         {
+            _zones.Clear();
+            CurrentRaidData = new ZoneTrackerData();
+            CurrentZone = null;
+            ZoneEntryTime = 0f;
+            
             LeaderboardPlugin.Instance.FixedTick += CheckPlayerPosition;
             LoadZones();
             LoadZonesForCurrentMap();
@@ -49,11 +57,6 @@ namespace SPTLeaderboard.Utils.Zones
         public void Disable()
         {
             LeaderboardPlugin.Instance.FixedTick -= CheckPlayerPosition;
-            
-            _zones.Clear();
-            CurrentRaidData = new ZoneTrackerData();
-            CurrentZone = null;
-            ZoneEntryTime = 0f;
         }
 
         public void LoadZones()
@@ -94,7 +97,14 @@ namespace SPTLeaderboard.Utils.Zones
             {
                 if (CurrentZone != foundZone)
                     EnterZone(foundZone);
-
+                
+                if (foundZone.SubZones != null && foundZone.SubZones.Count > 0)
+                {
+                    ZoneData foundSubZone = FindZoneContainingPosition(pos, foundZone.SubZones);
+                    
+                    if(CurrentSubZone != foundSubZone)
+                        EnterSubZone(foundSubZone);
+                }
                 return;
             }
 
@@ -106,21 +116,9 @@ namespace SPTLeaderboard.Utils.Zones
             foreach (var zone in zones)
             {
                 if (zone == null) continue;
-
-                // Check if position is in this zone
+                
                 if (zone.GetBounds().Contains(pos))
                 {
-                    // If this zone has sub-zones, recursively check them first
-                    if (zone.SubZones != null && zone.SubZones.Count > 0)
-                    {
-                        ZoneData subZone = FindZoneContainingPosition(pos, zone.SubZones);
-                        if (subZone != null)
-                        {
-                            return subZone;
-                        }
-                    }
-
-                    // No sub-zone contains the position, return this zone
                     return zone;
                 }
             }
@@ -130,15 +128,13 @@ namespace SPTLeaderboard.Utils.Zones
 
         private void EnterZone(ZoneData newZone)
         {
-            ExitCurrentZone();
-
             CurrentZone = newZone;
             ZoneEntryTime = Time.fixedTime;
 
             if (!CurrentRaidData.ZonesEntered.Contains(newZone.GUID))
                 CurrentRaidData.ZonesEntered.Add(newZone.GUID);
 
-            Logger.LogDebugWarning($"ZoneTracker: Enter {CurrentZone.Name}");
+            Logger.LogDebugWarning($"ZoneTracker: Enter zone {CurrentZone.Name}");
         }
 
         private void ExitCurrentZone()
@@ -151,10 +147,45 @@ namespace SPTLeaderboard.Utils.Zones
                 CurrentRaidData.ZonesTimesSpend[CurrentZone.GUID] = 0f;
 
             CurrentRaidData.ZonesTimesSpend[CurrentZone.GUID] += timeSpent;
-            Logger.LogDebugWarning($"ZoneTracker: Exit {CurrentZone.Name}, total time: {CurrentRaidData.ZonesTimesSpend[CurrentZone.GUID]:F1}s");
+            Logger.LogDebugWarning($"ZoneTracker: Exit zone {CurrentZone.Name}, total time: {CurrentRaidData.ZonesTimesSpend[CurrentZone.GUID]:F1}s");
 
             ZoneEntryTime = 0f;
             CurrentZone = null;
+
+            // Also exit any sub-zone when exiting the main zone
+            if (CurrentSubZone != null)
+            {
+                ExitCurrentSubZone();
+            }
+
+            OnZoneTimeUpdated?.Invoke();
+        }
+
+        private void EnterSubZone(ZoneData newSubZone)
+        {
+            CurrentSubZone = newSubZone;
+            SubZoneEntryTime = Time.fixedTime;
+
+            if (!CurrentRaidData.ZonesEntered.Contains(newSubZone.GUID))
+                CurrentRaidData.ZonesEntered.Add(newSubZone.GUID);
+
+            Logger.LogDebugWarning($"ZoneTracker: Enter sub-zone {CurrentSubZone.Name}");
+        }
+
+        private void ExitCurrentSubZone()
+        {
+            if (CurrentSubZone == null || SubZoneEntryTime <= 0f)
+                return;
+
+            float timeSpent = Time.fixedTime - SubZoneEntryTime;
+            if (!CurrentRaidData.ZonesTimesSpend.ContainsKey(CurrentSubZone.GUID))
+                CurrentRaidData.ZonesTimesSpend[CurrentSubZone.GUID] = 0f;
+
+            CurrentRaidData.ZonesTimesSpend[CurrentSubZone.GUID] += timeSpent;
+            Logger.LogDebugWarning($"ZoneTracker: Exit sub-zone {CurrentSubZone.Name}, total time: {CurrentRaidData.ZonesTimesSpend[CurrentSubZone.GUID]:F1}s");
+
+            SubZoneEntryTime = 0f;
+            CurrentSubZone = null;
             OnZoneTimeUpdated?.Invoke();
         }
     }

@@ -1,18 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using Cysharp.Threading.Tasks;
 using Comfort.Common;
+using Cysharp.Threading.Tasks;
 using EFT;
 using EFT.Communications;
 using SPTLeaderboard.Data;
 using SPTLeaderboard.Utils;
 
-namespace SPTLeaderboard.Models
+namespace SPTLeaderboard.Services
 {
-    public class LocalizationModel
+    public class LocalizationService
     {
-        public static LocalizationModel Instance { get; private set; }
+        public static LocalizationService Instance { get; private set; }
         
         /// <summary>
         /// Get current language EFT
@@ -27,13 +27,13 @@ namespace SPTLeaderboard.Models
             return Singleton<SharedGameSettingsClass>.Instance.Game.Settings.Language;
         }
     
-        public static LocalizationModel Create()
+        public static LocalizationService Create()
         {
             if (Instance != null)
             {
                 return Instance;
             }
-            return Instance = new LocalizationModel();
+            return Instance = new LocalizationService();
         }
 
         /// <summary>

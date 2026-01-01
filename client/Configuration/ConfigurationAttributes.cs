@@ -1,4 +1,9 @@
-﻿/// <summary>
+﻿using System;
+using BepInEx.Configuration;
+
+namespace SPTLeaderboard.Configuration;
+
+/// <summary>
 /// Class that specifies how a setting should be displayed inside the ConfigurationManager settings window.
 /// 
 /// Usage:
@@ -25,7 +30,7 @@
 /// You can optionally remove fields that you won't use from this class, it's the same as leaving them null.
 /// </remarks>
 #pragma warning disable 0169, 0414, 0649
-internal sealed class ConfigurationManagerAttributes
+internal sealed class ConfigurationAttributes
 {
     /// <summary>
     /// Should the setting be shown as a percentage (only use with value range settings).
@@ -36,7 +41,7 @@ internal sealed class ConfigurationManagerAttributes
     /// Custom setting editor (OnGUI code that replaces the default editor provided by ConfigurationManager).
     /// See below for a deeper explanation. Using a custom drawer will cause many of the other fields to do nothing.
     /// </summary>
-    public System.Action<BepInEx.Configuration.ConfigEntryBase> CustomDrawer;
+    public Action<ConfigEntryBase> CustomDrawer;
 
     /// <summary>
     /// Custom setting editor that allows polling keyboard input with the Input (or UnityInput) class.
@@ -82,7 +87,7 @@ internal sealed class ConfigurationManagerAttributes
     /// The value will persist after being set, use it to see if the current instance is being edited.
     /// Remember to set it to false after you are done!
     /// </param>
-    public delegate void CustomHotkeyDrawerFunc(BepInEx.Configuration.ConfigEntryBase setting, ref bool isCurrentlyAcceptingInput);
+    public delegate void CustomHotkeyDrawerFunc(ConfigEntryBase setting, ref bool isCurrentlyAcceptingInput);
 
     /// <summary>
     /// Show this setting in the settings screen at all? If false, don't show.
@@ -140,10 +145,10 @@ internal sealed class ConfigurationManagerAttributes
     /// <summary>
     /// Custom converter from setting type to string for the built-in editor textboxes.
     /// </summary>
-    public System.Func<object, string> ObjToStr;
+    public Func<object, string> ObjToStr;
 
     /// <summary>
     /// Custom converter from string to setting type for the built-in editor textboxes.
     /// </summary>
-    public System.Func<string, object> StrToObj;
+    public Func<string, object> StrToObj;
 }

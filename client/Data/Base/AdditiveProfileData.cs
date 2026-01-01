@@ -1,7 +1,8 @@
 ﻿using System.Collections.Generic;
 using Newtonsoft.Json;
+using SPTLeaderboard.Data.Internal;
 
-namespace SPTLeaderboard.Data
+namespace SPTLeaderboard.Data.Base
 {
     public class AdditiveProfileData(BaseData baseData)
     {
@@ -73,13 +74,13 @@ namespace SPTLeaderboard.Data
         public bool IsTransition { get; set; }
 
         [JsonProperty("isUsingStattrack")]
-        public bool IsUsingStattrack { get; set; } = false;
+        public bool IsUsingStattrack { get; set; }
         
         [JsonProperty("lastRaidEXP")]
         public int LastRaidEXP { get; set; }
 
         [JsonProperty("hideout")]
-        public HideoutData HideoutData { get; set; } = null;
+        public HideoutData HideoutData { get; set; }
         
         [JsonProperty("lastRaidHits")]
         public int LastRaidHits { get; set; }
@@ -121,7 +122,7 @@ namespace SPTLeaderboard.Data
         public int BossKills { get; set; }
 
         [JsonProperty("modWeaponStats")]
-        public Dictionary<string, WeaponInfo> ModWeaponStats { get; set; } = null;
+        public Dictionary<string, WeaponInfo> ModWeaponStats { get; set; }
         
         [JsonProperty("playedAs")]
         public string PlayedAs { get; set; }
@@ -136,7 +137,7 @@ namespace SPTLeaderboard.Data
         public bool PublicProfile { get; set; } = true;
         
         [JsonProperty("hasKappa")]
-        public bool HasKappa { get; set; } = false;
+        public bool HasKappa { get; set; }
         
         [JsonProperty("raidDamage")]
         public int RaidDamage { get; set; }
@@ -151,22 +152,22 @@ namespace SPTLeaderboard.Data
         public int ScavLevel { get; set; }
 
         [JsonProperty("traderInfo")]
-        public Dictionary<string, TraderData> TraderInfo { get; set; } = null;
+        public Dictionary<string, TraderData> TraderInfo { get; set; }
 
         [JsonProperty("completed_quests")]
         public Dictionary<string, QuestInfoData> Quests { get; set; } = new();
         
         [JsonProperty("energy")]
-        public float Energy { get; set; } = 0;
+        public float Energy { get; set; }
         
         [JsonProperty("hydration")]
-        public float Hydration { get; set; } = 0;
+        public float Hydration { get; set; }
         
         [JsonProperty("max_energy")]
-        public float MaxEnergy { get; set; } = 0;
+        public float MaxEnergy { get; set; }
         
         [JsonProperty("max_hydration")]
-        public float MaxHydration { get; set; } = 0;
+        public float MaxHydration { get; set; }
         
         [JsonProperty("revenue_items")]
         public List<ItemData> RevenueItems { get; set; } = new();

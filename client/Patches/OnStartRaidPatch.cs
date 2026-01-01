@@ -1,10 +1,8 @@
-﻿using System;
-using System.Reflection;
+﻿using System.Reflection;
 using EFT;
 using SPT.Reflection.Patching;
-using SPTLeaderboard.Models;
+using SPTLeaderboard.Configuration;
 using SPTLeaderboard.Utils;
-using SPTLeaderboard.Utils.Zones;
 using UnityEngine;
 
 namespace SPTLeaderboard.Patches
@@ -19,7 +17,7 @@ namespace SPTLeaderboard.Patches
         [PatchPrefix]
         static bool Prefix(LocalRaidSettings settings)
         {
-            if (!SettingsModel.Instance.EnableSendData.Value)
+            if (!Settings.Instance.EnableSendData.Value)
                 return true;
             
             HitsTracker.Instance.Clear();

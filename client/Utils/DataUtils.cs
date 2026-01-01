@@ -6,21 +6,20 @@ using System.Security.Cryptography;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading;
-using Cysharp.Threading.Tasks;
 using BepInEx;
 using BepInEx.Bootstrap;
 using Comfort.Common;
+using Cysharp.Threading.Tasks;
 using EFT;
 using EFT.InventoryLogic;
 using Newtonsoft.Json;
 using SPT.Common.Http;
 using SPT.Common.Utils;
-using SPT.Reflection.Utils;
 using SPTLeaderboard.Data;
+using SPTLeaderboard.Data.Internal;
 using SPTLeaderboard.Enums;
-using SPTLeaderboard.Models;
 using UnityEngine;
-using TraderData = SPTLeaderboard.Data.TraderData;
+using TraderData = SPTLeaderboard.Data.Internal.TraderData;
 
 namespace SPTLeaderboard.Utils;
 
@@ -317,7 +316,7 @@ public static class DataUtils
         TarkovApplication tarkovApplication;
         if (!TarkovApplication.Exist(out tarkovApplication))
         {
-            Logger.LogWarning($"[TryGetTransitionData] TarkovApplication does not exist, cannot retrieve transition status");
+            Logger.LogWarning("[TryGetTransitionData] TarkovApplication does not exist, cannot retrieve transition status");
             callback.Invoke(lastRaidTransitionTo, false);
             return;
         }
@@ -329,14 +328,14 @@ public static class DataUtils
             
             if (!inTransition)
             {
-                Logger.LogInfo($"[TryGetTransitionData] Not in transition, skipping");
+                Logger.LogInfo("[TryGetTransitionData] Not in transition, skipping");
                 callback.Invoke(lastRaidTransitionTo, false);
                 return;
             }
             
             if (string.IsNullOrEmpty(location))
             {
-                Logger.LogWarning($"[TryGetTransitionData] Transition location is empty");
+                Logger.LogWarning("[TryGetTransitionData] Transition location is empty");
                 callback.Invoke(lastRaidTransitionTo, false);
                 return;
             }

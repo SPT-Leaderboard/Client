@@ -2,8 +2,9 @@
 using EFT;
 using EFT.UI;
 using SPT.Reflection.Patching;
+using SPTLeaderboard.Configuration;
 using SPTLeaderboard.Enums;
-using SPTLeaderboard.Models;
+using SPTLeaderboard.Services;
 using SPTLeaderboard.Utils;
 
 namespace SPTLeaderboard.Patches
@@ -37,17 +38,17 @@ namespace SPTLeaderboard.Patches
                 bool hasEnLocale = LocaleManagerClass.LocaleManagerClass.Dictionary_4.TryGetValue("en", out _);
                 if (!hasEnLocale)
                 {
-                    _ = LocalizationModel.Instance.LoadEnglishLocaleAsync();
+                    _ = LocalizationService.Instance.LoadEnglishLocaleAsync();
                 }
                 else
                 {
-                    if (LocalizationModel.GetLocaleName("5ea03f7400685063ec28bfa8 ShortName") != "Unknown")
+                    if (LocalizationService.GetLocaleName("5ea03f7400685063ec28bfa8 ShortName") != "Unknown")
                     {
                         LeaderboardPlugin.Instance.engLocaleLoaded = true;
                     }
                     else
                     {
-                        _ = LocalizationModel.Instance.LoadEnglishLocaleAsync();
+                        _ = LocalizationService.Instance.LoadEnglishLocaleAsync();
                     }
                 }
             }
@@ -57,7 +58,7 @@ namespace SPTLeaderboard.Patches
                 ConfigUpdater.UpdateEquipmentLimits();
             }
             
-            if (!SettingsModel.Instance.EnableSendData.Value)
+            if (!Settings.Instance.EnableSendData.Value)
                 return true;
             
             if (!PlayerHelper.HasRaidStarted())

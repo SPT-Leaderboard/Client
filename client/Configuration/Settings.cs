@@ -1,17 +1,15 @@
 ﻿using BepInEx.Configuration;
-#if DEBUG || BETA
 using SPTLeaderboard.Utils;
 using UnityEngine;
-#endif
 
-namespace SPTLeaderboard.Models
+namespace SPTLeaderboard.Configuration
 {
 	/// <summary>
 	/// Model with config fields
 	/// </summary>
-	public class SettingsModel
+	public class Settings
 	{
-		public static SettingsModel Instance { get; private set; }
+		public static Settings Instance { get; private set; }
 		
 #if DEBUG || BETA
 		public ConfigEntry<KeyboardShortcut> KeyBind;
@@ -39,7 +37,7 @@ namespace SPTLeaderboard.Models
 		public ConfigEntry<string> PhpPath;
 		public ConfigEntry<int> SupportInRaidConnectionTimer;
 
-		private SettingsModel(ConfigFile configFile)
+		private Settings(ConfigFile configFile)
 		{
 #if DEBUG || BETA
 			KeyBind = configFile.Bind(
@@ -81,7 +79,7 @@ namespace SPTLeaderboard.Models
 				new ConfigDescription(
 					"Sets the font size of overlays.",
 					new AcceptableValueRange<int>(2, 32),
-					new ConfigurationManagerAttributes { }));
+					new ConfigurationAttributes()));
 			
 			OverlayMaxDist = configFile.Bind(
 				"2. Debug",
@@ -90,7 +88,7 @@ namespace SPTLeaderboard.Models
 				new ConfigDescription(
 					"Max distance to render an overlay",
 					new AcceptableValueRange<float>(0f, 1000f),
-					new ConfigurationManagerAttributes { }));
+					new ConfigurationAttributes()));
 			
 			OverlayUpDist = configFile.Bind(
 				"2. Debug",
@@ -99,7 +97,7 @@ namespace SPTLeaderboard.Models
 				new ConfigDescription(
 					"Distance the overlay is above the objects",
 					new AcceptableValueRange<float>(0f, 5f),
-					new ConfigurationManagerAttributes { }));
+					new ConfigurationAttributes()));
 			
 			ToggleZonesInterfaceKey = configFile.Bind(
 				"1. Settings",
@@ -108,7 +106,7 @@ namespace SPTLeaderboard.Models
 				new ConfigDescription(
 					"Keybind to toggle ZonesInterface visibility",
 					null,
-					new ConfigurationManagerAttributes
+					new ConfigurationAttributes
 					{
 						Order = 9
 					}));
@@ -129,7 +127,7 @@ namespace SPTLeaderboard.Models
 				new ConfigDescription(
 					"When disable, stops sending your scores and statistics to the leaderboard server",
 					null, 
-					new ConfigurationManagerAttributes
+					new ConfigurationAttributes
 					{
 						Order = 8
 					}));
@@ -141,7 +139,7 @@ namespace SPTLeaderboard.Models
 				new ConfigDescription(
 					"When turned on, display a notification about the issuance of leaderboard points at the end of the raid.",
 					null, 
-					new ConfigurationManagerAttributes
+					new ConfigurationAttributes
 					{
 						Order = 7
 					}));
@@ -153,7 +151,7 @@ namespace SPTLeaderboard.Models
 				new ConfigDescription(
 					"When turned on, display a notification about the issuance of leaderboard experience at the end of the raid.",
 					null, 
-					new ConfigurationManagerAttributes
+					new ConfigurationAttributes
 					{
 						Order = 6
 					}));
@@ -165,7 +163,7 @@ namespace SPTLeaderboard.Models
 				new ConfigDescription(
 					"Enabling this will switch you to a Casual Mode.\n You will not be ranked in the leaderboard and your stats won't count towards its progress.\n You'll be free off any leaderboard restrictions (except reasonable ones), have access to raid history and your profile like usual.\n DANGER - Once you played with this ON - YOU CANT GET BACK INTO RANKING.",
 					null, 
-					new ConfigurationManagerAttributes
+					new ConfigurationAttributes
 					{
 						Order = 5
 					}));
@@ -177,7 +175,7 @@ namespace SPTLeaderboard.Models
 				new ConfigDescription(
 					"Enable mod support to send extra data for your profile\n Mod automatically detects mods that it supports\n Currently supports: \n Stattrack by AcidPhantasm (extra weapon stats at battlepass tab and weapon mastery)",
 					null, 
-					new ConfigurationManagerAttributes
+					new ConfigurationAttributes
 					{
 						Order = 4
 					}));
@@ -189,7 +187,7 @@ namespace SPTLeaderboard.Models
 				new ConfigDescription(
 					"How long mod will be waiting for the response from Leaderboard API, in SECONDS",
 					null, 
-					new ConfigurationManagerAttributes
+					new ConfigurationAttributes
 					{
 						Order = 3,
 						IsAdvanced = true
@@ -202,7 +200,7 @@ namespace SPTLeaderboard.Models
 				new ConfigDescription(
 					"DO NOT TOUCH UNLESS YOU KNOW WHAT YOU ARE DOING.\n Domain (or both subdomain + domain) used for requests",
 					null, 
-					new ConfigurationManagerAttributes
+					new ConfigurationAttributes
 					{
 						Order = 2,
 						IsAdvanced = true
@@ -215,7 +213,7 @@ namespace SPTLeaderboard.Models
 				new ConfigDescription(
 					"DO NOT TOUCH UNLESS YOU KNOW WHAT YOU ARE DOING.\n Domain (or both subdomain + domain) used for requests",
 					null, 
-					new ConfigurationManagerAttributes
+					new ConfigurationAttributes
 					{
 						Order = 1,
 						IsAdvanced = true
@@ -228,7 +226,7 @@ namespace SPTLeaderboard.Models
 				new ConfigDescription(
 					"Timer for requests in server for support status IN_RAID",
 					null, 
-					new ConfigurationManagerAttributes
+					new ConfigurationAttributes
 					{
 						Order = 0,
 						IsAdvanced = true
@@ -257,13 +255,13 @@ namespace SPTLeaderboard.Models
 		/// </summary>
 		/// <param name="configFile"></param>
 		/// <returns></returns>
-		public static SettingsModel Create(ConfigFile configFile)
+		public static Settings Create(ConfigFile configFile)
 		{
 			if (Instance != null)
 			{
 				return Instance;
 			}
-			return Instance = new SettingsModel(configFile);
+			return Instance = new Settings(configFile);
 		}
 	}
 }

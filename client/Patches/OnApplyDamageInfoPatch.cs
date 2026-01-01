@@ -1,7 +1,7 @@
 ﻿using System.Reflection;
 using EFT;
 using SPT.Reflection.Patching;
-using SPTLeaderboard.Models;
+using SPTLeaderboard.Configuration;
 using SPTLeaderboard.Utils;
 
 namespace SPTLeaderboard.Patches
@@ -16,7 +16,7 @@ namespace SPTLeaderboard.Patches
         [PatchPrefix]
         static bool Prefix(DamageInfoStruct damageInfo, EBodyPart bodyPartType, EBodyPartColliderType colliderType)
         {
-            if (!SettingsModel.Instance.EnableSendData.Value)
+            if (!Settings.Instance.EnableSendData.Value)
                 return true;
             
 

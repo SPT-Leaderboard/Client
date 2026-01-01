@@ -2,20 +2,21 @@
 using System.IO;
 using System.Reflection;
 using System.Security.Cryptography;
+using SPTLeaderboard.Configuration;
 using SPTLeaderboard.Data;
 using SPTLeaderboard.Utils;
 
-namespace SPTLeaderboard.Models
+namespace SPTLeaderboard.Services
 {
-    public class EncryptionModel
+    public class EncryptionService
     {
-        public static EncryptionModel Instance { get; private set; }
+        public static EncryptionService Instance { get; private set; }
         
         private string _token = "";
         
         public string Token => _token;
         
-        private EncryptionModel()
+        private EncryptionService()
         {
             try
             {
@@ -28,7 +29,7 @@ namespace SPTLeaderboard.Models
                         LoadToken();
                         
                         Logger.LogWarning(
-                            $"Migrated token from server mod. WARNING: DO NOT SHARE IT WITH ANYONE! If you lose it, you will lose access to the Leaderboard until next season!");
+                            "Migrated token from server mod. WARNING: DO NOT SHARE IT WITH ANYONE! If you lose it, you will lose access to the Leaderboard until next season!");
                     }
                     else
                     {
@@ -36,13 +37,13 @@ namespace SPTLeaderboard.Models
                         WriteTokenToFile(_token);
 
                         Logger.LogWarning(
-                            $"Generated your secret token, see mod directory. WARNING: DO NOT SHARE IT WITH ANYONE! If you lose it, you will lose access to the Leaderboard until next season!");
+                            "Generated your secret token, see mod directory. WARNING: DO NOT SHARE IT WITH ANYONE! If you lose it, you will lose access to the Leaderboard until next season!");
                     }
                 }
                 else
                 {
                     Logger.LogWarning(
-                        $"Your secret token was initialized by the mod. Remember to never show it to anyone!");
+                        "Your secret token was initialized by the mod. Remember to never show it to anyone!");
                     LoadToken();
                 }
             }
@@ -75,19 +76,19 @@ namespace SPTLeaderboard.Models
             File.WriteAllText(GlobalData.PathToken, token);
         }
         
-        public static EncryptionModel Create()
+        public static EncryptionService Create()
         {
             if (Instance != null)
             {
                 return Instance;
             }
-            return Instance = new EncryptionModel();
+            return Instance = new EncryptionService();
         }
         
         public string GetHashMod()
         {
             #if DEBUG
-            if (SettingsModel.Instance.Debug.Value)
+            if (Settings.Instance.Debug.Value)
             {
                 return "dcb0d416f5ee16a7ea23c5ee028f822b6b19e6a96d61a0bc2049c7560f9f2f56";
             }
@@ -103,7 +104,7 @@ namespace SPTLeaderboard.Models
             }
             catch (Exception)
             {
-                Logger.LogError($"Error check integrity");
+                Logger.LogError("Error check integrity");
                 return "ERROR CHECK INTEGRITY";
             }
         }

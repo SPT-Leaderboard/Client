@@ -2,8 +2,9 @@
 using EFT;
 using EFT.UI.Matchmaker;
 using SPT.Reflection.Patching;
+using SPTLeaderboard.Configuration;
 using SPTLeaderboard.Data;
-using SPTLeaderboard.Models;
+using SPTLeaderboard.Services;
 using SPTLeaderboard.Utils;
 
 namespace SPTLeaderboard.Patches
@@ -23,7 +24,7 @@ namespace SPTLeaderboard.Patches
         static bool Prefix()
         {
             Utils.Logger.LogDebugWarning("Player opened select side screen");
-            if (!SettingsModel.Instance.EnableSendData.Value && PlayerHelper.HasRaidStarted())
+            if (!Settings.Instance.EnableSendData.Value && PlayerHelper.HasRaidStarted())
                 return true;
 
             PlayerHelper.GetLimitViolations(PlayerHelper.GetEquipmentData());
@@ -49,9 +50,9 @@ namespace SPTLeaderboard.Patches
             {
                 ProfileId = PlayerHelper.GetProfile().ProfileId,
                 VersionMod = GlobalData.Version,
-                IsCasual = SettingsModel.Instance.ModCasualMode.Value,
+                IsCasual = Settings.Instance.ModCasualMode.Value,
                 Mods = modsPlayer,
-                Hash = EncryptionModel.Instance.GetHashMod(),
+                Hash = EncryptionService.Instance.GetHashMod(),
                 MaxHydration = maxHydration,
                 MaxEnergy = maxEnergy,
                 Hydration = currentHydration,
