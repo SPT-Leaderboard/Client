@@ -1,38 +1,124 @@
-# SPT Leaderboard Mod
+# 🎯 SPT Leaderboard Mod
 
-A mod for Single Player Tarkov (SPT) that tracks and displays player statistics on an online leaderboard.
+[![.NET Framework](https://img.shields.io/badge/.NET%20Framework-4.7.2-blue)](https://dotnet.microsoft.com/)
+[![SPT](https://img.shields.io/badge/SPT-4.0+-green)](https://www.sp-tarkov.com/)
+[![License](https://img.shields.io/badge/License-MIT-yellow)](LICENSE)
 
-## Features
+**An advanced mod for SPT (Single Player Tarkov) that tracks player statistics and displays them on an online leaderboard.**
 
-- **Automatic Stat Tracking**: Records raid results, kills, damage, and other performance stats
-- **Public/Private Profiles**: Choose whether to display your stats publicly
-- **Achievement Tracking**: Your most recent achievement with details
-- **Detailed Statistics**: Tracks:
-  - PMC and SCAV levels
-  - Raid results (Survived/Died/Runner)
-  - Damage dealt
-  - Longest kill shot
-  - Win streaks
-  - Play time
-  - And more!
 
-## Installation and How it works
+## ✨ Features
 
-1. Download the latest release
-2. Extract the folder into your `Root SPT game` directory
-3. Launch SPT Server to generate your unique token
-4. Finish a raid
+### 📊 **Statistics Tracking**
+- **Automatic data collection**: Raid results, kills, damage, play time
+- **Detailed statistics**: PMC/SCAV levels, win streaks, kill distances
+- **Item tracking**: Equipment, looting, trading
+- **Raid history**: Complete history of your gaming sessions
 
-## Configuration
+### 🏆 **Achievement System**
+- **Personal achievements**: Best results, records
+- **Battle Pass progress**: Experience and level tracking
+- **Leaderboards**: Compare results with other players
 
-Edit `config/config.js` to customize:
+<!-- ### 🗺️ **Zone System**
+- **Hierarchical zones**: Support for main zones and sub-zones
+- **Time tracking**: Time spent in each zone
+- **Visualization**: Display zones in-game with color differentiation
+- **Zone editor**: Tools for creating and configuring zones -->
 
-```json
-{
-  "public_profile": true,
-  "connectionRetries": 1,
-  "profile_aboutMe": "Your profile description",
-  "profile_profilePicture": "URL to your profile picture",
-  "profile_profileTheme": "Darker",
-  "profile_usePrestigeStyling": true
-}
+### 🌐 **Server Integration**
+- **Online synchronization**: Automatic statistics upload
+- **Error handling**: Smart retry system
+- **Data encryption**: Personal information protection
+- **Multilingual support**: Multiple language support
+
+## 🚀 Installation
+
+### 📋 **Requirements**
+- **SPT 4.0**
+- **.NET Framework 4.7.2**
+
+### 📦 **Quick Installation**
+1. **Download** the latest release from [Releases](https://github.com/your-repo/releases)
+2. **Extract** the archive to your SPT root folder
+3. **Launch** SPT server to generate your token
+4. **Play** and enjoy the statistics!
+
+### ⚙️ **File Locations**
+```
+📁 SPT/
+├── 📁 BepInEx/
+│   ├── 📁 plugins/
+│   │   └── 📁 SPT-Leaderboard/
+│   │       ├── SPTLeaderboard.dll
+│   │       └── [other mod files]
+│   └── 📁 config/
+│       └── SPT-Leaderboard.cfg  # Mod configuration
+```
+
+### 📊 **Statistics Viewing**
+- **Website profile**: Visit the leaderboard website for detailed statistics
+- **Raid history**: View all your gaming sessions
+- **Comparison**: Compare results with other players
+
+## 🏗️ **For Developers**
+
+### 📂 **Project Structure**
+```
+📁 Client/
+├── 📁 Configuration/     # Application settings
+├── 📁 Services/         # Business logic
+│   ├── EncryptionService.cs
+│   ├── LocalizationService.cs
+│   ├── NetworkApiRequest.cs
+│   └── ProcessProfileService.cs
+├── 📁 Data/            # Data models
+│   ├── Base/           # Base models
+│   ├── Response/       # API responses
+│   └── Internal/       # Internal models
+├── 📁 Utils/           # Utilities
+│   ├── Zones/          # Zone system
+│   └── [other utilities]
+├── 📁 Patches/         # Harmony patches
+└── 📁 Enums/           # Enumerations
+```
+
+### 🛠️ **Building the Project**
+
+#### **Build Requirements:**
+- **Visual Studio 2022** or **dotnet CLI**
+- **SPT paths** configured in `SPTLeaderboard.csproj`
+
+#### **Build Commands:**
+```bash
+# Debug version
+dotnet build SPTLeaderboard.csproj --configuration Debug
+
+# Release version
+dotnet build SPTLeaderboard.csproj --configuration Release
+
+# Beta version
+dotnet build SPTLeaderboard.csproj --configuration Beta
+```
+
+#### **Environment Variables (Optional):**
+```bash
+# Override default SPT paths (defaults are set in .csproj)
+TarkovDir=C:\Games\SPT\
+TarkovDevDir=C:\Games\SPTDEV\
+```
+
+> **Note**: Default paths are already configured in `SPTLeaderboard.csproj`. Use environment variables only if you need custom paths.
+
+### 📞 **Support**
+- **Issues**: [GitHub Issues](https://github.com/SPT-Leaderboard/Client/issues)
+- **Discord**: [Join our Discord server](https://discord.gg/psV2PY8brW)
+- **Logs**: Press LEFT CTRL+LEFT SHIFT+D+SPACE in Main menu for detailed logs
+
+## 📄 **License**
+
+This project is distributed under the **MIT** license. Details in the [LICENSE](LICENSE) file.
+
+---
+
+**🎯 Enjoy the game and track your progress!**
