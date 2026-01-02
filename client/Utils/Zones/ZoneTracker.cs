@@ -14,6 +14,8 @@ namespace SPTLeaderboard.Utils.Zones
         
         public float ZoneEntryTime;
         public float SubZoneEntryTime;
+        public float ZoneEntryPedometer;
+        public float SubZoneEntryPedometer;
         
         public Action OnZoneTimeUpdated;
         public Action OnSubZoneTimeUpdated;
@@ -130,6 +132,7 @@ namespace SPTLeaderboard.Utils.Zones
         {
             CurrentZone = newZone;
             ZoneEntryTime = Time.fixedTime;
+            ZoneEntryPedometer = PlayerHelper.Instance.Player.Pedometer.GetDistance();
 
             if (!CurrentRaidData.ZonesEntered.Contains(newZone.GUID))
                 CurrentRaidData.ZonesEntered.Add(newZone.GUID);
@@ -143,11 +146,17 @@ namespace SPTLeaderboard.Utils.Zones
                 return;
 
             float timeSpent = Time.fixedTime - ZoneEntryTime;
+            float kilometerWalked = PlayerHelper.Instance.Player.Pedometer.GetDistance() - ZoneEntryPedometer;
             if (!CurrentRaidData.ZonesTimesSpend.ContainsKey(CurrentZone.GUID))
                 CurrentRaidData.ZonesTimesSpend[CurrentZone.GUID] = 0f;
+            
+            if (!CurrentRaidData.ZonesKilometerWalked.ContainsKey(CurrentZone.GUID))
+                CurrentRaidData.ZonesKilometerWalked[CurrentZone.GUID] = 0f;
 
             CurrentRaidData.ZonesTimesSpend[CurrentZone.GUID] += timeSpent;
-            Logger.LogDebugWarning($"ZoneTracker: Exit zone {CurrentZone.Name}, total time: {CurrentRaidData.ZonesTimesSpend[CurrentZone.GUID]:F1}s");
+            CurrentRaidData.ZonesKilometerWalked[CurrentZone.GUID] += kilometerWalked;
+            
+            Logger.LogDebugWarning($"ZoneTracker: Exit zone {CurrentZone.Name}, total time: {CurrentRaidData.ZonesTimesSpend[CurrentZone.GUID]:F1}s, total kilometer walked: {CurrentRaidData.ZonesKilometerWalked[CurrentZone.GUID]:F1}");
 
             ZoneEntryTime = 0f;
             CurrentZone = null;
@@ -165,6 +174,7 @@ namespace SPTLeaderboard.Utils.Zones
         {
             CurrentSubZone = newSubZone;
             SubZoneEntryTime = Time.fixedTime;
+            SubZoneEntryPedometer = PlayerHelper.Instance.Player.Pedometer.GetDistance();
 
             if (!CurrentRaidData.ZonesEntered.Contains(newSubZone.GUID))
                 CurrentRaidData.ZonesEntered.Add(newSubZone.GUID);
@@ -178,10 +188,15 @@ namespace SPTLeaderboard.Utils.Zones
                 return;
 
             float timeSpent = Time.fixedTime - SubZoneEntryTime;
+            float kilometerWalked = PlayerHelper.Instance.Player.Pedometer.GetDistance() - SubZoneEntryPedometer;
             if (!CurrentRaidData.ZonesTimesSpend.ContainsKey(CurrentSubZone.GUID))
                 CurrentRaidData.ZonesTimesSpend[CurrentSubZone.GUID] = 0f;
+            
+            if (!CurrentRaidData.ZonesKilometerWalked.ContainsKey(CurrentSubZone.GUID))
+                CurrentRaidData.ZonesKilometerWalked[CurrentSubZone.GUID] = 0f;
 
             CurrentRaidData.ZonesTimesSpend[CurrentSubZone.GUID] += timeSpent;
+            CurrentRaidData.ZonesKilometerWalked[CurrentSubZone.GUID] += kilometerWalked;
             Logger.LogDebugWarning($"ZoneTracker: Exit sub-zone {CurrentSubZone.Name}, total time: {CurrentRaidData.ZonesTimesSpend[CurrentSubZone.GUID]:F1}s");
 
             SubZoneEntryTime = 0f;
