@@ -8,10 +8,13 @@ namespace SPTLeaderboard.Data
         [JsonProperty("ZonesEnteredInRaid")]
         public List<string> ZonesEntered = new();
     
-        [JsonProperty("ZonesTimesSpendInRaid")]
-        public Dictionary<string, float> ZonesTimesSpend = new();
+        [JsonProperty("TimeSpendInZones")]
+        public Dictionary<string, float> TimeSpendInZones = new();
         
-        [JsonProperty("ZonesKilometerWalkedInRaid")]
-        public Dictionary<string, float> ZonesKilometerWalked = new();
+        [JsonProperty("KilometerWalkedInZones")]
+        public Dictionary<string, float> KilometerWalkedInZones = new();
+        
+        [JsonProperty("MedicinesUsedInZones")]
+        public Dictionary<string, int> MedicinesUsedInZones = new();
     }
 }

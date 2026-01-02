@@ -322,12 +322,12 @@ namespace SPTLeaderboard.Services
 
             if (isScavRaid)
             {
-                killedPmc = scavData.Stats.Eft.SessionCounters.GetInt(SessionCounterTypesAbstractClass.KilledPmc);
-                killedSavage = scavData.Stats.Eft.SessionCounters.GetInt(SessionCounterTypesAbstractClass.KilledSavage);
-                killedBoss = scavData.Stats.Eft.SessionCounters.GetInt(SessionCounterTypesAbstractClass.KilledBoss);
-                hitCount = scavData.Stats.Eft.SessionCounters.GetInt(SessionCounterTypesAbstractClass.HitCount);
+                killedPmc = scavData.EftStats.SessionCounters.GetInt(SessionCounterTypesAbstractClass.KilledPmc);
+                killedSavage = scavData.EftStats.SessionCounters.GetInt(SessionCounterTypesAbstractClass.KilledSavage);
+                killedBoss = scavData.EftStats.SessionCounters.GetInt(SessionCounterTypesAbstractClass.KilledBoss);
+                hitCount = scavData.EftStats.SessionCounters.GetInt(SessionCounterTypesAbstractClass.HitCount);
                 totalDamage =
-                    (int)scavData.Stats.Eft.SessionCounters.GetFloat(SessionCounterTypesAbstractClass.CauseBodyDamage);
+                    (int)scavData.EftStats.SessionCounters.GetFloat(SessionCounterTypesAbstractClass.CauseBodyDamage);
                 expLooting = 0;
                 damageTaken = 0;
 
@@ -341,14 +341,14 @@ namespace SPTLeaderboard.Services
             }
             else
             {
-                killedPmc = pmcData.Stats.Eft.SessionCounters.GetInt(SessionCounterTypesAbstractClass.KilledPmc);
-                killedSavage = pmcData.Stats.Eft.SessionCounters.GetInt(SessionCounterTypesAbstractClass.KilledSavage);
-                killedBoss = pmcData.Stats.Eft.SessionCounters.GetInt(SessionCounterTypesAbstractClass.KilledBoss);
-                expLooting = pmcData.Stats.Eft.SessionCounters.GetInt(SessionCounterTypesAbstractClass.ExpLooting);
-                hitCount = pmcData.Stats.Eft.SessionCounters.GetInt(SessionCounterTypesAbstractClass.HitCount);
+                killedPmc = pmcData.EftStats.SessionCounters.GetInt(SessionCounterTypesAbstractClass.KilledPmc);
+                killedSavage = pmcData.EftStats.SessionCounters.GetInt(SessionCounterTypesAbstractClass.KilledSavage);
+                killedBoss = pmcData.EftStats.SessionCounters.GetInt(SessionCounterTypesAbstractClass.KilledBoss);
+                expLooting = pmcData.EftStats.SessionCounters.GetInt(SessionCounterTypesAbstractClass.ExpLooting);
+                hitCount = pmcData.EftStats.SessionCounters.GetInt(SessionCounterTypesAbstractClass.HitCount);
                 totalDamage =
-                    (int)pmcData.Stats.Eft.SessionCounters.GetFloat(SessionCounterTypesAbstractClass.CauseBodyDamage);
-                damageTaken = (int)pmcData.Stats.Eft.SessionCounters.GetFloat(SessionCounterTypesAbstractClass.BloodLoss);
+                    (int)pmcData.EftStats.SessionCounters.GetFloat(SessionCounterTypesAbstractClass.CauseBodyDamage);
+                damageTaken = (int)pmcData.EftStats.SessionCounters.GetFloat(SessionCounterTypesAbstractClass.BloodLoss);
 
                 Logger.LogDebugWarning($"Death coordinates {PlayerHelper.Instance.LastDeathPosition}");
                 Logger.LogDebugWarning("\n");
