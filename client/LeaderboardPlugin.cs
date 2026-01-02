@@ -91,6 +91,7 @@ namespace SPTLeaderboard
             new OnApplyDamageInfoPatch().Enable();
             new OnInitPlayerPatch().Enable();
             new OnEnemyDamagePatch().Enable();
+            new OnEnemyKillPatch().Enable();
             new PlayerOnDeadPatch().Enable();
             new OnPlayerAddedItem().Enable();
             new OnPlayerRemovedItem().Enable();

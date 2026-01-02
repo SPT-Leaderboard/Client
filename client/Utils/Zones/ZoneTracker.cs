@@ -1,6 +1,9 @@
 using System;
 using System.Collections.Generic;
+using EFT;
+using EFT.HealthSystem;
 using SPTLeaderboard.Data;
+using SPTLeaderboard.Services;
 using UnityEngine;
 
 // ReSharper disable InconsistentNaming
@@ -237,6 +240,53 @@ namespace SPTLeaderboard.Utils.Zones
         private float GetKilometer()
         {
             return PlayerHelper.Instance.Player.Pedometer.GetDistance();
+        }
+        private IStatisticsManager GetStatisticsManager()
+        {
+            return PlayerHelper.Instance.Player.StatisticsManager;
+        }
+
+        public void OnEnemyKilledInZone(DamageInfoStruct damage, string playerAccountId, float distance, EBodyPart bodyPart)
+        {
+            if (CurrentZone != null)
+            {
+                if (!CurrentRaidData.KillsInZones.ContainsKey(CurrentZone.GUID))
+                    CurrentRaidData.KillsInZones[CurrentZone.GUID] = 0;
+                CurrentRaidData.KillsInZones[CurrentZone.GUID]++;
+                
+                if (!CurrentRaidData.KillDetailsInZones.ContainsKey(CurrentZone.GUID))
+                    CurrentRaidData.KillDetailsInZones[CurrentZone.GUID] = new List<KillInfo>();
+
+                CurrentRaidData.KillDetailsInZones[CurrentZone.GUID].Add(new KillInfo
+                {
+                    Weapon = LocalizationService.GetLocaleName(damage.Weapon.ShortName),
+                    Distance = distance,
+                    BodyPart = bodyPart.ToString()
+                });
+
+                Logger.LogDebugWarning($"[ZoneTracker] Kill in zone {CurrentZone.Name}:" +
+                                       $"Weapon={damage.Weapon.ShortName}, distance={distance:F1}m, BodyPart={bodyPart.ToString()}m");
+            }
+            
+            if (CurrentSubZone != null)
+            {
+                if (!CurrentRaidData.KillsInZones.ContainsKey(CurrentSubZone.GUID))
+                    CurrentRaidData.KillsInZones[CurrentSubZone.GUID] = 0;
+                CurrentRaidData.KillsInZones[CurrentSubZone.GUID]++;
+                
+                if (!CurrentRaidData.KillDetailsInZones.ContainsKey(CurrentSubZone.GUID))
+                    CurrentRaidData.KillDetailsInZones[CurrentSubZone.GUID] = new List<KillInfo>();
+
+                CurrentRaidData.KillDetailsInZones[CurrentSubZone.GUID].Add(new KillInfo
+                {
+                    Weapon = LocalizationService.GetLocaleName(damage.Weapon.ShortName),
+                    Distance = distance,
+                    BodyPart = bodyPart.ToString()
+                });
+
+                Logger.LogDebugWarning($"[ZoneTracker] Kill in sub-zone {CurrentSubZone.Name}: " +
+                                       $"Weapon={damage.Weapon.ShortName}, distance={distance:F1}m, BodyPart={bodyPart.ToString()}m");
+            }
         }
 
         #endregion

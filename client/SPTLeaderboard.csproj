@@ -172,6 +172,7 @@
         <Compile Include="Patches\OnCoopApplyShotFourPatch.cs" />
         <Compile Include="Patches\OnEndRaidPatch.cs" />
         <Compile Include="Patches\OnEnemyDamagePatch.cs" />
+        <Compile Include="Patches\OnEnemyKillPatch.cs" />
         <Compile Include="Patches\OnGameWorldDisposePatch.cs" />
         <Compile Include="Patches\OnGameWorldStartPatch.cs" />
         <Compile Include="Patches\OnInitPlayerPatch.cs" />
