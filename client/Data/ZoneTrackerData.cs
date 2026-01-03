@@ -17,6 +17,9 @@ namespace SPTLeaderboard.Data
         [JsonProperty("MedicinesUsedInZones")]
         public Dictionary<string, int> MedicinesUsedInZones = new();
         
+        [JsonProperty("HealthHealedUsedInZones")]
+        public Dictionary<string, float> HealthHealedUsedInZones = new();
+        
         [JsonProperty("KillsInZones")]
         public Dictionary<string, int> KillsInZones = new();
         
