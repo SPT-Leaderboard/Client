@@ -29,6 +29,12 @@ public class OnCoopApplyShotFourPatch: ModulePatch
             return;
         }
         
+        var zoneTracker = LeaderboardPlugin.Instance?.ZoneTracker;
+        if (zoneTracker != null && zoneTracker.CurrentZone != null)
+        {
+            zoneTracker.OnEnemyDamage(damageInfo);
+        }
+        
         HitsTracker.Instance.IncreaseHit(bodyPart);
         
 #if DEBUG || BETA

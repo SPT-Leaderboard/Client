@@ -31,6 +31,12 @@ namespace SPTLeaderboard.Patches
                 return true;
             }
 
+            var zoneTracker = LeaderboardPlugin.Instance?.ZoneTracker;
+            if (zoneTracker != null && zoneTracker.CurrentZone != null)
+            {
+                zoneTracker.OnEnemyDamage(damageInfo);
+            }
+            
             HitsTracker.Instance.IncreaseHit(bodyPartType);
 #if DEBUG
             OverlayDebug.Instance.UpdateOverlay();

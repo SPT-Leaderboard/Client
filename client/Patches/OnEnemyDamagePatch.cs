@@ -39,7 +39,7 @@ namespace SPTLeaderboard.Patches
             if (!Settings.Instance.EnableSendData.Value)
                 return;
             
-            if (!(damage.Weapon is ThrowWeapItemClass))
+            if (damage.Weapon is not ThrowWeapItemClass)
             {
                 HitsTracker.Instance.AddHit(distance, bodyPart);
             }

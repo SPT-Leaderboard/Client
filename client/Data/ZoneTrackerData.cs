@@ -25,6 +25,9 @@ namespace SPTLeaderboard.Data
         
         [JsonProperty("KillDetailsInZones")]
         public Dictionary<string, List<KillInfo>> KillDetailsInZones = new();
+        
+        [JsonProperty("CausedDamageInZones")]
+        public Dictionary<string, float> CausedDamageInZones = new();
     }
     
     public class KillInfo
