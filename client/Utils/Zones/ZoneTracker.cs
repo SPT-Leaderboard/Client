@@ -246,7 +246,7 @@ namespace SPTLeaderboard.Utils.Zones
             return PlayerHelper.Instance.Player.StatisticsManager;
         }
 
-        public void OnEnemyKilledInZone(DamageInfoStruct damage, string playerAccountId, float distance, EBodyPart bodyPart)
+        public void OnEnemyKilledInZone(DamageInfoStruct damage, string role, float distance, EBodyPart bodyPart)
         {
             if (CurrentZone != null)
             {
@@ -261,6 +261,7 @@ namespace SPTLeaderboard.Utils.Zones
                 {
                     Weapon = LocalizationService.GetLocaleName(damage.Weapon.ShortName),
                     Distance = distance,
+                    Role = role,
                     BodyPart = bodyPart.ToString()
                 });
 
@@ -281,6 +282,7 @@ namespace SPTLeaderboard.Utils.Zones
                 {
                     Weapon = LocalizationService.GetLocaleName(damage.Weapon.ShortName),
                     Distance = distance,
+                    Role = role,
                     BodyPart = bodyPart.ToString()
                 });
 

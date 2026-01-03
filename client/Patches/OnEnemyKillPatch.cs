@@ -4,6 +4,7 @@ using EFT;
 using EFT.HealthSystem;
 using SPT.Reflection.Patching;
 using SPTLeaderboard.Configuration;
+using SPTLeaderboard.Services;
 using SPTLeaderboard.Utils;
 
 namespace SPTLeaderboard.Patches
@@ -12,7 +13,7 @@ namespace SPTLeaderboard.Patches
     {
         protected override MethodBase GetTargetMethod()
         {
-            var targetType = typeof(IStatisticsManager);
+            var targetType = typeof(LocationStatisticsCollectorAbstractClass);
             return targetType?.GetMethod(
                 "OnEnemyKill",
                 BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic
@@ -52,13 +53,13 @@ namespace SPTLeaderboard.Patches
             var zoneTracker = LeaderboardPlugin.Instance?.ZoneTracker;
             if (zoneTracker != null && zoneTracker.CurrentZone != null)
             {
-                zoneTracker.OnEnemyKilledInZone(damage, playerAccountId, distance, bodyPart);
+                zoneTracker.OnEnemyKilledInZone(damage, role.ToStringNoBox(), distance, bodyPart);
             }
 
-            Utils.Logger.LogDebugWarning($"[OnEnemyKill Postfix] " +
-                $"playerAccountId={playerAccountId}, " +
-                $"damage={damage.Damage}, " +
+            LocalizationService.Notification($"role={role.ToStringNoBox()}");
+            Utils.Logger.LogDebugWarning($"[OnEnemyKill] " +
                 $"distance={distance:F1}, " +
+                $"role={role.ToStringNoBox()}, " +
                 $"bodyPart={bodyPart}, " +
                 $"zone={zoneTracker?.CurrentZone?.Name ?? "None"}");
             

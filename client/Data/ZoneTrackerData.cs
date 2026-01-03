@@ -32,6 +32,9 @@ namespace SPTLeaderboard.Data
         [JsonProperty("distance")]
         public float Distance { get; set; }
         
+        [JsonProperty("role")]
+        public string Role { get; set; }
+        
         [JsonProperty("bodyPart")]
         public string BodyPart { get; set; }
     }
