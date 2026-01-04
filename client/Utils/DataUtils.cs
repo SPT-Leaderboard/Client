@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Security.Cryptography;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -18,6 +19,7 @@ using SPT.Common.Utils;
 using SPTLeaderboard.Data;
 using SPTLeaderboard.Data.Internal;
 using SPTLeaderboard.Enums;
+using SPTLeaderboard.Utils.Zones;
 using UnityEngine;
 using TraderData = SPTLeaderboard.Data.Internal.TraderData;
 
@@ -25,6 +27,7 @@ namespace SPTLeaderboard.Utils;
 
 public static class DataUtils
 {
+    public static Assembly Assembly = Assembly.GetExecutingAssembly();
     public static long CurrentTimestamp => DateTimeOffset.UtcNow.ToUnixTimeSeconds();
     
     /// <summary>
@@ -410,6 +413,29 @@ public static class DataUtils
         {
             byte[] hashBytes = sha256.ComputeHash(Encoding.UTF8.GetBytes(input));
             return Convert.ToBase64String(hashBytes);
+        }
+    }
+    
+    public static string LoadFromEmbeddedResource(string resourceName)
+    {
+        try
+        {
+            using var stream = Assembly.GetManifestResourceStream(resourceName);
+            if (stream == null)
+            {
+                Logger.LogDebugInfo($"[ZoneTracker] Embedded resource '{resourceName}' not found");
+                return null;
+            }
+
+            using var reader = new StreamReader(stream);
+            var json = reader.ReadToEnd();
+
+            return json;
+        }
+        catch (Exception ex)
+        {
+            Logger.LogDebugInfo($"[ZoneTracker] Error loading embedded zones: {ex.Message}");
+            return null;
         }
     }
 }

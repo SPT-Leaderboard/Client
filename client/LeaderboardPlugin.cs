@@ -24,8 +24,6 @@ namespace SPTLeaderboard
         public static LeaderboardPlugin Instance { get; private set; }
         
         private Settings _settings;
-        private LocalizationService _localization;
-        private EncryptionService _encrypt;
         private IconSaver _iconSaver;
         
         private Timer _inRaidHeartbeatTimer;
@@ -34,7 +32,8 @@ namespace SPTLeaderboard
         public bool canPreRaidCheck = true;
         public bool cachedPlayerModelPreview;
         public bool engLocaleLoaded;
-        public bool configUpdated;
+        public bool configLimitsUpdated;
+        public bool configZonesUpdated;
 #if DEBUG || BETA
         public Action Tick;
 #endif
@@ -42,12 +41,14 @@ namespace SPTLeaderboard
 
         public static ManualLogSource logger;
         
-        private static readonly object _raidDataLock = new();
+        private static readonly object RaidDataLock = new();
         private static bool _isSendingRaidData;
         private static string _lastSentDataHash;
         private static DateTime _lastSentDataTime = DateTime.MinValue;
-        private const int HASH_EXPIRY_SECONDS = 120;
+        private const int HashExpirySeconds = 120;
+#if !BETA || !DEBUG
         public static bool IsDebugLogsEnabled;
+#endif
 
         public RaidSettingsData SavedRaidSettingsData = new();
 
@@ -77,8 +78,8 @@ namespace SPTLeaderboard
             #endregion
             
             _settings = Settings.Create(Config);
-            _encrypt = EncryptionService.Create();
-            _localization = LocalizationService.Create();
+            EncryptionService.Create();
+            LocalizationService.Create();
             
             new LeaderboardVersionLabelPatch().Enable();
             new OpenMainMenuScreenPatch().Enable();
@@ -109,7 +110,6 @@ namespace SPTLeaderboard
             }
             
 #if DEBUG
-            // Enable patches for overlay with hits
             new OnGameWorldStartPatch().Enable();
             new OnGameWorldDisposePatch().Enable();
 #endif
@@ -287,9 +287,9 @@ namespace SPTLeaderboard
                 return;
             }
             
-            lock (_raidDataLock)
+            lock (RaidDataLock)
             {
-                bool isHashExpired = (DateTime.Now - _lastSentDataTime).TotalSeconds > HASH_EXPIRY_SECONDS;
+                bool isHashExpired = (DateTime.Now - _lastSentDataTime).TotalSeconds > HashExpirySeconds;
                 
                 if (_lastSentDataHash == dataHash && !isHashExpired)
                 {
@@ -312,7 +312,7 @@ namespace SPTLeaderboard
 
             request.OnSuccess = (response, code) =>
             {
-                lock (_raidDataLock)
+                lock (RaidDataLock)
                 {
                     _isSendingRaidData = false;
                     
@@ -347,7 +347,7 @@ namespace SPTLeaderboard
 
             request.OnFail = (error, code) =>
             {
-                lock (_raidDataLock)
+                lock (RaidDataLock)
                 {
                     _isSendingRaidData = false;
 
@@ -474,6 +474,7 @@ namespace SPTLeaderboard
         public TrackingLoot TrackingLoot { get; } = new();
 
         public ZoneTracker ZoneTracker { get; set; }
+        public ZoneRepository ZoneRepository { get; set; }
         
 #if DEBUG || BETA
         public ZoneInterface ZoneInterface { get; set; }

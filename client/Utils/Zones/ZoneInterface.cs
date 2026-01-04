@@ -687,9 +687,9 @@ namespace SPTLeaderboard.Utils.Zones
 
         void SaveZones()
         {
-            if (_zoneZoneTracker != null && allZones != null)
+            if (LeaderboardPlugin.Instance.ZoneRepository != null && allZones != null)
             {
-                _zoneZoneTracker.ZoneRepository.SaveAllZones(allZones);
+                LeaderboardPlugin.Instance.ZoneRepository.SaveAllZones(allZones);
                 Logger.LogDebugInfo("[ZonesInterface] Zones saved");
                 LocalizationService.Notification("Zones saved");
             }

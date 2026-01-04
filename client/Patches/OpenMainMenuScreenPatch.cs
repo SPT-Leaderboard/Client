@@ -53,9 +53,14 @@ namespace SPTLeaderboard.Patches
                 }
             }
 
-            if (!LeaderboardPlugin.Instance.configUpdated)
+            if (!LeaderboardPlugin.Instance.configLimitsUpdated)
             {
                 ConfigUpdater.UpdateEquipmentLimits();
+            }
+            
+            if (!LeaderboardPlugin.Instance.configZonesUpdated)
+            {
+                ConfigUpdater.UpdateZones();
             }
             
             if (!Settings.Instance.EnableSendData.Value)

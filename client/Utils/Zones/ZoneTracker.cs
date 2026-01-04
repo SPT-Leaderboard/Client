@@ -31,13 +31,11 @@ namespace SPTLeaderboard.Utils.Zones
         public Action OnSubZoneUpdated;
 
         public Dictionary<string, List<ZoneData>> AllZones => _allZones;
-        public ZoneRepository ZoneRepository => _zoneRepository;
         public ZoneTrackerData CurrentRaidData { get; set; } = new();
 
         public Action<Dictionary<string, List<ZoneData>>> OnZonesLoaded;
         private List<ZoneData> _zones = new();
         private readonly Dictionary<string, List<ZoneData>> _allZones = new();
-        private readonly ZoneRepository _zoneRepository = new(GlobalData.ZonesConfig);
 
         public void Enable()
         {
@@ -85,7 +83,9 @@ namespace SPTLeaderboard.Utils.Zones
 
         public void LoadZones()
         {
-            var loaded = _zoneRepository.LoadAllZones();
+            LeaderboardPlugin.Instance.ZoneRepository ??= new ZoneRepository();
+            
+            var loaded = LeaderboardPlugin.Instance.ZoneRepository.LoadAllZones();
             _allZones.Clear();
 
             if (loaded != null)

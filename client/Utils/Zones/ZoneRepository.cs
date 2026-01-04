@@ -5,57 +5,39 @@ using System.Reflection;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 using SPTLeaderboard.Data;
+using SPTLeaderboard.Services;
 
 namespace SPTLeaderboard.Utils.Zones;
 
-public class ZoneRepository(string configPath)
+public class ZoneRepository()
 {
-    private readonly Assembly _assembly = Assembly.GetExecutingAssembly();
-
+    public Dictionary<string, List<ZoneData>> ZonesConfigData = null;
     public Dictionary<string, List<ZoneData>> LoadAllZones()
     {
-        if (File.Exists(configPath))
+        if (ZonesConfigData != null) return ZonesConfigData;
+        
+        if (File.Exists(GlobalData.ZonesConfig))
         {
-            var zonesFromFile = LoadFromFile(configPath);
+            var zonesFromFile = LoadFromFile(GlobalData.ZonesConfig);
             if (zonesFromFile != null)
             {
-                Logger.LogDebugInfo("[ZoneTracker] Loaded zones from user file");
+                Logger.LogDebugInfo("[ZoneTracker] Loaded zones from CUSTOM file");
+                LocalizationService.NotificationWarning("Zones config loaded from custom file!!!");
+                ZonesConfigData = zonesFromFile;
                 return zonesFromFile;
             }
         }
         
-        var zonesFromDll = LoadFromEmbeddedResource("zones.json");
+        var zonesFromDll = DeserializeZones(DataUtils.LoadFromEmbeddedResource("BuildScripts/zonesConfig.json"));
         if (zonesFromDll != null)
         {
             Logger.LogDebugInfo("[ZoneTracker] Loaded default zones from DLL");
+            ZonesConfigData = zonesFromDll;
             return zonesFromDll;
         }
         
         Logger.LogDebugInfo("[ZoneTracker] No zones found in DLL or file");
         return null;
-    }
-
-    private Dictionary<string, List<ZoneData>> LoadFromEmbeddedResource(string resourceName)
-    {
-        try
-        {
-            using var stream = _assembly.GetManifestResourceStream(resourceName);
-            if (stream == null)
-            {
-                Logger.LogDebugInfo($"[ZoneTracker] Embedded resource '{resourceName}' not found");
-                return null;
-            }
-
-            using var reader = new StreamReader(stream);
-            string json = reader.ReadToEnd();
-
-            return DeserializeZones(json);
-        }
-        catch (Exception ex)
-        {
-            Logger.LogDebugInfo($"[ZoneTracker] Error loading embedded zones: {ex.Message}");
-            return null;
-        }
     }
 
     private Dictionary<string, List<ZoneData>> LoadFromFile(string path)

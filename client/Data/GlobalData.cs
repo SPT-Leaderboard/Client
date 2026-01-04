@@ -6,10 +6,10 @@ namespace SPTLeaderboard.Data;
 
 public static class GlobalData
 {
-    public const string Version = "5.0.5";
+    public const string Version = "5.1.0";
     
 #if DEBUG || BETA
-    public const string SubVersion = "70";
+    public const string SubVersion = "71";
 #endif
     
     public const string BaseSptVersion = "4.0";
@@ -22,15 +22,16 @@ public static class GlobalData
     public static string IconUrl = $"{Settings.Instance.PhpEndpoint.Value}{Settings.Instance.PhpPath.Value}client/avatar_processor.php";
     public static string PreRaidUrl = $"{Settings.Instance.PhpEndpoint.Value}{Settings.Instance.PhpPath.Value}client/api_sync.php";
     public static string ConfigUrl = $"{Settings.Instance.PhpEndpoint.Value}{Settings.Instance.PhpPath.Value}client/get_config.php";
+    public static string ZonesConfigUrl = $"{Settings.Instance.PhpEndpoint.Value}{Settings.Instance.PhpPath.Value}client/data/map_zones.json";
     
     // Paths
-    public static string SptRootPath = Path.GetFullPath(Path.Combine(BepInEx.Paths.PluginPath, "..", "..")); 
+    private static string _sptRootPath = Path.GetFullPath(Path.Combine(BepInEx.Paths.PluginPath, "..", "..")); 
     public static string PathToken => Path.Combine(BepInEx.Paths.PluginPath, "SPT-Leaderboard", "secret.token");
     public static string PathMigrationToken => Path.Combine(UserModsPath, "SPT-Leaderboard", "src", "secret.token");
-    public static string UserModsPath = Path.GetFullPath(Path.Combine(SptRootPath, "user", "mods")); 
-    public static string LeaderboardIconPath = Path.GetFullPath(Path.Combine(SptRootPath, "BepInEx", "plugins", "SPT-Leaderboard", "SavedIcon.png"));
-    public static string LeaderboardFullImagePath = Path.GetFullPath(Path.Combine(SptRootPath, "BepInEx", "plugins", "SPT-Leaderboard", "SavedFull.png"));
-    public static string ZonesConfig = Path.GetFullPath(Path.Combine(SptRootPath, "BepInEx", "plugins", "SPT-Leaderboard", "zones.json"));
+    public static string UserModsPath = Path.GetFullPath(Path.Combine(_sptRootPath, "user", "mods")); 
+    public static string LeaderboardIconPath = Path.GetFullPath(Path.Combine(_sptRootPath, "BepInEx", "plugins", "SPT-Leaderboard", "SavedIcon.png"));
+    public static string LeaderboardFullImagePath = Path.GetFullPath(Path.Combine(_sptRootPath, "BepInEx", "plugins", "SPT-Leaderboard", "SavedFull.png"));
+    public static string ZonesConfig = Path.GetFullPath(Path.Combine(_sptRootPath, "BepInEx", "plugins", "SPT-Leaderboard", "zonesConfig.json"));
 
     // Limits equipment capacity
     public static EquipmentData EquipmentLimits = new()
