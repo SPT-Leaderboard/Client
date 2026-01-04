@@ -145,9 +145,18 @@ namespace SPTLeaderboard.Services
                 if (foundZone.SubZones != null && foundZone.SubZones.Count > 0)
                 {
                     ZoneData foundSubZone = FindZoneContainingPosition(pos, foundZone.SubZones);
-
-                    if (CurrentSubZone != foundSubZone && foundSubZone != null)
-                        EnterSubZone(foundSubZone);
+                    if (foundSubZone != null)
+                    {
+                        if (CurrentSubZone != foundSubZone)
+                            EnterSubZone(foundSubZone);
+                    }
+                    else
+                    {
+                        if (CurrentSubZone != null)
+                        {
+                            ExitCurrentSubZone();
+                        }
+                    }
                 }
 
                 return;
