@@ -143,6 +143,7 @@ namespace SPTLeaderboard
 
             if (_settings.KeyBind.Value.IsDown())
             {
+                GUIUtility.systemCopyBuffer = JsonConvert.SerializeObject(ZoneTrackerService.CurrentRaidData);
                 Logger.LogWarning($"Data Tracked in zone {JsonConvert.SerializeObject(ZoneTrackerService.CurrentRaidData)}");
             }
         }
