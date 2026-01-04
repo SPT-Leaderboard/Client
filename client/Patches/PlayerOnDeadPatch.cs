@@ -20,10 +20,8 @@ namespace SPTLeaderboard.Patches
             {
                 if (PlayerHelper.Instance.Player == __instance)
                 {
-                    Utils.Logger.LogDebugWarning(
-                        "PlayerOnDeadPatch: Player is already dead. Set position dead");
-                    PlayerHelper.Instance.LastDeathPosition =
-                        PlayerHelper.ConvertToMapPosition(__instance.PlayerBones.BodyTransform.position);
+                    Utils.Logger.LogDebugWarning("[PlayerOnDeadPatch] Player is already dead. Set position dead");
+                    PlayerHelper.Instance.LastDeathPosition = PlayerHelper.ConvertToMapPosition(__instance.PlayerBones.BodyTransform.position);
                 }
             }
         }

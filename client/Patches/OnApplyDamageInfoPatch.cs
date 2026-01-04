@@ -19,14 +19,13 @@ namespace SPTLeaderboard.Patches
             if (!Settings.Instance.EnableSendData.Value)
                 return true;
             
-
             Utils.Logger.LogDebugWarning("[ProcessShot Local] Hit");
 
             IPlayerOwner player = damageInfo.Player;
 
             Utils.Logger.LogDebugWarning($"[ProcessShot Local] Nick -> {player?.Nickname}");
 
-            if ((Player)((player != null) ? player.iPlayer : null) != PlayerHelper.Instance.Player)
+            if ((Player)player?.iPlayer != PlayerHelper.Instance.Player)
             {
                 return true;
             }

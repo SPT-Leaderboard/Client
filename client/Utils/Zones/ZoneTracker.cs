@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
-using EFT;
-using EFT.HealthSystem;
+using System.Linq;
+using EFT.InventoryLogic;
 using SPTLeaderboard.Data;
 using SPTLeaderboard.Services;
 using UnityEngine;
@@ -295,6 +295,7 @@ namespace SPTLeaderboard.Utils.Zones
             return PlayerHelper.GetProfile().EftStats.SessionCounters.GetFloat(SessionCounterTypesAbstractClass.CombatDamage);
         }
         
+        #endregion
         
         public void OnEnemyKilledInZone(DamageInfoStruct damage, string role, float distance, EBodyPart bodyPart)
         {
@@ -356,7 +357,53 @@ namespace SPTLeaderboard.Utils.Zones
                 CurrentRaidData.CausedDamageInZones[CurrentSubZone.GUID] += damage.DidBodyDamage;
             }
         }
-        
-        #endregion
+        public void OnItemAdded(Item item)
+        {
+            if (CurrentZone != null)
+            {
+                if (CurrentRaidData.LootedItemsInZones.TryGetValue(CurrentZone.GUID, out var zone))
+                {
+                    zone.Add(new ItemData(
+                        item.Id,
+                        item.TemplateId.ToString(),
+                        item.StackObjectsCount
+                    ));
+                }
+                else
+                {
+                    CurrentRaidData.LootedItemsInZones[CurrentZone.GUID] = new List<ItemData>();
+                }
+            }
+        }
+        public void OnItemUpdated(Item item)
+        {
+            if (CurrentZone != null)
+            {
+                if (CurrentRaidData.LootedItemsInZones.TryGetValue(CurrentZone.GUID, out var zone))
+                {
+                    var existingLootedItem = zone.FirstOrDefault(x => x.Id == item.Id);
+                    if (existingLootedItem != null) existingLootedItem.Amount = item.StackObjectsCount;
+                }
+                else
+                {
+                    CurrentRaidData.LootedItemsInZones[CurrentZone.GUID] = new List<ItemData>();
+                }
+            }
+        }
+        public void OnItemRemoved(Item item)
+        {
+            if (CurrentZone != null)
+            {
+                if (CurrentRaidData.LootedItemsInZones.TryGetValue(CurrentZone.GUID, out var zone))
+                {
+                    var existingLootedItem = zone.FirstOrDefault(x => x.Id == item.Id);
+                    if (existingLootedItem != null) zone.Remove(existingLootedItem);
+                }
+                else
+                {
+                    CurrentRaidData.LootedItemsInZones[CurrentZone.GUID] = new List<ItemData>();
+                }
+            }
+        }
     }
 }

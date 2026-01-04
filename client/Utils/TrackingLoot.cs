@@ -10,7 +10,7 @@ public class TrackingLoot
 {
     public List<ItemData> LootedItems = new();
     public List<ItemData> PreRaidItems = new();
-    public List<string> PreRaidIdItems = new();
+    private List<string> _preRaidIdItems = new();
 
     public void Add(Item item)
     {
@@ -19,7 +19,6 @@ public class TrackingLoot
         if (existingPreRaidItem != null)
         {
             existingPreRaidItem.Amount = item.StackObjectsCount;
-
             Logger.LogDebugInfo($"[TrackingLoot][Update][PreRaidEquipment] Item TemplateId: {existingPreRaidItem.TemplateId}, Id: {existingPreRaidItem.Id}, New Amount: {existingPreRaidItem.Amount}");
 
             return;
@@ -30,13 +29,14 @@ public class TrackingLoot
         if (existingLootedItem != null)
         {
             existingLootedItem.Amount = item.StackObjectsCount;
+            LeaderboardPlugin.Instance.ZoneTracker?.OnItemUpdated(item);
             Logger.LogDebugInfo($"[TrackingLoot][Update] Item TemplateId: {existingLootedItem.TemplateId}, Id: {existingLootedItem.Id}, New Amount: {existingLootedItem.Amount}");
 
             return;
         }
         
         // If item not found, add new one
-        if (PreRaidIdItems.Contains(item.Id))
+        if (_preRaidIdItems.Contains(item.Id))
         {
             var preItemData = new ItemData(
                 item.Id,
@@ -57,7 +57,7 @@ public class TrackingLoot
             );
 
             LootedItems.Add(itemData);
-
+            LeaderboardPlugin.Instance.ZoneTracker?.OnItemAdded(item);
 
             Logger.LogDebugInfo($"[TrackingLoot][Add] Item TemplateId: {itemData.TemplateId}, Id: {itemData.Id}, Amount: {itemData.Amount}");
         }
@@ -78,6 +78,7 @@ public class TrackingLoot
         if (lootedItem != null)
         {
             LootedItems.Remove(lootedItem);
+            LeaderboardPlugin.Instance.ZoneTracker?.OnItemRemoved(item);
             Logger.LogDebugInfo($"[TrackingLoot][Remove] Item TemplateId: {lootedItem.TemplateId}, Id: {lootedItem.Id}");
         }
     }
@@ -85,7 +86,7 @@ public class TrackingLoot
     private void Clear()
     {
         PreRaidItems.Clear();
-        PreRaidIdItems.Clear();
+        _preRaidIdItems.Clear();
         LootedItems.Clear();
     }
 
@@ -93,6 +94,6 @@ public class TrackingLoot
     {
         Clear();
         PreRaidItems = PlayerHelper.GetEquipmentItems(sideType);
-        PreRaidIdItems = PreRaidItems.Select(item => item.Id).ToList();
+        _preRaidIdItems = PreRaidItems.Select(item => item.Id).ToList();
     }
 }
