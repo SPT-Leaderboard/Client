@@ -72,7 +72,7 @@ public class PlayerHelper
         var pmcData = session?.GetProfileBySide(sideType);
         var listEquipment = pmcData.Inventory.GetItemsInSlots(SlotsToSearch);
 
-        return listEquipment.Where(i => i is not null).Where(i => !i.Parent.IsSpecialSlotAddress()).Select(item => new ItemData(item.Id, item.TemplateId.ToString(), item.StackObjectsCount)).ToList();
+        return listEquipment.Where(i => i is not null).Where(i => !i.Parent.IsSpecialSlotAddress()).Select(item => new ItemData(item.Id, item.TemplateId.ToString(), item.StackObjectsCount, item.BackgroundColor.ToString())).ToList();
     }
     
     #region Equipment

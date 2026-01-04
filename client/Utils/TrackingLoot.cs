@@ -41,7 +41,8 @@ public class TrackingLoot
             var preItemData = new ItemData(
                 item.Id,
                 item.TemplateId.ToString(),
-                item.StackObjectsCount
+                item.StackObjectsCount,
+                item.BackgroundColor.ToString()
             );
             
             PreRaidItems.Add(preItemData);
@@ -53,7 +54,8 @@ public class TrackingLoot
             var itemData = new ItemData(
                 item.Id,
                 item.TemplateId.ToString(),
-                item.StackObjectsCount
+                item.StackObjectsCount,
+                item.BackgroundColor.ToString()
             );
 
             LootedItems.Add(itemData);

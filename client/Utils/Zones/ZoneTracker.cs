@@ -366,7 +366,8 @@ namespace SPTLeaderboard.Utils.Zones
                     zone.Add(new ItemData(
                         item.Id,
                         item.TemplateId.ToString(),
-                        item.StackObjectsCount
+                        item.StackObjectsCount,
+                        item.BackgroundColor.ToString()
                     ));
                 }
                 else

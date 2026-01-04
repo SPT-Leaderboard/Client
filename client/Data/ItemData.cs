@@ -10,15 +10,18 @@ public class ItemData
     public string TemplateId { get; set; }
     [JsonProperty("amount")]
     public int Amount { get; set; }
+    [JsonProperty("color")]
+    public string Color { get; set; }
     
     public ItemData()
     {
     }
     
-    public ItemData(string id, string templateId, int amount)
+    public ItemData(string id, string templateId, int amount, string color = "default")
     {
         Id = id;
         TemplateId = templateId;
         Amount = amount;
+        Color = color;
     }
 }

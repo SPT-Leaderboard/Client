@@ -6,7 +6,8 @@ namespace SPTLeaderboard.Data;
 
 public static class GlobalData
 {
-    public const string Version = "5.1.0";
+    // public const string Version = "5.1.0";
+    public const string Version = "5.0.5";
     
 #if DEBUG || BETA
     public const string SubVersion = "71";
