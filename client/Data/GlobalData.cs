@@ -17,6 +17,9 @@ public static class GlobalData
     
     public const int HeartbeatCooldownSeconds = 60;
     
+    public const string SafeContainerKey = "578f8782245977354405a1e3";
+    public const string ComputerContainerKey = "59139c2186f77411564f8e42";
+    
     // URLs
     public static string HeartbeatUrl = $"{Settings.Instance.PhpEndpoint.Value}{Settings.Instance.PhpPath.Value}heartbeat/v2.php";
     public static string ProfileUrl = $"{Settings.Instance.PhpEndpoint.Value}{Settings.Instance.PhpPath.Value}v3/v3.php";
@@ -34,6 +37,8 @@ public static class GlobalData
     public static string LeaderboardFullImagePath = Path.GetFullPath(Path.Combine(_sptRootPath, "BepInEx", "plugins", "SPT-Leaderboard", "SavedFull.png"));
     public static string ZonesConfig = Path.GetFullPath(Path.Combine(_sptRootPath, "BepInEx", "plugins", "SPT-Leaderboard", "zonesConfig.json"));
 
+    public static string ZonesEmbeddedConfig = "SPTLeaderboard.BuildScripts.zonesConfig.json";
+    
     // Limits equipment capacity
     public static EquipmentData EquipmentLimits = new()
     {

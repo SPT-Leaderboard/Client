@@ -31,9 +31,18 @@ namespace SPTLeaderboard.Data
         
         [JsonProperty("TakenDamageInZones")]
         public Dictionary<string, float> TakenDamageInZones = new();
-        
+
         [JsonProperty("LootedItemsInZones")]
         public Dictionary<string, List<ItemData>> LootedItemsInZones = new();
+        
+        [JsonProperty("AmountComputersOpenedInZones")]
+        public Dictionary<string, int> AmountComputersOpenedInZones = new();
+        
+        [JsonProperty("AmountSafeOpenedInZones")]
+        public Dictionary<string, int> AmountSafeOpenedInZones = new();
+        
+        [JsonProperty("AmountContainersOpenedInZones")]
+        public Dictionary<string, int> AmountContainersOpenedInZones = new();
     }
     
     public class KillInfo

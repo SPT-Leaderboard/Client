@@ -86,6 +86,7 @@ namespace SPTLeaderboard
             new OpenInventoryScreenPatch().Enable();
             new OpenSelectSideScreenPatch().Enable();
             new OpenLoadingRaidScreenPatch().Enable();
+            new OpenStashPanelShowPatch().Enable();
             new OnStartRaidPatch().Enable();
             new OnEndRaidPatch().Enable();
             new HideoutAwakePatch().Enable();

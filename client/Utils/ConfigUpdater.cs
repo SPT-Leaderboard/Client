@@ -75,7 +75,12 @@ namespace SPTLeaderboard.Utils
                                 MissingMemberHandling = MissingMemberHandling.Ignore,
                                 NullValueHandling = NullValueHandling.Include,
                                 DefaultValueHandling = DefaultValueHandling.Populate,
-                                ContractResolver = new DefaultContractResolver { NamingStrategy = null }
+                                ContractResolver = new DefaultContractResolver { NamingStrategy = null },
+                                Error = (sender, args) =>
+                                {
+                                    Logger.LogDebugInfo($"[ZoneTracker] Deserialization error: {args.ErrorContext.Error.Message}");
+                                    args.ErrorContext.Handled = true;
+                                }
                             };
 
                             var zonesDict = new Dictionary<string, List<ZoneData>>();
@@ -151,7 +156,7 @@ namespace SPTLeaderboard.Utils
         {
             try
             {
-                var json = DataUtils.LoadFromEmbeddedResource("BuildScripts/zonesConfig.json");
+                var json = DataUtils.LoadFromEmbeddedResource(GlobalData.ZonesEmbeddedConfig);
                 var jsonObject = JObject.Parse(json);
                 return jsonObject["ver"]?.ToString() ?? "0.0";
             }

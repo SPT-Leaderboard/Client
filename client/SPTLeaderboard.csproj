@@ -162,6 +162,7 @@
         <Compile Include="Data\ZoneTrackerData.cs" />
         <Compile Include="Enums\PlayerState.cs" />
         <Compile Include="LeaderboardPlugin.cs" />
+        <Compile Include="Patches\OpenStashPanelShowPatch.cs" />
         <Compile Include="Services\EncryptionService.cs" />
         <Compile Include="Services\LocalizationService.cs" />
         <Compile Include="Services\NetworkApiRequest.cs" />

@@ -99,7 +99,7 @@ namespace SPTLeaderboard.Utils
         {
             return errorType switch
             {
-                ErrorType.VIOLATION_LA_TOS => ENotificationDurationType.Long,
+                ErrorType.VIOLATION_LA_TOS => ENotificationDurationType.Infinite,
                 ErrorType.TOKEN_MISMATCH => ENotificationDurationType.Long,
                 ErrorType.TOKEN_NOT_SAFE => ENotificationDurationType.Long,
                 ErrorType.UPDATE_MOD => ENotificationDurationType.Long,

@@ -30,12 +30,15 @@ namespace SPTLeaderboard.Utils.Zones
         public Action OnZoneUpdated;
         public Action OnSubZoneUpdated;
 
-        public Dictionary<string, List<ZoneData>> AllZones => _allZones;
         public ZoneTrackerData CurrentRaidData { get; set; } = new();
+        
+        public Dictionary<string, List<ZoneData>> AllZones => _allZones;
 
         public Action<Dictionary<string, List<ZoneData>>> OnZonesLoaded;
         private List<ZoneData> _zones = new();
         private readonly Dictionary<string, List<ZoneData>> _allZones = new();
+
+        private List<string> _lootedContainers = new();
 
         public void Enable()
         {
@@ -126,7 +129,7 @@ namespace SPTLeaderboard.Utils.Zones
                 {
                     ZoneData foundSubZone = FindZoneContainingPosition(pos, foundZone.SubZones);
 
-                    if (CurrentSubZone != foundSubZone)
+                    if (CurrentSubZone != foundSubZone && foundSubZone != null)
                         EnterSubZone(foundSubZone);
                 }
 
@@ -319,26 +322,28 @@ namespace SPTLeaderboard.Utils.Zones
                 Logger.LogDebugWarning($"[ZoneTracker] Kill in zone {CurrentZone.Name}:" +
                                        $"Weapon={damage.Weapon.ShortName}, distance={distance:F1}m, BodyPart={bodyPart.ToString()}m");
             }
-
-            if (CurrentSubZone != null)
+            else
             {
-                if (!CurrentRaidData.KillsInZones.ContainsKey(CurrentSubZone.GUID))
-                    CurrentRaidData.KillsInZones[CurrentSubZone.GUID] = 0;
-                CurrentRaidData.KillsInZones[CurrentSubZone.GUID]++;
-
-                if (!CurrentRaidData.KillDetailsInZones.ContainsKey(CurrentSubZone.GUID))
-                    CurrentRaidData.KillDetailsInZones[CurrentSubZone.GUID] = new List<KillInfo>();
-
-                CurrentRaidData.KillDetailsInZones[CurrentSubZone.GUID].Add(new KillInfo
+                if (CurrentSubZone != null)
                 {
-                    Weapon = LocalizationService.GetLocaleName(damage.Weapon.ShortName),
-                    Distance = distance,
-                    Role = role,
-                    BodyPart = bodyPart.ToString()
-                });
+                    if (!CurrentRaidData.KillsInZones.ContainsKey(CurrentSubZone.GUID))
+                        CurrentRaidData.KillsInZones[CurrentSubZone.GUID] = 0;
+                    CurrentRaidData.KillsInZones[CurrentSubZone.GUID]++;
 
-                Logger.LogDebugWarning($"[ZoneTracker] Kill in sub-zone {CurrentSubZone.Name}: " +
-                                       $"Weapon={damage.Weapon.ShortName}, distance={distance:F1}m, BodyPart={bodyPart.ToString()}m");
+                    if (!CurrentRaidData.KillDetailsInZones.ContainsKey(CurrentSubZone.GUID))
+                        CurrentRaidData.KillDetailsInZones[CurrentSubZone.GUID] = new List<KillInfo>();
+
+                    CurrentRaidData.KillDetailsInZones[CurrentSubZone.GUID].Add(new KillInfo
+                    {
+                        Weapon = LocalizationService.GetLocaleName(damage.Weapon.ShortName),
+                        Distance = distance,
+                        Role = role,
+                        BodyPart = bodyPart.ToString()
+                    });
+
+                    Logger.LogDebugWarning($"[ZoneTracker] Kill in sub-zone {CurrentSubZone.Name}: " +
+                                           $"Weapon={damage.Weapon.ShortName}, distance={distance:F1}m, BodyPart={bodyPart.ToString()}m");
+                }
             }
         }
         public void OnEnemyDamage(DamageInfoStruct damage)
@@ -349,13 +354,17 @@ namespace SPTLeaderboard.Utils.Zones
                     CurrentRaidData.CausedDamageInZones[CurrentZone.GUID] = 0f;
                 CurrentRaidData.CausedDamageInZones[CurrentZone.GUID] += damage.DidBodyDamage;
             }
-
-            if (CurrentSubZone != null)
+            else
             {
-                if (!CurrentRaidData.CausedDamageInZones.ContainsKey(CurrentSubZone.GUID))
-                    CurrentRaidData.CausedDamageInZones[CurrentSubZone.GUID] = 0f;
-                CurrentRaidData.CausedDamageInZones[CurrentSubZone.GUID] += damage.DidBodyDamage;
+                if (CurrentSubZone != null)
+                {
+                    if (!CurrentRaidData.CausedDamageInZones.ContainsKey(CurrentSubZone.GUID))
+                        CurrentRaidData.CausedDamageInZones[CurrentSubZone.GUID] = 0f;
+                    CurrentRaidData.CausedDamageInZones[CurrentSubZone.GUID] += damage.DidBodyDamage;
+                }
             }
+
+            
         }
         public void OnItemAdded(Item item)
         {
@@ -375,6 +384,25 @@ namespace SPTLeaderboard.Utils.Zones
                     CurrentRaidData.LootedItemsInZones[CurrentZone.GUID] = new List<ItemData>();
                 }
             }
+            else
+            {
+                if (CurrentSubZone != null)
+                {
+                    if (CurrentRaidData.LootedItemsInZones.TryGetValue(CurrentSubZone.GUID, out var zone))
+                    {
+                        zone.Add(new ItemData(
+                            item.Id,
+                            item.TemplateId.ToString(),
+                            item.StackObjectsCount,
+                            item.BackgroundColor.ToString()
+                        ));
+                    }
+                    else
+                    {
+                        CurrentRaidData.LootedItemsInZones[CurrentSubZone.GUID] = new List<ItemData>();
+                    }
+                }
+            }
         }
         public void OnItemUpdated(Item item)
         {
@@ -390,6 +418,21 @@ namespace SPTLeaderboard.Utils.Zones
                     CurrentRaidData.LootedItemsInZones[CurrentZone.GUID] = new List<ItemData>();
                 }
             }
+            else
+            {
+                if (CurrentSubZone != null)
+                {
+                    if (CurrentRaidData.LootedItemsInZones.TryGetValue(CurrentSubZone.GUID, out var zone))
+                    {
+                        var existingLootedItem = zone.FirstOrDefault(x => x.Id == item.Id);
+                        if (existingLootedItem != null) existingLootedItem.Amount = item.StackObjectsCount;
+                    }
+                    else
+                    {
+                        CurrentRaidData.LootedItemsInZones[CurrentSubZone.GUID] = new List<ItemData>();
+                    }
+                }
+            }
         }
         public void OnItemRemoved(Item item)
         {
@@ -403,6 +446,73 @@ namespace SPTLeaderboard.Utils.Zones
                 else
                 {
                     CurrentRaidData.LootedItemsInZones[CurrentZone.GUID] = new List<ItemData>();
+                }
+            }
+            else
+            {
+                if (CurrentSubZone != null)
+                {
+                    if (CurrentRaidData.LootedItemsInZones.TryGetValue(CurrentSubZone.GUID, out var zone))
+                    {
+                        var existingLootedItem = zone.FirstOrDefault(x => x.Id == item.Id);
+                        if (existingLootedItem != null) zone.Remove(existingLootedItem);
+                    }
+                    else
+                    {
+                        CurrentRaidData.LootedItemsInZones[CurrentSubZone.GUID] = new List<ItemData>();
+                    }
+                }
+            }
+        }
+        public void OnStashOpened(CompoundItem item)
+        {
+            if(_lootedContainers.Contains(item.Parent.GetOwner().ID)) return;
+            
+            if (CurrentZone != null)
+            {
+                if (!CurrentRaidData.AmountContainersOpenedInZones.ContainsKey(CurrentZone.GUID))
+                    CurrentRaidData.AmountContainersOpenedInZones[CurrentZone.GUID] = 0;
+                CurrentRaidData.AmountContainersOpenedInZones[CurrentZone.GUID]++;
+
+                if (item.TemplateId == GlobalData.ComputerContainerKey)
+                {
+                    if (!CurrentRaidData.AmountComputersOpenedInZones.ContainsKey(CurrentZone.GUID))
+                        CurrentRaidData.AmountComputersOpenedInZones[CurrentZone.GUID] = 0;
+                    CurrentRaidData.AmountComputersOpenedInZones[CurrentZone.GUID]++;
+                }
+                
+                if (item.TemplateId == GlobalData.SafeContainerKey)
+                {
+                    if (!CurrentRaidData.AmountSafeOpenedInZones.ContainsKey(CurrentZone.GUID))
+                        CurrentRaidData.AmountSafeOpenedInZones[CurrentZone.GUID] = 0;
+                    CurrentRaidData.AmountSafeOpenedInZones[CurrentZone.GUID]++;
+                }
+
+                _lootedContainers.Add(item.Parent.GetOwner().ID);
+            }
+            else
+            {
+                if (CurrentSubZone != null)
+                {
+                    if (!CurrentRaidData.AmountContainersOpenedInZones.ContainsKey(CurrentSubZone.GUID))
+                        CurrentRaidData.AmountContainersOpenedInZones[CurrentSubZone.GUID] = 0;
+                    CurrentRaidData.AmountContainersOpenedInZones[CurrentSubZone.GUID]++;
+
+                    if (item.TemplateId == GlobalData.ComputerContainerKey)
+                    {
+                        if (!CurrentRaidData.AmountComputersOpenedInZones.ContainsKey(CurrentSubZone.GUID))
+                            CurrentRaidData.AmountComputersOpenedInZones[CurrentSubZone.GUID] = 0;
+                        CurrentRaidData.AmountComputersOpenedInZones[CurrentSubZone.GUID]++;
+                    }
+                
+                    if (item.TemplateId == GlobalData.SafeContainerKey)
+                    {
+                        if (!CurrentRaidData.AmountSafeOpenedInZones.ContainsKey(CurrentSubZone.GUID))
+                            CurrentRaidData.AmountSafeOpenedInZones[CurrentSubZone.GUID] = 0;
+                        CurrentRaidData.AmountSafeOpenedInZones[CurrentSubZone.GUID]++;
+                    }
+
+                    _lootedContainers.Add(item.Parent.GetOwner().ID);
                 }
             }
         }

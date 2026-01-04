@@ -28,7 +28,7 @@ public class ZoneRepository()
             }
         }
         
-        var zonesFromDll = DeserializeZones(DataUtils.LoadFromEmbeddedResource("BuildScripts/zonesConfig.json"));
+        var zonesFromDll = DeserializeZones(DataUtils.LoadFromEmbeddedResource(GlobalData.ZonesEmbeddedConfig));
         if (zonesFromDll != null)
         {
             Logger.LogDebugInfo("[ZoneTracker] Loaded default zones from DLL");
@@ -116,7 +116,12 @@ public class ZoneRepository()
             {
                 ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
                 Converters = new List<JsonConverter> { new ZoneVector3Converter() },
-                Formatting = Formatting.Indented
+                Formatting = Formatting.Indented,
+                Error = (sender, args) =>
+                {
+                    Logger.LogDebugInfo($"[ZoneTracker] Serialization error: {args.ErrorContext.Error.Message}");
+                    args.ErrorContext.Handled = true;
+                }
             };
 
             string json = JsonConvert.SerializeObject(zonesToSave, settings);
