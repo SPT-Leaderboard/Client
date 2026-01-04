@@ -187,6 +187,7 @@
         <Compile Include="Patches\PlayerOnDeadPatch.cs" />
         <Compile Include="Patches\RaidSettingsHookPatch.cs" />
         <Compile Include="Properties\AssemblyInfo.cs" />
+        <Compile Include="Services\ZoneTrackerService.cs" />
         <Compile Include="Utils\ConfigUpdater.cs" />
         <Compile Include="Utils\DataUtils.cs" />
         <Compile Include="Utils\HeartbeatSender.cs" />
@@ -204,7 +205,6 @@
         <Compile Include="Utils\Zones\PlayerRotateBlocker.cs" />
         <Compile Include="Utils\Zones\ZoneVector3Converter.cs" />
         <Compile Include="Utils\Zones\ZoneOverlay.cs" />
-        <Compile Include="Utils\Zones\ZoneTracker.cs" />
         <Compile Include="Utils\Zones\ZoneInterface.cs" />
     </ItemGroup>
     <ItemGroup>

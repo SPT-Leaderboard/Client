@@ -29,7 +29,7 @@ public class TrackingLoot
         if (existingLootedItem != null)
         {
             existingLootedItem.Amount = item.StackObjectsCount;
-            LeaderboardPlugin.Instance.ZoneTracker?.OnItemUpdated(item);
+            LeaderboardPlugin.Instance.ZoneTrackerService?.OnItemUpdated(item);
             Logger.LogDebugInfo($"[TrackingLoot][Update] Item TemplateId: {existingLootedItem.TemplateId}, Id: {existingLootedItem.Id}, New Amount: {existingLootedItem.Amount}");
 
             return;
@@ -59,7 +59,7 @@ public class TrackingLoot
             );
 
             LootedItems.Add(itemData);
-            LeaderboardPlugin.Instance.ZoneTracker?.OnItemAdded(item);
+            LeaderboardPlugin.Instance.ZoneTrackerService?.OnItemAdded(item);
 
             Logger.LogDebugInfo($"[TrackingLoot][Add] Item TemplateId: {itemData.TemplateId}, Id: {itemData.Id}, Amount: {itemData.Amount}");
         }
@@ -80,7 +80,7 @@ public class TrackingLoot
         if (lootedItem != null)
         {
             LootedItems.Remove(lootedItem);
-            LeaderboardPlugin.Instance.ZoneTracker?.OnItemRemoved(item);
+            LeaderboardPlugin.Instance.ZoneTrackerService?.OnItemRemoved(item);
             Logger.LogDebugInfo($"[TrackingLoot][Remove] Item TemplateId: {lootedItem.TemplateId}, Id: {lootedItem.Id}");
         }
     }

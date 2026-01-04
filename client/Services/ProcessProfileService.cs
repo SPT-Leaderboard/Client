@@ -467,7 +467,7 @@ namespace SPTLeaderboard.Services
                 return;
 
             var baseData = CreateBaseData(profileId, gameVersion, isScavRaid, maxHealth, currentHealth,
-                pmcData, killedPmc, resultRaid, listModsPlayer, haveDevItems);
+                pmcData, killedPmc, resultRaid, listModsPlayer, false);
 
             if (isScavRaid)
             {
@@ -521,7 +521,8 @@ namespace SPTLeaderboard.Services
                 Token = EncryptionService.Instance.Token,
                 DBinInv = haveDevItems,
                 IsCasual = Settings.Instance.ModCasualMode.Value,
-                RaidSettingsData = LeaderboardPlugin.Instance.SavedRaidSettingsData
+                RaidSettingsData = LeaderboardPlugin.Instance.SavedRaidSettingsData,
+                ZoneTrackerData = LeaderboardPlugin.Instance.ZoneTrackerService.CurrentRaidData
             };
         }
 

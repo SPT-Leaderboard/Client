@@ -66,10 +66,10 @@ public class OverlayDebug: MonoBehaviour
         {
             debugValues += $"Player Cords = ({PlayerHelper.Instance.Player.PlayerBones.transform.position.x}, {PlayerHelper.Instance.Player.PlayerBones.transform.position.y}, {PlayerHelper.Instance.Player.PlayerBones.transform.position.z})\n";
         }
-        if (LeaderboardPlugin.Instance.ZoneTracker != null)
+        if (LeaderboardPlugin.Instance.ZoneTrackerService != null)
         {
-            debugValues += $"Current Zone = {LeaderboardPlugin.Instance.ZoneTracker?.CurrentZone?.Name}\n";
-            debugValues += $"Current Sub Zone = {LeaderboardPlugin.Instance.ZoneTracker?.CurrentSubZone?.Name}\n";
+            debugValues += $"Current Zone = {LeaderboardPlugin.Instance.ZoneTrackerService?.CurrentZone?.Name}\n";
+            debugValues += $"Current Sub Zone = {LeaderboardPlugin.Instance.ZoneTrackerService?.CurrentSubZone?.Name}\n";
         }
         
         _overlayText.text = debugValues;

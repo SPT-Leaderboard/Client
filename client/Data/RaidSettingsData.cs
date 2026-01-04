@@ -13,7 +13,6 @@ namespace SPTLeaderboard.Data
         [JsonProperty("BotsEnabled")]
         public bool BotsEnabled { get; set; } = true;
         [JsonProperty("MetabolismDisabled")]
-        public bool MetabolismDisabled { get; set; }
-        
+        public bool MetabolismDisabled { get; set; } = false;
     }
 }

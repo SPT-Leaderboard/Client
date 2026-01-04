@@ -19,7 +19,7 @@ namespace SPTLeaderboard.Patches
 #if DEBUG
             OverlayDebug.Instance.Disable();
             
-            LeaderboardPlugin.Instance.ZoneTracker.Disable();
+            LeaderboardPlugin.Instance.ZoneTrackerService.Disable();
             
             if (LeaderboardPlugin.Instance.ZoneInterface)
             {

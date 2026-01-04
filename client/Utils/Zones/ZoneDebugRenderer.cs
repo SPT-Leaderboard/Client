@@ -1,6 +1,7 @@
 ﻿#if DEBUG || BETA
 using System.Collections.Generic;
 using SPTLeaderboard.Data;
+using SPTLeaderboard.Services;
 using UnityEngine;
 
 namespace SPTLeaderboard.Utils.Zones;
@@ -11,7 +12,7 @@ public class ZoneDebugRenderer: MonoBehaviour
     private readonly List<ZoneOverlay> _zoneOverlays = new();
 
     public bool ShowOverlays { get; set; }
-    public ZoneTracker ZoneTracker { get; set; }
+    public ZoneTrackerService ZoneTrackerService { get; set; }
     
     public void Clear()
     {
@@ -131,7 +132,7 @@ public class ZoneDebugRenderer: MonoBehaviour
 
     public void DrawZonesForMap(string mapName)
     {
-        if (ZoneTracker.AllZones == null || !ZoneTracker.AllZones.ContainsKey(mapName))
+        if (ZoneTrackerService.AllZones == null || !ZoneTrackerService.AllZones.ContainsKey(mapName))
         {
             Logger.LogDebugInfo($"[ZoneTracker] Map {mapName} not found");
             return;
@@ -139,7 +140,7 @@ public class ZoneDebugRenderer: MonoBehaviour
 
         ClearDebugViews();
 
-        var zones = ZoneTracker.AllZones[mapName];
+        var zones = ZoneTrackerService.AllZones[mapName];
         if (zones == null)
         {
             Logger.LogDebugInfo($"[ZoneTracker] List zones for map {mapName} is empty");
@@ -226,11 +227,11 @@ public class ZoneDebugRenderer: MonoBehaviour
 
         int createdCount = 0;
 
-        if (ZoneTracker.AllZones != null)
+        if (ZoneTrackerService.AllZones != null)
         {
-            if (categoryName != null && ZoneTracker.AllZones.ContainsKey(categoryName))
+            if (categoryName != null && ZoneTrackerService.AllZones.ContainsKey(categoryName))
             {
-                var category = ZoneTracker.AllZones[categoryName];
+                var category = ZoneTrackerService.AllZones[categoryName];
                 if (category != null)
                 {
                     foreach (var zone in category)
@@ -244,7 +245,7 @@ public class ZoneDebugRenderer: MonoBehaviour
             }
             else
             {
-                foreach (var category in ZoneTracker.AllZones.Values)
+                foreach (var category in ZoneTrackerService.AllZones.Values)
                 {
                     if (category != null)
                     {

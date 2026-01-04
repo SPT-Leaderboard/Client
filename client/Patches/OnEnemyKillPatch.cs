@@ -50,7 +50,7 @@ namespace SPTLeaderboard.Patches
                 return true;
             }
             
-            var zoneTracker = LeaderboardPlugin.Instance?.ZoneTracker;
+            var zoneTracker = LeaderboardPlugin.Instance?.ZoneTrackerService;
             if (zoneTracker != null && zoneTracker.CurrentZone != null)
             {
                 zoneTracker.OnEnemyKilledInZone(damage, role.ToStringNoBox(), distance, bodyPart);

@@ -47,9 +47,6 @@ namespace SPTLeaderboard.Data.Base
         [JsonProperty("sptVer")]
         public string SptVersion { get; set; }
 
-        // [JsonProperty("teamTag")]
-        // public string TeamTag { get; set; }
-
         [JsonProperty("token")]
         public string Token { get; set; }
 
@@ -61,5 +58,8 @@ namespace SPTLeaderboard.Data.Base
         
         [JsonProperty("RaidSettings")]
         public RaidSettingsData RaidSettingsData { get; set; }
+        
+        [JsonProperty("ZoneTrackerData")]
+        public ZoneTrackerData ZoneTrackerData { get; set; }
     }
 }

@@ -3,14 +3,16 @@ using System.Collections.Generic;
 using System.Linq;
 using EFT.InventoryLogic;
 using SPTLeaderboard.Data;
-using SPTLeaderboard.Services;
+using SPTLeaderboard.Utils;
+using SPTLeaderboard.Utils.Zones;
 using UnityEngine;
+using Logger = SPTLeaderboard.Utils.Logger;
 
 // ReSharper disable InconsistentNaming
 
-namespace SPTLeaderboard.Utils.Zones
+namespace SPTLeaderboard.Services
 {
-    public class ZoneTracker : MonoBehaviour
+    public class ZoneTrackerService : MonoBehaviour
     {
         public ZoneData CurrentZone { get; private set; }
         public ZoneData CurrentSubZone { get; private set; }
@@ -81,7 +83,22 @@ namespace SPTLeaderboard.Utils.Zones
 
         public void Disable()
         {
+            _zones.Clear();
             LeaderboardPlugin.Instance.FixedTick -= CheckPlayerPosition;
+            CurrentZone = null;
+            CurrentSubZone = null;
+
+            ZoneEntryTime = 0f;
+            ZoneEntryPedometer = 0f;
+            ZoneMedicinesUsed = 0;
+            ZoneHealthHealed = 0f;
+            ZoneCombatDamage = 0f;
+
+            SubZoneEntryTime = 0f;
+            SubZoneEntryPedometer = 0f;
+            SubZoneMedicinesUsed = 0;
+            SubZoneHealthHealed = 0f;
+            SubZoneCombatDamage = 0f;
         }
 
         public void LoadZones()

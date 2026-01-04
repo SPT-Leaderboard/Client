@@ -28,7 +28,7 @@ namespace SPTLeaderboard.Patches
                 return;
             }
         
-            var zoneTracker = LeaderboardPlugin.Instance?.ZoneTracker;
+            var zoneTracker = LeaderboardPlugin.Instance?.ZoneTrackerService;
             if (zoneTracker != null && zoneTracker.CurrentZone != null)
             {
                 zoneTracker.OnEnemyDamage(damageInfo);

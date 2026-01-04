@@ -51,7 +51,11 @@ namespace SPTLeaderboard.Patches
                 ProfileId = PlayerHelper.GetProfile().ProfileId,
                 VersionMod = GlobalData.Version,
                 IsCasual = Settings.Instance.ModCasualMode.Value,
+#if DEBUG
+                Mods = Settings.Instance.Debug.Value ? ["DEBUGSPTLB"] : modsPlayer,
+#else
                 Mods = modsPlayer,
+#endif
                 Hash = EncryptionService.Instance.GetHashMod(),
                 MaxHydration = maxHydration,
                 MaxEnergy = maxEnergy,

@@ -140,6 +140,11 @@ namespace SPTLeaderboard
                     LocalizationService.NotificationWarning($"Advanced SPTLB Logs are: {IsDebugLogsEnabled}");
                 }
             }
+
+            if (_settings.KeyBind.Value.IsDown())
+            {
+                Logger.LogWarning($"Data Tracked in zone {JsonConvert.SerializeObject(ZoneTrackerService.CurrentRaidData)}");
+            }
         }
 
         private void FixedUpdate()
@@ -474,7 +479,7 @@ namespace SPTLeaderboard
         
         public TrackingLoot TrackingLoot { get; } = new();
 
-        public ZoneTracker ZoneTracker { get; set; }
+        public ZoneTrackerService ZoneTrackerService { get; set; }
         public ZoneRepository ZoneRepository { get; set; }
         
 #if DEBUG || BETA

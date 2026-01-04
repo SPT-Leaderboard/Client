@@ -62,6 +62,9 @@ namespace SPTLeaderboard.Data.Base
         [JsonProperty("RaidSettings")]
         public RaidSettingsData RaidSettingsData = baseData.RaidSettingsData;
         
+        [JsonProperty("ZoneTrackerData")]
+        public ZoneTrackerData ZoneTrackerData = baseData.ZoneTrackerData;
+        
         #endregion
         
         [JsonProperty("discFromRaid")]
@@ -192,7 +195,9 @@ namespace SPTLeaderboard.Data.Base
                 SptVersion = original.SptVersion,
                 Token = "BETA",
                 DBinInv = original.DBinInv,
-                IsCasual = original.IsCasual
+                IsCasual = original.IsCasual,
+                RaidSettingsData = original.RaidSettingsData,
+                ZoneTrackerData = original.ZoneTrackerData
             })
             {
                 DiscFromRaid = original.DiscFromRaid,

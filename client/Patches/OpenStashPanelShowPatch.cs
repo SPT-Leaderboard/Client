@@ -30,7 +30,7 @@ namespace SPTLeaderboard.Patches
         {
             if (item == null) return true;
             
-            LeaderboardPlugin.Instance.ZoneTracker.OnStashOpened(item);
+            LeaderboardPlugin.Instance.ZoneTrackerService.OnStashOpened(item);
             
             return true;
         }
