@@ -88,8 +88,11 @@ namespace SPTLeaderboard.Services
 
         public void Disable()
         {
-            _zones.Clear();
             LeaderboardPlugin.Instance.FixedTick -= CheckPlayerPosition;
+            
+            ExitCurrentZone();
+            
+            _zones.Clear();
             _lootedContainers.Clear();
             CurrentZone = null;
             CurrentSubZone = null;
@@ -240,7 +243,7 @@ namespace SPTLeaderboard.Services
                 CurrentRaidData.DamageToPlayerInZones[CurrentZone.GUID] = 0;
             CurrentRaidData.DamageToPlayerInZones[CurrentZone.GUID] += damageToPlayer;
             
-            float damageToEnemy = GetDamageToEnemy() - ZoneDamageToPlayer;
+            float damageToEnemy = GetDamageToEnemy() - ZoneDamageToEnemy;
             if (!CurrentRaidData.DamageToEnemyInZones.ContainsKey(CurrentZone.GUID))
                 CurrentRaidData.DamageToEnemyInZones[CurrentZone.GUID] = 0;
             CurrentRaidData.DamageToEnemyInZones[CurrentZone.GUID] += damageToEnemy;
@@ -299,7 +302,7 @@ namespace SPTLeaderboard.Services
                 CurrentRaidData.DamageToPlayerInZones[CurrentSubZone.GUID] = 0;
             CurrentRaidData.DamageToPlayerInZones[CurrentSubZone.GUID] += damageToPlayer;
             
-            float damageToEnemy = GetDamageToEnemy() - SubZoneDamageToPlayer;
+            float damageToEnemy = GetDamageToEnemy() - SubZoneDamageToEnemy;
             if (!CurrentRaidData.DamageToEnemyInZones.ContainsKey(CurrentSubZone.GUID))
                 CurrentRaidData.DamageToEnemyInZones[CurrentSubZone.GUID] = 0;
             CurrentRaidData.DamageToEnemyInZones[CurrentSubZone.GUID] += damageToEnemy;
