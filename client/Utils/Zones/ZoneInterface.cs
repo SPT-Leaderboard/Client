@@ -1,6 +1,7 @@
-﻿#if DEBUG || BETA
+﻿#if DEBUG
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using SPTLeaderboard.Configuration;
 using SPTLeaderboard.Data;
 using SPTLeaderboard.Services;
@@ -756,12 +757,11 @@ namespace SPTLeaderboard.Utils.Zones
                 LocalizationService.NotificationWarning("Not selected parent zone for adding sub-zone");
                 return;
             }
-
-            // Create new sub-zone, copying properties from existing sub-zone if any
+            
             ZoneData templateSubZone = null;
             if (currentParentZone.SubZones != null && currentParentZone.SubZones.Count > 0)
             {
-                templateSubZone = currentParentZone.SubZones[0]; // Use first existing sub-zone as template
+                templateSubZone = currentParentZone.SubZones.Last();
             }
 
             ZoneData newSubZone = new ZoneData

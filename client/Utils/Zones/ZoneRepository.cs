@@ -77,10 +77,9 @@ namespace SPTLeaderboard.Utils.Zones
                     args.ErrorContext.Handled = true;
                 }
             };
-
-            // Deserialize zones config with version wrapper (required format)
+            
             var wrapper = JsonConvert.DeserializeObject<ZonesConfigWrapper>(json, settings);
-            Dictionary<string, List<ZoneData>> mapsZones = null;
+            Dictionary<string, List<ZoneData>> mapsZones;
 
             if (wrapper != null && wrapper.Data != null)
             {
@@ -106,16 +105,13 @@ namespace SPTLeaderboard.Utils.Zones
                 Logger.LogDebugInfo("[ZoneTracker] allZones is null or empty after deserialization!");
             }
 
-            if (mapsZones != null)
+            foreach (var category in mapsZones.Values)
             {
-                foreach (var category in mapsZones.Values)
+                foreach (var zone in category ?? new List<ZoneData>())
                 {
-                    foreach (var zone in category ?? new List<ZoneData>())
-                    {
-                        if (string.IsNullOrEmpty(zone?.GUID) || zone.GUID == Guid.Empty.ToString())
-                            if (zone != null)
-                                zone.GUID = Guid.NewGuid().ToString();
-                    }
+                    if (string.IsNullOrEmpty(zone?.GUID) || zone.GUID == Guid.Empty.ToString())
+                        if (zone != null)
+                            zone.GUID = Guid.NewGuid().ToString();
                 }
             }
 
