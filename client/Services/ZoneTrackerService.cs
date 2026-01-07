@@ -240,7 +240,7 @@ namespace SPTLeaderboard.Services
                 CurrentRaidData.DamageToPlayerInZones[CurrentZone.GUID] = 0;
             CurrentRaidData.DamageToPlayerInZones[CurrentZone.GUID] += damageToPlayer;
             
-            float damageToEnemy = GetDamageToPlayer() - ZoneDamageToPlayer;
+            float damageToEnemy = GetDamageToEnemy() - ZoneDamageToPlayer;
             if (!CurrentRaidData.DamageToEnemyInZones.ContainsKey(CurrentZone.GUID))
                 CurrentRaidData.DamageToEnemyInZones[CurrentZone.GUID] = 0;
             CurrentRaidData.DamageToEnemyInZones[CurrentZone.GUID] += damageToEnemy;
@@ -298,13 +298,19 @@ namespace SPTLeaderboard.Services
             if (!CurrentRaidData.DamageToPlayerInZones.ContainsKey(CurrentSubZone.GUID))
                 CurrentRaidData.DamageToPlayerInZones[CurrentSubZone.GUID] = 0;
             CurrentRaidData.DamageToPlayerInZones[CurrentSubZone.GUID] += damageToPlayer;
+            
+            float damageToEnemy = GetDamageToEnemy() - SubZoneDamageToPlayer;
+            if (!CurrentRaidData.DamageToEnemyInZones.ContainsKey(CurrentSubZone.GUID))
+                CurrentRaidData.DamageToEnemyInZones[CurrentSubZone.GUID] = 0;
+            CurrentRaidData.DamageToEnemyInZones[CurrentSubZone.GUID] += damageToEnemy;
 
             Logger.LogDebugWarning($"[ZoneTracker]: Exit Sub-zone {CurrentSubZone.Name},   " +
                                    $"total time: {CurrentRaidData.TimeSpendInZones[CurrentSubZone.GUID]:F1}s,   " +
                                    $"total kilometer walked: {CurrentRaidData.KilometerWalkedInZones[CurrentSubZone.GUID]:F1},   " +
                                    $"total medicines used: {CurrentRaidData.MedicinesUsedInZones[CurrentSubZone.GUID]},   " +
                                    $"total health healed: {CurrentRaidData.HealthHealedUsedInZones[CurrentSubZone.GUID]:F1},   " +
-                                   $"total taken damage: {CurrentRaidData.DamageToPlayerInZones[CurrentSubZone.GUID]:F1}");
+                                   $"total damage to player: {CurrentRaidData.DamageToPlayerInZones[CurrentSubZone.GUID]:F1}    " +
+                                   $"total damage to enemy: {CurrentRaidData.DamageToEnemyInZones[CurrentSubZone.GUID]:F1}");
 
             SubZoneEntryTime = 0f;
             SubZoneEntryPedometer = 0f;
