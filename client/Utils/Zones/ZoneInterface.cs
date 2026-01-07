@@ -578,7 +578,7 @@ namespace SPTLeaderboard.Utils.Zones
             ZoneData newZone = new ZoneData
             {
                 GUID = Guid.NewGuid().ToString(),
-                Name = "Новая зона",
+                Name = "New Zone 123",
                 Center = Vector3.zero,
                 Size = Vector3.one * 10f,
                 RotationZ = 0f
@@ -755,13 +755,20 @@ namespace SPTLeaderboard.Utils.Zones
                 return;
             }
 
+            // Create new sub-zone, copying properties from existing sub-zone if any
+            ZoneData templateSubZone = null;
+            if (currentParentZone.SubZones != null && currentParentZone.SubZones.Count > 0)
+            {
+                templateSubZone = currentParentZone.SubZones[0]; // Use first existing sub-zone as template
+            }
+
             ZoneData newSubZone = new ZoneData
             {
                 GUID = Guid.NewGuid().ToString(),
-                Name = "Новая подзона",
-                Center = Vector3.zero,
-                Size = Vector3.one * 5f,
-                RotationZ = 0f
+                Name = "New Sub-zone 123",
+                Center = templateSubZone?.Center ?? Vector3.zero,
+                Size = templateSubZone?.Size ?? Vector3.one * 5f,
+                RotationZ = templateSubZone?.RotationZ ?? 0f
             };
 
             if (currentParentZone.SubZones == null)

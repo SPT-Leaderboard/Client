@@ -1,717 +1,1329 @@
 {
   "ver": "1.0",
-  "Customs": [
-    {
-      "GUID": "9ae09e82-be30-41f2-aca3-54416598f6ea",
-      "Name": "Big Red",
-      "Center": {
-        "x": -214,
-        "y": 10,
-        "z": -120
-      },
-      "Size": {
-        "x": 25,
-        "y": 20,
-        "z": 60
-      },
-      "RotationZ": 2,
-      "SubZones": [
-        {
-          "GUID": "cd4aad81-4252-4b6b-9bc7-67c3ed5f09ee",
-          "Name": "Director office",
-          "Center": {
-            "x": -203,
-            "y": 8,
-            "z": -104
-          },
-          "Size": {
-            "x": 5,
-            "y": 5,
-            "z": 12
-          },
-          "RotationZ": 2,
-          "SubZones": []
-        }
-      ]
-    },
-    {
-      "GUID": "c6953f74-7c77-4297-a5f3-35546d50d9e8",
-      "Name": "Storage",
-      "Center": {
-        "x": -280,
-        "y": 1,
-        "z": -130
-      },
-      "Size": {
-        "x": 60,
-        "y": 25,
-        "z": 120
-      },
-      "RotationZ": 2,
-      "SubZones": [
-        {
-          "GUID": "d9bee471-839b-42fd-9b06-54b406fbd183",
-          "Name": "Garage 1",
-          "Center": {
-            "x": -298.19,
-            "y": 3,
-            "z": -158
-          },
-          "Size": {
-            "x": 15,
-            "y": 5,
-            "z": 34
-          },
-          "RotationZ": 2,
-          "SubZones": []
+  "data": {
+    "Customs": [
+      {
+        "GUID": "9ae09e82-be30-41f2-aca3-54416598f6ea",
+        "Name": "Big Red",
+        "Center": {
+          "x": -214.0,
+          "y": 10.0,
+          "z": -120.0
         },
-        {
-          "GUID": "c84c5e64-61f4-4853-9d50-0e4912e038e4",
-          "Name": "Garage 2",
-          "Center": {
-            "x": -274.5,
-            "y": 3,
-            "z": -160
-          },
-          "Size": {
-            "x": 15,
-            "y": 5,
-            "z": 30
-          },
-          "RotationZ": 2,
-          "SubZones": []
+        "Size": {
+          "x": 25.0,
+          "y": 20.0,
+          "z": 60.0
         },
-        {
-          "GUID": "d9bee471-839b-42fd-9b06-54b406fbd183",
-          "Name": "Garage 3",
-          "Center": {
-            "x": -297,
-            "y": 3,
-            "z": -112
-          },
-          "Size": {
-            "x": 15,
-            "y": 5,
-            "z": 34
-          },
-          "RotationZ": 2,
-          "SubZones": []
+        "RotationZ": 2.0,
+        "SubZones": [
+          {
+            "GUID": "cd4aad81-4252-4b6b-9bc7-67c3ed5f09ee",
+            "Name": "Director office",
+            "Center": {
+              "x": -203.0,
+              "y": 8.0,
+              "z": -104.0
+            },
+            "Size": {
+              "x": 5.0,
+              "y": 5.0,
+              "z": 12.0
+            },
+            "RotationZ": 2.0,
+            "SubZones": []
+          }
+        ]
+      },
+      {
+        "GUID": "c6953f74-7c77-4297-a5f3-35546d50d9e8",
+        "Name": "Storage",
+        "Center": {
+          "x": -280.0,
+          "y": 1.0,
+          "z": -130.0
         },
-        {
-          "GUID": "c84c5e64-61f4-4853-9d50-0e4912e038e4",
-          "Name": "Garage 4",
-          "Center": {
-            "x": -272,
-            "y": 3,
-            "z": -108
+        "Size": {
+          "x": 60.0,
+          "y": 25.0,
+          "z": 120.0
+        },
+        "RotationZ": 2.0,
+        "SubZones": [
+          {
+            "GUID": "d9bee471-839b-42fd-9b06-54b406fbd183",
+            "Name": "Garage 1",
+            "Center": {
+              "x": -298.19,
+              "y": 3.0,
+              "z": -158.0
+            },
+            "Size": {
+              "x": 15.0,
+              "y": 5.0,
+              "z": 34.0
+            },
+            "RotationZ": 2.0,
+            "SubZones": []
           },
-          "Size": {
-            "x": 15,
-            "y": 5,
-            "z": 50
+          {
+            "GUID": "c84c5e64-61f4-4853-9d50-0e4912e038e4",
+            "Name": "Garage 2",
+            "Center": {
+              "x": -274.5,
+              "y": 3.0,
+              "z": -160.0
+            },
+            "Size": {
+              "x": 15.0,
+              "y": 5.0,
+              "z": 30.0
+            },
+            "RotationZ": 2.0,
+            "SubZones": []
           },
-          "RotationZ": 2,
-          "SubZones": []
-        }
-      ]
-    },
-    {
-      "GUID": "69fa5405-a00f-46ba-8f13-4965bc26b175",
-      "Name": "Trailer park",
-      "Center": {
-        "x": -207,
-        "y": 1,
-        "z": -220
-      },
-      "Size": {
-        "x": 60,
-        "y": 25,
-        "z": 30
-      },
-      "RotationZ": 0,
-      "SubZones": []
-    },
-    {
-      "GUID": "6a603697-8214-4814-994e-a04890a9ee9b",
-      "Name": "Trash bridge",
-      "Center": {
-        "x": -67,
-        "y": -11,
-        "z": 44
-      },
-      "Size": {
-        "x": 60,
-        "y": 25,
-        "z": 30
-      },
-      "RotationZ": 0,
-      "SubZones": []
-    },
-    {
-      "GUID": "be233b7a-4d3a-4bab-9ed7-17ab7fd47ea1",
-      "Name": "Main bridge",
-      "Center": {
-        "x": -77,
-        "y": 0,
-        "z": 7
-      },
-      "Size": {
-        "x": 80,
-        "y": 25,
-        "z": 30
-      },
-      "RotationZ": 8,
-      "SubZones": []
-    },
-    {
-      "GUID": "eb69305d-c41b-4348-9a73-1d1645d867ae",
-      "Name": "Блокпост ВС РФ",
-      "Center": {
-        "x": -15,
-        "y": 0,
-        "z": -135
-      },
-      "Size": {
-        "x": 20,
-        "y": 20,
-        "z": 20
-      },
-      "RotationZ": 0,
-      "SubZones": []
-    },
-    {
-      "GUID": "6da6e66e-c33f-4fa0-8747-271c8d4671d3",
-      "Name": "Склад 17",
-      "Center": {
-        "x": 48,
-        "y": 1,
-        "z": -61
-      },
-      "Size": {
-        "x": 48,
-        "y": 30,
-        "z": 40
-      },
-      "RotationZ": -12,
-      "SubZones": []
-    },
-    {
-      "GUID": "ed4b6996-135d-4804-864b-5de6b5b71ade",
-      "Name": "Котельная",
-      "Center": {
-        "x": 116,
-        "y": 1,
-        "z": -55
-      },
-      "Size": {
-        "x": 50,
-        "y": 30,
-        "z": 40
-      },
-      "RotationZ": -12,
-      "SubZones": []
-    },
-    {
-      "GUID": "45165df7-dc57-4d80-bdab-cf213d6a664d",
-      "Name": "Repair workshop",
-      "Center": {
-        "x": 107,
-        "y": 1,
-        "z": -92
-      },
-      "Size": {
-        "x": 20,
-        "y": 30,
-        "z": 20
-      },
-      "RotationZ": -12,
-      "SubZones": []
-    },
-    {
-      "GUID": "6c4e953a-8daf-43de-9883-918a99d0ecc5",
-      "Name": "Library",
-      "Center": {
-        "x": 84,
-        "y": 5,
-        "z": -156
-      },
-      "Size": {
-        "x": 20,
-        "y": 15,
-        "z": 25
-      },
-      "RotationZ": -10,
-      "SubZones": []
-    },
-    {
-      "GUID": "5cd7734d-256f-48f1-92cc-c8778edf7001",
-      "Name": "New building",
-      "Center": {
-        "x": 202,
-        "y": 5,
-        "z": -127
-      },
-      "Size": {
-        "x": 30,
-        "y": 20,
-        "z": 65
-      },
-      "RotationZ": -10,
-      "SubZones": []
-    },
-    {
-      "GUID": "24f12f05-d676-4ece-b8d2-949ed6521196",
-      "Name": "Skeleton",
-      "Center": {
-        "x": 200,
-        "y": 5,
-        "z": -15
-      },
-      "Size": {
-        "x": 65,
-        "y": 20,
-        "z": 25
-      },
-      "RotationZ": -10,
-      "SubZones": []
-    },
-    {
-      "GUID": "740b304c-fdb7-4f17-bc76-abb6b6d30fa4",
-      "Name": "Старая заправка",
-      "Center": {
-        "x": 330,
-        "y": 5,
-        "z": -173
-      },
-      "Size": {
-        "x": 65,
-        "y": 20,
-        "z": 65
-      },
-      "RotationZ": 0,
-      "SubZones": []
-    },
-    {
-      "GUID": "e34c8d5f-875b-415d-a750-e6f26beae24d",
-      "Name": "Storage 4",
-      "Center": {
-        "x": 336,
-        "y": 5,
-        "z": -63
-      },
-      "Size": {
-        "x": 30,
-        "y": 20,
-        "z": 67
-      },
-      "RotationZ": 8,
-      "SubZones": []
-    },
-    {
-      "GUID": "a8379dee-027f-4905-9ad3-5f9efc28bc37",
-      "Name": "Storage 3",
-      "Center": {
-        "x": 392,
-        "y": 5,
-        "z": -95
-      },
-      "Size": {
-        "x": 55,
-        "y": 20,
-        "z": 30
-      },
-      "RotationZ": 10,
-      "SubZones": []
-    },
-    {
-      "GUID": "df5dd404-eb5d-47e7-a8a2-9792228ab916",
-      "Name": "Container",
-      "Center": {
-        "x": 475,
-        "y": 5,
-        "z": -69
-      },
-      "Size": {
-        "x": 40,
-        "y": 20,
-        "z": 50
-      },
-      "RotationZ": 10,
-      "SubZones": []
-    },
-    {
-      "GUID": "337af855-054a-4f8a-bda0-57bc371741fd",
-      "Name": "Новая заправка",
-      "Center": {
-        "x": 409,
-        "y": 5,
-        "z": 32
-      },
-      "Size": {
-        "x": 30,
-        "y": 20,
-        "z": 25
-      },
-      "RotationZ": 8,
-      "SubZones": []
-    },
-    {
-      "GUID": "2192a63b-b273-442b-915b-c66ce65536d8",
-      "Name": "Башня линии электропередач",
-      "Center": {
-        "x": 500,
-        "y": 10,
-        "z": 106
-      },
-      "Size": {
-        "x": 30,
-        "y": 20,
-        "z": 30
-      },
-      "RotationZ": 35,
-      "SubZones": []
-    },
-    {
-      "GUID": "7579cc39-da02-4956-8a09-dbaf92d42cec",
-      "Name": "Военный КПП",
-      "Center": {
-        "x": 585,
-        "y": 1,
-        "z": 18
-      },
-      "Size": {
-        "x": 30,
-        "y": 20,
-        "z": 30
-      },
-      "RotationZ": 45,
-      "SubZones": []
-    },
-    {
-      "GUID": "abb7af31-7e43-4e36-a7db-3500f61f4c5e",
-      "Name": "Мастерская",
-      "Center": {
-        "x": 569,
-        "y": 1,
-        "z": -70
-      },
-      "Size": {
-        "x": 25,
-        "y": 20,
-        "z": 50
-      },
-      "RotationZ": 8,
-      "SubZones": []
-    },
-    {
-      "GUID": "b93873c3-fcc7-47ad-bad4-0d96b4f5efaa",
-      "Name": "Ангар 7",
-      "Center": {
-        "x": 554,
-        "y": 1,
-        "z": -120
-      },
-      "Size": {
-        "x": 50,
-        "y": 20,
-        "z": 25
-      },
-      "RotationZ": 8,
-      "SubZones": []
-    },
-    {
-      "GUID": "66a119f6-34df-4064-b910-28b097273ca0",
-      "Name": "Насосная станция",
-      "Center": {
-        "x": 620,
-        "y": 1,
-        "z": -86
-      },
-      "Size": {
-        "x": 50,
-        "y": 20,
-        "z": 50
-      },
-      "RotationZ": 8,
-      "SubZones": []
-    },
-    {
-      "GUID": "fb8deece-3ded-4d17-bb9b-8ef95aa5ce32",
-      "Name": "Bus stop",
-      "Center": {
-        "x": 240,
-        "y": 1,
-        "z": 51
-      },
-      "Size": {
-        "x": 40,
-        "y": 20,
-        "z": 20
-      },
-      "RotationZ": 0,
-      "SubZones": []
-    },
-    {
-      "GUID": "31fe9a76-5f7c-45e9-ba38-231f9be0b0b2",
-      "Name": "Двухэтажное общежитие",
-      "Center": {
-        "x": 230,
-        "y": 1,
-        "z": 147
-      },
-      "Size": {
-        "x": 20,
-        "y": 20,
-        "z": 40
-      },
-      "RotationZ": 8,
-      "SubZones": []
-    },
-    {
-      "GUID": "64a8aff8-7f35-42a7-be5b-262e2df6e214",
-      "Name": "Трехэтажное общежитие",
-      "Center": {
-        "x": 176,
-        "y": 1,
-        "z": 166
-      },
-      "Size": {
-        "x": 20,
-        "y": 20,
-        "z": 40
-      },
-      "RotationZ": 8,
-      "SubZones": []
-    },
-    {
-      "GUID": "42c473ba-eb42-45b3-a317-0b1fd69faff6",
-      "Name": "Промышленный комплекс",
-      "Center": {
-        "x": 274,
-        "y": 1,
-        "z": -40
-      },
-      "Size": {
-        "x": 30,
-        "y": 20,
-        "z": 70
-      },
-      "RotationZ": 12,
-      "SubZones": []
-    },
-    {
-      "GUID": "80653426-1249-4813-85d6-2abdde663427",
-      "Name": "Старая стройка",
-      "Center": {
-        "x": 80,
-        "y": 1,
-        "z": -12
-      },
-      "Size": {
-        "x": 22,
-        "y": 22,
-        "z": 22
-      },
-      "RotationZ": 5,
-      "SubZones": []
-    }
-  ],
-  "Factory": [
-    {
-      "GUID": "f62f796b-ac0a-4477-bc91-3f4bbb13b5e8",
-      "Name": "Лесопилка",
-      "Center": {
-        "x": 0,
-        "y": 0,
-        "z": 10
-      },
-      "Size": {
-        "x": 10,
-        "y": 5,
-        "z": 10
-      },
-      "RotationZ": 0,
-      "SubZones": []
-    }
-  ],
-  "Night Factory": [
-    {
-      "GUID": "7482c4ad-9f9e-4570-b2b6-b084f3c2ad83",
-      "Name": "Лесопилка",
-      "Center": {
-        "x": 0,
-        "y": 0,
-        "z": 10
-      },
-      "Size": {
-        "x": 10,
-        "y": 5,
-        "z": 10
-      },
-      "RotationZ": 0,
-      "SubZones": []
-    }
-  ],
-  "Interchange": [
-    {
-      "GUID": "c3996ba1-3b19-435c-a08e-86e3d61474bc",
-      "Name": "Лесопилка",
-      "Center": {
-        "x": 0,
-        "y": 0,
-        "z": 10
-      },
-      "Size": {
-        "x": 10,
-        "y": 5,
-        "z": 10
-      },
-      "RotationZ": 0,
-      "SubZones": []
-    }
-  ],
-  "Labs": [
-    {
-      "GUID": "342fa05f-6739-48df-8765-6326157c1d53",
-      "Name": "Лесопилка",
-      "Center": {
-        "x": 0,
-        "y": 0,
-        "z": 10
-      },
-      "Size": {
-        "x": 10,
-        "y": 5,
-        "z": 10
-      },
-      "RotationZ": 0,
-      "SubZones": []
-    }
-  ],
-  "Reserve": [
-    {
-      "GUID": "7d23de1f-6d01-47d9-a13a-40da2c3598d8",
-      "Name": "Лесопилка",
-      "Center": {
-        "x": 0,
-        "y": 0,
-        "z": 10
-      },
-      "Size": {
-        "x": 10,
-        "y": 5,
-        "z": 10
-      },
-      "RotationZ": 0,
-      "SubZones": []
-    }
-  ],
-  "Shoreline": [
-    {
-      "GUID": "b7582ae8-5be8-423a-a3da-b635bf91fc3b",
-      "Name": "Лесопилка",
-      "Center": {
-        "x": 0,
-        "y": 0,
-        "z": 10
-      },
-      "Size": {
-        "x": 10,
-        "y": 5,
-        "z": 10
-      },
-      "RotationZ": 0,
-      "SubZones": []
-    }
-  ],
-  "Woods": [
-    {
-      "GUID": "7a971683-f954-48fe-932a-7a7e2247d411",
-      "Name": "Лесопилка",
-      "Center": {
-        "x": 0,
-        "y": 0,
-        "z": 10
-      },
-      "Size": {
-        "x": 10,
-        "y": 5,
-        "z": 10
-      },
-      "RotationZ": 0,
-      "SubZones": []
-    }
-  ],
-  "Lighthouse": [
-    {
-      "GUID": "ad0ec543-3042-42c5-bae4-695a99994d04",
-      "Name": "Лесопилка",
-      "Center": {
-        "x": 0,
-        "y": 0,
-        "z": 10
-      },
-      "Size": {
-        "x": 10,
-        "y": 5,
-        "z": 10
-      },
-      "RotationZ": 0,
-      "SubZones": []
-    }
-  ],
-  "Streets of Tarkov": [
-    {
-      "GUID": "da6e4d12-66dd-4d38-bbca-9d6ac5a7e4f6",
-      "Name": "Лесопилка",
-      "Center": {
-        "x": 0,
-        "y": 0,
-        "z": 10
-      },
-      "Size": {
-        "x": 10,
-        "y": 5,
-        "z": 10
-      },
-      "RotationZ": 0,
-      "SubZones": []
-    }
-  ],
-  "Ground Zero - Low": [
-    {
-      "GUID": "3a4026ad-8d4f-4738-92bb-c78f9e170d6a",
-      "Name": "Лесопилка",
-      "Center": {
-        "x": 0,
-        "y": 0,
-        "z": 10
-      },
-      "Size": {
-        "x": 10,
-        "y": 5,
-        "z": 10
-      },
-      "RotationZ": 0,
-      "SubZones": []
-    }
-  ],
-  "Ground Zero - High": [
-    {
-      "GUID": "916bf59b-6951-4e3c-a907-61bb0f1b8c27",
-      "Name": "Лесопилка",
-      "Center": {
-        "x": 0,
-        "y": 0,
-        "z": 10
-      },
-      "Size": {
-        "x": 10,
-        "y": 5,
-        "z": 10
-      },
-      "RotationZ": 0,
-      "SubZones": []
-    }
-  ]
+          {
+            "GUID": "d9bee471-839b-42fd-9b06-54b406fbd183",
+            "Name": "Garage 3",
+            "Center": {
+              "x": -297.0,
+              "y": 3.0,
+              "z": -112.0
+            },
+            "Size": {
+              "x": 15.0,
+              "y": 5.0,
+              "z": 34.0
+            },
+            "RotationZ": 2.0,
+            "SubZones": []
+          },
+          {
+            "GUID": "c84c5e64-61f4-4853-9d50-0e4912e038e4",
+            "Name": "Garage 4",
+            "Center": {
+              "x": -272.0,
+              "y": 3.0,
+              "z": -108.0
+            },
+            "Size": {
+              "x": 15.0,
+              "y": 5.0,
+              "z": 50.0
+            },
+            "RotationZ": 2.0,
+            "SubZones": []
+          }
+        ]
+      },
+      {
+        "GUID": "69fa5405-a00f-46ba-8f13-4965bc26b175",
+        "Name": "Trailer park",
+        "Center": {
+          "x": -207.0,
+          "y": 1.0,
+          "z": -220.0
+        },
+        "Size": {
+          "x": 60.0,
+          "y": 25.0,
+          "z": 30.0
+        },
+        "RotationZ": 0.0,
+        "SubZones": []
+      },
+      {
+        "GUID": "6a603697-8214-4814-994e-a04890a9ee9b",
+        "Name": "Trash bridge",
+        "Center": {
+          "x": -67.0,
+          "y": -11.0,
+          "z": 44.0
+        },
+        "Size": {
+          "x": 60.0,
+          "y": 25.0,
+          "z": 30.0
+        },
+        "RotationZ": 0.0,
+        "SubZones": []
+      },
+      {
+        "GUID": "be233b7a-4d3a-4bab-9ed7-17ab7fd47ea1",
+        "Name": "Main bridge",
+        "Center": {
+          "x": -77.0,
+          "y": 0.0,
+          "z": 7.0
+        },
+        "Size": {
+          "x": 80.0,
+          "y": 25.0,
+          "z": 30.0
+        },
+        "RotationZ": 8.0,
+        "SubZones": []
+      },
+      {
+        "GUID": "eb69305d-c41b-4348-9a73-1d1645d867ae",
+        "Name": "Russian Armed Forces checkpoint",
+        "Center": {
+          "x": -15.0,
+          "y": 0.0,
+          "z": -135.0
+        },
+        "Size": {
+          "x": 20.0,
+          "y": 20.0,
+          "z": 20.0
+        },
+        "RotationZ": 0.0,
+        "SubZones": []
+      },
+      {
+        "GUID": "6da6e66e-c33f-4fa0-8747-271c8d4671d3",
+        "Name": "Warehouse 17",
+        "Center": {
+          "x": 48.0,
+          "y": 1.0,
+          "z": -61.0
+        },
+        "Size": {
+          "x": 48.0,
+          "y": 30.0,
+          "z": 40.0
+        },
+        "RotationZ": -12.0,
+        "SubZones": []
+      },
+      {
+        "GUID": "ed4b6996-135d-4804-864b-5de6b5b71ade",
+        "Name": "Boiler room",
+        "Center": {
+          "x": 116.0,
+          "y": 1.0,
+          "z": -55.0
+        },
+        "Size": {
+          "x": 50.0,
+          "y": 30.0,
+          "z": 40.0
+        },
+        "RotationZ": -12.0,
+        "SubZones": []
+      },
+      {
+        "GUID": "45165df7-dc57-4d80-bdab-cf213d6a664d",
+        "Name": "Repair workshop",
+        "Center": {
+          "x": 107.0,
+          "y": 1.0,
+          "z": -92.0
+        },
+        "Size": {
+          "x": 20.0,
+          "y": 30.0,
+          "z": 20.0
+        },
+        "RotationZ": -12.0,
+        "SubZones": []
+      },
+      {
+        "GUID": "6c4e953a-8daf-43de-9883-918a99d0ecc5",
+        "Name": "Library",
+        "Center": {
+          "x": 84.0,
+          "y": 5.0,
+          "z": -156.0
+        },
+        "Size": {
+          "x": 20.0,
+          "y": 15.0,
+          "z": 25.0
+        },
+        "RotationZ": -10.0,
+        "SubZones": []
+      },
+      {
+        "GUID": "5cd7734d-256f-48f1-92cc-c8778edf7001",
+        "Name": "New building",
+        "Center": {
+          "x": 202.0,
+          "y": 5.0,
+          "z": -127.0
+        },
+        "Size": {
+          "x": 30.0,
+          "y": 20.0,
+          "z": 65.0
+        },
+        "RotationZ": -10.0,
+        "SubZones": []
+      },
+      {
+        "GUID": "24f12f05-d676-4ece-b8d2-949ed6521196",
+        "Name": "Skeleton",
+        "Center": {
+          "x": 200.0,
+          "y": 5.0,
+          "z": -15.0
+        },
+        "Size": {
+          "x": 65.0,
+          "y": 20.0,
+          "z": 25.0
+        },
+        "RotationZ": -10.0,
+        "SubZones": []
+      },
+      {
+        "GUID": "740b304c-fdb7-4f17-bc76-abb6b6d30fa4",
+        "Name": "Старая заправка",
+        "Center": {
+          "x": 330.0,
+          "y": 5.0,
+          "z": -173.0
+        },
+        "Size": {
+          "x": 65.0,
+          "y": 20.0,
+          "z": 65.0
+        },
+        "RotationZ": 0.0,
+        "SubZones": []
+      },
+      {
+        "GUID": "e34c8d5f-875b-415d-a750-e6f26beae24d",
+        "Name": "Storage 4",
+        "Center": {
+          "x": 336.0,
+          "y": 5.0,
+          "z": -63.0
+        },
+        "Size": {
+          "x": 30.0,
+          "y": 20.0,
+          "z": 67.0
+        },
+        "RotationZ": 8.0,
+        "SubZones": []
+      },
+      {
+        "GUID": "a8379dee-027f-4905-9ad3-5f9efc28bc37",
+        "Name": "Storage 3",
+        "Center": {
+          "x": 392.0,
+          "y": 5.0,
+          "z": -95.0
+        },
+        "Size": {
+          "x": 55.0,
+          "y": 20.0,
+          "z": 30.0
+        },
+        "RotationZ": 10.0,
+        "SubZones": []
+      },
+      {
+        "GUID": "df5dd404-eb5d-47e7-a8a2-9792228ab916",
+        "Name": "Container",
+        "Center": {
+          "x": 475.0,
+          "y": 5.0,
+          "z": -69.0
+        },
+        "Size": {
+          "x": 40.0,
+          "y": 20.0,
+          "z": 50.0
+        },
+        "RotationZ": 10.0,
+        "SubZones": []
+      },
+      {
+        "GUID": "337af855-054a-4f8a-bda0-57bc371741fd",
+        "Name": "New gas station",
+        "Center": {
+          "x": 409.0,
+          "y": 5.0,
+          "z": 32.0
+        },
+        "Size": {
+          "x": 30.0,
+          "y": 20.0,
+          "z": 25.0
+        },
+        "RotationZ": 8.0,
+        "SubZones": []
+      },
+      {
+        "GUID": "2192a63b-b273-442b-915b-c66ce65536d8",
+        "Name": "Power Line Tower",
+        "Center": {
+          "x": 500.0,
+          "y": 10.0,
+          "z": 106.0
+        },
+        "Size": {
+          "x": 30.0,
+          "y": 20.0,
+          "z": 30.0
+        },
+        "RotationZ": 35.0,
+        "SubZones": []
+      },
+      {
+        "GUID": "7579cc39-da02-4956-8a09-dbaf92d42cec",
+        "Name": "Military checkpoint",
+        "Center": {
+          "x": 585.0,
+          "y": 1.0,
+          "z": 18.0
+        },
+        "Size": {
+          "x": 30.0,
+          "y": 20.0,
+          "z": 30.0
+        },
+        "RotationZ": 45.0,
+        "SubZones": []
+      },
+      {
+        "GUID": "abb7af31-7e43-4e36-a7db-3500f61f4c5e",
+        "Name": "Workshop",
+        "Center": {
+          "x": 569.0,
+          "y": 1.0,
+          "z": -70.0
+        },
+        "Size": {
+          "x": 25.0,
+          "y": 20.0,
+          "z": 50.0
+        },
+        "RotationZ": 8.0,
+        "SubZones": []
+      },
+      {
+        "GUID": "b93873c3-fcc7-47ad-bad4-0d96b4f5efaa",
+        "Name": "Hangar 7",
+        "Center": {
+          "x": 554.0,
+          "y": 1.0,
+          "z": -120.0
+        },
+        "Size": {
+          "x": 50.0,
+          "y": 20.0,
+          "z": 25.0
+        },
+        "RotationZ": 8.0,
+        "SubZones": []
+      },
+      {
+        "GUID": "66a119f6-34df-4064-b910-28b097273ca0",
+        "Name": "Pumping station",
+        "Center": {
+          "x": 620.0,
+          "y": 1.0,
+          "z": -86.0
+        },
+        "Size": {
+          "x": 50.0,
+          "y": 20.0,
+          "z": 50.0
+        },
+        "RotationZ": 8.0,
+        "SubZones": []
+      },
+      {
+        "GUID": "fb8deece-3ded-4d17-bb9b-8ef95aa5ce32",
+        "Name": "Bus stop",
+        "Center": {
+          "x": 240.0,
+          "y": 1.0,
+          "z": 51.0
+        },
+        "Size": {
+          "x": 40.0,
+          "y": 20.0,
+          "z": 20.0
+        },
+        "RotationZ": 0.0,
+        "SubZones": []
+      },
+      {
+        "GUID": "31fe9a76-5f7c-45e9-ba38-231f9be0b0b2",
+        "Name": "Two-storey dormitory",
+        "Center": {
+          "x": 230.0,
+          "y": 1.0,
+          "z": 147.0
+        },
+        "Size": {
+          "x": 20.0,
+          "y": 20.0,
+          "z": 40.0
+        },
+        "RotationZ": 8.0,
+        "SubZones": []
+      },
+      {
+        "GUID": "64a8aff8-7f35-42a7-be5b-262e2df6e214",
+        "Name": "Three-storey dormitory",
+        "Center": {
+          "x": 176.0,
+          "y": 1.0,
+          "z": 166.0
+        },
+        "Size": {
+          "x": 20.0,
+          "y": 20.0,
+          "z": 40.0
+        },
+        "RotationZ": 8.0,
+        "SubZones": []
+      },
+      {
+        "GUID": "42c473ba-eb42-45b3-a317-0b1fd69faff6",
+        "Name": "Industrial complex",
+        "Center": {
+          "x": 274.0,
+          "y": 1.0,
+          "z": -40.0
+        },
+        "Size": {
+          "x": 30.0,
+          "y": 20.0,
+          "z": 70.0
+        },
+        "RotationZ": 12.0,
+        "SubZones": []
+      },
+      {
+        "GUID": "80653426-1249-4813-85d6-2abdde663427",
+        "Name": "Old construction site",
+        "Center": {
+          "x": 80.0,
+          "y": 1.0,
+          "z": -12.0
+        },
+        "Size": {
+          "x": 22.0,
+          "y": 22.0,
+          "z": 22.0
+        },
+        "RotationZ": 5.0,
+        "SubZones": []
+      }
+    ],
+    "Factory": [
+      {
+        "GUID": "170d29c9-41c3-441c-b335-4279d91744d9",
+        "Name": "Silos",
+        "Center": {
+          "x": 7.0,
+          "y": -2.61,
+          "z": 17.0
+        },
+        "Size": {
+          "x": 32.0,
+          "y": 15.0,
+          "z": 8.0
+        },
+        "RotationZ": 0.0,
+        "SubZones": []
+      },
+      {
+        "GUID": "1afbcd7a-b654-4400-8292-cf684cc55522",
+        "Name": "TransitCustomsOut",
+        "Center": {
+          "x": 17.84,
+          "y": -0.34,
+          "z": -47.8
+        },
+        "Size": {
+          "x": 30.0,
+          "y": 10.0,
+          "z": 10.0
+        },
+        "RotationZ": 0.0,
+        "SubZones": []
+      },
+      {
+        "GUID": "b166daa9-8e2c-4132-a661-8de3d1bae0d2",
+        "Name": "East Halls",
+        "Center": {
+          "x": 47.0,
+          "y": 5.0,
+          "z": -36.0
+        },
+        "Size": {
+          "x": 10.0,
+          "y": 10.0,
+          "z": 10.0
+        },
+        "RotationZ": 0.0,
+        "SubZones": []
+      },
+      {
+        "GUID": "4772fc37-129e-4975-8a14-dabd9e40cdc2",
+        "Name": "Forklifts",
+        "Center": {
+          "x": 66.26,
+          "y": 2.0,
+          "z": -42.59
+        },
+        "Size": {
+          "x": 10.0,
+          "y": 5.0,
+          "z": 10.0
+        },
+        "RotationZ": 0.0,
+        "SubZones": []
+      },
+      {
+        "GUID": "99832d35-236c-4418-843a-85ad3f6b5cea",
+        "Name": "Glass Hall",
+        "Center": {
+          "x": 69.17,
+          "y": 0.03,
+          "z": 1.0
+        },
+        "Size": {
+          "x": 3.0,
+          "y": 5.0,
+          "z": 60.0
+        },
+        "RotationZ": 0.0,
+        "SubZones": []
+      },
+      {
+        "GUID": "6944c751-29db-44af-bd36-9b4f4cd9a84a",
+        "Name": "Pumping Station",
+        "Center": {
+          "x": 40.32,
+          "y": 0.0,
+          "z": -10.98
+        },
+        "Size": {
+          "x": 5.0,
+          "y": 5.0,
+          "z": 9.0
+        },
+        "RotationZ": 0.0,
+        "SubZones": []
+      },
+      {
+        "GUID": "5c92d8c2-c02f-4ace-aad9-6ef51c541104",
+        "Name": "Boilers",
+        "Center": {
+          "x": 56.04,
+          "y": 0.11,
+          "z": 5.99
+        },
+        "Size": {
+          "x": 15.0,
+          "y": 10.0,
+          "z": 15.0
+        },
+        "RotationZ": 0.0,
+        "SubZones": []
+      },
+      {
+        "GUID": "546009ae-92f5-4fa5-98e8-e60bcc7b7b40",
+        "Name": "Exit 3",
+        "Center": {
+          "x": 58.35,
+          "y": 0.27,
+          "z": 65.0
+        },
+        "Size": {
+          "x": 10.0,
+          "y": 10.0,
+          "z": 10.0
+        },
+        "RotationZ": 0.0,
+        "SubZones": []
+      },
+      {
+        "GUID": "a22ea8ae-9962-4d18-9ce5-f2ccff678bbf",
+        "Name": "North Stairs",
+        "Center": {
+          "x": 35.4,
+          "y": 4.6,
+          "z": 40.0
+        },
+        "Size": {
+          "x": 3.5,
+          "y": 20.0,
+          "z": 10.0
+        },
+        "RotationZ": 0.0,
+        "SubZones": []
+      },
+      {
+        "GUID": "4177c650-bf5d-4683-95e9-babdc57b830f",
+        "Name": "South Stairs",
+        "Center": {
+          "x": 9.25,
+          "y": 4.58,
+          "z": 39.0
+        },
+        "Size": {
+          "x": 3.5,
+          "y": 20.0,
+          "z": 9.0
+        },
+        "RotationZ": 0.0,
+        "SubZones": []
+      },
+      {
+        "GUID": "335ee58f-c4cd-4d1f-ac6c-e15403fc8223",
+        "Name": "Office Building",
+        "Center": {
+          "x": 22.5,
+          "y": 5.0,
+          "z": 40.0
+        },
+        "Size": {
+          "x": 23.0,
+          "y": 20.0,
+          "z": 11.0
+        },
+        "RotationZ": 0.0,
+        "SubZones": [
+          {
+            "GUID": "e6111be0-fc55-41ed-88a4-be42e28c0a18",
+            "Name": "1 Floor",
+            "Center": {
+              "x": 22.5,
+              "y": 2.0,
+              "z": 39.0
+            },
+            "Size": {
+              "x": 22.0,
+              "y": 4.0,
+              "z": 9.0
+            },
+            "RotationZ": 0.0,
+            "SubZones": []
+          },
+          {
+            "GUID": "7a858789-4680-4f5c-b4a8-0ffd5a9008c7",
+            "Name": "2 Floor",
+            "Center": {
+              "x": 22.5,
+              "y": 6.0,
+              "z": 39.0
+            },
+            "Size": {
+              "x": 22.0,
+              "y": 4.0,
+              "z": 9.0
+            },
+            "RotationZ": 0.0,
+            "SubZones": []
+          },
+          {
+            "GUID": "518c7183-6a8e-47e1-a999-412abbe57b45",
+            "Name": "3 Floor",
+            "Center": {
+              "x": 22.5,
+              "y": 10.0,
+              "z": 39.0
+            },
+            "Size": {
+              "x": 22.0,
+              "y": 4.0,
+              "z": 9.0
+            },
+            "RotationZ": 0.0,
+            "SubZones": []
+          }
+        ]
+      },
+      {
+        "GUID": "2465445a-2f06-4662-ad3c-e925dcab3f87",
+        "Name": "Connector",
+        "Center": {
+          "x": 30.0,
+          "y": 0.22,
+          "z": 18.27
+        },
+        "Size": {
+          "x": 6.0,
+          "y": 20.0,
+          "z": 8.0
+        },
+        "RotationZ": 0.0,
+        "SubZones": []
+      },
+      {
+        "GUID": "acf8909b-6be2-423e-ac38-c2d13804974c",
+        "Name": "Platform",
+        "Center": {
+          "x": -2.97,
+          "y": 0.0,
+          "z": 37.48
+        },
+        "Size": {
+          "x": 20.0,
+          "y": 20.0,
+          "z": 5.0
+        },
+        "RotationZ": 0.0,
+        "SubZones": []
+      },
+      {
+        "GUID": "b68d01d8-563b-4632-abdc-ba27f1609d0a",
+        "Name": "Blue Containers",
+        "Center": {
+          "x": -14.88,
+          "y": 1.41,
+          "z": 58.0
+        },
+        "Size": {
+          "x": 35.0,
+          "y": 10.0,
+          "z": 15.0
+        },
+        "RotationZ": 0.0,
+        "SubZones": []
+      },
+      {
+        "GUID": "50187dd1-3dd6-40fb-b5e0-3724b40c450f",
+        "Name": "Scav Bunker",
+        "Center": {
+          "x": -20.29,
+          "y": 0.1,
+          "z": 23.21
+        },
+        "Size": {
+          "x": 3.0,
+          "y": 5.0,
+          "z": 3.0
+        },
+        "RotationZ": 0.0,
+        "SubZones": []
+      },
+      {
+        "GUID": "0de2eaa2-e842-4688-830c-e51b4d42d478",
+        "Name": "Wood Room",
+        "Center": {
+          "x": -46.79,
+          "y": 2.0,
+          "z": 62.0
+        },
+        "Size": {
+          "x": 8.0,
+          "y": 5.0,
+          "z": 5.0
+        },
+        "RotationZ": 0.0,
+        "SubZones": []
+      },
+      {
+        "GUID": "083e9778-c421-4330-84d4-da28fc8c7685",
+        "Name": "Med Tent",
+        "Center": {
+          "x": -17.5,
+          "y": 0.17,
+          "z": -28.35
+        },
+        "Size": {
+          "x": 5.0,
+          "y": 5.0,
+          "z": 13.0
+        },
+        "RotationZ": 0.0,
+        "SubZones": []
+      }
+    ],
+    "Night Factory": [
+      {
+        "GUID": "170d29c9-41c3-441c-b335-4279d91744d5",
+        "Name": "Silos",
+        "Center": {
+          "x": 7.0,
+          "y": -2.61,
+          "z": 17.0
+        },
+        "Size": {
+          "x": 32.0,
+          "y": 15.0,
+          "z": 8.0
+        },
+        "RotationZ": 0.0,
+        "SubZones": []
+      },
+      {
+        "GUID": "1afbcd7a-b654-4400-8292-cf684cc55524",
+        "Name": "TransitCustomsOut",
+        "Center": {
+          "x": 17.84,
+          "y": -0.34,
+          "z": -47.8
+        },
+        "Size": {
+          "x": 30.0,
+          "y": 10.0,
+          "z": 10.0
+        },
+        "RotationZ": 0.0,
+        "SubZones": []
+      },
+      {
+        "GUID": "b166daa9-8e2c-4132-a661-8de3d1bae0d3",
+        "Name": "East Halls",
+        "Center": {
+          "x": 47.0,
+          "y": 5.0,
+          "z": -36.0
+        },
+        "Size": {
+          "x": 10.0,
+          "y": 10.0,
+          "z": 10.0
+        },
+        "RotationZ": 0.0,
+        "SubZones": []
+      },
+      {
+        "GUID": "4772fc37-129e-4975-8a14-dabd9e40cdc2",
+        "Name": "Forklifts",
+        "Center": {
+          "x": 66.26,
+          "y": 2.0,
+          "z": -42.59
+        },
+        "Size": {
+          "x": 10.0,
+          "y": 5.0,
+          "z": 10.0
+        },
+        "RotationZ": 0.0,
+        "SubZones": []
+      },
+      {
+        "GUID": "99832d35-236c-4418-843a-85ad3f6b5ce1",
+        "Name": "Glass Hall",
+        "Center": {
+          "x": 69.17,
+          "y": 0.03,
+          "z": 1.0
+        },
+        "Size": {
+          "x": 3.0,
+          "y": 5.0,
+          "z": 60.0
+        },
+        "RotationZ": 0.0,
+        "SubZones": []
+      },
+      {
+        "GUID": "6944c751-29db-44af-bd36-9b4f4cd9a849",
+        "Name": "Pumping Station",
+        "Center": {
+          "x": 40.32,
+          "y": 0.0,
+          "z": -10.98
+        },
+        "Size": {
+          "x": 5.0,
+          "y": 5.0,
+          "z": 9.0
+        },
+        "RotationZ": 0.0,
+        "SubZones": []
+      },
+      {
+        "GUID": "5c92d8c2-c02f-4ace-aad9-6ef51c541108",
+        "Name": "Boilers",
+        "Center": {
+          "x": 56.04,
+          "y": 0.11,
+          "z": 5.99
+        },
+        "Size": {
+          "x": 15.0,
+          "y": 10.0,
+          "z": 15.0
+        },
+        "RotationZ": 0.0,
+        "SubZones": []
+      },
+      {
+        "GUID": "546009ae-92f5-4fa5-98e8-e60bcc7b7b47",
+        "Name": "Exit 3",
+        "Center": {
+          "x": 58.35,
+          "y": 0.27,
+          "z": 65.0
+        },
+        "Size": {
+          "x": 10.0,
+          "y": 10.0,
+          "z": 10.0
+        },
+        "RotationZ": 0.0,
+        "SubZones": []
+      },
+      {
+        "GUID": "a22ea8ae-9962-4d18-9ce5-f2ccff678bb6",
+        "Name": "North Stairs",
+        "Center": {
+          "x": 35.4,
+          "y": 4.6,
+          "z": 40.0
+        },
+        "Size": {
+          "x": 3.5,
+          "y": 20.0,
+          "z": 10.0
+        },
+        "RotationZ": 0.0,
+        "SubZones": []
+      },
+      {
+        "GUID": "4177c650-bf5d-4683-95e9-babdc57b8305",
+        "Name": "South Stairs",
+        "Center": {
+          "x": 9.25,
+          "y": 4.58,
+          "z": 39.0
+        },
+        "Size": {
+          "x": 3.5,
+          "y": 20.0,
+          "z": 9.0
+        },
+        "RotationZ": 0.0,
+        "SubZones": []
+      },
+      {
+        "GUID": "335ee58f-c4cd-4d1f-ac6c-e15403fc8224",
+        "Name": "Office Building",
+        "Center": {
+          "x": 22.5,
+          "y": 5.0,
+          "z": 40.0
+        },
+        "Size": {
+          "x": 23.0,
+          "y": 20.0,
+          "z": 11.0
+        },
+        "RotationZ": 0.0,
+        "SubZones": [
+          {
+            "GUID": "e6111be0-fc55-41ed-88a4-be42e28c0a13",
+            "Name": "1 Floor",
+            "Center": {
+              "x": 22.5,
+              "y": 2.0,
+              "z": 39.0
+            },
+            "Size": {
+              "x": 22.0,
+              "y": 4.0,
+              "z": 9.0
+            },
+            "RotationZ": 0.0,
+            "SubZones": []
+          },
+          {
+            "GUID": "7a858789-4680-4f5c-b4a8-0ffd5a9008c2",
+            "Name": "2 Floor",
+            "Center": {
+              "x": 22.5,
+              "y": 6.0,
+              "z": 39.0
+            },
+            "Size": {
+              "x": 22.0,
+              "y": 4.0,
+              "z": 9.0
+            },
+            "RotationZ": 0.0,
+            "SubZones": []
+          },
+          {
+            "GUID": "518c7183-6a8e-47e1-a999-412abbe57b41",
+            "Name": "3 Floor",
+            "Center": {
+              "x": 22.5,
+              "y": 10.0,
+              "z": 39.0
+            },
+            "Size": {
+              "x": 22.0,
+              "y": 4.0,
+              "z": 9.0
+            },
+            "RotationZ": 0.0,
+            "SubZones": []
+          }
+        ]
+      },
+      {
+        "GUID": "2465445a-2f06-4662-ad3c-e925dcab3f86",
+        "Name": "Connector",
+        "Center": {
+          "x": 30.0,
+          "y": 0.22,
+          "z": 18.27
+        },
+        "Size": {
+          "x": 6.0,
+          "y": 20.0,
+          "z": 8.0
+        },
+        "RotationZ": 0.0,
+        "SubZones": []
+      },
+      {
+        "GUID": "acf8909b-6be2-423e-ac38-c2d138049745",
+        "Name": "Platform",
+        "Center": {
+          "x": -2.97,
+          "y": 0.0,
+          "z": 37.48
+        },
+        "Size": {
+          "x": 20.0,
+          "y": 20.0,
+          "z": 5.0
+        },
+        "RotationZ": 0.0,
+        "SubZones": []
+      },
+      {
+        "GUID": "b68d01d8-563b-4632-abdc-ba27f1609d04",
+        "Name": "Blue Containers",
+        "Center": {
+          "x": -14.88,
+          "y": 1.41,
+          "z": 58.0
+        },
+        "Size": {
+          "x": 35.0,
+          "y": 10.0,
+          "z": 15.0
+        },
+        "RotationZ": 0.0,
+        "SubZones": []
+      },
+      {
+        "GUID": "50187dd1-3dd6-40fb-b5e0-3724b40c4503",
+        "Name": "Scav Bunker",
+        "Center": {
+          "x": -20.29,
+          "y": 0.1,
+          "z": 23.21
+        },
+        "Size": {
+          "x": 3.0,
+          "y": 5.0,
+          "z": 3.0
+        },
+        "RotationZ": 0.0,
+        "SubZones": []
+      },
+      {
+        "GUID": "0de2eaa2-e842-4688-830c-e51b4d42d472",
+        "Name": "Wood Room",
+        "Center": {
+          "x": -46.79,
+          "y": 2.0,
+          "z": 62.0
+        },
+        "Size": {
+          "x": 8.0,
+          "y": 5.0,
+          "z": 5.0
+        },
+        "RotationZ": 0.0,
+        "SubZones": []
+      },
+      {
+        "GUID": "083e9778-c421-4330-84d4-da28fc8c7681",
+        "Name": "Med Tent",
+        "Center": {
+          "x": -17.5,
+          "y": 0.17,
+          "z": -28.35
+        },
+        "Size": {
+          "x": 5.0,
+          "y": 5.0,
+          "z": 13.0
+        },
+        "RotationZ": 0.0,
+        "SubZones": []
+      }
+    ],
+    "Interchange": [
+      {
+        "GUID": "c3996ba1-3b19-435c-a08e-86e3d61474bc",
+        "Name": "Лесопилка",
+        "Center": {
+          "x": 0.0,
+          "y": 0.0,
+          "z": 10.0
+        },
+        "Size": {
+          "x": 10.0,
+          "y": 5.0,
+          "z": 10.0
+        },
+        "RotationZ": 0.0,
+        "SubZones": []
+      }
+    ],
+    "Labs": [
+      {
+        "GUID": "342fa05f-6739-48df-8765-6326157c1d53",
+        "Name": "Лесопилка",
+        "Center": {
+          "x": 0.0,
+          "y": 0.0,
+          "z": 10.0
+        },
+        "Size": {
+          "x": 10.0,
+          "y": 5.0,
+          "z": 10.0
+        },
+        "RotationZ": 0.0,
+        "SubZones": []
+      }
+    ],
+    "Reserve": [
+      {
+        "GUID": "7d23de1f-6d01-47d9-a13a-40da2c3598d8",
+        "Name": "Лесопилка",
+        "Center": {
+          "x": 0.0,
+          "y": 0.0,
+          "z": 10.0
+        },
+        "Size": {
+          "x": 10.0,
+          "y": 5.0,
+          "z": 10.0
+        },
+        "RotationZ": 0.0,
+        "SubZones": []
+      }
+    ],
+    "Shoreline": [
+      {
+        "GUID": "b7582ae8-5be8-423a-a3da-b635bf91fc3b",
+        "Name": "Лесопилка",
+        "Center": {
+          "x": 0.0,
+          "y": 0.0,
+          "z": 10.0
+        },
+        "Size": {
+          "x": 10.0,
+          "y": 5.0,
+          "z": 10.0
+        },
+        "RotationZ": 0.0,
+        "SubZones": []
+      }
+    ],
+    "Woods": [
+      {
+        "GUID": "7a971683-f954-48fe-932a-7a7e2247d411",
+        "Name": "Лесопилка",
+        "Center": {
+          "x": 0.0,
+          "y": 0.0,
+          "z": 10.0
+        },
+        "Size": {
+          "x": 10.0,
+          "y": 5.0,
+          "z": 10.0
+        },
+        "RotationZ": 0.0,
+        "SubZones": []
+      }
+    ],
+    "Lighthouse": [
+      {
+        "GUID": "ad0ec543-3042-42c5-bae4-695a99994d04",
+        "Name": "Лесопилка",
+        "Center": {
+          "x": 0.0,
+          "y": 0.0,
+          "z": 10.0
+        },
+        "Size": {
+          "x": 10.0,
+          "y": 5.0,
+          "z": 10.0
+        },
+        "RotationZ": 0.0,
+        "SubZones": []
+      }
+    ],
+    "Streets of Tarkov": [
+      {
+        "GUID": "da6e4d12-66dd-4d38-bbca-9d6ac5a7e4f6",
+        "Name": "Лесопилка",
+        "Center": {
+          "x": 0.0,
+          "y": 0.0,
+          "z": 10.0
+        },
+        "Size": {
+          "x": 10.0,
+          "y": 5.0,
+          "z": 10.0
+        },
+        "RotationZ": 0.0,
+        "SubZones": []
+      }
+    ],
+    "Ground Zero - Low": [
+      {
+        "GUID": "3a4026ad-8d4f-4738-92bb-c78f9e170d6a",
+        "Name": "Лесопилка",
+        "Center": {
+          "x": 0.0,
+          "y": 0.0,
+          "z": 10.0
+        },
+        "Size": {
+          "x": 10.0,
+          "y": 5.0,
+          "z": 10.0
+        },
+        "RotationZ": 0.0,
+        "SubZones": []
+      }
+    ],
+    "Ground Zero - High": [
+      {
+        "GUID": "916bf59b-6951-4e3c-a907-61bb0f1b8c27",
+        "Name": "Лесопилка",
+        "Center": {
+          "x": 0.0,
+          "y": 0.0,
+          "z": 10.0
+        },
+        "Size": {
+          "x": 10.0,
+          "y": 5.0,
+          "z": 10.0
+        },
+        "RotationZ": 0.0,
+        "SubZones": []
+      }
+    ]
+  }
 }
