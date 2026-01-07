@@ -21,13 +21,15 @@ namespace SPTLeaderboard.Services
         public float ZoneEntryPedometer;
         public int ZoneMedicinesUsed;
         public float ZoneHealthHealed;
-        public float ZoneCombatDamage;
+        public float ZoneDamageToPlayer;
+        public float ZoneDamageToEnemy;
 
         public float SubZoneEntryTime;
         public float SubZoneEntryPedometer;
         public int SubZoneMedicinesUsed;
         public float SubZoneHealthHealed;
-        public float SubZoneCombatDamage;
+        public float SubZoneDamageToPlayer;
+        public float SubZoneDamageToEnemy;
         
         public Action OnZoneUpdated;
         public Action OnSubZoneUpdated;
@@ -46,6 +48,7 @@ namespace SPTLeaderboard.Services
         {
             _zones.Clear();
             CurrentRaidData = new ZoneTrackerData();
+            _lootedContainers.Clear();
             CurrentZone = null;
             CurrentSubZone = null;
 
@@ -53,13 +56,15 @@ namespace SPTLeaderboard.Services
             ZoneEntryPedometer = 0f;
             ZoneMedicinesUsed = 0;
             ZoneHealthHealed = 0f;
-            ZoneCombatDamage = 0f;
+            ZoneDamageToPlayer = 0f;
+            ZoneDamageToEnemy = 0f;
 
             SubZoneEntryTime = 0f;
             SubZoneEntryPedometer = 0f;
             SubZoneMedicinesUsed = 0;
             SubZoneHealthHealed = 0f;
-            SubZoneCombatDamage = 0f;
+            SubZoneDamageToPlayer = 0f;
+            SubZoneDamageToEnemy = 0f;
 
             LeaderboardPlugin.Instance.FixedTick += CheckPlayerPosition;
             LoadZones();
@@ -85,6 +90,7 @@ namespace SPTLeaderboard.Services
         {
             _zones.Clear();
             LeaderboardPlugin.Instance.FixedTick -= CheckPlayerPosition;
+            _lootedContainers.Clear();
             CurrentZone = null;
             CurrentSubZone = null;
 
@@ -92,13 +98,15 @@ namespace SPTLeaderboard.Services
             ZoneEntryPedometer = 0f;
             ZoneMedicinesUsed = 0;
             ZoneHealthHealed = 0f;
-            ZoneCombatDamage = 0f;
+            ZoneDamageToPlayer = 0f;
+            ZoneDamageToEnemy = 0f;
 
             SubZoneEntryTime = 0f;
             SubZoneEntryPedometer = 0f;
             SubZoneMedicinesUsed = 0;
             SubZoneHealthHealed = 0f;
-            SubZoneCombatDamage = 0f;
+            SubZoneDamageToPlayer = 0f;
+            SubZoneDamageToEnemy = 0f;
         }
 
         public void LoadZones()
@@ -136,7 +144,7 @@ namespace SPTLeaderboard.Services
             if (_zones == null || _zones.Count == 0)
                 return;
 
-            ZoneData foundZone = FindZoneContainingPosition(pos, _zones);
+            var foundZone = FindZoneContainingPosition(pos, _zones);
             if (foundZone != null)
             {
                 if (CurrentZone != foundZone)
@@ -167,17 +175,7 @@ namespace SPTLeaderboard.Services
 
         private ZoneData FindZoneContainingPosition(Vector3 pos, List<ZoneData> zones)
         {
-            foreach (var zone in zones)
-            {
-                if (zone == null) continue;
-
-                if (zone.GetBounds().Contains(pos))
-                {
-                    return zone;
-                }
-            }
-
-            return null;
+            return zones.Where(zone => zone != null).FirstOrDefault(zone => zone.GetBounds().Contains(pos));
         }
 
         private void EnterZone(ZoneData newZone)
@@ -187,7 +185,8 @@ namespace SPTLeaderboard.Services
             ZoneEntryPedometer = GetKilometer();
             ZoneMedicinesUsed = GetUsedMedicines();
             ZoneHealthHealed = GetHealthHealed();
-            ZoneCombatDamage = GetCombatDamage();
+            ZoneDamageToPlayer = GetDamageToPlayer();
+            ZoneDamageToEnemy = GetDamageToEnemy();
 
             if (!CurrentRaidData.ZonesEntered.Contains(newZone.GUID))
                 CurrentRaidData.ZonesEntered.Add(newZone.GUID);
@@ -202,7 +201,8 @@ namespace SPTLeaderboard.Services
             SubZoneEntryPedometer = GetKilometer();
             SubZoneMedicinesUsed = GetUsedMedicines();
             SubZoneHealthHealed = GetHealthHealed();
-            SubZoneCombatDamage = GetCombatDamage();
+            SubZoneDamageToPlayer = GetDamageToPlayer();
+            SubZoneDamageToEnemy = GetDamageToEnemy();
 
             if (!CurrentRaidData.ZonesEntered.Contains(newSubZone.GUID))
                 CurrentRaidData.ZonesEntered.Add(newSubZone.GUID);
@@ -235,21 +235,30 @@ namespace SPTLeaderboard.Services
                 CurrentRaidData.HealthHealedUsedInZones[CurrentZone.GUID] = 0;
             CurrentRaidData.HealthHealedUsedInZones[CurrentZone.GUID] += healthHealed;
 
-            float combatDamage = GetCombatDamage() - ZoneCombatDamage;
-            if (!CurrentRaidData.TakenDamageInZones.ContainsKey(CurrentZone.GUID))
-                CurrentRaidData.TakenDamageInZones[CurrentZone.GUID] = 0;
-            CurrentRaidData.TakenDamageInZones[CurrentZone.GUID] += combatDamage;
+            float damageToPlayer = GetDamageToPlayer() - ZoneDamageToPlayer;
+            if (!CurrentRaidData.DamageToPlayerInZones.ContainsKey(CurrentZone.GUID))
+                CurrentRaidData.DamageToPlayerInZones[CurrentZone.GUID] = 0;
+            CurrentRaidData.DamageToPlayerInZones[CurrentZone.GUID] += damageToPlayer;
+            
+            float damageToEnemy = GetDamageToPlayer() - ZoneDamageToPlayer;
+            if (!CurrentRaidData.DamageToEnemyInZones.ContainsKey(CurrentZone.GUID))
+                CurrentRaidData.DamageToEnemyInZones[CurrentZone.GUID] = 0;
+            CurrentRaidData.DamageToEnemyInZones[CurrentZone.GUID] += damageToEnemy;
 
             Logger.LogDebugWarning($"[ZoneTracker]: Exit Sub-zone {CurrentZone.Name},   " +
                                    $"total time: {CurrentRaidData.TimeSpendInZones[CurrentZone.GUID]:F1}s,   " +
                                    $"total kilometer walked: {CurrentRaidData.KilometerWalkedInZones[CurrentZone.GUID]:F1},   " +
                                    $"total medicines used: {CurrentRaidData.MedicinesUsedInZones[CurrentZone.GUID]},   " +
                                    $"total health healed: {CurrentRaidData.HealthHealedUsedInZones[CurrentZone.GUID]:F1},   " +
-                                   $"total taken damage: {CurrentRaidData.TakenDamageInZones[CurrentZone.GUID]:F1}");
+                                   $"total damage to player: {CurrentRaidData.DamageToPlayerInZones[CurrentZone.GUID]:F1}    " +
+                                   $"total damage to enemy: {CurrentRaidData.DamageToEnemyInZones[CurrentZone.GUID]:F1}");
 
             ZoneEntryTime = 0f;
             ZoneEntryPedometer = 0f;
             ZoneMedicinesUsed = 0;
+            ZoneHealthHealed = 0f;
+            ZoneDamageToPlayer = 0f;
+            ZoneDamageToEnemy = 0f;
             CurrentZone = null;
 
             if (CurrentSubZone != null)
@@ -285,43 +294,54 @@ namespace SPTLeaderboard.Services
                 CurrentRaidData.HealthHealedUsedInZones[CurrentSubZone.GUID] = 0;
             CurrentRaidData.HealthHealedUsedInZones[CurrentSubZone.GUID] += healthHealed;
             
-            float combatDamage = GetCombatDamage() - SubZoneCombatDamage;
-            if (!CurrentRaidData.TakenDamageInZones.ContainsKey(CurrentSubZone.GUID))
-                CurrentRaidData.TakenDamageInZones[CurrentSubZone.GUID] = 0;
-            CurrentRaidData.TakenDamageInZones[CurrentSubZone.GUID] += combatDamage;
+            float damageToPlayer = GetDamageToPlayer() - SubZoneDamageToPlayer;
+            if (!CurrentRaidData.DamageToPlayerInZones.ContainsKey(CurrentSubZone.GUID))
+                CurrentRaidData.DamageToPlayerInZones[CurrentSubZone.GUID] = 0;
+            CurrentRaidData.DamageToPlayerInZones[CurrentSubZone.GUID] += damageToPlayer;
 
             Logger.LogDebugWarning($"[ZoneTracker]: Exit Sub-zone {CurrentSubZone.Name},   " +
                                    $"total time: {CurrentRaidData.TimeSpendInZones[CurrentSubZone.GUID]:F1}s,   " +
                                    $"total kilometer walked: {CurrentRaidData.KilometerWalkedInZones[CurrentSubZone.GUID]:F1},   " +
                                    $"total medicines used: {CurrentRaidData.MedicinesUsedInZones[CurrentSubZone.GUID]},   " +
                                    $"total health healed: {CurrentRaidData.HealthHealedUsedInZones[CurrentSubZone.GUID]:F1},   " +
-                                   $"total taken damage: {CurrentRaidData.TakenDamageInZones[CurrentSubZone.GUID]:F1}");
+                                   $"total taken damage: {CurrentRaidData.DamageToPlayerInZones[CurrentSubZone.GUID]:F1}");
 
             SubZoneEntryTime = 0f;
             SubZoneEntryPedometer = 0f;
             SubZoneMedicinesUsed = 0;
+            SubZoneHealthHealed = 0f;
+            SubZoneDamageToPlayer = 0f;
+            SubZoneDamageToEnemy = 0f;
             CurrentSubZone = null;
             OnSubZoneUpdated?.Invoke();
         }
 
         #region Utils
 
-        private int GetUsedMedicines()
+        public int GetUsedMedicines()
         {
             return PlayerHelper.GetProfile().EftStats.SessionCounters
                 .GetInt(SessionCounterTypesAbstractClass.Medicines);
         }
-        private float GetHealthHealed()
+
+        public float GetHealthHealed()
         {
             return PlayerHelper.GetProfile().EftStats.SessionCounters.GetFloat(SessionCounterTypesAbstractClass.Heal);
         }
-        private float GetKilometer()
+
+        public float GetKilometer()
         {
-            return PlayerHelper.Instance.Player.Pedometer.GetDistance();
+            return PlayerHelper.Instance.Player.Pedometer.GetDistance() / 1000;
         }
-        private float GetCombatDamage()
+
+        public float GetDamageToPlayer()
         {
             return PlayerHelper.GetProfile().EftStats.SessionCounters.GetFloat(SessionCounterTypesAbstractClass.CombatDamage);
+        }
+        
+        public float GetDamageToEnemy()
+        {
+            return PlayerHelper.GetProfile().EftStats.SessionCounters.GetFloat(SessionCounterTypesAbstractClass.CauseBodyDamage);
         }
         
         #endregion
@@ -376,21 +396,19 @@ namespace SPTLeaderboard.Services
         {
             if (CurrentZone != null)
             {
-                if (!CurrentRaidData.CausedDamageInZones.ContainsKey(CurrentZone.GUID))
-                    CurrentRaidData.CausedDamageInZones[CurrentZone.GUID] = 0f;
-                CurrentRaidData.CausedDamageInZones[CurrentZone.GUID] += damage.DidBodyDamage;
+                if (!CurrentRaidData.DamageToEnemyInZones.ContainsKey(CurrentZone.GUID))
+                    CurrentRaidData.DamageToEnemyInZones[CurrentZone.GUID] = 0f;
+                CurrentRaidData.DamageToEnemyInZones[CurrentZone.GUID] += damage.Damage;
             }
             else
             {
                 if (CurrentSubZone != null)
                 {
-                    if (!CurrentRaidData.CausedDamageInZones.ContainsKey(CurrentSubZone.GUID))
-                        CurrentRaidData.CausedDamageInZones[CurrentSubZone.GUID] = 0f;
-                    CurrentRaidData.CausedDamageInZones[CurrentSubZone.GUID] += damage.DidBodyDamage;
+                    if (!CurrentRaidData.DamageToEnemyInZones.ContainsKey(CurrentSubZone.GUID))
+                        CurrentRaidData.DamageToEnemyInZones[CurrentSubZone.GUID] = 0f;
+                    CurrentRaidData.DamageToEnemyInZones[CurrentSubZone.GUID] += damage.Damage;
                 }
             }
-
-            
         }
         public void OnItemAdded(Item item)
         {

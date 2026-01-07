@@ -18,7 +18,7 @@ namespace SPTLeaderboard.Patches
                 return;
         
             Utils.Logger.LogDebugWarning("[ProcessShot ObservedClientBridge] Hit");
-
+            
             IPlayerOwner player = damageInfo.Player;
 
             Utils.Logger.LogDebugWarning($"[ProcessShot ObservedClientBridge] Nick -> {player?.Nickname}");
@@ -27,13 +27,7 @@ namespace SPTLeaderboard.Patches
             {
                 return;
             }
-        
-            var zoneTracker = LeaderboardPlugin.Instance?.ZoneTrackerService;
-            if (zoneTracker != null && zoneTracker.CurrentZone != null)
-            {
-                zoneTracker.OnEnemyDamage(damageInfo);
-            }
-        
+            
             HitsTracker.Instance.IncreaseHit(bodyPart);
         
 #if DEBUG || BETA

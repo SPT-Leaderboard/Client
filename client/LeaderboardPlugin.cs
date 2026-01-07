@@ -86,7 +86,6 @@ namespace SPTLeaderboard
             new OpenInventoryScreenPatch().Enable();
             new OpenSelectSideScreenPatch().Enable();
             new OpenLoadingRaidScreenPatch().Enable();
-            new OpenStashPanelShowPatch().Enable();
             new OnStartRaidPatch().Enable();
             new OnEndRaidPatch().Enable();
             new HideoutAwakePatch().Enable();
@@ -98,6 +97,7 @@ namespace SPTLeaderboard
             new OnPlayerAddedItem().Enable();
             new OnPlayerRemovedItem().Enable();
             new RaidSettingsHookPatch().Enable();
+            new OpenStashPanelShowPatch().Enable();
 
             if (!DataUtils.IsCheckedFikaCore)
             {

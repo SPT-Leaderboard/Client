@@ -20,7 +20,7 @@ namespace SPTLeaderboard.Patches
                 return true;
             
             Utils.Logger.LogDebugWarning("[ProcessShot Local] Hit");
-
+            
             IPlayerOwner player = damageInfo.Player;
 
             Utils.Logger.LogDebugWarning($"[ProcessShot Local] Nick -> {player?.Nickname}");
@@ -28,12 +28,6 @@ namespace SPTLeaderboard.Patches
             if ((Player)player?.iPlayer != PlayerHelper.Instance.Player)
             {
                 return true;
-            }
-
-            var zoneTracker = LeaderboardPlugin.Instance?.ZoneTrackerService;
-            if (zoneTracker != null && zoneTracker.CurrentZone != null)
-            {
-                zoneTracker.OnEnemyDamage(damageInfo);
             }
             
             HitsTracker.Instance.IncreaseHit(bodyPartType);

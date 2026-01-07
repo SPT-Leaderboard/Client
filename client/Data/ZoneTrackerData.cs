@@ -26,11 +26,11 @@ namespace SPTLeaderboard.Data
         [JsonProperty("KillDetailsInZones")]
         public Dictionary<string, List<KillInfo>> KillDetailsInZones = new();
         
-        [JsonProperty("CausedDamageInZones")]
-        public Dictionary<string, float> CausedDamageInZones = new();
+        [JsonProperty("DamageToEnemyInZones")]
+        public Dictionary<string, float> DamageToEnemyInZones = new();
         
-        [JsonProperty("TakenDamageInZones")]
-        public Dictionary<string, float> TakenDamageInZones = new();
+        [JsonProperty("DamageToPlayerInZones")]
+        public Dictionary<string, float> DamageToPlayerInZones = new();
 
         [JsonProperty("LootedItemsInZones")]
         public Dictionary<string, List<ItemData>> LootedItemsInZones = new();
