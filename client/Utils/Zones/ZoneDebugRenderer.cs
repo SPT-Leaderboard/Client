@@ -12,8 +12,30 @@ public class ZoneDebugRenderer: MonoBehaviour
     private readonly List<ZoneOverlay> _zoneOverlays = new();
     private readonly Dictionary<string, Color> _zoneColors = new();
 
+    // Cached materials to prevent memory leaks
+    private Material _normalMaterial;
+    private Material _seeThroughMaterial;
+
     public bool ShowOverlays { get; set; }
     public ZoneTrackerService ZoneTrackerService { get; set; }
+
+    private Material GetNormalMaterial()
+    {
+        if (_normalMaterial == null)
+        {
+            _normalMaterial = new Material(Shader.Find("Sprites/Default"));
+        }
+        return _normalMaterial;
+    }
+
+    private Material GetSeeThroughMaterial()
+    {
+        if (_seeThroughMaterial == null)
+        {
+            _seeThroughMaterial = new Material(Shader.Find("GUI/Text Shader"));
+        }
+        return _seeThroughMaterial;
+    }
 
     private Color GetZoneColor(string zoneGuid)
     {
@@ -63,6 +85,20 @@ public class ZoneDebugRenderer: MonoBehaviour
         ClearDebugViews();
         ClearOverlays();
         _zoneColors.Clear();
+
+        // Destroy cached materials to prevent memory leaks
+        if (_normalMaterial != null)
+        {
+            Destroy(_normalMaterial);
+            _normalMaterial = null;
+        }
+        if (_seeThroughMaterial != null)
+        {
+            Destroy(_seeThroughMaterial);
+            _seeThroughMaterial = null;
+        }
+
+        Logger.LogDebugInfo($"[ZoneDebugRenderer] Cleared {_zoneColors.Count} cached zone colors and materials");
     }
     
     public void DrawZone(Vector3 Size, Vector3 Center, string zoneGuid = null)
@@ -90,8 +126,8 @@ public class ZoneDebugRenderer: MonoBehaviour
         Color zoneColor = zoneGuid != null ? GetZoneColor(zoneGuid) : Color.white;
 
         Material zoneMaterial = SPTLeaderboard.Configuration.Settings.Instance.ZonesSeeThroughWalls.Value
-            ? new Material(Shader.Find("GUI/Text Shader")) // See through walls
-            : new Material(Shader.Find("Sprites/Default")); // Normal rendering
+            ? GetSeeThroughMaterial()
+            : GetNormalMaterial();
 
         for (int i = 0; i < edges.GetLength(0); i++)
         {

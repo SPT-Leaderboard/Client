@@ -89,11 +89,13 @@ namespace SPTLeaderboard.Services
         public void Disable()
         {
             LeaderboardPlugin.Instance.FixedTick -= CheckPlayerPosition;
-            
+
             ExitCurrentZone();
-            
+
             _zones.Clear();
             _lootedContainers.Clear();
+            _allZones.Clear();
+
             CurrentZone = null;
             CurrentSubZone = null;
 
