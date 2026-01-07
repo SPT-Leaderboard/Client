@@ -20,6 +20,9 @@ namespace SPTLeaderboard.Configuration
 		public ConfigEntry<int> OverlayFontSize;
 		public ConfigEntry<float> OverlayMaxDist;
 		public ConfigEntry<float> OverlayUpDist;
+		public ConfigEntry<bool> ShowCoordinateAxes;
+		public ConfigEntry<bool> ZonesSeeThroughWalls;
+		public ConfigEntry<bool> ShowZonePlanes;
 #endif
 #if DEBUG
 		public ConfigEntry<bool> Debug;
@@ -98,7 +101,34 @@ namespace SPTLeaderboard.Configuration
 					"Distance the overlay is above the objects",
 					new AcceptableValueRange<float>(0f, 5f),
 					new ConfigurationAttributes()));
-			
+
+			ShowCoordinateAxes = configFile.Bind(
+				"3. Zones",
+				"Show Coordinate Axes",
+				true,
+				new ConfigDescription(
+					"Show coordinate axes (X=red, Y=green, Z=blue) for each zone",
+					null,
+					new ConfigurationAttributes()));
+
+			ZonesSeeThroughWalls = configFile.Bind(
+				"3. Zones",
+				"Zones See Through Walls",
+				false,
+				new ConfigDescription(
+					"Make zone lines visible through walls",
+					null,
+					new ConfigurationAttributes()));
+
+			ShowZonePlanes = configFile.Bind(
+				"3. Zones",
+				"Show Zone Planes",
+				false,
+				new ConfigDescription(
+					"Show semi-transparent colored planes for each zone face",
+					null,
+					new ConfigurationAttributes()));
+
 			ToggleZonesInterfaceKey = configFile.Bind(
 				"1. Settings",
 				"Toggle Zones Interface Key",

@@ -1167,7 +1167,186 @@
     "Labs": [],
     "Reserve": [],
     "Shoreline": [],
-    "Woods": [],
+    "Woods": [
+      {
+        "GUID": "a5395b95-edc8-4329-9b50-938c98467679",
+        "Name": "SCAV Bunker",
+        "Center": {
+          "x": 224.81,
+          "y": 24.41,
+          "z": -708.93
+        },
+        "Size": {
+          "x": 15.0,
+          "y": 15.0,
+          "z": 15.0
+        },
+        "RotationZ": 15.0,
+        "SubZones": []
+      },
+      {
+        "GUID": "1f69fa64-f1f1-4c1d-a798-b953db0ed5e3",
+        "Name": "SCAV Camp",
+        "Center": {
+          "x": 135.09,
+          "y": 24.4,
+          "z": -742.3
+        },
+        "Size": {
+          "x": 40.0,
+          "y": 15.0,
+          "z": 30.0
+        },
+        "RotationZ": -40.0,
+        "SubZones": []
+      },
+      {
+        "GUID": "856ad7c6-d061-44b0-ab94-b6800e4b8935",
+        "Name": "Convoy",
+        "Center": {
+          "x": 196.03,
+          "y": 10.85,
+          "z": -594.32
+        },
+        "Size": {
+          "x": 20.0,
+          "y": 10.0,
+          "z": 30.0
+        },
+        "RotationZ": 0.0,
+        "SubZones": []
+      },
+      {
+        "GUID": "aedc149e-5be4-4073-9eb8-bb975f88dcad",
+        "Name": "USEC Camp",
+        "Center": {
+          "x": 303.86,
+          "y": 22.89,
+          "z": -499.07
+        },
+        "Size": {
+          "x": 60.0,
+          "y": 30.0,
+          "z": 80.0
+        },
+        "RotationZ": 45.0,
+        "SubZones": [
+          {
+            "GUID": "c752912e-72a0-4050-aa70-af2883af49bd",
+            "Name": "Med Tent 1",
+            "Center": {
+              "x": 287.36,
+              "y": 22.94,
+              "z": -515.84
+            },
+            "Size": {
+              "x": 15.0,
+              "y": 10.0,
+              "z": 10.0
+            },
+            "RotationZ": 15.0,
+            "SubZones": []
+          },
+          {
+            "GUID": "73dcde5d-1dba-4f33-81bd-68d59237cf25",
+            "Name": "Med Tent 2",
+            "Center": {
+              "x": 272.34,
+              "y": 24.01,
+              "z": -511.81
+            },
+            "Size": {
+              "x": 6.0,
+              "y": 6.0,
+              "z": 6.0
+            },
+            "RotationZ": 50.0,
+            "SubZones": []
+          },
+          {
+            "GUID": "33389cad-06f1-4252-8d87-f38b1feffb01",
+            "Name": "Med Tent 3",
+            "Center": {
+              "x": 307.88,
+              "y": 23.04,
+              "z": -461.47
+            },
+            "Size": {
+              "x": 12.0,
+              "y": 6.0,
+              "z": 6.0
+            },
+            "RotationZ": 70.0,
+            "SubZones": []
+          }
+        ]
+      },
+      {
+        "GUID": "5fae7878-7fd2-4d65-9b78-6db366239237",
+        "Name": "Ponds",
+        "Center": {
+          "x": -6.99,
+          "y": 17.56,
+          "z": -507.51
+        },
+        "Size": {
+          "x": 40.0,
+          "y": 20.0,
+          "z": 40.0
+        },
+        "RotationZ": 0.0,
+        "SubZones": []
+      },
+      {
+        "GUID": "1d4e9df1-e175-4070-9d3f-6fe25131797c",
+        "Name": "Cultist Village",
+        "Center": {
+          "x": -72.24,
+          "y": 9.36,
+          "z": -688.77
+        },
+        "Size": {
+          "x": 200.0,
+          "y": 20.0,
+          "z": 120.0
+        },
+        "RotationZ": 30.0,
+        "SubZones": [
+          {
+            "GUID": "dfc20ef9-2583-439a-82e1-0a32e549a9ee",
+            "Name": "The Sunken Church",
+            "Center": {
+              "x": -60.68,
+              "y": 10.77,
+              "z": -645.0
+            },
+            "Size": {
+              "x": 10.0,
+              "y": 10.0,
+              "z": 15.0
+            },
+            "RotationZ": 10.0,
+            "SubZones": []
+          },
+          {
+            "GUID": "a0573669-a5b8-47e9-84e7-b806965a3fd9",
+            "Name": "Home 1",
+            "Center": {
+              "x": -97.88,
+              "y": 8.04,
+              "z": -618.06
+            },
+            "Size": {
+              "x": 12.0,
+              "y": 10.0,
+              "z": 8.0
+            },
+            "RotationZ": 10.0,
+            "SubZones": []
+          }
+        ]
+      }
+    ],
     "Lighthouse": [],
     "Streets of Tarkov": [],
     "Ground Zero - Low": [
@@ -1428,6 +1607,184 @@
         },
         "RotationZ": 45.0,
         "SubZones": []
+      },
+      {
+        "GUID": "237402cc-56c3-496e-b126-d0a359f210d8",
+        "Name": "Tarbank",
+        "Center": {
+          "x": 28.88,
+          "y": 23.48,
+          "z": 166.0
+        },
+        "Size": {
+          "x": 70.0,
+          "y": 70.0,
+          "z": 80.0
+        },
+        "RotationZ": 0.0,
+        "SubZones": [
+          {
+            "GUID": "db90dc6f-2507-4c3f-b289-88108c9d86a3",
+            "Name": "Empire Route Lobby",
+            "Center": {
+              "x": 18.0,
+              "y": 23.45,
+              "z": 160.0
+            },
+            "Size": {
+              "x": 30.0,
+              "y": 10.0,
+              "z": 30.0
+            },
+            "RotationZ": 0.0,
+            "SubZones": []
+          },
+          {
+            "GUID": "4d431be1-925d-4c5c-ac9c-f4e613a9f32b",
+            "Name": "Lobby 1",
+            "Center": {
+              "x": 48.0,
+              "y": 23.47,
+              "z": 140.58
+            },
+            "Size": {
+              "x": 30.0,
+              "y": 10.0,
+              "z": 10.0
+            },
+            "RotationZ": 0.0,
+            "SubZones": []
+          },
+          {
+            "GUID": "6f772af1-f278-462d-a62a-eb6676010936",
+            "Name": "Lobby 2",
+            "Center": {
+              "x": 58.0,
+              "y": 23.45,
+              "z": 156.83
+            },
+            "Size": {
+              "x": 10.0,
+              "y": 10.0,
+              "z": 15.0
+            },
+            "RotationZ": 0.0,
+            "SubZones": []
+          },
+          {
+            "GUID": "94aa1177-281f-49ed-853b-6647bc80fd31",
+            "Name": "Claymore Room",
+            "Center": {
+              "x": 59.78,
+              "y": 23.48,
+              "z": 171.38
+            },
+            "Size": {
+              "x": 2.0,
+              "y": 5.0,
+              "z": 2.0
+            },
+            "RotationZ": 0.0,
+            "SubZones": []
+          },
+          {
+            "GUID": "5fbb68a5-2251-490b-b950-11b0fea7401a",
+            "Name": "Tarbank Office",
+            "Center": {
+              "x": 53.88,
+              "y": 33.0,
+              "z": 147.02
+            },
+            "Size": {
+              "x": 20.0,
+              "y": 5.0,
+              "z": 40.0
+            },
+            "RotationZ": 0.0,
+            "SubZones": []
+          }
+        ]
+      },
+      {
+        "GUID": "0afa50d8-498e-4918-91f3-90fc2cb80bf4",
+        "Name": "Showroom",
+        "Center": {
+          "x": 99.04,
+          "y": 26.0,
+          "z": 223.46
+        },
+        "Size": {
+          "x": 12.0,
+          "y": 15.0,
+          "z": 12.0
+        },
+        "RotationZ": 0.0,
+        "SubZones": []
+      },
+      {
+        "GUID": "fa3d10db-5e42-461a-8023-e86aba23aa97",
+        "Name": "Capital Insight",
+        "Center": {
+          "x": 121.89,
+          "y": 32.84,
+          "z": 288.86
+        },
+        "Size": {
+          "x": 60.0,
+          "y": 30.0,
+          "z": 70.0
+        },
+        "RotationZ": 55.0,
+        "SubZones": [
+          {
+            "GUID": "3f37b0ed-d394-46d6-9ec9-c10544210a9d",
+            "Name": "Lobby",
+            "Center": {
+              "x": 115.57,
+              "y": 23.41,
+              "z": 284.11
+            },
+            "Size": {
+              "x": 30.0,
+              "y": 15.0,
+              "z": 35.0
+            },
+            "RotationZ": 55.0,
+            "SubZones": []
+          },
+          {
+            "GUID": "7478d70e-953c-4a20-b978-fc678a6d4ea0",
+            "Name": "Right Rise",
+            "Center": {
+              "x": 134.9,
+              "y": 25.0,
+              "z": 264.63
+            },
+            "Size": {
+              "x": 20.0,
+              "y": 8.0,
+              "z": 5.0
+            },
+            "RotationZ": 5.0,
+            "SubZones": []
+          }
+        ]
+      },
+      {
+        "GUID": "d8c748e9-e0a3-4992-beb1-9982ba5edfaa",
+        "Name": "Nakatani",
+        "Center": {
+          "x": -10.0,
+          "y": 20.0,
+          "z": 330.02
+        },
+        "Size": {
+          "x": 40.0,
+          "y": 30.0,
+          "z": 10.0
+        },
+        "RotationZ": 0.0,
+        "SubZones": []
       }
     ],
     "Ground Zero - High": [
@@ -1461,8 +1818,411 @@
             },
             "RotationZ": 0.0,
             "SubZones": []
+          },
+          {
+            "GUID": "8dd51277-aa01-4fa6-b5cb-cd0df63379bd",
+            "Name": "Parking",
+            "Center": {
+              "x": 4.55,
+              "y": 23.84,
+              "z": -41.36
+            },
+            "Size": {
+              "x": 40.0,
+              "y": 20.0,
+              "z": 40.0
+            },
+            "RotationZ": 0.0,
+            "SubZones": []
+          },
+          {
+            "GUID": "adc1e866-8069-4b01-a4c9-3a4411fe8d19",
+            "Name": "Lobby",
+            "Center": {
+              "x": -35.92,
+              "y": 24.22,
+              "z": 32.62
+            },
+            "Size": {
+              "x": 22.0,
+              "y": 22.0,
+              "z": 22.0
+            },
+            "RotationZ": 0.0,
+            "SubZones": []
+          },
+          {
+            "GUID": "203c12ec-dadc-4771-ac5a-e7d9ec1524c0",
+            "Name": "Office3",
+            "Center": {
+              "x": -17.0,
+              "y": 31.0,
+              "z": 75.0
+            },
+            "Size": {
+              "x": 20.0,
+              "y": 4.0,
+              "z": 35.0
+            },
+            "RotationZ": 0.0,
+            "SubZones": []
+          },
+          {
+            "GUID": "2faeafb9-0448-4261-ae61-523e47ebca6d",
+            "Name": "Office4",
+            "Center": {
+              "x": -11.68,
+              "y": 31.0,
+              "z": 48.0
+            },
+            "Size": {
+              "x": 15.0,
+              "y": 3.0,
+              "z": 20.0
+            },
+            "RotationZ": 0.0,
+            "SubZones": []
           }
         ]
+      },
+      {
+        "GUID": "1cfadf2e-ae99-4c66-a7d3-3067f00c98bf",
+        "Name": "Winery",
+        "Center": {
+          "x": 118.0,
+          "y": 22.78,
+          "z": 25.0
+        },
+        "Size": {
+          "x": 25.0,
+          "y": 5.0,
+          "z": 20.0
+        },
+        "RotationZ": 0.0,
+        "SubZones": [
+          {
+            "GUID": "bfa0d383-63a8-4d4b-bbb2-b9948a4672f6",
+            "Name": "Storage Winery",
+            "Center": {
+              "x": 126.21,
+              "y": 22.82,
+              "z": 23.19
+            },
+            "Size": {
+              "x": 5.0,
+              "y": 5.0,
+              "z": 5.0
+            },
+            "RotationZ": 0.0,
+            "SubZones": []
+          }
+        ]
+      },
+      {
+        "GUID": "acc2349e-29eb-4bee-9615-39f94db59459",
+        "Name": "Med Tent",
+        "Center": {
+          "x": 154.0,
+          "y": 22.73,
+          "z": -82.11
+        },
+        "Size": {
+          "x": 12.0,
+          "y": 5.0,
+          "z": 5.0
+        },
+        "RotationZ": -10.0,
+        "SubZones": []
+      },
+      {
+        "GUID": "6526d8a9-51ff-45ee-90eb-42351a7ae360",
+        "Name": "Rise",
+        "Center": {
+          "x": 137.06,
+          "y": 19.57,
+          "z": 66.15
+        },
+        "Size": {
+          "x": 60.0,
+          "y": 10.0,
+          "z": 15.0
+        },
+        "RotationZ": 0.0,
+        "SubZones": []
+      },
+      {
+        "GUID": "57803996-4d0a-4d92-b344-78f6f393ec76",
+        "Name": "Avenue Mira",
+        "Center": {
+          "x": 217.54,
+          "y": 16.03,
+          "z": -20.0
+        },
+        "Size": {
+          "x": 20.0,
+          "y": 10.0,
+          "z": 90.0
+        },
+        "RotationZ": 0.0,
+        "SubZones": []
+      },
+      {
+        "GUID": "68fc3671-e676-4929-a84a-b4a3df18a627",
+        "Name": "TarTower Sales Office",
+        "Center": {
+          "x": 197.18,
+          "y": 16.2,
+          "z": 134.65
+        },
+        "Size": {
+          "x": 10.0,
+          "y": 10.0,
+          "z": 10.0
+        },
+        "RotationZ": 0.0,
+        "SubZones": []
+      },
+      {
+        "GUID": "c5c57dc4-1c59-4ae5-bfb8-c301707f92f6",
+        "Name": "Fusion Park",
+        "Center": {
+          "x": 195.72,
+          "y": 16.16,
+          "z": 101.86
+        },
+        "Size": {
+          "x": 30.0,
+          "y": 10.0,
+          "z": 50.0
+        },
+        "RotationZ": 0.0,
+        "SubZones": []
+      },
+      {
+        "GUID": "8ed6147b-908c-4ef0-b2d8-06396e34d944",
+        "Name": "Fusion Back",
+        "Center": {
+          "x": 173.45,
+          "y": 24.41,
+          "z": 103.6
+        },
+        "Size": {
+          "x": 10.0,
+          "y": 10.0,
+          "z": 30.0
+        },
+        "RotationZ": 0.0,
+        "SubZones": []
+      },
+      {
+        "GUID": "c7d841f4-f0e7-4130-bf15-57bb1510eda8",
+        "Name": "Cafe",
+        "Center": {
+          "x": 115.0,
+          "y": 29.95,
+          "z": 151.05
+        },
+        "Size": {
+          "x": 30.0,
+          "y": 20.0,
+          "z": 30.0
+        },
+        "RotationZ": 0.0,
+        "SubZones": []
+      },
+      {
+        "GUID": "46e76ab3-ee7b-4706-b6ce-a734f04b0c44",
+        "Name": "Oasis",
+        "Center": {
+          "x": 117.44,
+          "y": 26.38,
+          "z": 104.01
+        },
+        "Size": {
+          "x": 30.0,
+          "y": 20.0,
+          "z": 30.0
+        },
+        "RotationZ": 45.0,
+        "SubZones": []
+      },
+      {
+        "GUID": "237402cc-56c3-496e-b126-d0a359f210d8",
+        "Name": "Tarbank",
+        "Center": {
+          "x": 28.88,
+          "y": 23.48,
+          "z": 166.0
+        },
+        "Size": {
+          "x": 70.0,
+          "y": 70.0,
+          "z": 80.0
+        },
+        "RotationZ": 0.0,
+        "SubZones": [
+          {
+            "GUID": "db90dc6f-2507-4c3f-b289-88108c9d86a3",
+            "Name": "Empire Route Lobby",
+            "Center": {
+              "x": 18.0,
+              "y": 23.45,
+              "z": 160.0
+            },
+            "Size": {
+              "x": 30.0,
+              "y": 10.0,
+              "z": 30.0
+            },
+            "RotationZ": 0.0,
+            "SubZones": []
+          },
+          {
+            "GUID": "4d431be1-925d-4c5c-ac9c-f4e613a9f32b",
+            "Name": "Lobby 1",
+            "Center": {
+              "x": 48.0,
+              "y": 23.47,
+              "z": 140.58
+            },
+            "Size": {
+              "x": 30.0,
+              "y": 10.0,
+              "z": 10.0
+            },
+            "RotationZ": 0.0,
+            "SubZones": []
+          },
+          {
+            "GUID": "6f772af1-f278-462d-a62a-eb6676010936",
+            "Name": "Lobby 2",
+            "Center": {
+              "x": 58.0,
+              "y": 23.45,
+              "z": 156.83
+            },
+            "Size": {
+              "x": 10.0,
+              "y": 10.0,
+              "z": 15.0
+            },
+            "RotationZ": 0.0,
+            "SubZones": []
+          },
+          {
+            "GUID": "94aa1177-281f-49ed-853b-6647bc80fd31",
+            "Name": "Claymore Room",
+            "Center": {
+              "x": 59.78,
+              "y": 23.48,
+              "z": 171.38
+            },
+            "Size": {
+              "x": 2.0,
+              "y": 5.0,
+              "z": 2.0
+            },
+            "RotationZ": 0.0,
+            "SubZones": []
+          },
+          {
+            "GUID": "5fbb68a5-2251-490b-b950-11b0fea7401a",
+            "Name": "Tarbank Office",
+            "Center": {
+              "x": 53.88,
+              "y": 33.0,
+              "z": 147.02
+            },
+            "Size": {
+              "x": 20.0,
+              "y": 5.0,
+              "z": 40.0
+            },
+            "RotationZ": 0.0,
+            "SubZones": []
+          }
+        ]
+      },
+      {
+        "GUID": "0afa50d8-498e-4918-91f3-90fc2cb80bf4",
+        "Name": "Showroom",
+        "Center": {
+          "x": 99.04,
+          "y": 26.0,
+          "z": 223.46
+        },
+        "Size": {
+          "x": 12.0,
+          "y": 15.0,
+          "z": 12.0
+        },
+        "RotationZ": 0.0,
+        "SubZones": []
+      },
+      {
+        "GUID": "fa3d10db-5e42-461a-8023-e86aba23aa97",
+        "Name": "Capital Insight",
+        "Center": {
+          "x": 121.89,
+          "y": 32.84,
+          "z": 288.86
+        },
+        "Size": {
+          "x": 60.0,
+          "y": 30.0,
+          "z": 70.0
+        },
+        "RotationZ": 55.0,
+        "SubZones": [
+          {
+            "GUID": "3f37b0ed-d394-46d6-9ec9-c10544210a9d",
+            "Name": "Lobby",
+            "Center": {
+              "x": 115.57,
+              "y": 23.41,
+              "z": 284.11
+            },
+            "Size": {
+              "x": 30.0,
+              "y": 15.0,
+              "z": 35.0
+            },
+            "RotationZ": 55.0,
+            "SubZones": []
+          },
+          {
+            "GUID": "7478d70e-953c-4a20-b978-fc678a6d4ea0",
+            "Name": "Right Rise",
+            "Center": {
+              "x": 134.9,
+              "y": 25.0,
+              "z": 264.63
+            },
+            "Size": {
+              "x": 20.0,
+              "y": 8.0,
+              "z": 5.0
+            },
+            "RotationZ": 5.0,
+            "SubZones": []
+          }
+        ]
+      },
+      {
+        "GUID": "d8c748e9-e0a3-4992-beb1-9982ba5edfaa",
+        "Name": "Nakatani",
+        "Center": {
+          "x": -10.0,
+          "y": 20.0,
+          "z": 330.02
+        },
+        "Size": {
+          "x": 40.0,
+          "y": 30.0,
+          "z": 10.0
+        },
+        "RotationZ": 0.0,
+        "SubZones": []
       }
     ]
   }

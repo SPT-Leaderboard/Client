@@ -94,7 +94,6 @@ namespace SPTLeaderboard.Utils.Zones
                 IsUIOpen = !IsUIOpen;
                 Cursor.lockState = IsUIOpen ? CursorLockMode.None : CursorLockMode.Locked;
                 Cursor.visible = IsUIOpen;
-                LocalizationService.NotificationWarning($"ZonesInterface: {IsUIOpen}");
             }
             
             if (_wasUIOpen != IsUIOpen)
@@ -189,6 +188,48 @@ namespace SPTLeaderboard.Utils.Zones
                 }
             }
 
+            GUILayout.EndHorizontal();
+
+            GUILayout.BeginHorizontal();
+            bool showCoordinateAxes = Settings.Instance.ShowCoordinateAxes.Value;
+            bool newShowCoordinateAxes = GUILayout.Toggle(showCoordinateAxes, "Show coordinate axes", GUILayout.Height(25));
+            if (newShowCoordinateAxes != showCoordinateAxes)
+            {
+                Settings.Instance.ShowCoordinateAxes.Value = newShowCoordinateAxes;
+                // Re-render zones to apply the change
+                if (_zoneTrackerService != null && selectedMap != null)
+                {
+                    _zoneDebugRenderer.DrawZonesForMap(selectedMap);
+                }
+            }
+            GUILayout.EndHorizontal();
+
+            GUILayout.BeginHorizontal();
+            bool zonesSeeThroughWalls = Settings.Instance.ZonesSeeThroughWalls.Value;
+            bool newZonesSeeThroughWalls = GUILayout.Toggle(zonesSeeThroughWalls, "Zones see through walls", GUILayout.Height(25));
+            if (newZonesSeeThroughWalls != zonesSeeThroughWalls)
+            {
+                Settings.Instance.ZonesSeeThroughWalls.Value = newZonesSeeThroughWalls;
+                // Re-render zones to apply the change
+                if (_zoneTrackerService != null && selectedMap != null)
+                {
+                    _zoneDebugRenderer.DrawZonesForMap(selectedMap);
+                }
+            }
+            GUILayout.EndHorizontal();
+
+            GUILayout.BeginHorizontal();
+            bool showZonePlanes = Settings.Instance.ShowZonePlanes.Value;
+            bool newShowZonePlanes = GUILayout.Toggle(showZonePlanes, "Show zone planes", GUILayout.Height(25));
+            if (newShowZonePlanes != showZonePlanes)
+            {
+                Settings.Instance.ShowZonePlanes.Value = newShowZonePlanes;
+                // Re-render zones to apply the change
+                if (_zoneTrackerService != null && selectedMap != null)
+                {
+                    _zoneDebugRenderer.DrawZonesForMap(selectedMap);
+                }
+            }
             GUILayout.EndHorizontal();
 
             GUILayout.Space(10);
@@ -539,13 +580,19 @@ namespace SPTLeaderboard.Utils.Zones
 
         void SelectZone(int index)
         {
-            if (selectedMap == null || currentMapZones == null)
+            if (selectedMap == null || currentMapZones == null || index < 0 || index >= currentMapZones.Count)
                 return;
 
-            if (index >= 0 && index < currentMapZones.Count)
+            try
             {
                 selectedZoneIndex = index;
                 selectedZone = currentMapZones[index];
+
+                if (selectedZone == null)
+                {
+                    Logger.LogDebugInfo("[ZonesInterface] Selected zone is null");
+                    return;
+                }
 
                 Logger.LogDebugInfo($"[ZonesInterface] Selected zone: {selectedZone.Name}, GUID: {selectedZone.GUID}");
 
@@ -559,6 +606,10 @@ namespace SPTLeaderboard.Utils.Zones
                 _lastSizeY = editedSizeY;
                 _lastSizeZ = editedSizeZ;
                 _lastRotationZ = editedRotationZ;
+            }
+            catch (System.Exception ex)
+            {
+                Logger.LogDebugInfo($"[ZonesInterface] Error selecting zone at index {index}: {ex.Message}");
             }
         }
 
@@ -611,15 +662,32 @@ namespace SPTLeaderboard.Utils.Zones
             if (selectedZone == null)
                 return;
 
-            editedGuid = selectedZone.GUID ?? "";
-            editedName = selectedZone.Name ?? "";
-            editedCenterX = selectedZone.Center.x.ToString("F2");
-            editedCenterY = selectedZone.Center.y.ToString("F2");
-            editedCenterZ = selectedZone.Center.z.ToString("F2");
-            editedSizeX = selectedZone.Size.x.ToString("F2");
-            editedSizeY = selectedZone.Size.y.ToString("F2");
-            editedSizeZ = selectedZone.Size.z.ToString("F2");
-            editedRotationZ = selectedZone.RotationZ.ToString("F2");
+            try
+            {
+                editedGuid = selectedZone.GUID ?? "";
+                editedName = selectedZone.Name ?? "";
+                editedCenterX = selectedZone.Center.x.ToString("F2");
+                editedCenterY = selectedZone.Center.y.ToString("F2");
+                editedCenterZ = selectedZone.Center.z.ToString("F2");
+                editedSizeX = selectedZone.Size.x.ToString("F2");
+                editedSizeY = selectedZone.Size.y.ToString("F2");
+                editedSizeZ = selectedZone.Size.z.ToString("F2");
+                editedRotationZ = selectedZone.RotationZ.ToString("F2");
+            }
+            catch (System.Exception ex)
+            {
+                Logger.LogDebugInfo($"[ZonesInterface] Error syncing fields with selected zone: {ex.Message}");
+                // Set default values
+                editedGuid = "";
+                editedName = "";
+                editedCenterX = "0.00";
+                editedCenterY = "0.00";
+                editedCenterZ = "0.00";
+                editedSizeX = "1.00";
+                editedSizeY = "1.00";
+                editedSizeZ = "1.00";
+                editedRotationZ = "0.00";
+            }
         }
 
         void ApplyChanges()
@@ -757,36 +825,44 @@ namespace SPTLeaderboard.Utils.Zones
                 LocalizationService.NotificationWarning("Not selected parent zone for adding sub-zone");
                 return;
             }
-            
-            ZoneData templateSubZone = null;
-            if (currentParentZone.SubZones != null && currentParentZone.SubZones.Count > 0)
+
+            try
             {
-                templateSubZone = currentParentZone.SubZones.Last();
+                ZoneData templateSubZone = null;
+                if (currentParentZone.SubZones != null && currentParentZone.SubZones.Count > 0)
+                {
+                    templateSubZone = currentParentZone.SubZones[currentParentZone.SubZones.Count - 1]; // Use last sub-zone as template
+                }
+
+                ZoneData newSubZone = new ZoneData
+                {
+                    GUID = Guid.NewGuid().ToString(),
+                    Name = "New Sub-zone 123",
+                    Center = templateSubZone?.Center ?? currentParentZone.Center,
+                    Size = templateSubZone?.Size ?? Vector3.one * 5f,
+                    RotationZ = templateSubZone?.RotationZ ?? currentParentZone.RotationZ
+                };
+
+                if (currentParentZone.SubZones == null)
+                {
+                    currentParentZone.SubZones = new List<ZoneData>();
+                }
+
+                currentParentZone.SubZones.Add(newSubZone);
+                currentMapZones = currentParentZone.SubZones;
+
+                selectedZoneIndex = currentMapZones.Count - 1;
+                selectedZone = newSubZone;
+                SyncFieldsWithSelectedZone();
+
+                Logger.LogDebugInfo($"[ZonesInterface] Added new sub-zone in zone {currentParentZone.Name}");
+                LocalizationService.Notification($"Added new sub-zone in zone {currentParentZone.Name}");
             }
-
-            ZoneData newSubZone = new ZoneData
+            catch (System.Exception ex)
             {
-                GUID = Guid.NewGuid().ToString(),
-                Name = "New Sub-zone 123",
-                Center = templateSubZone?.Center ?? Vector3.zero,
-                Size = templateSubZone?.Size ?? Vector3.one * 5f,
-                RotationZ = templateSubZone?.RotationZ ?? 0f
-            };
-
-            if (currentParentZone.SubZones == null)
-            {
-                currentParentZone.SubZones = new List<ZoneData>();
+                Logger.LogDebugInfo($"[ZonesInterface] Error adding new sub-zone: {ex.Message}");
+                LocalizationService.NotificationWarning("Error adding new sub-zone");
             }
-
-            currentParentZone.SubZones.Add(newSubZone);
-            currentMapZones = currentParentZone.SubZones;
-
-            selectedZoneIndex = currentMapZones.Count - 1;
-            selectedZone = newSubZone;
-            SyncFieldsWithSelectedZone();
-
-            Logger.LogDebugInfo($"[ZonesInterface] Added new sub-zone in zone {currentParentZone.Name}");
-            LocalizationService.Notification($"Added new sub-zone in zone {currentParentZone.Name}");
         }
 
         int GetTotalZoneCount(string mapName)
