@@ -40,7 +40,7 @@ namespace SPTLeaderboard.Services
 
         public Action<Dictionary<string, List<ZoneData>>> OnZonesLoaded;
         private List<ZoneData> _zones = new();
-        private readonly Dictionary<string, List<ZoneData>> _allZones = new();
+        private Dictionary<string, List<ZoneData>> _allZones = new();
 
         private List<string> _lootedContainers = new();
 
@@ -71,9 +71,9 @@ namespace SPTLeaderboard.Services
             LoadZonesForCurrentMap();
         }
 
-        private void LoadZonesForCurrentMap()
+        public void LoadZonesForCurrentMap()
         {
-            var mapName = DataUtils.GetPrettyMapName(DataUtils.GetRaidRawMap());
+            var mapName = DataUtils.GetPrettyMapName(DataUtils.GetRaidRawMap().ToLower());
             if (_allZones.TryGetValue(mapName, out var mapZones) && mapZones != null)
             {
                 _zones = mapZones;
@@ -82,7 +82,7 @@ namespace SPTLeaderboard.Services
             else
             {
                 _allZones.Clear();
-                Logger.LogWarning($"[ZoneTracker] For map {mapName} zones not found.");
+                Logger.LogWarning($"[ZoneTracker] For map {DataUtils.GetRaidRawMap().ToLower()} zones not found.");
             }
         }
 

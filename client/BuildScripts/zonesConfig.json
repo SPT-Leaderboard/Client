@@ -1163,166 +1163,306 @@
         "SubZones": []
       }
     ],
-    "Interchange": [
-      {
-        "GUID": "c3996ba1-3b19-435c-a08e-86e3d61474bc",
-        "Name": "Лесопилка",
-        "Center": {
-          "x": 0.0,
-          "y": 0.0,
-          "z": 10.0
-        },
-        "Size": {
-          "x": 10.0,
-          "y": 5.0,
-          "z": 10.0
-        },
-        "RotationZ": 0.0,
-        "SubZones": []
-      }
-    ],
-    "Labs": [
-      {
-        "GUID": "342fa05f-6739-48df-8765-6326157c1d53",
-        "Name": "Лесопилка",
-        "Center": {
-          "x": 0.0,
-          "y": 0.0,
-          "z": 10.0
-        },
-        "Size": {
-          "x": 10.0,
-          "y": 5.0,
-          "z": 10.0
-        },
-        "RotationZ": 0.0,
-        "SubZones": []
-      }
-    ],
-    "Reserve": [
-      {
-        "GUID": "7d23de1f-6d01-47d9-a13a-40da2c3598d8",
-        "Name": "Лесопилка",
-        "Center": {
-          "x": 0.0,
-          "y": 0.0,
-          "z": 10.0
-        },
-        "Size": {
-          "x": 10.0,
-          "y": 5.0,
-          "z": 10.0
-        },
-        "RotationZ": 0.0,
-        "SubZones": []
-      }
-    ],
-    "Shoreline": [
-      {
-        "GUID": "b7582ae8-5be8-423a-a3da-b635bf91fc3b",
-        "Name": "Лесопилка",
-        "Center": {
-          "x": 0.0,
-          "y": 0.0,
-          "z": 10.0
-        },
-        "Size": {
-          "x": 10.0,
-          "y": 5.0,
-          "z": 10.0
-        },
-        "RotationZ": 0.0,
-        "SubZones": []
-      }
-    ],
-    "Woods": [
-      {
-        "GUID": "7a971683-f954-48fe-932a-7a7e2247d411",
-        "Name": "Лесопилка",
-        "Center": {
-          "x": 0.0,
-          "y": 0.0,
-          "z": 10.0
-        },
-        "Size": {
-          "x": 10.0,
-          "y": 5.0,
-          "z": 10.0
-        },
-        "RotationZ": 0.0,
-        "SubZones": []
-      }
-    ],
-    "Lighthouse": [
-      {
-        "GUID": "ad0ec543-3042-42c5-bae4-695a99994d04",
-        "Name": "Лесопилка",
-        "Center": {
-          "x": 0.0,
-          "y": 0.0,
-          "z": 10.0
-        },
-        "Size": {
-          "x": 10.0,
-          "y": 5.0,
-          "z": 10.0
-        },
-        "RotationZ": 0.0,
-        "SubZones": []
-      }
-    ],
-    "Streets of Tarkov": [
-      {
-        "GUID": "da6e4d12-66dd-4d38-bbca-9d6ac5a7e4f6",
-        "Name": "Лесопилка",
-        "Center": {
-          "x": 0.0,
-          "y": 0.0,
-          "z": 10.0
-        },
-        "Size": {
-          "x": 10.0,
-          "y": 5.0,
-          "z": 10.0
-        },
-        "RotationZ": 0.0,
-        "SubZones": []
-      }
-    ],
+    "Interchange": [],
+    "Labs": [],
+    "Reserve": [],
+    "Shoreline": [],
+    "Woods": [],
+    "Lighthouse": [],
+    "Streets of Tarkov": [],
     "Ground Zero - Low": [
       {
-        "GUID": "3a4026ad-8d4f-4738-92bb-c78f9e170d6a",
-        "Name": "Лесопилка",
+        "GUID": "ecca6b16-3884-4275-9822-412e47ed40d7",
+        "Name": "TerraGroup",
         "Center": {
-          "x": 0.0,
-          "y": 0.0,
-          "z": 10.0
+          "x": -5.0,
+          "y": 23.85,
+          "z": 15.0
+        },
+        "Size": {
+          "x": 100.0,
+          "y": 100.0,
+          "z": 165.0
+        },
+        "RotationZ": 0.0,
+        "SubZones": [
+          {
+            "GUID": "5f2da552-f7b2-4a61-a9d3-644b476eede4",
+            "Name": "Park TerraGroup",
+            "Center": {
+              "x": 21.97,
+              "y": 23.05,
+              "z": 31.84
+            },
+            "Size": {
+              "x": 40.0,
+              "y": 20.0,
+              "z": 90.0
+            },
+            "RotationZ": 0.0,
+            "SubZones": []
+          },
+          {
+            "GUID": "8dd51277-aa01-4fa6-b5cb-cd0df63379bd",
+            "Name": "Parking",
+            "Center": {
+              "x": 4.55,
+              "y": 23.84,
+              "z": -41.36
+            },
+            "Size": {
+              "x": 40.0,
+              "y": 20.0,
+              "z": 40.0
+            },
+            "RotationZ": 0.0,
+            "SubZones": []
+          },
+          {
+            "GUID": "adc1e866-8069-4b01-a4c9-3a4411fe8d19",
+            "Name": "Lobby",
+            "Center": {
+              "x": -35.92,
+              "y": 24.22,
+              "z": 32.62
+            },
+            "Size": {
+              "x": 22.0,
+              "y": 22.0,
+              "z": 22.0
+            },
+            "RotationZ": 0.0,
+            "SubZones": []
+          },
+          {
+            "GUID": "203c12ec-dadc-4771-ac5a-e7d9ec1524c0",
+            "Name": "Office3",
+            "Center": {
+              "x": -17.0,
+              "y": 31.0,
+              "z": 75.0
+            },
+            "Size": {
+              "x": 20.0,
+              "y": 4.0,
+              "z": 35.0
+            },
+            "RotationZ": 0.0,
+            "SubZones": []
+          },
+          {
+            "GUID": "2faeafb9-0448-4261-ae61-523e47ebca6d",
+            "Name": "Office4",
+            "Center": {
+              "x": -11.68,
+              "y": 31.0,
+              "z": 48.0
+            },
+            "Size": {
+              "x": 15.0,
+              "y": 3.0,
+              "z": 20.0
+            },
+            "RotationZ": 0.0,
+            "SubZones": []
+          }
+        ]
+      },
+      {
+        "GUID": "1cfadf2e-ae99-4c66-a7d3-3067f00c98bf",
+        "Name": "Winery",
+        "Center": {
+          "x": 118.0,
+          "y": 22.78,
+          "z": 25.0
+        },
+        "Size": {
+          "x": 25.0,
+          "y": 5.0,
+          "z": 20.0
+        },
+        "RotationZ": 0.0,
+        "SubZones": [
+          {
+            "GUID": "bfa0d383-63a8-4d4b-bbb2-b9948a4672f6",
+            "Name": "Storage Winery",
+            "Center": {
+              "x": 126.21,
+              "y": 22.82,
+              "z": 23.19
+            },
+            "Size": {
+              "x": 5.0,
+              "y": 5.0,
+              "z": 5.0
+            },
+            "RotationZ": 0.0,
+            "SubZones": []
+          }
+        ]
+      },
+      {
+        "GUID": "acc2349e-29eb-4bee-9615-39f94db59459",
+        "Name": "Med Tent",
+        "Center": {
+          "x": 154.0,
+          "y": 22.73,
+          "z": -82.11
+        },
+        "Size": {
+          "x": 12.0,
+          "y": 5.0,
+          "z": 5.0
+        },
+        "RotationZ": -10.0,
+        "SubZones": []
+      },
+      {
+        "GUID": "6526d8a9-51ff-45ee-90eb-42351a7ae360",
+        "Name": "Rise",
+        "Center": {
+          "x": 137.06,
+          "y": 19.57,
+          "z": 66.15
+        },
+        "Size": {
+          "x": 60.0,
+          "y": 10.0,
+          "z": 15.0
+        },
+        "RotationZ": 0.0,
+        "SubZones": []
+      },
+      {
+        "GUID": "57803996-4d0a-4d92-b344-78f6f393ec76",
+        "Name": "Avenue Mira",
+        "Center": {
+          "x": 217.54,
+          "y": 16.03,
+          "z": -20.0
+        },
+        "Size": {
+          "x": 20.0,
+          "y": 10.0,
+          "z": 90.0
+        },
+        "RotationZ": 0.0,
+        "SubZones": []
+      },
+      {
+        "GUID": "68fc3671-e676-4929-a84a-b4a3df18a627",
+        "Name": "TarTower Sales Office",
+        "Center": {
+          "x": 197.18,
+          "y": 16.2,
+          "z": 134.65
         },
         "Size": {
           "x": 10.0,
-          "y": 5.0,
+          "y": 10.0,
           "z": 10.0
         },
         "RotationZ": 0.0,
+        "SubZones": []
+      },
+      {
+        "GUID": "c5c57dc4-1c59-4ae5-bfb8-c301707f92f6",
+        "Name": "Fusion Park",
+        "Center": {
+          "x": 195.72,
+          "y": 16.16,
+          "z": 101.86
+        },
+        "Size": {
+          "x": 30.0,
+          "y": 10.0,
+          "z": 50.0
+        },
+        "RotationZ": 0.0,
+        "SubZones": []
+      },
+      {
+        "GUID": "8ed6147b-908c-4ef0-b2d8-06396e34d944",
+        "Name": "Fusion Back",
+        "Center": {
+          "x": 173.45,
+          "y": 24.41,
+          "z": 103.6
+        },
+        "Size": {
+          "x": 10.0,
+          "y": 10.0,
+          "z": 30.0
+        },
+        "RotationZ": 0.0,
+        "SubZones": []
+      },
+      {
+        "GUID": "c7d841f4-f0e7-4130-bf15-57bb1510eda8",
+        "Name": "Cafe",
+        "Center": {
+          "x": 115.0,
+          "y": 29.95,
+          "z": 151.05
+        },
+        "Size": {
+          "x": 30.0,
+          "y": 20.0,
+          "z": 30.0
+        },
+        "RotationZ": 0.0,
+        "SubZones": []
+      },
+      {
+        "GUID": "46e76ab3-ee7b-4706-b6ce-a734f04b0c44",
+        "Name": "Oasis",
+        "Center": {
+          "x": 117.44,
+          "y": 26.38,
+          "z": 104.01
+        },
+        "Size": {
+          "x": 30.0,
+          "y": 20.0,
+          "z": 30.0
+        },
+        "RotationZ": 45.0,
         "SubZones": []
       }
     ],
     "Ground Zero - High": [
       {
-        "GUID": "916bf59b-6951-4e3c-a907-61bb0f1b8c27",
-        "Name": "Лесопилка",
+        "GUID": "ecca6b16-3884-4275-9822-412e47ed40d7",
+        "Name": "TerraGroup",
         "Center": {
-          "x": 0.0,
-          "y": 0.0,
-          "z": 10.0
+          "x": -5.0,
+          "y": 23.85,
+          "z": 15.0
         },
         "Size": {
-          "x": 10.0,
-          "y": 5.0,
-          "z": 10.0
+          "x": 100.0,
+          "y": 100.0,
+          "z": 165.0
         },
         "RotationZ": 0.0,
-        "SubZones": []
+        "SubZones": [
+          {
+            "GUID": "5f2da552-f7b2-4a61-a9d3-644b476eede4",
+            "Name": "Park TerraGroup",
+            "Center": {
+              "x": 21.97,
+              "y": 23.05,
+              "z": 31.84
+            },
+            "Size": {
+              "x": 40.0,
+              "y": 20.0,
+              "z": 90.0
+            },
+            "RotationZ": 0.0,
+            "SubZones": []
+          }
+        ]
       }
     ]
   }

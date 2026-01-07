@@ -18,12 +18,10 @@ namespace SPTLeaderboard.Utils.Zones
 
     public class ZoneRepository()
     {
-        public Dictionary<string, List<ZoneData>> ZonesConfigData = null;
+        public Dictionary<string, List<ZoneData>> ZonesConfigData;
 
         public Dictionary<string, List<ZoneData>> LoadAllZones()
         {
-            if (ZonesConfigData != null) return ZonesConfigData;
-
             if (File.Exists(GlobalData.ZonesConfig))
             {
                 var zonesFromFile = LoadFromFile(GlobalData.ZonesConfig);

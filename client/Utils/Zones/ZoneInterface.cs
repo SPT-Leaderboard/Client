@@ -36,7 +36,7 @@ namespace SPTLeaderboard.Utils.Zones
         private string editedSizeZ = "0";
         private string editedRotationZ = "0";
 
-        private ZoneTrackerService _zoneZoneTrackerService;
+        private ZoneTrackerService _zoneTrackerService;
         private ZoneDebugRenderer _zoneDebugRenderer;
 
         private bool _liveUpdateEnabled = true;
@@ -54,15 +54,15 @@ namespace SPTLeaderboard.Utils.Zones
 
         void Start()
         {
-            _zoneZoneTrackerService = LeaderboardPlugin.Instance.ZoneTrackerService;
+            _zoneTrackerService = LeaderboardPlugin.Instance.ZoneTrackerService;
             
             
             ZoneCursorUtils.Initialize();
-            if (_zoneZoneTrackerService != null)
+            if (_zoneTrackerService != null)
             {
                 _zoneDebugRenderer = gameObject.AddComponent<ZoneDebugRenderer>();
-                _zoneDebugRenderer.ZoneTrackerService = _zoneZoneTrackerService;
-                _zoneZoneTrackerService.OnZonesLoaded += OnZonesLoaded;
+                _zoneDebugRenderer.ZoneTrackerService = _zoneTrackerService;
+                _zoneTrackerService.OnZonesLoaded += OnZonesLoaded;
             }
             else
             {
@@ -75,9 +75,9 @@ namespace SPTLeaderboard.Utils.Zones
         {
             _rotateBlocker?.Unlock();
             _rotateBlocker = null;
-            if (_zoneZoneTrackerService != null)
+            if (_zoneTrackerService != null)
             {
-                _zoneZoneTrackerService.OnZonesLoaded -= OnZonesLoaded;
+                _zoneTrackerService.OnZonesLoaded -= OnZonesLoaded;
             }
         }
 
@@ -138,9 +138,9 @@ namespace SPTLeaderboard.Utils.Zones
             GUILayout.BeginHorizontal();
             if (GUILayout.Button("Load zones", GUILayout.Height(30)))
             {
-                if (_zoneZoneTrackerService != null)
+                if (_zoneTrackerService != null)
                 {
-                    _zoneZoneTrackerService.LoadZones();
+                    _zoneTrackerService.LoadZones();
                 }
                 else
                 {
@@ -166,7 +166,7 @@ namespace SPTLeaderboard.Utils.Zones
             GUILayout.EndHorizontal();
 
             GUILayout.BeginHorizontal();
-            bool showOverlays = _zoneZoneTrackerService != null && _zoneDebugRenderer.ShowOverlays;
+            bool showOverlays = _zoneTrackerService != null && _zoneDebugRenderer.ShowOverlays;
             bool newShowOverlays = GUILayout.Toggle(showOverlays, "Show overlay zones", GUILayout.Height(25));
             if (_zoneDebugRenderer != null && newShowOverlays != showOverlays)
             {
@@ -259,7 +259,7 @@ namespace SPTLeaderboard.Utils.Zones
 
                 if (GUILayout.Button("RENDER", GUILayout.Height(30)))
                 {
-                    if (_zoneZoneTrackerService != null)
+                    if (_zoneTrackerService != null)
                     {
                         _zoneDebugRenderer.DrawZonesForMap(selectedMap);
                     }
@@ -517,6 +517,8 @@ namespace SPTLeaderboard.Utils.Zones
                 if (map != null)
                     totalZones += map.Count;
             }
+            
+            _zoneTrackerService.LoadZonesForCurrentMap();
 
             Logger.LogDebugInfo($"[ZonesInterface] Uploaded {allZones.Count} maps, total {totalZones} zones");
             LocalizationService.Notification($"Uploaded {allZones.Count} maps, total {totalZones} zones");
