@@ -153,8 +153,8 @@ namespace SPTLeaderboard.Models
 			
 			PhpEndpoint = configFile.Bind(
 				"1. Settings", 
-				"Server Endpoint", 
-				"https://sptlb.yuyui.moe", 
+				"SPTLB Server Endpoint", 
+				"https://sptlb.katrinfoxvr.com", 
 				new ConfigDescription(
 					"DO NOT TOUCH UNLESS YOU KNOW WHAT YOU ARE DOING.\n Domain (or both subdomain + domain) used for requests",
 					null, 
