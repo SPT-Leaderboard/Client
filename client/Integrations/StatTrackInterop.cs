@@ -2,13 +2,13 @@
 using System.Collections.Generic;
 using BepInEx;
 using BepInEx.Bootstrap;
-using Comfort.Logs;
 using Newtonsoft.Json;
 using SPT.Common.Http;
 using SPTLeaderboard.Data;
 using SPTLeaderboard.Models;
+using SPTLeaderboard.Utils;
 
-namespace SPTLeaderboard.Utils;
+namespace SPTLeaderboard.Integrations;
 
 public static class StatTrackInterop
 {

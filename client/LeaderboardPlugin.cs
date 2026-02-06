@@ -9,9 +9,11 @@ using BepInEx;
 using BepInEx.Logging;
 using EFT;
 using EFT.Communications;
+using HarmonyLib;
 using Newtonsoft.Json;
 using SPTLeaderboard.Data;
 using SPTLeaderboard.Enums;
+using SPTLeaderboard.Integrations;
 using SPTLeaderboard.Models;
 using SPTLeaderboard.Patches;
 using SPTLeaderboard.Utils;
@@ -50,6 +52,7 @@ namespace SPTLeaderboard
         public static bool IsDebugLogsEnabled = false;
 
         public RaidSettingsData SavedRaidSettingsData = new();
+        private Harmony pauseModIntegration;
 
         private void Awake()
         {
@@ -105,6 +108,52 @@ namespace SPTLeaderboard
                     new OnCoopApplyShotFourPatch().Enable();
                     Utils.Logger.LogInfo("FIKA is found. Enable patch for hit hook");
                 });
+            }
+            
+            pauseModIntegration = new Harmony("harmonyzt.SPTLeaderboard");
+            if (PauseModInterop.Loaded())
+            {
+                Utils.Logger.LogInfo("Pause Mod Is Loaded!!");
+                try
+                {
+                    var pauseType = AccessTools.TypeByName("Pause.PauseController");
+                    if (pauseType == null)
+                    {
+                        return;
+                    }
+        
+                    var pauseMethod = AccessTools.Method(pauseType, "Pause");
+                    var unpauseMethod = AccessTools.Method(pauseType, "Unpause");
+        
+                    if (pauseMethod == null)
+                    {
+                        return;
+                    }
+                    if (unpauseMethod == null)
+                    {
+                        return;
+                    }
+        
+                    pauseModIntegration.Patch(
+                        pauseMethod,
+                        postfix: new HarmonyMethod(AccessTools.Method(typeof(PauseModInterop), nameof(PauseModInterop.OnPausePostfix)))
+                    );
+        
+                    pauseModIntegration.Patch(
+                        unpauseMethod,
+                        postfix: new HarmonyMethod(AccessTools.Method(typeof(PauseModInterop), nameof(PauseModInterop.OnUnpausePostfix)))
+                    );
+        
+                    Utils.Logger.LogInfo("Pause Mod Is Patched!");
+                }
+                catch (Exception ex)
+                {
+                    Utils.Logger.LogError($"Pause mod patching failed: {ex}");
+                }
+            }
+            else
+            {
+                Utils.Logger.LogInfo("Pause Mod not loaded.");
             }
             
 #if DEBUG

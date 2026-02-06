@@ -153,6 +153,8 @@
         <Compile Include="Data\ServerProfileInfo.cs" />
         <Compile Include="Data\WeaponInfo.cs" />
         <Compile Include="Enums\PlayerState.cs" />
+        <Compile Include="Integrations\PauseModInterop.cs" />
+        <Compile Include="Integrations\StatTrackInterop.cs" />
         <Compile Include="LeaderboardPlugin.cs" />
         <Compile Include="Models\ConfigurationManagerAttributes.cs" />
         <Compile Include="Models\EncryptionModel.cs" />
@@ -187,7 +189,6 @@
         <Compile Include="Utils\PlayerHelper.cs" />
         <Compile Include="Utils\ServerErrorHandler.cs" />
         <Compile Include="Utils\IconSaver.cs" />
-        <Compile Include="Utils\StatTrackInterop.cs" />
         <Compile Include="Utils\TrackingLoot.cs" />
         <Compile Include="Utils\Logger.cs" />
     </ItemGroup>

@@ -9,6 +9,7 @@ using Newtonsoft.Json;
 using SPTLeaderboard.Data;
 using SPTLeaderboard.Utils;
 using Cysharp.Threading.Tasks;
+using SPTLeaderboard.Integrations;
 
 namespace SPTLeaderboard.Models;
 
@@ -497,6 +498,16 @@ public class ProcessProfileModel
         float currentHealth, Profile pmcData, int killedPmc, RaidEndDescriptorClass resultRaid,
         List<string> listModsPlayer, bool haveDevItems)
     {
+        int calculatedTime;
+        if (PauseModInterop.Loaded())
+        {
+            calculatedTime = resultRaid.playTime - (int)Math.Round(PauseModInterop.totalPausedTime.TotalSeconds);
+        }
+        else
+        {
+            calculatedTime = resultRaid.playTime;
+        }
+        
         return new BaseData
         {
             AccountType = gameVersion,
@@ -515,7 +526,7 @@ public class ProcessProfileModel
             PmcLevel = pmcData.Info.Level,
             RaidKills = killedPmc,
             RaidResult = resultRaid.result.ToString(),
-            RaidTime = resultRaid.playTime,
+            RaidTime = calculatedTime,
             SptVersion = DataUtils.GetSptVersion(),
             Token = EncryptionModel.Instance.Token,
             DBinInv = haveDevItems,
