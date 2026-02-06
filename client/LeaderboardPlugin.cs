@@ -21,7 +21,7 @@ using Timer = System.Timers.Timer;
 namespace SPTLeaderboard
 {
     [BepInDependency("com.arys.unitytoolkit", "2.0.1")]
-    [BepInPlugin("harmonyzt.SPTLeaderboard", "SPTLeaderboard", "5.0.5")]
+    [BepInPlugin("harmonyzt.SPTLeaderboard", "SPTLeaderboard", "5.0.6")]
     public class LeaderboardPlugin : BaseUnityPlugin
     {
         public static LeaderboardPlugin Instance { get; private set; }
