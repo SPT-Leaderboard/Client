@@ -51,8 +51,21 @@ public class ProcessProfileModel
     /// </summary>
     private bool ShouldProcessProfile()
     {
-        return SettingsModel.Instance.EnableSendData.Value ||
-               !PlayerHelper.GetLimitViolationsSilent(PlayerHelper.GetEquipmentData());
+        if (SettingsModel.Instance.EnableSendData.Value)
+        {
+            if (SettingsModel.Instance.ModCasualMode.Value)
+            {
+                return true;
+            }
+            else
+            {
+                return PlayerHelper.GetLimitViolationsSilent(PlayerHelper.GetEquipmentData());
+            }
+        }
+        else
+        {
+            return false;
+        }
     }
 
     /// <summary>
