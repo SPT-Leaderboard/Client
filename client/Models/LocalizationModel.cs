@@ -166,6 +166,7 @@ namespace SPTLeaderboard.Models
                 ErrorType.CHAR_LIMIT => LocalizationData.Error_CharLimit,
                 ErrorType.NSFW_NAME => LocalizationData.Error_NsfwName,
                 ErrorType.INVALID_STATS => LocalizationData.Error_InvalidStats,
+                ErrorType.RAID_TIME_EXCEEDED => LocalizationData.Error_RaidTimeExceeded,
                 ErrorType.DEVITEMS => LocalizationData.Error_DevItems,
                 ErrorType.API_BANNED => LocalizationData.Error_API_BANNED,
                 ErrorType.BANNED => LocalizationData.Error_BANNED,
