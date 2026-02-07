@@ -59,7 +59,16 @@ public class ProcessProfileModel
             }
             else
             {
-                return PlayerHelper.GetLimitViolationsSilent(PlayerHelper.GetEquipmentData());
+                var resultViolation = PlayerHelper.GetLimitViolationsSilent(PlayerHelper.GetEquipmentData());
+                if (resultViolation)
+                {
+                    Logger.LogInfo("Not sending raid: Limit violation");
+                    return false;
+                }
+                else
+                {
+                    return true;
+                }
             }
         }
         else
