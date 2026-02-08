@@ -1,8 +1,11 @@
-﻿using System.Reflection;
+﻿using System;
+using System.Reflection;
 using EFT;
 using EFT.UI.Matchmaker;
 using SPT.Reflection.Patching;
 using SPTLeaderboard.Configuration;
+using SPTLeaderboard.Integrations;
+using SPTLeaderboard.Models;
 
 namespace SPTLeaderboard.Patches
 {
@@ -28,6 +31,7 @@ namespace SPTLeaderboard.Patches
                 return true;
             
             Utils.Logger.LogDebugWarning("Player opened Loading raid screen");
+            PauseModInterop.OnRaidStart();
             LeaderboardPlugin.Instance.CreateIconFullBodyPlayer();
             return true;
         }

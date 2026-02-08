@@ -255,6 +255,27 @@ public class LocalizationData
         { "ru", "Обнаружены необоснованно высокие значения максимальной энергии или максимальной гидратации. Данные рейда не будут отправлены." },
         { "ro", "A fost detectată energie maximă sau hidratare maximă nerezonabil de mare. Datele raidului nu vor fi trimise." }
     };
+
+    public static Dictionary<string, string> Error_RaidTimeExceeded = new() // 712
+    {
+        { "ch", "排行榜条目被拒。您的突袭时间超过了地图时间限制。" },
+        { "cz", "Záznam do žebříčku byl zamítnut. Vaše doba nájezdu překračuje časové limity mapy." },
+        { "en", "Leaderboard entry denied. Your raidTime exceeds map time limits." },
+        { "fr", "Entrée au classement refusée. Votre temps de raid dépasse les limites de temps de la carte." },
+        { "ge", "Eintrag in die Bestenliste abgelehnt. Ihre Raidzeit überschreitet die Kartenzeitlimits." },
+        { "hu", "Ranglista-bejegyzés elutasítva. A rajtaütési ideje meghaladja a térkép időkorlátait." },
+        { "it", "Inserimento in classifica negato. Il tempo del tuo raid supera i limiti di tempo della mappa." },
+        { "jp", "リーダーボードへの登録が拒否されました。あなたのレイド時間がマップの時間制限を超えています。" },
+        { "kr", "리더보드 등록이 거부되었습니다. 레이드 시간이 맵 시간 제한을 초과했습니다." },
+        { "pl", "Wpis do rankingu odrzucony. Twój czas rajdu przekracza limity czasowe mapy." },
+        { "po", "Entrada na tabela negada. O seu tempo de raid excede os limites de tempo do mapa." },
+        { "sk", "Záznam do rebríčka zamietnutý. Váš čas nájazdu prekročil časové limity mapy." },
+        { "es", "Entrada al ranking denegada. Tu tiempo de incursión supera los límites de tiempo del mapa." },
+        { "es-mx", "Entrada al leaderboard denegada. Tu tiempo de asalto excede los límites de tiempo del mapa." },
+        { "tu", "Liderlik tablosuna giriş reddedildi. Baskın süreniz harita zaman limitlerini aşıyor." },
+        { "ru", "Доступ к SPT Leaderboard отклонён. Время рейда превышает лимиты времени карты." },
+        { "ro", "Intrarea în clasament a fost refuzată. Timpul tău de raid depășește limitele de timp ale hărții." }
+    };
     
     public static Dictionary<string, string> Error_Capacity = new() //Error after check capacity storages violation
     {

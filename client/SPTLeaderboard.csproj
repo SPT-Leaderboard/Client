@@ -161,6 +161,8 @@
         <Compile Include="Data\ZoneData.cs" />
         <Compile Include="Data\ZoneTrackerData.cs" />
         <Compile Include="Enums\PlayerState.cs" />
+        <Compile Include="Integrations\PauseModInterop.cs" />
+        <Compile Include="Integrations\StatTrackInterop.cs" />
         <Compile Include="LeaderboardPlugin.cs" />
         <Compile Include="Patches\OpenStashPanelShowPatch.cs" />
         <Compile Include="Services\EncryptionService.cs" />
@@ -196,7 +198,6 @@
         <Compile Include="Utils\PlayerHelper.cs" />
         <Compile Include="Utils\ServerErrorHandler.cs" />
         <Compile Include="Utils\IconSaver.cs" />
-        <Compile Include="Utils\StatTrackInterop.cs" />
         <Compile Include="Utils\TrackingLoot.cs" />
         <Compile Include="Utils\Logger.cs" />
         <Compile Include="Utils\Zones\ZoneRepository.cs" />

@@ -27,8 +27,11 @@ namespace SPTLeaderboard.Patches
             if (!Settings.Instance.EnableSendData.Value && PlayerHelper.HasRaidStarted())
                 return true;
 
-            PlayerHelper.GetLimitViolations(PlayerHelper.GetEquipmentData());
-            
+            if (!SettingsModel.Instance.ModCasualMode.Value)
+            {
+                PlayerHelper.GetLimitViolations(PlayerHelper.GetEquipmentData());
+            }
+
             // If it has not yet been 10 minutes since the last call - we do nothing
             if (!LeaderboardPlugin.Instance.canPreRaidCheck)
             {

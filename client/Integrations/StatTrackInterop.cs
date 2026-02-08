@@ -8,7 +8,7 @@ using SPTLeaderboard.Data;
 using SPTLeaderboard.Data.Internal;
 using SPTLeaderboard.Services;
 
-namespace SPTLeaderboard.Utils;
+namespace SPTLeaderboard.Integrations;
 
 public static class StatTrackInterop
 {
