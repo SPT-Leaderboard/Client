@@ -27,7 +27,7 @@ namespace SPTLeaderboard.Patches
             if (!Settings.Instance.EnableSendData.Value && PlayerHelper.HasRaidStarted())
                 return true;
 
-            if (!SettingsModel.Instance.ModCasualMode.Value)
+            if (!Settings.Instance.ModCasualMode.Value)
             {
                 PlayerHelper.GetLimitViolations(PlayerHelper.GetEquipmentData());
             }

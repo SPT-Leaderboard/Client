@@ -53,7 +53,7 @@ public static class StatTrackInterop
     {
         if (!info.ContainsKey(playerId))
         {
-            Logger.LogWarning($"[StatTrack] Not exists data for current player: {playerId}");
+            Utils.Logger.LogWarning($"[StatTrack] Not exists data for current player: {playerId}");
             return null;
         }
 
@@ -71,11 +71,11 @@ public static class StatTrackInterop
             // Skip weapons with unknown names
             if (weaponName == "Unknown")
             {
-                Logger.LogDebugWarning($"[StatTrack] Not exists locale {weaponId + " ShortName"}");
+                Utils.Logger.LogDebugWarning($"[StatTrack] Not exists locale {weaponId + " ShortName"}");
                 continue;
             }
 
-            Logger.LogDebugWarning($"[StatTrack] Add {weaponId + " ShortName"}");
+            Utils.Logger.LogDebugWarning($"[StatTrack] Add {weaponId + " ShortName"}");
 
             result[playerId][weaponName] = new WeaponInfo
             {
@@ -86,7 +86,7 @@ public static class StatTrackInterop
 
         if (result[playerId].Count == 0)
         {
-            Logger.LogWarning("[StatTrack] ListWeapons is empty");
+            Utils.Logger.LogWarning("[StatTrack] ListWeapons is empty");
 
             return null;
         }

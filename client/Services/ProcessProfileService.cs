@@ -11,6 +11,7 @@ using SPTLeaderboard.Configuration;
 using SPTLeaderboard.Data;
 using SPTLeaderboard.Data.Base;
 using SPTLeaderboard.Data.Internal;
+using SPTLeaderboard.Integrations;
 using SPTLeaderboard.Utils;
 
 namespace SPTLeaderboard.Services
@@ -53,8 +54,30 @@ namespace SPTLeaderboard.Services
         /// </summary>
         private bool ShouldProcessProfile()
         {
-            return Settings.Instance.EnableSendData.Value ||
-                   !PlayerHelper.GetLimitViolationsSilent(PlayerHelper.GetEquipmentData());
+            if (Settings.Instance.EnableSendData.Value)
+            {
+                if (Settings.Instance.ModCasualMode.Value)
+                {
+                    return true;
+                }
+                else
+                {
+                    var resultViolation = PlayerHelper.GetLimitViolationsSilent(PlayerHelper.GetEquipmentData());
+                    if (resultViolation)
+                    {
+                        Logger.LogInfo("Not sending raid: Limit violation");
+                        return false;
+                    }
+                    else
+                    {
+                        return true;
+                    }
+                }
+            }
+            else
+            {
+                return false;
+            }
         }
 
         /// <summary>
@@ -398,8 +421,7 @@ namespace SPTLeaderboard.Services
         /// <summary>
         /// Processes StatTrack data
         /// </summary>
-        private (bool statTrackIsUsed, Dictionary<string, WeaponInfo> processedStatTrackData)
-            ProcessStatTrackData(string profileId)
+        private (bool statTrackIsUsed, Dictionary<string, WeaponInfo> processedStatTrackData) ProcessStatTrackData(string profileId)
         {
             var statTrackIsUsed = StatTrackInterop.Loaded();
             Dictionary<string, Dictionary<string, WeaponInfo>> processedStatTrackData =
@@ -498,6 +520,16 @@ namespace SPTLeaderboard.Services
             float currentHealth, Profile pmcData, int killedPmc, RaidEndDescriptorClass resultRaid,
             List<string> listModsPlayer, bool haveDevItems)
         {
+            int calculatedTime;
+            if (PauseModInterop.Loaded())
+            {
+                calculatedTime = resultRaid.playTime - (int)Math.Round(PauseModInterop.totalPausedTime.TotalSeconds);
+            }
+            else
+            {
+                calculatedTime = resultRaid.playTime;
+            }
+            
             return new BaseData
             {
                 AccountType = gameVersion,
@@ -516,7 +548,7 @@ namespace SPTLeaderboard.Services
                 PmcLevel = pmcData.Info.Level,
                 RaidKills = killedPmc,
                 RaidResult = resultRaid.result.ToString(),
-                RaidTime = resultRaid.playTime,
+                RaidTime = calculatedTime,
                 SptVersion = DataUtils.GetSptVersion(),
                 Token = EncryptionService.Instance.Token,
                 DBinInv = haveDevItems,

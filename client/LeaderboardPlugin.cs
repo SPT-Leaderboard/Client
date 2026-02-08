@@ -3,8 +3,6 @@ using System.Threading;
 using BepInEx;
 using BepInEx.Logging;
 using Cysharp.Threading.Tasks;
-using EFT;
-using EFT.Communications;
 using HarmonyLib;
 using Newtonsoft.Json;
 using SPTLeaderboard.Configuration;
@@ -12,7 +10,6 @@ using SPTLeaderboard.Data;
 using SPTLeaderboard.Data.Response;
 using SPTLeaderboard.Enums;
 using SPTLeaderboard.Integrations;
-using SPTLeaderboard.Models;
 using SPTLeaderboard.Patches;
 using SPTLeaderboard.Services;
 using SPTLeaderboard.Utils;
@@ -191,12 +188,6 @@ namespace SPTLeaderboard
                     IsDebugLogsEnabled = !IsDebugLogsEnabled;
                     LocalizationService.NotificationWarning($"Advanced SPTLB Logs are: {IsDebugLogsEnabled}");
                 }
-            }
-
-            if (_settings.KeyBind.Value.IsDown())
-            {
-                GUIUtility.systemCopyBuffer = JsonConvert.SerializeObject(ZoneTrackerService.CurrentRaidData);
-                Logger.LogWarning($"Data Tracked in zone {JsonConvert.SerializeObject(ZoneTrackerService.CurrentRaidData)}");
             }
         }
 

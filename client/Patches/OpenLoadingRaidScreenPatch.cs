@@ -1,11 +1,9 @@
-﻿using System;
-using System.Reflection;
+﻿using System.Reflection;
 using EFT;
 using EFT.UI.Matchmaker;
 using SPT.Reflection.Patching;
 using SPTLeaderboard.Configuration;
 using SPTLeaderboard.Integrations;
-using SPTLeaderboard.Models;
 
 namespace SPTLeaderboard.Patches
 {
