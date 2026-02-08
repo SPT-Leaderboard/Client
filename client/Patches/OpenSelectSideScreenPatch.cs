@@ -47,6 +47,7 @@ namespace SPTLeaderboard.Patches
             var currentHydration = pmcData.Health.Hydration.Current;
             var maxEnergy = pmcData.Health.Energy.Maximum;
             var maxHydration = pmcData.Health.Hydration.Maximum;
+            var currentEquipment = PlayerHelper.GetAllEquipmentItems(ESideType.Pmc);
             
             var preRaidData = new PreRaidData
             {
@@ -58,7 +59,8 @@ namespace SPTLeaderboard.Patches
                 MaxHydration = maxHydration,
                 MaxEnergy = maxEnergy,
                 Hydration = currentHydration,
-                Energy = currentEnergy
+                Energy = currentEnergy,
+                EquipmentItems = currentEquipment
             };
             
             LeaderboardPlugin.SendPreRaidData(preRaidData);

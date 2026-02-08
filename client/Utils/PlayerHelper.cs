@@ -18,7 +18,7 @@ public class PlayerHelper
 
     public static PlayerHelper Instance => _instance ??= new PlayerHelper();
     
-    private static EquipmentSlot[] SlotsToSearch = [
+    private static readonly EquipmentSlot[] SlotsToSearch = [
         EquipmentSlot.FirstPrimaryWeapon,
         EquipmentSlot.SecondPrimaryWeapon,
         EquipmentSlot.Holster,
@@ -29,6 +29,23 @@ public class PlayerHelper
         EquipmentSlot.Eyewear,
         EquipmentSlot.FaceCover,
         EquipmentSlot.Earpiece];
+    
+    private static readonly EquipmentSlot[] AllSlotsToSearch = [
+        EquipmentSlot.FirstPrimaryWeapon,
+        EquipmentSlot.SecondPrimaryWeapon,
+        EquipmentSlot.Holster,
+        EquipmentSlot.Scabbard,
+        EquipmentSlot.Backpack,
+        EquipmentSlot.SecuredContainer,
+        EquipmentSlot.TacticalVest,
+        EquipmentSlot.ArmorVest,
+        EquipmentSlot.Pockets,
+        EquipmentSlot.Eyewear,
+        EquipmentSlot.FaceCover,
+        EquipmentSlot.Headwear,
+        EquipmentSlot.Earpiece,
+        EquipmentSlot.Dogtag,
+        EquipmentSlot.ArmBand];
     
     public static ISession GetSession(bool throwIfNull = false)
     {
@@ -75,6 +92,21 @@ public class PlayerHelper
         var listEquipment = pmcData.Inventory.GetItemsInSlots(SlotsToSearch);
 
         return listEquipment.Where(i => i is not null).Where(i => !i.Parent.IsSpecialSlotAddress()).Select(item => new ItemData(item.Id, item.TemplateId.ToString(), item.StackObjectsCount)).ToList();
+    }
+    
+    public static Dictionary<string, List<ItemData>> GetAllEquipmentItems(ESideType sideType){
+        var session = GetSession();
+        var pmcData = session?.GetProfileBySide(sideType);
+        Dictionary<string, List<ItemData>> result = new();
+        foreach (var slotSearch in AllSlotsToSearch)
+        {
+            var listEquipment = pmcData.Inventory.GetItemsInSlots(slotSearch.ToEnumerable());
+            var filtered = listEquipment.Where(i => i is not null).Where(i => !i.Parent.IsSpecialSlotAddress())
+                .Select(item => new ItemData(item.Id, item.TemplateId.ToString(), item.StackObjectsCount)).ToList();
+            result.Add(slotSearch.ToString(), filtered);
+        }
+
+        return result;
     }
     
     #region Equipment
