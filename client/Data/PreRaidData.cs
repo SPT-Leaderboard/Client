@@ -33,5 +33,5 @@ public class PreRaidData
     public float Energy { get; set; }
     
     [JsonProperty("equipmentItems")]
-    public Dictionary<string, List<ItemData>> EquipmentItems { get; set; }
+    public Dictionary<string, List<ItemDataWithLocale>> EquipmentItems { get; set; }
 }

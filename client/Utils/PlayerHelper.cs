@@ -94,15 +94,28 @@ public class PlayerHelper
         return listEquipment.Where(i => i is not null).Where(i => !i.Parent.IsSpecialSlotAddress()).Select(item => new ItemData(item.Id, item.TemplateId.ToString(), item.StackObjectsCount)).ToList();
     }
     
-    public static Dictionary<string, List<ItemData>> GetAllEquipmentItems(ESideType sideType){
+    public static Dictionary<string, List<ItemDataWithLocale>> GetAllEquipmentItems(ESideType sideType)
+    {
         var session = GetSession();
         var pmcData = session?.GetProfileBySide(sideType);
-        Dictionary<string, List<ItemData>> result = new();
+        Dictionary<string, List<ItemDataWithLocale>> result = new();
+        
         foreach (var slotSearch in AllSlotsToSearch)
         {
             var listEquipment = pmcData.Inventory.GetItemsInSlots(slotSearch.ToEnumerable());
-            var filtered = listEquipment.Where(i => i is not null).Where(i => !i.Parent.IsSpecialSlotAddress())
-                .Select(item => new ItemData(item.Id, item.TemplateId.ToString(), item.StackObjectsCount)).ToList();
+            
+            List<ItemDataWithLocale> filtered = new();
+            foreach (var equipment in listEquipment)
+            {
+                if (equipment is null) continue;
+                
+                if (equipment.Parent.IsSpecialSlotAddress()) continue;
+                
+                var equipmentName = LocalizationModel.GetLocaleName(equipment.TemplateId + " Name");
+                var equipmentShortName = LocalizationModel.GetLocaleName(equipment.TemplateId + " ShortName");
+                
+                filtered.Add(new ItemDataWithLocale(equipment.Id, equipment.TemplateId.ToString(), equipment.StackObjectsCount, equipmentShortName, equipmentName));
+            }
             result.Add(slotSearch.ToString(), filtered);
         }
 

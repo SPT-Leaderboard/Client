@@ -135,6 +135,7 @@
         <Compile Include="Data\HideoutData.cs" />
         <Compile Include="Data\HitsDistanceData.cs" />
         <Compile Include="Data\ItemData.cs" />
+        <Compile Include="Data\ItemDataWithLocale.cs" />
         <Compile Include="Data\LoginRequestData.cs" />
         <Compile Include="Data\PreRaidData.cs" />
         <Compile Include="Data\CustomizedObject.cs" />
