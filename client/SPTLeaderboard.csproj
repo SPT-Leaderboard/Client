@@ -163,6 +163,9 @@
         <Compile Include="Models\NetworkApiRequestModel.cs" />
         <Compile Include="Models\ProcessProfileModel.cs" />
         <Compile Include="Models\SettingsModel.cs"/>
+        <Compile Include="Patches\RagfairScreenPatch.cs" />
+        <Compile Include="Patches\TraderScreensGroupPatch.cs" />
+        <Compile Include="Patches\WeaponModdingScreenPatch.cs" />
         <Compile Include="Patches\HideoutAwakePatch.cs" />
         <Compile Include="Patches\LeaderboardVersionLabelPatch.cs" />
         <Compile Include="Patches\OnApplyDamageInfoPatch.cs" />

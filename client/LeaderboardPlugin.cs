@@ -98,6 +98,9 @@ namespace SPTLeaderboard
             new OnPlayerAddedItem().Enable();
             new OnPlayerRemovedItem().Enable();
             new RaidSettingsHookPatch().Enable();
+            new WeaponModdingScreenPatch().Enable();
+            new TraderScreensGroupPatch().Enable();
+            new RagfairScreenPatch().Enable();
             
             if (!DataUtils.IsCheckedFikaCore)
             {
