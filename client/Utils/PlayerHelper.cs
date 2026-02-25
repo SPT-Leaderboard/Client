@@ -34,18 +34,13 @@ public class PlayerHelper
         EquipmentSlot.FirstPrimaryWeapon,
         EquipmentSlot.SecondPrimaryWeapon,
         EquipmentSlot.Holster,
-        EquipmentSlot.Scabbard,
         EquipmentSlot.Backpack,
-        EquipmentSlot.SecuredContainer,
         EquipmentSlot.TacticalVest,
         EquipmentSlot.ArmorVest,
-        EquipmentSlot.Pockets,
         EquipmentSlot.Eyewear,
         EquipmentSlot.FaceCover,
         EquipmentSlot.Headwear,
-        EquipmentSlot.Earpiece,
-        EquipmentSlot.Dogtag,
-        EquipmentSlot.ArmBand];
+        EquipmentSlot.Earpiece];
     
     public static ISession GetSession(bool throwIfNull = false)
     {
