@@ -50,6 +50,7 @@ namespace SPTLeaderboard
         private static DateTime _lastSentDataTime = DateTime.MinValue;
         private const int HASH_EXPIRY_SECONDS = 120;
         public static bool IsDebugLogsEnabled = false;
+        public bool IsPMCSelected = true;
 
         public RaidSettingsData SavedRaidSettingsData = new();
         private Harmony pauseModIntegration;
@@ -101,6 +102,7 @@ namespace SPTLeaderboard
             new WeaponModdingScreenPatch().Enable();
             new TraderScreensGroupPatch().Enable();
             new RagfairScreenPatch().Enable();
+            new ClickESideScreenPatch().Enable();
             
             if (!DataUtils.IsCheckedFikaCore)
             {
@@ -228,6 +230,8 @@ namespace SPTLeaderboard
         /// </summary>
         public void CreateIconPlayer()
         {
+            if (!IsPMCSelected) return;
+            
             if (!_iconSaver)
             {
                 _iconSaver = gameObject.AddComponent<IconSaver>();

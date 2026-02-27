@@ -23,7 +23,7 @@ namespace SPTLeaderboard.Patches
         static bool Prefix()
         {
             Utils.Logger.LogDebugWarning("Player opened select side screen");
-            if (!SettingsModel.Instance.EnableSendData.Value && PlayerHelper.HasRaidStarted())
+            if (!SettingsModel.Instance.EnableSendData.Value)
                 return true;
 
             if (!SettingsModel.Instance.ModCasualMode.Value)
