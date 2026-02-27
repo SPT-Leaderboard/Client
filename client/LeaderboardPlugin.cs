@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Security.Cryptography;
 using System.Text;
@@ -64,13 +64,13 @@ namespace SPTLeaderboard
             #region Checking Headless
             
             bool isFikaHeadless = false;
-            if (!DataUtils.IsCheckedFikaHeadless)
+            if (!FikaInterop.IsCheckedFikaHeadless)
             {
-                DataUtils.CheckFikaHeadless(found => { isFikaHeadless = found; });
+                FikaInterop.CheckFikaHeadless(found => { isFikaHeadless = found; });
             }
             else
             {
-                isFikaHeadless = DataUtils.FikaHeadless != null;
+                isFikaHeadless = FikaInterop.FikaHeadless != null;
             }
 
             if (isFikaHeadless)
@@ -105,9 +105,9 @@ namespace SPTLeaderboard
             new RagfairScreenPatch().Enable();
             new ClickESideScreenPatch().Enable();
             
-            if (!DataUtils.IsCheckedFikaCore)
+            if (!FikaInterop.IsCheckedFikaCore)
             {
-                DataUtils.CheckFikaCore(callback =>
+                FikaInterop.CheckFikaCore(callback =>
                 {
                     if (!callback) return;
 

@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -154,37 +154,6 @@ public static class DataUtils
         bool flag = Chainloader.PluginInfos.TryGetValue(pluginGUID, out pluginInfo);
         plugin = (flag ? pluginInfo.Instance : null);
         return flag;
-    }
-
-    public static void CheckFikaCore(Action<bool> callback)
-    {
-        TryGetPlugin("com.fika.core", out var FikaCoreTemp);
-        FikaCore = FikaCoreTemp;
-        IsCheckedFikaCore = true;
-        callback.Invoke(FikaCore != null);
-    }
-    
-    public static void CheckFikaHeadless(Action<bool> callback)
-    {
-        TryGetPlugin("com.fika.headless", out var FikaHeadlessTemp);
-        FikaHeadless = FikaHeadlessTemp;
-        IsCheckedFikaHeadless = true;
-        callback.Invoke(FikaHeadless != null);
-    }
-    
-    public static bool IsCheckedFikaCore;
-    public static bool IsCheckedFikaHeadless;
-    
-    public static BaseUnityPlugin FikaCore;
-    public static BaseUnityPlugin FikaHeadless;
-    
-    public static Type GetPluginType(BaseUnityPlugin plugin, string typePath)
-    {
-        if (plugin == null)
-        {
-            throw new ArgumentNullException("plugin");
-        }
-        return plugin.GetType().Assembly.GetType(typePath, true);
     }
 
     public static string GetRaidGameTime()

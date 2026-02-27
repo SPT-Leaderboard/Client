@@ -156,6 +156,7 @@
         <Compile Include="Enums\PlayerState.cs" />
         <Compile Include="Integrations\PauseModInterop.cs" />
         <Compile Include="Integrations\StatTrackInterop.cs" />
+        <Compile Include="Integrations\FikaInterop.cs" />
         <Compile Include="LeaderboardPlugin.cs" />
         <Compile Include="Models\ConfigurationManagerAttributes.cs" />
         <Compile Include="Models\EncryptionModel.cs" />
