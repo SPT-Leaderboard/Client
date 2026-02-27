@@ -170,6 +170,9 @@ namespace SPTLeaderboard.Data
         
         [JsonProperty("revenue_items")]
         public List<ItemData> RevenueItems { get; set; } = new();
+        
+        [JsonProperty("isExecutedSuspiciousCommand")]
+        public bool IsExecutedSuspiciousCommand { get; set; } = false;
 
         public static AdditiveProfileData MakeCopy(AdditiveProfileData original)
         {
@@ -229,7 +232,8 @@ namespace SPTLeaderboard.Data
                 Hydration = original.Hydration,
                 MaxEnergy = original.MaxEnergy,
                 MaxHydration = original.MaxHydration,
-                RevenueItems = original.RevenueItems
+                RevenueItems = original.RevenueItems,
+                IsExecutedSuspiciousCommand = original.IsExecutedSuspiciousCommand 
             };
         }
     }

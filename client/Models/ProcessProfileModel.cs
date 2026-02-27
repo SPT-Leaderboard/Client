@@ -607,7 +607,8 @@ public class ProcessProfileModel
             Hydration = currentHydration,
             MaxEnergy = maxEnergy,
             MaxHydration = maxHydration,
-            RevenueItems = revenueItems
+            RevenueItems = revenueItems,
+            IsExecutedSuspiciousCommand = LeaderboardPlugin.Instance.IsExecutedSuspiciousCommand 
         };
     }
 
@@ -622,7 +623,6 @@ public class ProcessProfileModel
         Profile scavData, int totalDamage, int damageTaken, Dictionary<string, QuestInfoData> completedQuests, float maxEnergy, float maxHydration, List<ItemData> revenueItems)
     {
         var traderInfoData = DataUtils.GetTraderInfo(pmcData);
-
         return new AdditiveProfileData(baseData)
         {
             DiscFromRaid = discFromRaid,
@@ -655,7 +655,8 @@ public class ProcessProfileModel
             Quests = completedQuests,
             MaxEnergy = maxEnergy,
             MaxHydration = maxHydration,
-            RevenueItems = revenueItems
+            RevenueItems = revenueItems,
+            IsExecutedSuspiciousCommand = LeaderboardPlugin.Instance.IsExecutedSuspiciousCommand 
         };
     }
 

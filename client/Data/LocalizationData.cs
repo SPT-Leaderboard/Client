@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 
 namespace SPTLeaderboard.Data;
 
@@ -275,6 +275,27 @@ public class LocalizationData
         { "tu", "Liderlik tablosuna giriş reddedildi. Baskın süreniz harita zaman limitlerini aşıyor." },
         { "ru", "Доступ к SPT Leaderboard отклонён. Время рейда превышает лимиты времени карты." },
         { "ro", "Intrarea în clasament a fost refuzată. Timpul tău de raid depășește limitele de timp ale hărții." }
+    };
+
+    public static Dictionary<string, string> Error_ConsoleCheatDetected = new() // 713
+    {
+        { "ch", "检测到控制台作弊。本次突袭将不会提交至排行榜。" },
+        { "cz", "Byl detekován cheat z konzole. Nájezd nebude odeslán do žebříčku." },
+        { "en", "Console cheat was detected. Raid will not submitted to Leaderboard." },
+        { "fr", "Triche console détectée. Le raid ne sera pas envoyé au classement." },
+        { "ge", "Konsolen-Cheat erkannt. Der Raid wird nicht an die Bestenliste übermittelt." },
+        { "hu", "Konzol csalás észlelve. A rajtaütés nem kerül feltöltésre a ranglistára." },
+        { "it", "Trucco da console rilevato. L'incursione non verrà inviata alla classifica." },
+        { "jp", "コンソールチートが検出されました。レイドはリーダーボードに送信されません。" },
+        { "kr", "콘솔 치트가 감지되었습니다. 레이드는 리더보드에 제출되지 않습니다." },
+        { "pl", "Wykryto cheat z konsoli. Raid nie zostanie przesłany do rankingu." },
+        { "po", "Trapaça por consola detetada. A incursão não será enviada para a tabela de classificação." },
+        { "sk", "Bol detekovaný cheat z konzoly. Nájazd nebude odoslaný do rebríčka." },
+        { "es", "Se detectó truco de consola. La incursión no se enviará al ranking." },
+        { "es-mx", "Se detectó truco de consola. La incursión no se enviará al leaderboard." },
+        { "tu", "Konsol hilesi tespit edildi. Baskın liderlik tablosuna gönderilmeyecek." },
+        { "ru", "Обнаружен консольный чит. Рейд не будет отправлен в Leaderboard." },
+        { "ro", "Tricou din consolă detectat. Raidul nu va fi trimis la clasament." }
     };
     
     public static Dictionary<string, string> Error_Capacity = new() //Error after check capacity storages violation
