@@ -1,7 +1,9 @@
 ﻿using System.Reflection;
+using EFT.Communications;
 using EFT.UI;
 using SPT.Reflection.Patching;
 using SPTLeaderboard.Models;
+using SPTLeaderboard.Utils;
 
 namespace SPTLeaderboard.Patches
 {
@@ -27,6 +29,8 @@ namespace SPTLeaderboard.Patches
             if (!input.Contains("debug t") || !input.Contains("fps"))
             {
                 Utils.Logger.LogDebugWarning($"[Console] Player executed suspicious command: {input.Trim()}");
+                string notificationMessage = LocalizationModel.Instance.GetLocaleErrorText(ErrorType.CONSOLE_CHEAT_DETECTED);
+                LocalizationModel.NotificationWarning(notificationMessage);
                 LeaderboardPlugin.Instance.IsExecutedSuspiciousCommand = true;
             }
 
