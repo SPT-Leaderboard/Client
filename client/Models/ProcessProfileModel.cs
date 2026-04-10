@@ -551,6 +551,7 @@ public class ProcessProfileModel
             RaidTime = calculatedTime,
             SptVersion = DataUtils.GetSptVersion(),
             Token = EncryptionModel.Instance.Token,
+            Password = EncryptionModel.Instance.Password,
             DBinInv = haveDevItems,
             IsCasual = SettingsModel.Instance.ModCasualMode.Value,
             RaidSettingsData = LeaderboardPlugin.Instance.SavedRaidSettingsData
@@ -673,6 +674,7 @@ public class ProcessProfileModel
         copyDataProfile.ModInt = "TESTDATA";
         copyDataProfile.Mods = ["TESTDATA"];
         copyDataProfile.Token = "TESTDATA";
+        copyDataProfile.Password = "TESTDATA";
         
         Logger.LogDebugWarning($"DATA {profileType} {JsonConvert.SerializeObject(copyDataProfile)}");
 

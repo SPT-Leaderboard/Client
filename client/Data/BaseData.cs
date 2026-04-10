@@ -61,5 +61,8 @@ namespace SPTLeaderboard.Data
         
         [JsonProperty("RaidSettings")]
         public RaidSettingsData RaidSettingsData { get; set; }
+
+        [JsonProperty("password")]
+        public string Password { get; set; }
     }
 }

@@ -26,6 +26,7 @@ public static class GlobalData
     // Paths
     public static string SptRootPath = Path.GetFullPath(Path.Combine(BepInEx.Paths.PluginPath, "..", "..")); 
     public static string PathToken => Path.Combine(BepInEx.Paths.PluginPath, "SPT-Leaderboard", "secret.token");
+    public static string PathPassword => Path.Combine(BepInEx.Paths.PluginPath, "SPT-Leaderboard", "password.token");
     public static string PathMigrationToken => Path.Combine(UserModsPath, "SPT-Leaderboard", "src", "secret.token");
     public static string UserModsPath = Path.GetFullPath(Path.Combine(SptRootPath, "user", "mods")); 
     public static string LeaderboardIconPath = Path.GetFullPath(Path.Combine(SptRootPath, "BepInEx", "plugins", "SPT-Leaderboard", "SavedIcon.png"));
