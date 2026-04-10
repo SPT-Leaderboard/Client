@@ -90,6 +90,7 @@ namespace SPTLeaderboard.Utils
                 711 => ErrorType.INVALID_STATS,
                 712 => ErrorType.RAID_TIME_EXCEEDED,
                 713 => ErrorType.CONSOLE_CHEAT_DETECTED,
+                714 => ErrorType.AUTH_PASSWORD_INCORRECT,
                 800 => ErrorType.API_BANNED,
                 801 => ErrorType.API_TOO_MANY_REQUESTS,
                 802 => ErrorType.BANNED,
@@ -110,6 +111,7 @@ namespace SPTLeaderboard.Utils
                 ErrorType.INVALID_STATS => ENotificationDurationType.Long,
                 ErrorType.RAID_TIME_EXCEEDED => ENotificationDurationType.Long,
                 ErrorType.CONSOLE_CHEAT_DETECTED => ENotificationDurationType.Infinite,
+                ErrorType.AUTH_PASSWORD_INCORRECT => ENotificationDurationType.Infinite,
                 ErrorType.DEVITEMS => ENotificationDurationType.Long,
                 ErrorType.API_BANNED => ENotificationDurationType.Infinite,
                 ErrorType.BANNED => ENotificationDurationType.Infinite,
@@ -136,6 +138,7 @@ namespace SPTLeaderboard.Utils
         API_TOO_MANY_REQUESTS,
         INVALID_STATS,
         RAID_TIME_EXCEEDED,
-        CONSOLE_CHEAT_DETECTED
+        CONSOLE_CHEAT_DETECTED,
+        AUTH_PASSWORD_INCORRECT
     }
 }

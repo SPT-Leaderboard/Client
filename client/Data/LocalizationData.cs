@@ -4,6 +4,27 @@ namespace SPTLeaderboard.Data;
 
 public class LocalizationData
 {
+    public static Dictionary<string, string> Auth_PasswordIncorrect = new()
+    {
+        { "ch", "您的双重验证密码不正确。请登录您的 SPTLB 账户，并按照说明了解如何使用它。" },
+        { "cz", "Vaše heslo pro dvoufázové ověření je nesprávné. Přihlaste se prosím ke svému účtu SPTLB a postupujte podle pokynů k jeho používání." },
+        { "en", "Your 2FA password is incorrect. Please, login into your SPTLB account and follow instructions on how to use it." },
+        { "fr", "Votre mot de passe d’authentification à deux facteurs est incorrect. Veuillez vous connecter à votre compte SPTLB et suivre les instructions pour savoir comment l’utiliser." },
+        { "ge", "Ihr 2FA-Passwort ist falsch. Bitte melden Sie sich bei Ihrem SPTLB-Konto an und folgen Sie den Anweisungen zur Verwendung." },
+        { "hu", "A 2FA jelszavad helytelen. Kérjük, jelentkezz be az SPTLB fiókodba, és kövesd a használatára vonatkozó utasításokat." },
+        { "it", "La tua password 2FA non è corretta. Accedi al tuo account SPTLB e segui le istruzioni su come usarlo." },
+        { "jp", "2FAパスワードが正しくありません。SPTLBアカウントにログインして、使用方法の案内に従ってください。" },
+        { "kr", "2FA 비밀번호가 올바르지 않습니다. SPTLB 계정에 로그인한 후 사용 방법 안내를 따라 주세요." },
+        { "pl", "Twoje hasło 2FA jest nieprawidłowe. Zaloguj się na swoje konto SPTLB i postępuj zgodnie z instrukcjami, jak z niego korzystać." },
+        { "po", "Sua senha de 2FA está incorreta. Faça login na sua conta SPTLB e siga as instruções sobre como usá-la." },
+        { "sk", "Vaše heslo 2FA je nesprávne. Prihláste sa prosím do svojho účtu SPTLB a postupujte podľa pokynov, ako ho používať." },
+        { "es", "Tu contraseña de 2FA es incorrecta. Por favor, inicia sesión en tu cuenta de SPTLB y sigue las instrucciones sobre cómo usarla." },
+        { "es-mx", "Tu contraseña de 2FA es incorrecta. Por favor, inicia sesión en tu cuenta de SPTLB y sigue las instrucciones sobre cómo usarla." },
+        { "tu", "2FA şifreniz yanlış. Lütfen SPTLB hesabınıza giriş yapın ve nasıl kullanılacağına dair talimatları takip edin." },
+        { "ru", "Ваш пароль 2FA неверный. Пожалуйста, войдите в свой аккаунт SPTLB и следуйте инструкциям по его использованию." },
+        { "ro", "Parola ta 2FA este incorectă. Te rugăm să te autentifici în contul tău SPTLB și să urmezi instrucțiunile despre cum să îl folosești." }
+    };
+
     public static Dictionary<string, string> Error_API_BANNED = new()
     {
         { "ch", "您因违反排行榜规则而被封禁" },

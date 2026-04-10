@@ -168,6 +168,7 @@ namespace SPTLeaderboard.Models
                 ErrorType.INVALID_STATS => LocalizationData.Error_InvalidStats,
                 ErrorType.RAID_TIME_EXCEEDED => LocalizationData.Error_RaidTimeExceeded,
                 ErrorType.CONSOLE_CHEAT_DETECTED => LocalizationData.Error_ConsoleCheatDetected,
+                ErrorType.AUTH_PASSWORD_INCORRECT => LocalizationData.Auth_PasswordIncorrect,
                 ErrorType.DEVITEMS => LocalizationData.Error_DevItems,
                 ErrorType.API_BANNED => LocalizationData.Error_API_BANNED,
                 ErrorType.BANNED => LocalizationData.Error_BANNED,
