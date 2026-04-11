@@ -14,6 +14,29 @@ namespace SPTLeaderboard.Data
         public bool BotsEnabled { get; set; } = true;
         [JsonProperty("MetabolismDisabled")]
         public bool MetabolismDisabled { get; set; } = false;
-        
+
+        /// <summary>
+        /// Present when Fika Core is loaded and custom raid settings were read successfully
+        /// </summary>
+        [JsonProperty("fikaCustomRaidSettings", NullValueHandling = NullValueHandling.Ignore)]
+        public FikaCustomRaidSettingsPayload FikaCustomRaidSettings { get; set; }
+    }
+
+    /// <summary>
+    /// Mirrors FikaCustomRaidSettingsJSON shape for payload
+    /// </summary>
+    public class FikaCustomRaidSettingsPayload
+    {
+        [JsonProperty("useCustomWeather")]
+        public bool UseCustomWeather { get; set; }
+
+        [JsonProperty("disableOverload")]
+        public bool DisableOverload { get; set; }
+
+        [JsonProperty("disableLegStamina")]
+        public bool DisableLegStamina { get; set; }
+
+        [JsonProperty("disableArmStamina")]
+        public bool DisableArmStamina { get; set; }
     }
 }

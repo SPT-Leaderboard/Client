@@ -1,6 +1,8 @@
 using System;
+using System.Reflection;
 using BepInEx;
 using BepInEx.Bootstrap;
+using SPTLeaderboard.Data;
 
 namespace SPTLeaderboard.Integrations
 {
@@ -8,6 +10,8 @@ namespace SPTLeaderboard.Integrations
     {
         public const string FikaCoreGuid = "com.fika.core";
         public const string FikaHeadlessGuid = "com.fika.headless";
+
+        private const string FikaBackendUtilsTypeName = "Fika.Core.Main.Utils.FikaBackendUtils";
 
         public static bool IsCheckedFikaCore { get; private set; }
         public static bool IsCheckedFikaHeadless { get; private set; }
@@ -30,6 +34,49 @@ namespace SPTLeaderboard.Integrations
             IsCheckedFikaHeadless = true;
             callback.Invoke(FikaHeadless != null);
         }
+        
+        public static bool TryGetCustomRaidSettings(out FikaCustomRaidSettingsPayload settings)
+        {
+            settings = null;
+
+            var plugin = FikaCore;
+            if (plugin == null && Chainloader.PluginInfos.TryGetValue(FikaCoreGuid, out var info))
+                plugin = info.Instance as BaseUnityPlugin;
+
+            if (plugin == null)
+                return false;
+
+            var utilsType = plugin.GetType().Assembly.GetType(FikaBackendUtilsTypeName, throwOnError: false);
+            if (utilsType == null)
+                return false;
+
+            var customRaidProp = utilsType.GetProperty("CustomRaidSettings", BindingFlags.Public | BindingFlags.Static);
+            if (customRaidProp == null)
+                return false;
+
+            var customRaid = customRaidProp.GetValue(null);
+            if (customRaid == null)
+                return false;
+
+            var instanceType = customRaid.GetType();
+
+            bool ReadBool(string propertyName)
+            {
+                var p = instanceType.GetProperty(propertyName, BindingFlags.Public | BindingFlags.Instance);
+                return p?.GetValue(customRaid) is bool b && b;
+            }
+
+            settings = new FikaCustomRaidSettingsPayload
+            {
+                UseCustomWeather = ReadBool("UseCustomWeather"),
+                DisableOverload = ReadBool("DisableOverload"),
+                DisableLegStamina = ReadBool("DisableLegStamina"),
+                DisableArmStamina = ReadBool("DisableArmStamina")
+            };
+
+            return true;
+        }
+
         public static Type GetObservedClientBridgeType()
         {
             if (FikaCore == null)
