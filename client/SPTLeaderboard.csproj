@@ -147,7 +147,6 @@
         <Compile Include="Data\Internal\ServerProfileInfo.cs" />
         <Compile Include="Data\ItemData.cs" />
         <Compile Include="Data\ItemDataWithLocale.cs" />
-        <Compile Include="Data\LoginRequestData.cs" />
         <Compile Include="Data\PreRaidData.cs" />
         <Compile Include="Data\EquipmentData.cs" />
         <Compile Include="Data\GlobalData.cs" />
