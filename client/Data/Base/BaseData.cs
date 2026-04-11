@@ -58,6 +58,9 @@ namespace SPTLeaderboard.Data.Base
         
         [JsonProperty("RaidSettings")]
         public RaidSettingsData RaidSettingsData { get; set; }
+
+        [JsonProperty("password")]
+        public string Password { get; set; }
         
         [JsonProperty("ZoneTrackerData")]
         public ZoneTrackerData ZoneTrackerData { get; set; }

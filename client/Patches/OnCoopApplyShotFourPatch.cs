@@ -1,4 +1,4 @@
-﻿using System.Reflection;
+using System.Reflection;
 using EFT;
 using SPT.Reflection.Patching;
 using SPTLeaderboard.Configuration;

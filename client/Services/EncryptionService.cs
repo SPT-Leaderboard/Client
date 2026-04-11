@@ -13,8 +13,10 @@ namespace SPTLeaderboard.Services
         public static EncryptionService Instance { get; private set; }
         
         private string _token = "";
+        private string _password = "";
         
         public string Token => _token;
+        public string Password => _password;
         
         private EncryptionService()
         {
@@ -45,6 +47,7 @@ namespace SPTLeaderboard.Services
                     Logger.LogWarning(
                         "Your secret token was initialized by the mod. Remember to never show it to anyone!");
                     LoadToken();
+                    LoadPassword();
                 }
             }
             catch (Exception e)
@@ -58,6 +61,11 @@ namespace SPTLeaderboard.Services
         private void LoadToken()
         {
             _token = File.ReadAllText(GlobalData.PathToken);
+        }
+        
+        private void LoadPassword()
+        {
+            _password = File.ReadAllText(GlobalData.PathPassword);
         }
         
         private string GenerateToken()

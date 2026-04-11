@@ -8,6 +8,9 @@
         IN_RAID,
         RAID_END,
         IN_HIDEOUT,
-        IN_TRANSIT
+        IN_TRANSIT,
+        IN_MODDING,
+        IN_TRADING,
+        IN_FLEA
     }
 }

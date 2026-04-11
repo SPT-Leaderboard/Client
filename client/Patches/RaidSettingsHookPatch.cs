@@ -3,6 +3,7 @@ using EFT;
 using HarmonyLib;
 using SPT.Reflection.Patching;
 using SPTLeaderboard.Data;
+using SPTLeaderboard.Integrations;
 
 namespace SPTLeaderboard.Patches
 {
@@ -19,7 +20,7 @@ namespace SPTLeaderboard.Patches
             if (settings == null)
                 return;
 
-            LeaderboardPlugin.Instance.SavedRaidSettingsData = new RaidSettingsData
+            var saved = new RaidSettingsData
             {
                 BotAmount = settings.WavesSettings.BotAmount.ToString(),
                 BotDifficulty = settings.WavesSettings.BotDifficulty.ToString(),
@@ -27,6 +28,11 @@ namespace SPTLeaderboard.Patches
                 BotsEnabled = settings.BotSettings.IsEnabled,
                 MetabolismDisabled = settings.MetabolismDisabled
             };
+
+            if (FikaInterop.TryGetCustomRaidSettings(out var fikaCustom))
+                saved.FikaCustomRaidSettings = fikaCustom;
+
+            LeaderboardPlugin.Instance.SavedRaidSettingsData = saved;
         }
     }
 }

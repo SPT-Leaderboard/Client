@@ -6,7 +6,7 @@ namespace SPTLeaderboard.Data;
 
 public static class GlobalData
 {
-    public const string Version = "5.0.7";
+    public const string Version = "5.0.8";
     
 #if DEBUG || BETA
     public const string SubVersion = "71";
@@ -30,6 +30,7 @@ public static class GlobalData
     // Paths
     private static string _sptRootPath = Path.GetFullPath(Path.Combine(BepInEx.Paths.PluginPath, "..", "..")); 
     public static string PathToken => Path.Combine(BepInEx.Paths.PluginPath, "SPT-Leaderboard", "secret.token");
+    public static string PathPassword => Path.Combine(BepInEx.Paths.PluginPath, "SPT-Leaderboard", "password.token");
     public static string PathMigrationToken => Path.Combine(UserModsPath, "SPT-Leaderboard", "src", "secret.token");
     public static string UserModsPath = Path.GetFullPath(Path.Combine(_sptRootPath, "user", "mods")); 
     public static string LeaderboardIconPath = Path.GetFullPath(Path.Combine(_sptRootPath, "BepInEx", "plugins", "SPT-Leaderboard", "SavedIcon.png"));

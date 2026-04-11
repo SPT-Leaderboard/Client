@@ -16,7 +16,7 @@ public class PlayerHelper
 
     public static PlayerHelper Instance => _instance ??= new PlayerHelper();
     
-    private static EquipmentSlot[] SlotsToSearch = [
+    private static readonly EquipmentSlot[] SlotsToSearch = [
         EquipmentSlot.FirstPrimaryWeapon,
         EquipmentSlot.SecondPrimaryWeapon,
         EquipmentSlot.Holster,
@@ -26,6 +26,18 @@ public class PlayerHelper
         EquipmentSlot.Pockets,
         EquipmentSlot.Eyewear,
         EquipmentSlot.FaceCover,
+        EquipmentSlot.Earpiece];
+    
+    private static readonly EquipmentSlot[] AllSlotsToSearch = [
+        EquipmentSlot.FirstPrimaryWeapon,
+        EquipmentSlot.SecondPrimaryWeapon,
+        EquipmentSlot.Holster,
+        EquipmentSlot.Backpack,
+        EquipmentSlot.TacticalVest,
+        EquipmentSlot.ArmorVest,
+        EquipmentSlot.Eyewear,
+        EquipmentSlot.FaceCover,
+        EquipmentSlot.Headwear,
         EquipmentSlot.Earpiece];
     
     public static ISession GetSession(bool throwIfNull = false)
@@ -73,6 +85,34 @@ public class PlayerHelper
         var listEquipment = pmcData.Inventory.GetItemsInSlots(SlotsToSearch);
 
         return listEquipment.Where(i => i is not null).Where(i => !i.Parent.IsSpecialSlotAddress()).Select(item => new ItemData(item.Id, item.TemplateId.ToString(), item.StackObjectsCount, item.BackgroundColor.ToString())).ToList();
+    }
+    
+    public static Dictionary<string, List<ItemDataWithLocale>> GetAllEquipmentItems(ESideType sideType)
+    {
+        var session = GetSession();
+        var pmcData = session?.GetProfileBySide(sideType);
+        Dictionary<string, List<ItemDataWithLocale>> result = new();
+        
+        foreach (var slotSearch in AllSlotsToSearch)
+        {
+            var listEquipment = pmcData.Inventory.GetItemsInSlots(slotSearch.ToEnumerable());
+            
+            List<ItemDataWithLocale> filtered = new();
+            foreach (var equipment in listEquipment)
+            {
+                if (equipment is null) continue;
+                
+                if (equipment.Parent.IsSpecialSlotAddress()) continue;
+                
+                var equipmentName = LocalizationModel.GetLocaleName(equipment.TemplateId + " Name");
+                var equipmentShortName = LocalizationModel.GetLocaleName(equipment.TemplateId + " ShortName");
+                
+                filtered.Add(new ItemDataWithLocale(equipment.Id, equipment.TemplateId.ToString(), equipment.StackObjectsCount, equipmentShortName, equipmentName));
+            }
+            result.Add(slotSearch.ToString(), filtered);
+        }
+
+        return result;
     }
     
     #region Equipment

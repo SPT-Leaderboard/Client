@@ -52,6 +52,9 @@ namespace SPTLeaderboard.Data.Base
         
         [JsonProperty("token")]
         public string Token { get; set; } = baseData.Token;
+        
+        [JsonProperty("password")]
+        public string Password { get; set; } = baseData.Password;
 
         [JsonProperty("DBinINV")]
         public bool DBinInv { get; set; } = baseData.DBinInv;
@@ -174,6 +177,9 @@ namespace SPTLeaderboard.Data.Base
         
         [JsonProperty("revenue_items")]
         public List<ItemData> RevenueItems { get; set; } = new();
+        
+        [JsonProperty("isExecutedSuspiciousCommand")]
+        public bool IsExecutedSuspiciousCommand { get; set; } = false;
 
         public static AdditiveProfileData MakeCopy(AdditiveProfileData original)
         {
@@ -194,6 +200,7 @@ namespace SPTLeaderboard.Data.Base
                 RaidTime = original.RaidTime,
                 SptVersion = original.SptVersion,
                 Token = "BETA",
+                Password = "BETA",
                 DBinInv = original.DBinInv,
                 IsCasual = original.IsCasual,
                 RaidSettingsData = original.RaidSettingsData,
@@ -235,7 +242,8 @@ namespace SPTLeaderboard.Data.Base
                 Hydration = original.Hydration,
                 MaxEnergy = original.MaxEnergy,
                 MaxHydration = original.MaxHydration,
-                RevenueItems = original.RevenueItems
+                RevenueItems = original.RevenueItems,
+                IsExecutedSuspiciousCommand = original.IsExecutedSuspiciousCommand 
             };
         }
     }

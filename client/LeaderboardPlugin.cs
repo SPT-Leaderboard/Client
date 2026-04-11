@@ -1,3 +1,7 @@
+using System;
+using System.Collections.Generic;
+using System.Security.Cryptography;
+using System.Text;
 ﻿using System;
 using System.Threading;
 using BepInEx;
@@ -20,7 +24,7 @@ using Timer = System.Timers.Timer;
 namespace SPTLeaderboard
 {
     [BepInDependency("com.arys.unitytoolkit", "2.0.1")]
-    [BepInPlugin("harmonyzt.SPTLeaderboard", "SPTLeaderboard", "5.0.7")]
+    [BepInPlugin("harmonyzt.SPTLeaderboard", "SPTLeaderboard", "5.0.8")]
     public class LeaderboardPlugin : BaseUnityPlugin
     {
         public static LeaderboardPlugin Instance { get; private set; }
@@ -51,6 +55,10 @@ namespace SPTLeaderboard
 #if !BETA || !DEBUG
         public static bool IsDebugLogsEnabled;
 #endif
+        private const int HASH_EXPIRY_SECONDS = 120;
+        public static bool IsDebugLogsEnabled = false;
+        public bool IsPMCSelected = true;
+        public bool IsExecutedSuspiciousCommand = false;
 
         public RaidSettingsData SavedRaidSettingsData = new();
         private Harmony pauseModIntegration;
@@ -63,13 +71,13 @@ namespace SPTLeaderboard
             #region Checking Headless
             
             bool isFikaHeadless = false;
-            if (!DataUtils.IsCheckedFikaHeadless)
+            if (!FikaInterop.IsCheckedFikaHeadless)
             {
-                DataUtils.CheckFikaHeadless(found => { isFikaHeadless = found; });
+                FikaInterop.CheckFikaHeadless(found => { isFikaHeadless = found; });
             }
             else
             {
-                isFikaHeadless = DataUtils.FikaHeadless != null;
+                isFikaHeadless = FikaInterop.FikaHeadless != null;
             }
 
             if (isFikaHeadless)
@@ -100,11 +108,17 @@ namespace SPTLeaderboard
             new OnPlayerAddedItem().Enable();
             new OnPlayerRemovedItem().Enable();
             new RaidSettingsHookPatch().Enable();
+            new WeaponModdingScreenPatch().Enable();
+            new TraderScreensGroupPatch().Enable();
+            new RagfairScreenPatch().Enable();
+            new ClickESideScreenPatch().Enable();
+            
+            if (!FikaInterop.IsCheckedFikaCore)
             new OpenStashPanelShowPatch().Enable();
 
             if (!DataUtils.IsCheckedFikaCore)
             {
-                DataUtils.CheckFikaCore(callback =>
+                FikaInterop.CheckFikaCore(callback =>
                 {
                     if (!callback) return;
 
@@ -236,6 +250,8 @@ namespace SPTLeaderboard
         /// </summary>
         public void CreateIconPlayer()
         {
+            if (!IsPMCSelected) return;
+            
             if (!_iconSaver)
             {
                 _iconSaver = gameObject.AddComponent<IconSaver>();
@@ -281,7 +297,8 @@ namespace SPTLeaderboard
                 EncodedImage = encodedImage,
                 PlayerId = session.Profile.Id,
                 IsFullBody = isFullBody,
-                Token = EncryptionService.Instance.Token
+                Token = EncryptionModel.Instance.Token,
+                Password = EncryptionModel.Instance.Password
             };
             string jsonBody = JsonConvert.SerializeObject(data);
                     

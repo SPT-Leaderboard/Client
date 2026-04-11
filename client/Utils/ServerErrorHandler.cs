@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using Comfort.Common;
 using EFT.Communications;
 using Newtonsoft.Json;
@@ -90,6 +90,8 @@ namespace SPTLeaderboard.Utils
                 707 => ErrorType.NSFW_NAME,
                 711 => ErrorType.INVALID_STATS,
                 712 => ErrorType.RAID_TIME_EXCEEDED,
+                713 => ErrorType.CONSOLE_CHEAT_DETECTED,
+                714 => ErrorType.AUTH_PASSWORD_INCORRECT,
                 800 => ErrorType.API_BANNED,
                 801 => ErrorType.API_TOO_MANY_REQUESTS,
                 802 => ErrorType.BANNED,
@@ -109,6 +111,8 @@ namespace SPTLeaderboard.Utils
                 ErrorType.NSFW_NAME => ENotificationDurationType.Long,
                 ErrorType.INVALID_STATS => ENotificationDurationType.Long,
                 ErrorType.RAID_TIME_EXCEEDED => ENotificationDurationType.Long,
+                ErrorType.CONSOLE_CHEAT_DETECTED => ENotificationDurationType.Infinite,
+                ErrorType.AUTH_PASSWORD_INCORRECT => ENotificationDurationType.Infinite,
                 ErrorType.DEVITEMS => ENotificationDurationType.Long,
                 ErrorType.API_BANNED => ENotificationDurationType.Infinite,
                 ErrorType.BANNED => ENotificationDurationType.Infinite,
@@ -134,6 +138,8 @@ namespace SPTLeaderboard.Utils
         BANNED,
         API_TOO_MANY_REQUESTS,
         INVALID_STATS,
-        RAID_TIME_EXCEEDED
+        RAID_TIME_EXCEEDED,
+        CONSOLE_CHEAT_DETECTED,
+        AUTH_PASSWORD_INCORRECT
     }
 }
