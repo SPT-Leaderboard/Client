@@ -4,8 +4,6 @@ using SPTLeaderboard.Configuration;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
-using EFT;
-using SPTLeaderboard.Utils;
 
 namespace SPTLeaderboard.Utils;
 

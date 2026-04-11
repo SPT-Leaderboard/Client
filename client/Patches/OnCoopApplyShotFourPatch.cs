@@ -2,13 +2,14 @@ using System.Reflection;
 using EFT;
 using SPT.Reflection.Patching;
 using SPTLeaderboard.Configuration;
+using SPTLeaderboard.Integrations;
 using SPTLeaderboard.Utils;
 
 namespace SPTLeaderboard.Patches
 {
     public class OnCoopApplyShotFourPatch: ModulePatch
     {
-        protected override MethodBase GetTargetMethod() => DataUtils.GetPluginType(DataUtils.FikaCore, "Fika.Core.Main.ObservedClasses.PlayerBridge.ObservedClientBridge")
+        protected override MethodBase GetTargetMethod() => FikaInterop.GetObservedClientBridgeType()
             .GetMethod("ApplyShot", BindingFlags.Instance | BindingFlags.Public);
     
         [PatchPostfix]

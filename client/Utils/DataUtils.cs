@@ -19,7 +19,6 @@ using SPT.Common.Utils;
 using SPTLeaderboard.Data;
 using SPTLeaderboard.Data.Internal;
 using SPTLeaderboard.Enums;
-using SPTLeaderboard.Utils.Zones;
 using UnityEngine;
 using TraderData = SPTLeaderboard.Data.Internal.TraderData;
 

@@ -104,8 +104,8 @@ public class PlayerHelper
                 
                 if (equipment.Parent.IsSpecialSlotAddress()) continue;
                 
-                var equipmentName = LocalizationModel.GetLocaleName(equipment.TemplateId + " Name");
-                var equipmentShortName = LocalizationModel.GetLocaleName(equipment.TemplateId + " ShortName");
+                var equipmentName = LocalizationService.GetLocaleName(equipment.TemplateId + " Name");
+                var equipmentShortName = LocalizationService.GetLocaleName(equipment.TemplateId + " ShortName");
                 
                 filtered.Add(new ItemDataWithLocale(equipment.Id, equipment.TemplateId.ToString(), equipment.StackObjectsCount, equipmentShortName, equipmentName));
             }

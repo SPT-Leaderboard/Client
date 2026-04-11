@@ -2,7 +2,7 @@
 using EFT;
 using EFT.UI.Matchmaker;
 using SPT.Reflection.Patching;
-using SPTLeaderboard.Models;
+using SPTLeaderboard.Configuration;
 
 namespace SPTLeaderboard.Patches
 {
@@ -22,7 +22,7 @@ namespace SPTLeaderboard.Patches
         [PatchPrefix]
         static bool Prefix(ESideType side)
         {
-            if (!SettingsModel.Instance.EnableSendData.Value)
+            if (!Settings.Instance.EnableSendData.Value)
                 return true;
             if (side == ESideType.Pmc)
             {

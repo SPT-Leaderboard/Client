@@ -1,8 +1,4 @@
 using System;
-using System.Collections.Generic;
-using System.Security.Cryptography;
-using System.Text;
-﻿using System;
 using System.Threading;
 using BepInEx;
 using BepInEx.Logging;
@@ -51,10 +47,6 @@ namespace SPTLeaderboard
         private static bool _isSendingRaidData;
         private static string _lastSentDataHash;
         private static DateTime _lastSentDataTime = DateTime.MinValue;
-        private const int HashExpirySeconds = 120;
-#if !BETA || !DEBUG
-        public static bool IsDebugLogsEnabled;
-#endif
         private const int HASH_EXPIRY_SECONDS = 120;
         public static bool IsDebugLogsEnabled = false;
         public bool IsPMCSelected = true;
@@ -112,11 +104,9 @@ namespace SPTLeaderboard
             new TraderScreensGroupPatch().Enable();
             new RagfairScreenPatch().Enable();
             new ClickESideScreenPatch().Enable();
-            
-            if (!FikaInterop.IsCheckedFikaCore)
             new OpenStashPanelShowPatch().Enable();
 
-            if (!DataUtils.IsCheckedFikaCore)
+            if (!FikaInterop.IsCheckedFikaCore)
             {
                 FikaInterop.CheckFikaCore(callback =>
                 {
@@ -297,8 +287,8 @@ namespace SPTLeaderboard
                 EncodedImage = encodedImage,
                 PlayerId = session.Profile.Id,
                 IsFullBody = isFullBody,
-                Token = EncryptionModel.Instance.Token,
-                Password = EncryptionModel.Instance.Password
+                Token = EncryptionService.Instance.Token,
+                Password = EncryptionService.Instance.Password
             };
             string jsonBody = JsonConvert.SerializeObject(data);
                     
@@ -356,7 +346,7 @@ namespace SPTLeaderboard
             
             lock (RaidDataLock)
             {
-                bool isHashExpired = (DateTime.Now - _lastSentDataTime).TotalSeconds > HashExpirySeconds;
+                bool isHashExpired = (DateTime.Now - _lastSentDataTime).TotalSeconds > HASH_EXPIRY_SECONDS;
                 
                 if (_lastSentDataHash == dataHash && !isHashExpired)
                 {

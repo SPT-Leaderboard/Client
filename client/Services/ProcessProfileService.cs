@@ -489,7 +489,7 @@ namespace SPTLeaderboard.Services
                 return;
 
             var baseData = CreateBaseData(profileId, gameVersion, isScavRaid, maxHealth, currentHealth,
-                pmcData, killedPmc, resultRaid, listModsPlayer, false);
+                pmcData, killedPmc, resultRaid, listModsPlayer, haveDevItems);
 
             if (isScavRaid)
             {
@@ -551,6 +551,7 @@ namespace SPTLeaderboard.Services
                 RaidTime = calculatedTime,
                 SptVersion = DataUtils.GetSptVersion(),
                 Token = EncryptionService.Instance.Token,
+                Password = EncryptionService.Instance.Password,
                 DBinInv = haveDevItems,
                 IsCasual = Settings.Instance.ModCasualMode.Value,
                 RaidSettingsData = LeaderboardPlugin.Instance.SavedRaidSettingsData,
@@ -608,7 +609,8 @@ namespace SPTLeaderboard.Services
                 Hydration = currentHydration,
                 MaxEnergy = maxEnergy,
                 MaxHydration = maxHydration,
-                RevenueItems = revenueItems
+                RevenueItems = revenueItems,
+                IsExecutedSuspiciousCommand = LeaderboardPlugin.Instance.IsExecutedSuspiciousCommand 
             };
         }
 
@@ -656,7 +658,8 @@ namespace SPTLeaderboard.Services
                 Quests = completedQuests,
                 MaxEnergy = maxEnergy,
                 MaxHydration = maxHydration,
-                RevenueItems = revenueItems
+                RevenueItems = revenueItems,
+                IsExecutedSuspiciousCommand = LeaderboardPlugin.Instance.IsExecutedSuspiciousCommand 
             };
         }
 
@@ -673,6 +676,7 @@ namespace SPTLeaderboard.Services
             copyDataProfile.ModInt = "TESTDATA";
             copyDataProfile.Mods = ["TESTDATA"];
             copyDataProfile.Token = "TESTDATA";
+            copyDataProfile.Password = "TESTDATA";
         
             Logger.LogDebugWarning($"DATA {profileType} {JsonConvert.SerializeObject(copyDataProfile)}");
 

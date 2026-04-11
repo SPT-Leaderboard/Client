@@ -167,12 +167,6 @@
         <Compile Include="Integrations\StatTrackInterop.cs" />
         <Compile Include="Integrations\FikaInterop.cs" />
         <Compile Include="LeaderboardPlugin.cs" />
-        <Compile Include="Models\ConfigurationManagerAttributes.cs" />
-        <Compile Include="Models\EncryptionModel.cs" />
-        <Compile Include="Models\LocalizationModel.cs" />
-        <Compile Include="Models\NetworkApiRequestModel.cs" />
-        <Compile Include="Models\ProcessProfileModel.cs" />
-        <Compile Include="Models\SettingsModel.cs"/>
         <Compile Include="Patches\ClickESideScreenPatch.cs" />
         <Compile Include="Patches\ConsoleScreenPatch.cs" />
         <Compile Include="Patches\RagfairScreenPatch.cs" />
@@ -227,6 +221,9 @@
     </ItemGroup>
     <ItemGroup>
       <EmbeddedResource Include="BuildScripts\zonesConfig.json" />
+    </ItemGroup>
+    <ItemGroup>
+      <Folder Include="Models\" />
     </ItemGroup>
     <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets"/>
     <PropertyGroup>

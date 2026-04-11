@@ -2,8 +2,8 @@
 using EFT.InventoryLogic;
 using EFT.UI.WeaponModding;
 using SPT.Reflection.Patching;
+using SPTLeaderboard.Configuration;
 using SPTLeaderboard.Enums;
-using SPTLeaderboard.Models;
 using SPTLeaderboard.Utils;
 
 namespace SPTLeaderboard.Patches
@@ -29,7 +29,7 @@ namespace SPTLeaderboard.Patches
         [PatchPrefix]
         static bool Prefix()
         {
-            if (!SettingsModel.Instance.EnableSendData.Value)
+            if (!Settings.Instance.EnableSendData.Value)
                 return true;
 
             if (!PlayerHelper.HasRaidStarted())
