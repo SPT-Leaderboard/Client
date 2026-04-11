@@ -34,4 +34,10 @@ public class PreRaidData
     
     [JsonProperty("equipmentItems")]
     public Dictionary<string, List<ItemDataWithLocale>> EquipmentItems { get; set; }
+
+    [JsonProperty("token")]
+    public string Token { get; set; }
+
+    [JsonProperty("password")]
+    public string Password { get; set; }
 }

@@ -61,6 +61,8 @@ namespace SPTLeaderboard.Patches
                 Mods = modsPlayer,
 #endif
                 Hash = EncryptionService.Instance.GetHashMod(),
+                Token = EncryptionService.Instance.Token,
+                Password = EncryptionService.Instance.Password,
                 MaxHydration = maxHydration,
                 MaxEnergy = maxEnergy,
                 Hydration = currentHydration,
