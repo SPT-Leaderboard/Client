@@ -2104,7 +2104,731 @@
       }
     ],
     "Lighthouse": [],
-    "Streets of Tarkov": [],
+    "Streets of Tarkov": [
+      {
+        "GUID": "dd590549-f5a6-425a-beae-12f20d024659",
+        "Name": "Primorsky Ave",
+        "Center": {
+          "x": 12.0,
+          "y": 1.43,
+          "z": 147.14
+        },
+        "Size": {
+          "x": 45.0,
+          "y": 30.0,
+          "z": 800.0
+        },
+        "RotationZ": 0.0,
+        "SubZones": [
+          {
+            "GUID": "77763fe6-3053-486a-9d12-f07964c441ff",
+            "Name": "Primorsky Ave Taxi V-Ex",
+            "Center": {
+              "x": 8.86,
+              "y": 2.11,
+              "z": 467.81
+            },
+            "Size": {
+              "x": 40.0,
+              "y": 15.0,
+              "z": 20.0
+            },
+            "RotationZ": 0.0,
+            "SubZones": []
+          }
+        ]
+      },
+      {
+        "GUID": "c0e081e9-6f03-49d3-b4e8-2a8a249a871f",
+        "Name": "Park Cinema",
+        "Center": {
+          "x": -73.57,
+          "y": -0.1,
+          "z": 400.32
+        },
+        "Size": {
+          "x": 120.0,
+          "y": 30.0,
+          "z": 60.0
+        },
+        "RotationZ": 0.0,
+        "SubZones": []
+      },
+      {
+        "GUID": "0d958bb4-881e-4675-a8f1-e1ef7deea646",
+        "Name": "Nizhnyaya St.",
+        "Center": {
+          "x": -118.91,
+          "y": 2.11,
+          "z": 440.26
+        },
+        "Size": {
+          "x": 200.0,
+          "y": 20.0,
+          "z": 20.0
+        },
+        "RotationZ": 0.0,
+        "SubZones": []
+      },
+      {
+        "GUID": "30bb7f3e-253e-4c11-ba93-f943c660b13f",
+        "Name": "Cinema",
+        "Center": {
+          "x": -168.04,
+          "y": 8.61,
+          "z": 400.31
+        },
+        "Size": {
+          "x": 40.0,
+          "y": 40.0,
+          "z": 40.0
+        },
+        "RotationZ": 0.0,
+        "SubZones": []
+      },
+      {
+        "GUID": "b4772412-3f31-4108-9d02-e4b537fc837d",
+        "Name": "Verhnyaya St.",
+        "Center": {
+          "x": -118.1,
+          "y": 2.12,
+          "z": 360.09
+        },
+        "Size": {
+          "x": 200.0,
+          "y": 20.0,
+          "z": 20.0
+        },
+        "RotationZ": 0.0,
+        "SubZones": []
+      },
+      {
+        "GUID": "c3c08a40-c32d-4081-8a0c-ec7879a66018",
+        "Name": "Courtyard",
+        "Center": {
+          "x": -155.87,
+          "y": 2.37,
+          "z": 487.47
+        },
+        "Size": {
+          "x": 20.0,
+          "y": 20.0,
+          "z": 30.0
+        },
+        "RotationZ": 0.0,
+        "SubZones": []
+      },
+      {
+        "GUID": "99fcca4e-d0e4-4ab6-b432-2932bf7b8026",
+        "Name": "Damaged House",
+        "Center": {
+          "x": -246.57,
+          "y": 6.37,
+          "z": 344.14
+        },
+        "Size": {
+          "x": 15.0,
+          "y": 50.0,
+          "z": 15.0
+        },
+        "RotationZ": 0.0,
+        "SubZones": []
+      },
+      {
+        "GUID": "d519da57-b0a9-4b52-afb1-db8e7642a52c",
+        "Name": "Corner Restaurant",
+        "Center": {
+          "x": -205.21,
+          "y": 3.44,
+          "z": 336.43
+        },
+        "Size": {
+          "x": 20.0,
+          "y": 20.0,
+          "z": 30.0
+        },
+        "RotationZ": 50.0,
+        "SubZones": []
+      },
+      {
+        "GUID": "4e7d9e22-c166-4f0c-96f0-56544d75d605",
+        "Name": "Hive",
+        "Center": {
+          "x": -211.81,
+          "y": 4.51,
+          "z": 303.87
+        },
+        "Size": {
+          "x": 12.0,
+          "y": 12.0,
+          "z": 12.0
+        },
+        "RotationZ": 30.0,
+        "SubZones": []
+      },
+      {
+        "GUID": "553dbf57-cad2-432d-8b18-7b53d6788dd4",
+        "Name": "Alco Market",
+        "Center": {
+          "x": -224.65,
+          "y": 2.24,
+          "z": 281.96
+        },
+        "Size": {
+          "x": 12.0,
+          "y": 12.0,
+          "z": 12.0
+        },
+        "RotationZ": 28.0,
+        "SubZones": []
+      },
+      {
+        "GUID": "d58e4f3d-fc7e-4ed9-8618-27849bf13b82",
+        "Name": "Sparja Grocery",
+        "Center": {
+          "x": 138.0,
+          "y": 3.75,
+          "z": 303.27
+        },
+        "Size": {
+          "x": 65.0,
+          "y": 20.0,
+          "z": 40.0
+        },
+        "RotationZ": 0.0,
+        "SubZones": []
+      },
+      {
+        "GUID": "f166b193-3dc7-4098-875a-498d8d304db3",
+        "Name": "Lexos",
+        "Center": {
+          "x": 72.37,
+          "y": 2.63,
+          "z": 315.0
+        },
+        "Size": {
+          "x": 60.0,
+          "y": 50.0,
+          "z": 100.0
+        },
+        "RotationZ": 0.0,
+        "SubZones": [
+          {
+            "GUID": "2f0691b7-e93f-4353-9237-ceb9aabddb34",
+            "Name": "Lexos Outside",
+            "Center": {
+              "x": 75.0,
+              "y": 2.56,
+              "z": 345.0
+            },
+            "Size": {
+              "x": 50.0,
+              "y": 25.0,
+              "z": 40.0
+            },
+            "RotationZ": 0.0,
+            "SubZones": []
+          }
+        ]
+      },
+      {
+        "GUID": "f789cc23-0cf5-49c8-aea7-55a3f3c421ee",
+        "Name": "Concordia",
+        "Center": {
+          "x": 143.42,
+          "y": 10.0,
+          "z": 364.63
+        },
+        "Size": {
+          "x": 20.0,
+          "y": 100.0,
+          "z": 50.0
+        },
+        "RotationZ": 0.0,
+        "SubZones": []
+      },
+      {
+        "GUID": "9f532735-ef72-425b-a94b-8bb2c3c185b2",
+        "Name": "Construction",
+        "Center": {
+          "x": 220.0,
+          "y": 0.0,
+          "z": 295.1
+        },
+        "Size": {
+          "x": 80.0,
+          "y": 40.0,
+          "z": 70.0
+        },
+        "RotationZ": 0.0,
+        "SubZones": []
+      },
+      {
+        "GUID": "b779a8b6-2ee9-488b-965a-456a09b4d28f",
+        "Name": "Teppakot / Koener",
+        "Center": {
+          "x": 94.56,
+          "y": 3.18,
+          "z": 417.87
+        },
+        "Size": {
+          "x": 47.0,
+          "y": 30.0,
+          "z": 125.0
+        },
+        "RotationZ": 60.0,
+        "SubZones": []
+      },
+      {
+        "GUID": "99f41974-9df2-42ec-b5c6-881495214f40",
+        "Name": "Beluga",
+        "Center": {
+          "x": -40.44,
+          "y": 0.6,
+          "z": -47.66
+        },
+        "Size": {
+          "x": 50.0,
+          "y": 45.0,
+          "z": 50.0
+        },
+        "RotationZ": 10.0,
+        "SubZones": []
+      },
+      {
+        "GUID": "e99e7340-defd-40b0-915a-f69699dd07c4",
+        "Name": "Klimov Shopping Mail",
+        "Center": {
+          "x": -143.73,
+          "y": 5.1,
+          "z": -28.29
+        },
+        "Size": {
+          "x": 60.0,
+          "y": 50.0,
+          "z": 50.0
+        },
+        "RotationZ": 10.0,
+        "SubZones": []
+      },
+      {
+        "GUID": "8d421158-b546-4bfd-b9ca-1a1b25c99e88",
+        "Name": "Klimov St. Right",
+        "Center": {
+          "x": -116.0,
+          "y": 0.21,
+          "z": 28.13
+        },
+        "Size": {
+          "x": 200.0,
+          "y": 50.0,
+          "z": 45.0
+        },
+        "RotationZ": 10.0,
+        "SubZones": []
+      },
+      {
+        "GUID": "a4407726-c7a5-4553-8100-e999fbfe50c0",
+        "Name": "Klimov St. Left",
+        "Center": {
+          "x": 161.83,
+          "y": -3.8,
+          "z": 7.98
+        },
+        "Size": {
+          "x": 250.0,
+          "y": 50.0,
+          "z": 45.0
+        },
+        "RotationZ": 0.0,
+        "SubZones": []
+      },
+      {
+        "GUID": "6992ae7f-69fe-4b0b-be17-92cec906c227",
+        "Name": "Cardinal Bank",
+        "Center": {
+          "x": 97.0,
+          "y": 0.25,
+          "z": -35.0
+        },
+        "Size": {
+          "x": 120.0,
+          "y": 50.0,
+          "z": 45.0
+        },
+        "RotationZ": 0.0,
+        "SubZones": []
+      },
+      {
+        "GUID": "f7137edf-574f-4a3d-9cd1-573cf5cff797",
+        "Name": "Cardinal Apartaments",
+        "Center": {
+          "x": 106.53,
+          "y": -1.65,
+          "z": -110.46
+        },
+        "Size": {
+          "x": 130.0,
+          "y": 90.0,
+          "z": 110.0
+        },
+        "RotationZ": 0.0,
+        "SubZones": []
+      },
+      {
+        "GUID": "0fc1e096-ca84-413f-88f8-52bdc48d7064",
+        "Name": "LERM Expo",
+        "Center": {
+          "x": 239.01,
+          "y": -2.11,
+          "z": -70.96
+        },
+        "Size": {
+          "x": 20.0,
+          "y": 10.0,
+          "z": 80.0
+        },
+        "RotationZ": 0.0,
+        "SubZones": []
+      },
+      {
+        "GUID": "5c9fa383-3dd6-4217-a46d-e7b1e6a5bc8e",
+        "Name": "Post Office",
+        "Center": {
+          "x": 43.97,
+          "y": 1.18,
+          "z": 100.98
+        },
+        "Size": {
+          "x": 20.0,
+          "y": 10.0,
+          "z": 50.0
+        },
+        "RotationZ": 0.0,
+        "SubZones": []
+      },
+      {
+        "GUID": "744db06b-8657-4522-b499-ee418d2ba3a0",
+        "Name": "Pharmacy 1",
+        "Center": {
+          "x": 41.02,
+          "y": 2.68,
+          "z": 159.82
+        },
+        "Size": {
+          "x": 15.0,
+          "y": 20.0,
+          "z": 22.0
+        },
+        "RotationZ": 0.0,
+        "SubZones": []
+      },
+      {
+        "GUID": "f01e8180-f2bd-4898-b564-6b12d252e1ce",
+        "Name": "Prestigo Cafe",
+        "Center": {
+          "x": 43.92,
+          "y": 4.53,
+          "z": 226.44
+        },
+        "Size": {
+          "x": 20.0,
+          "y": 25.0,
+          "z": 20.0
+        },
+        "RotationZ": 45.0,
+        "SubZones": []
+      },
+      {
+        "GUID": "e9ba3d22-63d6-403a-9b93-8b2b9aa5b243",
+        "Name": "Tarbank",
+        "Center": {
+          "x": 62.31,
+          "y": 2.81,
+          "z": 231.14
+        },
+        "Size": {
+          "x": 20.0,
+          "y": 10.0,
+          "z": 15.0
+        },
+        "RotationZ": 0.0,
+        "SubZones": []
+      },
+      {
+        "GUID": "1f310551-f146-4c97-9637-7e0d7f9a8fec",
+        "Name": "Chekannaya St.",
+        "Center": {
+          "x": 157.84,
+          "y": 2.95,
+          "z": 249.28
+        },
+        "Size": {
+          "x": 240.0,
+          "y": 50.0,
+          "z": 24.0
+        },
+        "RotationZ": 0.0,
+        "SubZones": []
+      },
+      {
+        "GUID": "95e67cec-50bd-473d-a764-12b9a4907aad",
+        "Name": "Vet Clinic",
+        "Center": {
+          "x": 221.09,
+          "y": 0.0,
+          "z": 174.63
+        },
+        "Size": {
+          "x": 20.0,
+          "y": 10.0,
+          "z": 12.0
+        },
+        "RotationZ": 0.0,
+        "SubZones": []
+      },
+      {
+        "GUID": "c83c4030-d0da-4408-bc3d-1b0e58b534bf",
+        "Name": "School",
+        "Center": {
+          "x": 212.47,
+          "y": 0.0,
+          "z": 128.67
+        },
+        "Size": {
+          "x": 25.0,
+          "y": 20.0,
+          "z": 60.0
+        },
+        "RotationZ": 0.0,
+        "SubZones": []
+      },
+      {
+        "GUID": "1269efa0-fb7b-4675-b1a1-c48da5537af8",
+        "Name": "Kamchatskaya St.",
+        "Center": {
+          "x": 243.0,
+          "y": 0.0,
+          "z": 120.0
+        },
+        "Size": {
+          "x": 30.0,
+          "y": 20.0,
+          "z": 170.0
+        },
+        "RotationZ": 0.0,
+        "SubZones": []
+      },
+      {
+        "GUID": "92b39eda-bccd-4918-babe-3368a63477da",
+        "Name": "Zmejkij Alley",
+        "Center": {
+          "x": 140.0,
+          "y": 0.0,
+          "z": 139.91
+        },
+        "Size": {
+          "x": 65.0,
+          "y": 20.0,
+          "z": 200.0
+        },
+        "RotationZ": 0.0,
+        "SubZones": []
+      },
+      {
+        "GUID": "b157cca5-a02d-432f-9063-42f5e2f3dd31",
+        "Name": "Shestyorochka",
+        "Center": {
+          "x": -220.39,
+          "y": 2.95,
+          "z": 134.48
+        },
+        "Size": {
+          "x": 120.0,
+          "y": 20.0,
+          "z": 120.0
+        },
+        "RotationZ": 0.0,
+        "SubZones": []
+      },
+      {
+        "GUID": "02c649c0-cc26-4ead-a2b5-60c5473506d2",
+        "Name": "Nikitskaya St.",
+        "Center": {
+          "x": -148.48,
+          "y": 2.07,
+          "z": 207.69
+        },
+        "Size": {
+          "x": 270.0,
+          "y": 10.0,
+          "z": 25.0
+        },
+        "RotationZ": 0.0,
+        "SubZones": []
+      },
+      {
+        "GUID": "2884f554-e479-4145-bab6-691361b3a84f",
+        "Name": "Pinewood Hotel",
+        "Center": {
+          "x": -73.57,
+          "y": 0.93,
+          "z": 110.6
+        },
+        "Size": {
+          "x": 130.0,
+          "y": 50.0,
+          "z": 150.0
+        },
+        "RotationZ": 5.0,
+        "SubZones": [
+          {
+            "GUID": "393bd2a2-4162-42a0-9886-a16a8de73252",
+            "Name": "Sparja Express",
+            "Center": {
+              "x": -75.0,
+              "y": 1.44,
+              "z": 165.0
+            },
+            "Size": {
+              "x": 30.0,
+              "y": 10.0,
+              "z": 30.0
+            },
+            "RotationZ": 5.0,
+            "SubZones": []
+          },
+          {
+            "GUID": "d5efa3f4-3fbc-42d5-a863-071b14d1da3d",
+            "Name": "Burger Spot",
+            "Center": {
+              "x": -32.93,
+              "y": 1.53,
+              "z": 136.91
+            },
+            "Size": {
+              "x": 20.0,
+              "y": 10.0,
+              "z": 30.0
+            },
+            "RotationZ": 5.0,
+            "SubZones": []
+          }
+        ]
+      },
+      {
+        "GUID": "9f67b13b-be7b-4687-a02e-07cdd912f141",
+        "Name": "Primorskij 49",
+        "Center": {
+          "x": -16.88,
+          "y": 2.64,
+          "z": 241.24
+        },
+        "Size": {
+          "x": 15.0,
+          "y": 10.0,
+          "z": 30.0
+        },
+        "RotationZ": 0.0,
+        "SubZones": []
+      },
+      {
+        "GUID": "16e6e84d-077b-4f7e-b135-5507521965af",
+        "Name": "Diner",
+        "Center": {
+          "x": -80.05,
+          "y": 3.28,
+          "z": 234.15
+        },
+        "Size": {
+          "x": 10.0,
+          "y": 10.0,
+          "z": 30.0
+        },
+        "RotationZ": 0.0,
+        "SubZones": []
+      },
+      {
+        "GUID": "93d283a5-6660-45b6-8a04-7ed848c1d795",
+        "Name": "Office",
+        "Center": {
+          "x": -174.9,
+          "y": 2.73,
+          "z": 226.46
+        },
+        "Size": {
+          "x": 28.0,
+          "y": 15.0,
+          "z": 15.0
+        },
+        "RotationZ": 0.0,
+        "SubZones": []
+      },
+      {
+        "GUID": "12822c8b-c339-4d6f-8eaa-67331a58e935",
+        "Name": "Abandon Factory",
+        "Center": {
+          "x": -119.39,
+          "y": 4.31,
+          "z": 274.72
+        },
+        "Size": {
+          "x": 80.0,
+          "y": 50.0,
+          "z": 40.0
+        },
+        "RotationZ": 0.0,
+        "SubZones": []
+      },
+      {
+        "GUID": "31489d71-9fd5-4ede-a232-d049a1f09d0e",
+        "Name": "Malevecha St.",
+        "Center": {
+          "x": -199.36,
+          "y": 2.11,
+          "z": 288.14
+        },
+        "Size": {
+          "x": 20.0,
+          "y": 30.0,
+          "z": 150.0
+        },
+        "RotationZ": 27.0,
+        "SubZones": []
+      },
+      {
+        "GUID": "5ce70c21-8d37-4ed7-b7b8-bd8bf0c24664",
+        "Name": "Marked Hotel",
+        "Center": {
+          "x": -198.06,
+          "y": 4.61,
+          "z": 245.28
+        },
+        "Size": {
+          "x": 18.0,
+          "y": 20.0,
+          "z": 40.0
+        },
+        "RotationZ": 27.0,
+        "SubZones": []
+      },
+      {
+        "GUID": "d7757680-5fd2-4548-8113-6533bce8b00c",
+        "Name": "Pharmacy 2",
+        "Center": {
+          "x": -50.59,
+          "y": 3.22,
+          "z": 337.36
+        },
+        "Size": {
+          "x": 25.0,
+          "y": 10.0,
+          "z": 15.0
+        },
+        "RotationZ": 0.0,
+        "SubZones": []
+      }
+    ],
     "Ground Zero - Low": [
       {
         "GUID": "ecca6b16-3884-4275-9822-412e47ed40d7",
