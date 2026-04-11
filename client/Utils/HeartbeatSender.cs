@@ -45,8 +45,7 @@ namespace SPTLeaderboard.Utils
                         Timestamp = DataUtils.CurrentTimestamp,
                         Version = GlobalData.Version,
                         SessionId = session.Profile.Id,
-                        Token = EncryptionService.Instance.Token,
-                        Password = EncryptionService.Instance.Password
+                        Token = EncryptionService.Instance.Token
                     };
 
                     string jsonBody = JsonConvert.SerializeObject(data);
