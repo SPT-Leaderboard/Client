@@ -1,5 +1,6 @@
 ﻿#if DEBUG || BETA
 using System.Collections.Generic;
+using SPTLeaderboard.Configuration;
 using SPTLeaderboard.Data;
 using SPTLeaderboard.Services;
 using UnityEngine;
@@ -272,7 +273,7 @@ public class ZoneDebugRenderer: MonoBehaviour
 
         Vector3 half = Size / 2;
         Color zoneColor = zoneGuid != null ? GetZoneColor(zoneGuid) : Color.white;
-        zoneColor.a = 0.1f; // Very transparent
+        zoneColor.a = Settings.Instance.ZonePlanesTransparent.Value; // Very transparent
 
         Vector3[] corners = new Vector3[8];
         corners[0] = Center + new Vector3(-half.x, -half.y, -half.z);

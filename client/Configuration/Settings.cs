@@ -23,6 +23,7 @@ namespace SPTLeaderboard.Configuration
 		public ConfigEntry<bool> ShowCoordinateAxes;
 		public ConfigEntry<bool> ZonesSeeThroughWalls;
 		public ConfigEntry<bool> ShowZonePlanes;
+		public ConfigEntry<float> ZonePlanesTransparent;
 #endif
 #if DEBUG
 		public ConfigEntry<bool> Debug;
@@ -140,6 +141,12 @@ namespace SPTLeaderboard.Configuration
 					{
 						Order = 9
 					}));
+			
+			ZonePlanesTransparent = configFile.Bind(
+				"3. Zones",
+				"Zone Planes Tranparent Value",
+				0.2f,
+				new ConfigDescription("Value", new AcceptableValueRange<float>(0f, 1f)));
 #endif
 #if DEBUG
 			Debug = configFile.Bind(
