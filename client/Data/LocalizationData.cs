@@ -46,7 +46,7 @@ public class LocalizationData
         { "ro", "Ai fost interzis pentru încălcarea regulilor clasamentului." }
     };
     
-    public static Dictionary<string, string> Error_BANNED = new() // TODO: Get error code for this
+    public static Dictionary<string, string> Error_BANNED = new()
     {
         { "ch", "您因违反排行榜规则而被封禁" },
         { "cz", "Byli jste zabanováni za porušení pravidel žebříčku." },
@@ -402,7 +402,29 @@ public class LocalizationData
         { "ru", "Забаненные моды: {0}" },     // Russian
         { "ro", "Moduri interzise: {0}" }     // Romanian
     };
-    
+
+    public static Dictionary<string, string> PreRaid_Settings_Incorrect = new() //Incorrect Preraid settings
+    {
+        { "ch", "无法进入排行榜。禁止使用具有自定义预开荒设置的团队副本以获得优势：{0}" },    // Chinese
+        { "cz", "Záznam v žebříčku nebyl odeslán. Neumožňujeme používat skupiny s vlastními předraídovými nastaveními k získání výhody: {0}" },   // Czech
+        { "en", "Leaderboard entry is not submitted. Raids with custom pre-raid settings to gain advantage are not allowed: {0}" },    // English
+        { "fr", "L'entrée au classement n'est pas enregistrée. Les raids avec des paramètres de pré-raid personnalisés pour obtenir un avantage ne sont pas autorisés : {0}" },    // French
+        { "ge", "Der Eintrag in die Bestenliste wurde nicht erfasst. Raids mit benutzerdefinierten Vor-Raid-Einstellungen zum Erlangen eines Vorteils sind nicht gestattet: {0}" }, // German
+        { "hu", "A ranglistába nem került. A kiemelt előkészítő beállításokkal rendelkező raidok, amelyek előnyt biztosítanak, nem engedélyezett: {0}" }, // Hungarian
+        { "it", "Accesso alla classifica non confermato. Non sono ammessi raid con impostazioni pre-raid personalizzate per ottenere un vantaggio: {0}" },  // Italian
+        { "jp", "ランキングへの参加は拒否されました。優位性を得るためのカスタム事前レイド設定を持つレイドは登録されません：{0}" }, // Japanese
+        { "kr", "리더보드 참가 등록이 거부되었습니다. 이점을 얻기 위한 사용자 지정 사전 레이드 설정이 있는 레이드는 등록되지 않습니다: {0}" }, // Korean
+        { "pl", "Brak wpisu do rankingów. Rajdy z niestandardowymi ustawieniami przedraidu w celu uzyskania przewagi nie są dozwolone: {0}" }, // Polish
+        { "po", "Wejście do rankingu zostało odrzucone. Nie są dozwolone rajdy z niestandardowymi ustawieniami przedraidu w celu uzyskania przewagi: {0}" }, // Portuguese
+        { "sk", "Účastník sa zdišlo do tabuľky. Raidy s prispôsobenými predraídovými nastaveniami na získanie výhody nie sú povolené: {0}" }, // Slovak
+        { "es", "Acceso a la tabla de clasificación denegado. No se permiten incursiones con configuraciones de pre-raid personalizadas para obtener ventaja: {0}" }, // Spanish (ES)
+        { "es-mx", "Acceso a la tabla de clasificación denegado. No se permiten incursiones con configuraciones de pre-raid personalizadas para obtener ventaja: {0}" }, // Spanish (MX)
+        { "tu", "Tam ḥizzer dünlüü loḥâtes-s-səddâre. Lā yusmaḥ bil-ġarât dāti i‘dādāt mā qabla l-ġārate l-mukhaṣṣasa lil-ḥuṣûl ‘alā mīze: {0}" }, // Turkish
+        { "ru", "Запись в лидербор не будет отправлен. Рейды с читерскими кастомными настройками запрещены: {0}" }, // Russian
+        { "ro", "Accesul în clasament nu a fost înregistrat. Nu sunt permise raidurile cu setări personalizate pre-raid pentru a obține un avantaj: {0}" }   // Romanian
+    };
+
+
     // Template for translating
     // public static Dictionary<string, string> TEMPLATE = new Dictionary<string, string>
     // {

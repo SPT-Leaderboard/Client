@@ -158,6 +158,7 @@
         <Compile Include="Data\RaidSettingsData.cs" />
         <Compile Include="Data\Response\ErrorBannedModsData.cs" />
         <Compile Include="Data\Response\ResponseRaidData.cs" />
+        <Compile Include="Data\Response\ErrorRequestData.cs" />
         <Compile Include="Data\WeaponInfo.cs" />
         <Compile Include="Data\ZoneData.cs" />
         <Compile Include="Data\ZoneTrackerData.cs" />

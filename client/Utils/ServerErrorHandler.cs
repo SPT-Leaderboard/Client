@@ -44,6 +44,25 @@ namespace SPTLeaderboard.Utils
                 }
             }
 
+
+            if (statusCode == 715 && !string.IsNullOrEmpty(responseBody))
+            {
+                try
+                {
+                    var errorData = JsonConvert.DeserializeObject<ErrorRequestData>(responseBody);
+                    if (errorData?.Error != null && string.IsNullOrEmpty(errorData.Error))
+                    {
+                        string baseMessage = LocalizationService.Instance.GetLocaleErrorText(errorType);
+                        return string.Format(baseMessage, errorData.Error);
+                    }
+                }
+                catch (JsonException ex)
+                {
+                    Logger.LogDebugWarning($"Failed to parse banned mods error response: {ex.Message}");
+                }
+            }
+            
+
             return LocalizationService.Instance.GetLocaleErrorText(errorType);
         }
 
@@ -92,6 +111,7 @@ namespace SPTLeaderboard.Utils
                 712 => ErrorType.RAID_TIME_EXCEEDED,
                 713 => ErrorType.CONSOLE_CHEAT_DETECTED,
                 714 => ErrorType.AUTH_PASSWORD_INCORRECT,
+                715 => ErrorType.PRERAID_SETTINGS_INVALID,
                 800 => ErrorType.API_BANNED,
                 801 => ErrorType.API_TOO_MANY_REQUESTS,
                 802 => ErrorType.BANNED,
@@ -113,6 +133,7 @@ namespace SPTLeaderboard.Utils
                 ErrorType.RAID_TIME_EXCEEDED => ENotificationDurationType.Long,
                 ErrorType.CONSOLE_CHEAT_DETECTED => ENotificationDurationType.Infinite,
                 ErrorType.AUTH_PASSWORD_INCORRECT => ENotificationDurationType.Infinite,
+                ErrorType.PRERAID_SETTINGS_INVALID => ENotificationDurationType.Long,
                 ErrorType.DEVITEMS => ENotificationDurationType.Long,
                 ErrorType.API_BANNED => ENotificationDurationType.Infinite,
                 ErrorType.BANNED => ENotificationDurationType.Infinite,
@@ -140,6 +161,7 @@ namespace SPTLeaderboard.Utils
         INVALID_STATS,
         RAID_TIME_EXCEEDED,
         CONSOLE_CHEAT_DETECTED,
-        AUTH_PASSWORD_INCORRECT
+        AUTH_PASSWORD_INCORRECT,
+        PRERAID_SETTINGS_INVALID
     }
 }

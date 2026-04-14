@@ -70,13 +70,13 @@ namespace SPTLeaderboard
             else
             {
                 isFikaHeadless = FikaInterop.FikaHeadless != null;
+                if (isFikaHeadless)
+                {
+                    Utils.Logger.LogWarning("FIKA HEADLESS is found. SPTLeaderboard initialization disabled");
+                    return;
+                }
             }
 
-            if (isFikaHeadless)
-            {
-                Utils.Logger.LogWarning("FIKA HEADLESS is found. SPTLeaderboard initialization disabled");
-                return;
-            }
             
             #endregion
             
@@ -275,10 +275,7 @@ namespace SPTLeaderboard
                 Utils.Logger.LogInfo($"[SendProfileIcon] OnSuccess {response}");
             };
 
-            request.OnFail = (error, code) =>
-            {
-                ServerErrorHandler.HandleError(error, code);
-            };
+            request.OnFail = ServerErrorHandler.HandleError;
                     
             byte[] imageData = texture.EncodeToPNG();
             var encodedImage = Convert.ToBase64String(imageData);

@@ -169,6 +169,7 @@ namespace SPTLeaderboard.Services
                 ErrorType.RAID_TIME_EXCEEDED => LocalizationData.Error_RaidTimeExceeded,
                 ErrorType.CONSOLE_CHEAT_DETECTED => LocalizationData.Error_ConsoleCheatDetected,
                 ErrorType.AUTH_PASSWORD_INCORRECT => LocalizationData.Auth_PasswordIncorrect,
+                ErrorType.PRERAID_SETTINGS_INVALID => LocalizationData.PreRaid_Settings_Incorrect,
                 ErrorType.DEVITEMS => LocalizationData.Error_DevItems,
                 ErrorType.API_BANNED => LocalizationData.Error_API_BANNED,
                 ErrorType.BANNED => LocalizationData.Error_BANNED,
