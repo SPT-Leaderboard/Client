@@ -89,7 +89,8 @@ namespace SPTLeaderboard.Utils
                     Map = DataUtils.GetRaidRawMap(),
                     Side = DataUtils.GetRaidPlayerSide(),
                     GameTime = DataUtils.GetRaidGameTime(),
-                    Token = EncryptionService.Instance.Token
+                    Token = EncryptionService.Instance.Token,
+                    CurrentCoordinates = PlayerHelper.Instance.CurrentPosition
                 };
 
                 string jsonBody = JsonConvert.SerializeObject(data);
