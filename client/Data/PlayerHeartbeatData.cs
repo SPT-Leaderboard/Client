@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using UnityEngine;
 
 namespace SPTLeaderboard.Data
 {
@@ -45,8 +46,8 @@ namespace SPTLeaderboard.Data
         
         [JsonProperty("token")]
         public string Token { get; set; }
-
-        [JsonProperty("password")]
-        public string Password { get; set; }
+        
+        [JsonProperty("cords")]
+        public Vector2 CurrentCoordinates { get; set; }
     }
 }
