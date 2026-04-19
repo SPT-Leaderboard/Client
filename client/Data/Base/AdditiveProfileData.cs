@@ -75,6 +75,10 @@ namespace SPTLeaderboard.Data.Base
         
         [JsonProperty("agressorName")]
         public string AgressorName { get; set; }
+        [JsonProperty("agressorCategory")]
+        public string AgressorCategory { get; set; }
+        [JsonProperty("agressorBodyPart")]
+        public string AgressorBodyPart { get; set; }
         
         [JsonProperty("isTransition")]
         public bool IsTransition { get; set; }
@@ -209,6 +213,8 @@ namespace SPTLeaderboard.Data.Base
             {
                 DiscFromRaid = original.DiscFromRaid,
                 AgressorName = original.AgressorName,
+                AgressorCategory = original.AgressorCategory,
+                AgressorBodyPart = original.AgressorBodyPart,
                 IsTransition = original.IsTransition,
                 IsUsingStattrack = original.IsUsingStattrack,
                 LastRaidEXP = original.LastRaidEXP,

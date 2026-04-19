@@ -250,5 +250,43 @@ public class PlayerHelper
         Logger.LogDebugWarning("Aggressor Data is null");
         return nameKiller;
     }
+    
+    public static string TryGetBodyPartKilled(Profile profile)
+    {
+        string BodyPart = "";
+        GClass788 agressorData = profile.EftStats.Aggressor;
+        if (agressorData != null)
+        {
+            if (((GInterface214)agressorData).ProfileId != profile.Id)
+            {
+                BodyPart = agressorData.ColliderType.ToString();
+            }
+                    
+            Logger.LogDebugWarning($"Body part {BodyPart}\n");
+            return BodyPart;
+        }
+
+        Logger.LogDebugWarning("Aggressor Data is null");
+        return BodyPart;
+    }
+    
+    public static string TryGetCategoryKiller(Profile profile)
+    {
+        string CategoryKiller = "";
+        GClass788 agressorData = profile.EftStats.Aggressor;
+        if (agressorData != null)
+        {
+            if (((GInterface214)agressorData).ProfileId != profile.Id)
+            {
+                CategoryKiller = agressorData.Category.ToString();
+            }
+                    
+            Logger.LogDebugWarning($"Category killer {CategoryKiller}\n");
+            return CategoryKiller;
+        }
+
+        Logger.LogDebugWarning("Aggressor Data is null");
+        return CategoryKiller;
+    }
 }
 

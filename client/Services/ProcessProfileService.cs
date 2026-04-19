@@ -147,7 +147,7 @@ namespace SPTLeaderboard.Services
             var (gameVersion, lastRaidLocationRaw, lastRaidLocation) = raidInfo;
 
             var completedQuests = ProcessQuests(pmcData, isScavRaid);
-            var nameKiller = GetKillerName(resultRaid, pmcData, scavData);
+            var agressorData = GetAgressorData(resultRaid, pmcData, scavData);
             var discFromRaid = resultRaid.result == ExitStatus.Left;
             var revenueItems = GetRaidRevenueItems(resultRaid, isScavRaid);
             var (isTransition, lastRaidTransitionTo) = GetTransitionData(resultRaid);
@@ -163,7 +163,7 @@ namespace SPTLeaderboard.Services
             var (statTrackIsUsed, processedStatTrackData) = ProcessStatTrackData(profileId);
 
             CreateAndSendProfileData(profileId, gameVersion, lastRaidLocationRaw, lastRaidLocation,
-                isScavRaid, completedQuests, nameKiller, discFromRaid, revenueItems, isTransition,
+                isScavRaid, completedQuests, agressorData, discFromRaid, revenueItems, isTransition,
                 lastRaidTransitionTo, allAchievementsDict, haveDevItems, hasKappa, averageShot,
                 longestShot, longestHeadshot, maxHealth, currentHealth, currentEnergy, currentHydration,
                 maxEnergy, maxHydration, killedPmc, killedSavage, killedBoss, expLooting, hitCount,
@@ -203,18 +203,22 @@ namespace SPTLeaderboard.Services
         /// <summary>
         /// Gets killer name
         /// </summary>
-        private string GetKillerName(RaidEndDescriptorClass resultRaid, Profile pmcData, Profile scavData)
+        private (string, string, string) GetAgressorData(RaidEndDescriptorClass resultRaid, Profile pmcData, Profile scavData)
         {
             if (resultRaid.result != ExitStatus.Killed)
-                return "";
+                return ("", "", "");
 
             var nameKiller = PlayerHelper.TryGetAgressorName(pmcData);
+            var categoryKiller = PlayerHelper.TryGetCategoryKiller(pmcData);
+            var bodyPartKilled = PlayerHelper.TryGetBodyPartKilled(pmcData);
             if (string.IsNullOrEmpty(nameKiller))
             {
                 nameKiller = PlayerHelper.TryGetAgressorName(scavData);
+                categoryKiller = PlayerHelper.TryGetCategoryKiller(scavData);
+                bodyPartKilled = PlayerHelper.TryGetBodyPartKilled(scavData);
             }
 
-            return nameKiller;
+            return (nameKiller, categoryKiller, bodyPartKilled);
         }
 
         /// <summary>
@@ -475,7 +479,7 @@ namespace SPTLeaderboard.Services
         /// </summary>
         private void CreateAndSendProfileData(
             string profileId, string gameVersion, string lastRaidLocationRaw, string lastRaidLocation,
-            bool isScavRaid, Dictionary<string, QuestInfoData> completedQuests, string nameKiller,
+            bool isScavRaid, Dictionary<string, QuestInfoData> completedQuests, (string, string, string) agressorData,
             bool discFromRaid, List<ItemData> revenueItems, bool isTransition, string lastRaidTransitionTo,
             Dictionary<string, int> allAchievementsDict, bool haveDevItems, bool hasKappa,
             float averageShot, int longestShot, int longestHeadshot, float maxHealth, float currentHealth,
@@ -493,7 +497,7 @@ namespace SPTLeaderboard.Services
 
             if (isScavRaid)
             {
-                var scavProfileData = CreateScavProfileData(baseData, nameKiller, discFromRaid, isTransition,
+                var scavProfileData = CreateScavProfileData(baseData, agressorData, discFromRaid, isTransition,
                     statTrackIsUsed, hitCount, lastRaidLocation, lastRaidLocationRaw, lastRaidTransitionTo,
                     allAchievementsDict, longestShot, longestHeadshot, averageShot, killedBoss, killedSavage,
                     processedStatTrackData, pmcData, scavData, totalDamage, damageTaken, completedQuests, maxEnergy, maxHydration, revenueItems);
@@ -502,7 +506,7 @@ namespace SPTLeaderboard.Services
             }
             else
             {
-                var pmcProfileData = CreatePmcProfileData(baseData, nameKiller, discFromRaid, isTransition,
+                var pmcProfileData = CreatePmcProfileData(baseData, agressorData, discFromRaid, isTransition,
                     statTrackIsUsed, expLooting, hideoutData, hitCount, lastRaidLocation, lastRaidLocationRaw,
                     lastRaidTransitionTo, allAchievementsDict, longestShot, longestHeadshot, averageShot,
                     killedBoss, killedSavage, processedStatTrackData, pmcData, scavData, hasKappa,
@@ -562,7 +566,7 @@ namespace SPTLeaderboard.Services
         /// <summary>
         /// Creates PMC profile data
         /// </summary>
-        private AdditiveProfileData CreatePmcProfileData(BaseData baseData, string nameKiller, bool discFromRaid,
+        private AdditiveProfileData CreatePmcProfileData(BaseData baseData, (string, string, string) agressorData, bool discFromRaid,
             bool isTransition, bool statTrackIsUsed, int expLooting, HideoutData hideoutData, int hitCount,
             string lastRaidLocation, string lastRaidLocationRaw, string lastRaidTransitionTo,
             Dictionary<string, int> allAchievementsDict, int longestShot, int longestHeadshot, float averageShot,
@@ -576,7 +580,9 @@ namespace SPTLeaderboard.Services
             return new AdditiveProfileData(baseData)
             {
                 DiscFromRaid = discFromRaid,
-                AgressorName = nameKiller,
+                AgressorName = agressorData.Item1,
+                AgressorCategory = agressorData.Item2,
+                AgressorBodyPart = agressorData.Item3,
                 IsTransition = isTransition,
                 IsUsingStattrack = statTrackIsUsed,
                 LastRaidEXP = expLooting,
@@ -617,7 +623,7 @@ namespace SPTLeaderboard.Services
         /// <summary>
         /// Creates SCAV profile data
         /// </summary>
-        private AdditiveProfileData CreateScavProfileData(BaseData baseData, string nameKiller, bool discFromRaid,
+        private AdditiveProfileData CreateScavProfileData(BaseData baseData, (string, string, string) agressorData, bool discFromRaid,
             bool isTransition, bool statTrackIsUsed, int hitCount, string lastRaidLocation,
             string lastRaidLocationRaw, string lastRaidTransitionTo, Dictionary<string, int> allAchievementsDict,
             int longestShot, int longestHeadshot, float averageShot, int killedBoss, int killedSavage,
@@ -629,7 +635,9 @@ namespace SPTLeaderboard.Services
             return new AdditiveProfileData(baseData)
             {
                 DiscFromRaid = discFromRaid,
-                AgressorName = nameKiller,
+                AgressorName = agressorData.Item1,
+                AgressorCategory = agressorData.Item2,
+                AgressorBodyPart = agressorData.Item3,
                 IsTransition = isTransition,
                 IsUsingStattrack = statTrackIsUsed,
                 LastRaidEXP = 0,
