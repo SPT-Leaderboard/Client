@@ -37,6 +37,7 @@ public class ZoneData
 
     public Bounds GetBounds()
     {
-        return new Bounds(Center, Size);
+        Vector3 boundsCenter = Center + Vector3.up * (Size.y * 0.5f);
+        return new Bounds(boundsCenter, Size);
     }
 }

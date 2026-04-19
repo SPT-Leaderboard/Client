@@ -65,7 +65,7 @@ namespace SPTLeaderboard.Services
         
         private void LoadPassword()
         {
-            _password = File.ReadAllText(GlobalData.PathPassword);
+            _password = File.ReadAllText(GlobalData.PathPassword) ?? "";
         }
         
         private string GenerateToken()

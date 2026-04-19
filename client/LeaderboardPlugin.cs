@@ -62,7 +62,7 @@ namespace SPTLeaderboard
             
             #region Checking Headless
             
-            bool isFikaHeadless = false;
+            bool isFikaHeadless;
             if (!FikaInterop.IsCheckedFikaHeadless)
             {
                 FikaInterop.CheckFikaHeadless(found => { isFikaHeadless = found; });
@@ -76,7 +76,6 @@ namespace SPTLeaderboard
                     return;
                 }
             }
-
             
             #endregion
             
@@ -284,8 +283,7 @@ namespace SPTLeaderboard
                 EncodedImage = encodedImage,
                 PlayerId = session.Profile.Id,
                 IsFullBody = isFullBody,
-                Token = EncryptionService.Instance.Token,
-                Password = EncryptionService.Instance.Password
+                Token = EncryptionService.Instance.Token
             };
             string jsonBody = JsonConvert.SerializeObject(data);
                     

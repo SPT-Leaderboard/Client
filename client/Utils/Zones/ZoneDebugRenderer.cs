@@ -101,21 +101,38 @@ public class ZoneDebugRenderer: MonoBehaviour
 
         Logger.LogDebugInfo($"[ZoneDebugRenderer] Cleared {_zoneColors.Count} cached zone colors and materials");
     }
+
+    private static void FillZoneCorners(Vector3 pivot, Vector3 size, float rotationYDegrees, Vector3[] corners)
+    {
+        float halfX = size.x * 0.5f;
+        float halfZ = size.z * 0.5f;
+        float heightY = size.y;
+
+        corners[0] = pivot + new Vector3(-halfX, 0f, -halfZ);
+        corners[1] = pivot + new Vector3(-halfX, 0f, halfZ);
+        corners[2] = pivot + new Vector3(halfX, 0f, halfZ);
+        corners[3] = pivot + new Vector3(halfX, 0f, -halfZ);
+
+        corners[4] = pivot + new Vector3(-halfX, heightY, -halfZ);
+        corners[5] = pivot + new Vector3(-halfX, heightY, halfZ);
+        corners[6] = pivot + new Vector3(halfX, heightY, halfZ);
+        corners[7] = pivot + new Vector3(halfX, heightY, -halfZ);
+
+        if (Mathf.Abs(rotationYDegrees) > 0.001f)
+        {
+            Quaternion rotation = Quaternion.Euler(0f, rotationYDegrees, 0f);
+            for (int i = 0; i < corners.Length; i++)
+            {
+                Vector3 local = corners[i] - pivot;
+                corners[i] = pivot + rotation * local;
+            }
+        }
+    }
     
     public void DrawZone(Vector3 Size, Vector3 Center, string zoneGuid = null)
     {
-        Vector3 half = Size / 2;
-
         Vector3[] corners = new Vector3[8];
-        corners[0] = Center + new Vector3(-half.x, -half.y, -half.z);
-        corners[1] = Center + new Vector3(-half.x, -half.y, half.z);
-        corners[2] = Center + new Vector3(half.x, -half.y, half.z);
-        corners[3] = Center + new Vector3(half.x, -half.y, -half.z);
-
-        corners[4] = Center + new Vector3(-half.x, half.y, -half.z);
-        corners[5] = Center + new Vector3(-half.x, half.y, half.z);
-        corners[6] = Center + new Vector3(half.x, half.y, half.z);
-        corners[7] = Center + new Vector3(half.x, half.y, -half.z);
+        FillZoneCorners(Center, Size, 0f, corners);
 
         int[,] edges = new[,]
         {
@@ -185,28 +202,8 @@ public class ZoneDebugRenderer: MonoBehaviour
 
     public void DrawZone(Vector3 Size, Vector3 Center, float rotationZ, string zoneGuid = null)
     {
-        Vector3 half = Size / 2;
-
         Vector3[] corners = new Vector3[8];
-        corners[0] = Center + new Vector3(-half.x, -half.y, -half.z);
-        corners[1] = Center + new Vector3(-half.x, -half.y, half.z);
-        corners[2] = Center + new Vector3(half.x, -half.y, half.z);
-        corners[3] = Center + new Vector3(half.x, -half.y, -half.z);
-        corners[4] = Center + new Vector3(-half.x, half.y, -half.z);
-        corners[5] = Center + new Vector3(-half.x, half.y, half.z);
-        corners[6] = Center + new Vector3(half.x, half.y, half.z);
-        corners[7] = Center + new Vector3(half.x, half.y, -half.z);
-
-        if (Mathf.Abs(rotationZ) > 0.001f)
-        {
-            Quaternion rotation = Quaternion.Euler(0, rotationZ, 0);
-            for (int i = 0; i < corners.Length; i++)
-            {
-                Vector3 relativePos = corners[i] - Center;
-                relativePos = rotation * relativePos;
-                corners[i] = Center + relativePos;
-            }
-        }
+        FillZoneCorners(Center, Size, rotationZ, corners);
 
         int[,] edges = new[,]
         {
@@ -271,30 +268,11 @@ public class ZoneDebugRenderer: MonoBehaviour
         if (!SPTLeaderboard.Configuration.Settings.Instance.ShowZonePlanes.Value)
             return;
 
-        Vector3 half = Size / 2;
         Color zoneColor = zoneGuid != null ? GetZoneColor(zoneGuid) : Color.white;
         zoneColor.a = Settings.Instance.ZonePlanesTransparent.Value; // Very transparent
 
         Vector3[] corners = new Vector3[8];
-        corners[0] = Center + new Vector3(-half.x, -half.y, -half.z);
-        corners[1] = Center + new Vector3(-half.x, -half.y, half.z);
-        corners[2] = Center + new Vector3(half.x, -half.y, half.z);
-        corners[3] = Center + new Vector3(half.x, -half.y, -half.z);
-        corners[4] = Center + new Vector3(-half.x, half.y, -half.z);
-        corners[5] = Center + new Vector3(-half.x, half.y, half.z);
-        corners[6] = Center + new Vector3(half.x, half.y, half.z);
-        corners[7] = Center + new Vector3(half.x, half.y, -half.z);
-
-        if (Mathf.Abs(rotationZ) > 0.001f)
-        {
-            Quaternion rotation = Quaternion.Euler(0, rotationZ, 0);
-            for (int i = 0; i < corners.Length; i++)
-            {
-                Vector3 relativePos = corners[i] - Center;
-                relativePos = rotation * relativePos;
-                corners[i] = Center + relativePos;
-            }
-        }
+        FillZoneCorners(Center, Size, rotationZ, corners);
 
         // Create planes for each face
         // Bottom face

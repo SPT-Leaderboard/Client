@@ -15,7 +15,4 @@ public class ImageData
     
     [JsonProperty("token")]
     public string Token;
-
-    [JsonProperty("password")]
-    public string Password { get; set; }
 }

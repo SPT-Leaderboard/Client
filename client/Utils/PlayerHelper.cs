@@ -74,7 +74,7 @@ public class PlayerHelper
 
     public Vector3 LastDeathPosition { get; set; } = Vector3.zero;
 
-    public Vector2 CurrentPosition => Instance.Player.PlayerBones.transform.position;
+    public Vector2 CurrentPosition => new(Instance.Player.PlayerBones.transform.position.x, Instance.Player.PlayerBones.transform.position.z);
 
     public static Vector3 ConvertToMapPosition(Vector3 unityPosition)
     {
