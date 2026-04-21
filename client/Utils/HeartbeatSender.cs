@@ -17,49 +17,49 @@ namespace SPTLeaderboard.Utils
         public static void Send(PlayerState playerState)
         {
             if (Singleton<PreloaderUI>.Instantiated)
+            {
+                var now = DateTime.UtcNow;
+                var timeSinceLastSend = (now - _lastSendTime).TotalSeconds;
+
+                if (timeSinceLastSend < GlobalData.HeartbeatCooldownSeconds && _lastSentState.Equals(playerState))
                 {
-                    var now = DateTime.UtcNow;
-                    var timeSinceLastSend = (now - _lastSendTime).TotalSeconds;
+                    return;
+                }
 
-                    if (timeSinceLastSend < GlobalData.HeartbeatCooldownSeconds && _lastSentState.Equals(playerState))
-                    {
-                        return;
-                    }
+                var session = PlayerHelper.GetSession();
+                if (session?.Profile == null)
+                    return;
 
-                    var session = PlayerHelper.GetSession();
-                    if (session?.Profile == null)
-                        return;
+                var request = NetworkApiRequest.Create(GlobalData.HeartbeatUrl);
 
-                    var request = NetworkApiRequest.Create(GlobalData.HeartbeatUrl);
+                request.OnSuccess = (response, code) =>
+                {
+                    Logger.LogWarning($"[HeartbeatSender] OnSuccess {response}");
+                };
 
-                    request.OnSuccess = (response, code) =>
-                    {
-                        Logger.LogWarning($"[HeartbeatSender] OnSuccess {response}");
-                    };
+                request.OnFail = (error, code) => { ServerErrorHandler.HandleError(error, code); };
 
-                    request.OnFail = (error, code) => { ServerErrorHandler.HandleError(error, code); };
+                var data = new PlayerHeartbeatData
+                {
+                    Type = DataUtils.GetPlayerState(playerState),
+                    Timestamp = DataUtils.CurrentTimestamp,
+                    Version = GlobalData.Version,
+                    SessionId = session.Profile.Id,
+                    Token = EncryptionService.Instance.Token
+                };
 
-                    var data = new PlayerHeartbeatData
-                    {
-                        Type = DataUtils.GetPlayerState(playerState),
-                        Timestamp = DataUtils.CurrentTimestamp,
-                        Version = GlobalData.Version,
-                        SessionId = session.Profile.Id,
-                        Token = EncryptionService.Instance.Token
-                    };
-
-                    string jsonBody = JsonConvert.SerializeObject(data);
+                string jsonBody = JsonConvert.SerializeObject(data);
 
 #if DEBUG
-                    Logger.LogDebugWarning($"Request Data {jsonBody}");
+                Logger.LogDebugWarning($"Request Data {jsonBody}");
 #endif
 
-                    request.SetData(jsonBody);
-                    request.Send();
+                request.SetData(jsonBody);
+                request.Send();
 
-                    _lastSendTime = now;
-                    _lastSentState = playerState;
-                }
+                _lastSendTime = now;
+                _lastSentState = playerState;
+            }
         }
         
         public static void SendInRaid(PlayerState playerState = PlayerState.IN_RAID)
@@ -83,6 +83,7 @@ namespace SPTLeaderboard.Utils
                 var data = new PlayerHeartbeatRaidData
                 {
                     Type = DataUtils.GetPlayerState(playerState),
+                    State = DataUtils.GetActionState(PlayerHelper.LastActionState),
                     Timestamp = DataUtils.CurrentTimestamp,
                     Version = GlobalData.Version,
                     SessionId = session.Profile.Id,

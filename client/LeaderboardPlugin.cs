@@ -104,6 +104,7 @@ namespace SPTLeaderboard
             new RagfairScreenPatch().Enable();
             new ClickESideScreenPatch().Enable();
             new OpenStashPanelShowPatch().Enable();
+            new OnShotWeaponPatch().Enable();
 
             if (!FikaInterop.IsCheckedFikaCore)
             {

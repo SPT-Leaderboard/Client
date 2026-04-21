@@ -162,6 +162,7 @@
         <Compile Include="Data\WeaponInfo.cs" />
         <Compile Include="Data\ZoneData.cs" />
         <Compile Include="Data\ZoneTrackerData.cs" />
+        <Compile Include="Enums\ActionState.cs" />
         <Compile Include="Enums\PlayerState.cs" />
         <Compile Include="Integrations\PauseModInterop.cs" />
         <Compile Include="Integrations\StatTrackInterop.cs" />
@@ -169,6 +170,7 @@
         <Compile Include="LeaderboardPlugin.cs" />
         <Compile Include="Patches\ClickESideScreenPatch.cs" />
         <Compile Include="Patches\ConsoleScreenPatch.cs" />
+        <Compile Include="Patches\OnShotWeaponPatch.cs" />
         <Compile Include="Patches\RagfairScreenPatch.cs" />
         <Compile Include="Patches\TraderScreensGroupPatch.cs" />
         <Compile Include="Patches\WeaponModdingScreenPatch.cs" />

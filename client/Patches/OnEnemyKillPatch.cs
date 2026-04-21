@@ -4,6 +4,7 @@ using EFT;
 using EFT.HealthSystem;
 using SPT.Reflection.Patching;
 using SPTLeaderboard.Configuration;
+using SPTLeaderboard.Enums;
 using SPTLeaderboard.Services;
 using SPTLeaderboard.Utils;
 
@@ -56,6 +57,7 @@ namespace SPTLeaderboard.Patches
                 zoneTracker.OnEnemyKilledInZone(damage, role.ToStringNoBox(), distance, bodyPart);
             }
 
+            PlayerHelper.LastActionState = ActionState.KILLED_ENEMY;
             LocalizationService.Notification($"role={role.ToStringNoBox()}");
             Utils.Logger.LogDebugWarning($"[OnEnemyKill] " +
                 $"distance={distance:F1}, " +

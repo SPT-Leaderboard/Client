@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using EFT.InventoryLogic;
 using SPTLeaderboard.Data;
+using SPTLeaderboard.Enums;
 using SPTLeaderboard.Utils;
 using SPTLeaderboard.Utils.Zones;
 using UnityEngine;
@@ -522,7 +523,7 @@ namespace SPTLeaderboard.Services
         public void OnStashOpened(CompoundItem item)
         {
             if(_lootedContainers.Contains(item.Parent.GetOwner().ID)) return;
-            
+            PlayerHelper.LastActionState = ActionState.OPEN_CONTAINER;
             if (CurrentZone != null)
             {
                 if (!CurrentRaidData.AmountContainersOpenedInZones.ContainsKey(CurrentZone.GUID))

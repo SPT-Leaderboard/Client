@@ -40,6 +40,16 @@ public static class DataUtils
     }
     
     /// <summary>
+    /// Get string from enum ActionState type
+    /// </summary>
+    /// <param name="state"></param>
+    /// <returns></returns>
+    public static string GetActionState(ActionState state)
+    {
+        return Enum.GetName(typeof(ActionState), state)?.ToLower();
+    }
+    
+    /// <summary>
     /// Parsing version SPT from PlayerPrefs
     /// </summary>
     /// <returns></returns>

@@ -5,6 +5,7 @@ using EFT;
 using EFT.InventoryLogic;
 using SPT.Reflection.Utils;
 using SPTLeaderboard.Data;
+using SPTLeaderboard.Enums;
 using SPTLeaderboard.Services;
 using UnityEngine;
 
@@ -74,8 +75,29 @@ public class PlayerHelper
 
     public Vector3 LastDeathPosition { get; set; } = Vector3.zero;
 
-    public Vector2 CurrentPosition => new(Instance.Player.PlayerBones.transform.position.x, Instance.Player.PlayerBones.transform.position.z);
+    public Vector3 CurrentPosition => Instance.Player.PlayerBones.transform.position;
 
+    public static ActionState LastActionState
+    {
+        get
+        {
+            if (DataUtils.CurrentTimestamp - LastActionStateTimestamp < 59)
+            {
+                return field;
+            }
+
+            return ActionState.EMPTY;
+        }
+        set
+        {
+            Logger.LogDebugWarning($"[LastActionState] SET {value.ToString()}");
+            field = value; 
+            LastActionStateTimestamp = DataUtils.CurrentTimestamp;
+        }
+    } = ActionState.EMPTY;
+
+    private static long LastActionStateTimestamp { get; set; }
+    
     public static Vector3 ConvertToMapPosition(Vector3 unityPosition)
     {
         return new Vector3(unityPosition.x, unityPosition.z, unityPosition.y);

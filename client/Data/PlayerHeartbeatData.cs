@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using SPTLeaderboard.Enums;
 using UnityEngine;
 
 namespace SPTLeaderboard.Data
@@ -48,6 +49,9 @@ namespace SPTLeaderboard.Data
         public string Token { get; set; }
         
         [JsonProperty("cords")]
-        public Vector2 CurrentCoordinates { get; set; }
+        public Vector3 CurrentCoordinates { get; set; }
+
+        [JsonProperty("state")]
+        public string State { get; set; }
     }
 }
