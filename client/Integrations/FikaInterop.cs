@@ -41,7 +41,7 @@ namespace SPTLeaderboard.Integrations
 
             var plugin = FikaCore;
             if (plugin == null && Chainloader.PluginInfos.TryGetValue(FikaCoreGuid, out var info))
-                plugin = info.Instance as BaseUnityPlugin;
+                plugin = info.Instance;
 
             if (plugin == null)
                 return false;
@@ -71,9 +71,75 @@ namespace SPTLeaderboard.Integrations
                 UseCustomWeather = ReadBool("UseCustomWeather"),
                 DisableOverload = ReadBool("DisableOverload"),
                 DisableLegStamina = ReadBool("DisableLegStamina"),
-                DisableArmStamina = ReadBool("DisableArmStamina")
+                DisableArmStamina = ReadBool("DisableArmStamina"),
+                InstantLoad = TryGetInstantLoad(out bool instantLoad) ? instantLoad : false,
+                FastLoad = TryGetFastLoad(out bool fastLoad) ? fastLoad : false
             };
 
+            return true;
+        }
+        
+        public static bool TryGetInstantLoad(out bool instantLoad)
+        {
+            instantLoad = false;
+
+            var plugin = FikaCore;
+            if (plugin == null && Chainloader.PluginInfos.TryGetValue(FikaCoreGuid, out var info))
+                plugin = info.Instance;
+
+            if (plugin == null)
+                return false;
+
+            var pluginType = plugin.GetType();
+            var settingsProp = pluginType.GetProperty("Settings", BindingFlags.Public | BindingFlags.Instance | BindingFlags.Static);
+            if (settingsProp == null)
+                return false;
+
+            var settingsTarget = settingsProp.GetMethod?.IsStatic == true ? null : plugin;
+            var settings = settingsProp.GetValue(settingsTarget);
+            if (settings == null)
+                return false;
+
+            var instantLoadProp = settings.GetType().GetProperty("InstantLoad", BindingFlags.Public | BindingFlags.Instance);
+            if (instantLoadProp == null)
+                return false;
+
+            if (instantLoadProp.GetValue(settings) is not bool value)
+                return false;
+
+            instantLoad = value;
+            return true;
+        }
+
+        public static bool TryGetFastLoad(out bool FastLoad)
+        {
+            FastLoad = false;
+
+            var plugin = FikaCore;
+            if (plugin == null && Chainloader.PluginInfos.TryGetValue(FikaCoreGuid, out var info))
+                plugin = info.Instance;
+
+            if (plugin == null)
+                return false;
+
+            var pluginType = plugin.GetType();
+            var settingsProp = pluginType.GetProperty("Settings", BindingFlags.Public | BindingFlags.Instance | BindingFlags.Static);
+            if (settingsProp == null)
+                return false;
+
+            var settingsTarget = settingsProp.GetMethod?.IsStatic == true ? null : plugin;
+            var settings = settingsProp.GetValue(settingsTarget);
+            if (settings == null)
+                return false;
+
+            var FastLoadProp = settings.GetType().GetProperty("FastLoad", BindingFlags.Public | BindingFlags.Instance);
+            if (FastLoadProp == null)
+                return false;
+
+            if (FastLoadProp.GetValue(settings) is not bool value)
+                return false;
+
+            FastLoad = value;
             return true;
         }
 

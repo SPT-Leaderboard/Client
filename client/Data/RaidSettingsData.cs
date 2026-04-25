@@ -38,5 +38,11 @@ namespace SPTLeaderboard.Data
 
         [JsonProperty("disableArmStamina")]
         public bool DisableArmStamina { get; set; }
+
+        [JsonProperty("instantLoad")]
+        public bool InstantLoad { get; set; }
+
+        [JsonProperty("fastLoad")]
+        public bool FastLoad { get; set; }
     }
 }
