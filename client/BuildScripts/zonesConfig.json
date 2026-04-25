@@ -7,7 +7,7 @@
         "Name": "Big Red",
         "Center": {
           "x": -214.0,
-          "y": 10.0,
+          "y": -0.1,
           "z": -120.0
         },
         "Size": {
@@ -22,7 +22,7 @@
             "Name": "Director office",
             "Center": {
               "x": -203.0,
-              "y": 8.0,
+              "y": 5.3,
               "z": -104.0
             },
             "Size": {
@@ -40,7 +40,7 @@
         "Name": "Storage",
         "Center": {
           "x": -280.0,
-          "y": 1.0,
+          "y": -5.8,
           "z": -130.0
         },
         "Size": {
@@ -55,7 +55,7 @@
             "Name": "Garage 1",
             "Center": {
               "x": -298.19,
-              "y": 3.0,
+              "y": 0.4,
               "z": -158.0
             },
             "Size": {
@@ -71,7 +71,7 @@
             "Name": "Garage 2",
             "Center": {
               "x": -274.5,
-              "y": 3.0,
+              "y": 0.4,
               "z": -160.0
             },
             "Size": {
@@ -87,7 +87,7 @@
             "Name": "Garage 3",
             "Center": {
               "x": -297.0,
-              "y": 3.0,
+              "y": 0.4,
               "z": -112.0
             },
             "Size": {
@@ -103,7 +103,7 @@
             "Name": "Garage 4",
             "Center": {
               "x": -272.0,
-              "y": 3.0,
+              "y": 0.4,
               "z": -108.0
             },
             "Size": {
@@ -121,7 +121,7 @@
         "Name": "Trailer park",
         "Center": {
           "x": -207.0,
-          "y": 1.0,
+          "y": -5.8,
           "z": -220.0
         },
         "Size": {
@@ -137,7 +137,7 @@
         "Name": "Trash bridge",
         "Center": {
           "x": -67.0,
-          "y": -11.0,
+          "y": -13.8,
           "z": 44.0
         },
         "Size": {
@@ -153,7 +153,7 @@
         "Name": "Main bridge",
         "Center": {
           "x": -77.0,
-          "y": 0.0,
+          "y": -6.3,
           "z": 7.0
         },
         "Size": {
@@ -169,7 +169,7 @@
         "Name": "Russian Armed Forces checkpoint",
         "Center": {
           "x": -15.0,
-          "y": 0.0,
+          "y": -5.0,
           "z": -135.0
         },
         "Size": {
@@ -185,7 +185,7 @@
         "Name": "Warehouse 17",
         "Center": {
           "x": 48.0,
-          "y": 1.0,
+          "y": -7.1,
           "z": -61.0
         },
         "Size": {
@@ -201,7 +201,7 @@
         "Name": "Boiler room",
         "Center": {
           "x": 116.0,
-          "y": 1.0,
+          "y": -7.1,
           "z": -55.0
         },
         "Size": {
@@ -217,7 +217,7 @@
         "Name": "Repair workshop",
         "Center": {
           "x": 107.0,
-          "y": 1.0,
+          "y": -7.1,
           "z": -92.0
         },
         "Size": {
@@ -233,7 +233,7 @@
         "Name": "Library",
         "Center": {
           "x": 84.0,
-          "y": 5.0,
+          "y": -1.4,
           "z": -156.0
         },
         "Size": {
@@ -249,7 +249,7 @@
         "Name": "New building",
         "Center": {
           "x": 202.0,
-          "y": 5.0,
+          "y": -2.6,
           "z": -127.0
         },
         "Size": {
@@ -265,7 +265,7 @@
         "Name": "Skeleton",
         "Center": {
           "x": 200.0,
-          "y": 5.0,
+          "y": -2.6,
           "z": -15.0
         },
         "Size": {
@@ -278,10 +278,10 @@
       },
       {
         "GUID": "740b304c-fdb7-4f17-bc76-abb6b6d30fa4",
-        "Name": "Старая заправка",
+        "Name": "Old Gas",
         "Center": {
           "x": 330.0,
-          "y": 5.0,
+          "y": -2.6,
           "z": -173.0
         },
         "Size": {
@@ -297,7 +297,7 @@
         "Name": "Storage 4",
         "Center": {
           "x": 336.0,
-          "y": 5.0,
+          "y": -2.6,
           "z": -63.0
         },
         "Size": {
@@ -313,7 +313,7 @@
         "Name": "Storage 3",
         "Center": {
           "x": 392.0,
-          "y": 5.0,
+          "y": -2.6,
           "z": -95.0
         },
         "Size": {
@@ -329,7 +329,7 @@
         "Name": "Container",
         "Center": {
           "x": 475.0,
-          "y": 5.0,
+          "y": -2.6,
           "z": -69.0
         },
         "Size": {
@@ -345,7 +345,7 @@
         "Name": "New gas station",
         "Center": {
           "x": 409.0,
-          "y": 5.0,
+          "y": -2.6,
           "z": 32.0
         },
         "Size": {
@@ -361,7 +361,7 @@
         "Name": "Power Line Tower",
         "Center": {
           "x": 500.0,
-          "y": 10.0,
+          "y": -0.1,
           "z": 106.0
         },
         "Size": {
@@ -377,7 +377,7 @@
         "Name": "Military checkpoint",
         "Center": {
           "x": 585.0,
-          "y": 1.0,
+          "y": -4.6,
           "z": 18.0
         },
         "Size": {
@@ -393,7 +393,7 @@
         "Name": "Workshop",
         "Center": {
           "x": 569.0,
-          "y": 1.0,
+          "y": -4.6,
           "z": -70.0
         },
         "Size": {
@@ -409,7 +409,7 @@
         "Name": "Hangar 7",
         "Center": {
           "x": 554.0,
-          "y": 1.0,
+          "y": -4.6,
           "z": -120.0
         },
         "Size": {
@@ -425,7 +425,7 @@
         "Name": "Pumping station",
         "Center": {
           "x": 620.0,
-          "y": 1.0,
+          "y": -4.6,
           "z": -86.0
         },
         "Size": {
@@ -441,7 +441,7 @@
         "Name": "Bus stop",
         "Center": {
           "x": 240.0,
-          "y": 1.0,
+          "y": -4.6,
           "z": 51.0
         },
         "Size": {
@@ -457,7 +457,7 @@
         "Name": "Two-storey dormitory",
         "Center": {
           "x": 230.0,
-          "y": 1.0,
+          "y": -4.6,
           "z": 147.0
         },
         "Size": {
@@ -473,7 +473,7 @@
         "Name": "Three-storey dormitory",
         "Center": {
           "x": 176.0,
-          "y": 1.0,
+          "y": -4.6,
           "z": 166.0
         },
         "Size": {
@@ -489,7 +489,7 @@
         "Name": "Industrial complex",
         "Center": {
           "x": 274.0,
-          "y": 1.0,
+          "y": -4.6,
           "z": -40.0
         },
         "Size": {
@@ -505,7 +505,7 @@
         "Name": "Old construction site",
         "Center": {
           "x": 80.0,
-          "y": 1.0,
+          "y": -5.1,
           "z": -12.0
         },
         "Size": {
@@ -523,7 +523,7 @@
         "Name": "Silos",
         "Center": {
           "x": 7.0,
-          "y": -2.61,
+          "y": -10.3,
           "z": 17.0
         },
         "Size": {
@@ -539,7 +539,7 @@
         "Name": "TransitCustomsOut",
         "Center": {
           "x": 17.84,
-          "y": -0.34,
+          "y": -5.5,
           "z": -47.8
         },
         "Size": {
@@ -555,7 +555,7 @@
         "Name": "East Halls",
         "Center": {
           "x": 47.0,
-          "y": 5.0,
+          "y": -0.2,
           "z": -36.0
         },
         "Size": {
@@ -571,7 +571,7 @@
         "Name": "Forklifts",
         "Center": {
           "x": 66.26,
-          "y": 2.0,
+          "y": -0.6,
           "z": -42.59
         },
         "Size": {
@@ -587,7 +587,7 @@
         "Name": "Glass Hall",
         "Center": {
           "x": 69.17,
-          "y": 0.03,
+          "y": -2.6,
           "z": 1.0
         },
         "Size": {
@@ -603,7 +603,7 @@
         "Name": "Pumping Station",
         "Center": {
           "x": 40.32,
-          "y": 0.0,
+          "y": -2.6,
           "z": -10.98
         },
         "Size": {
@@ -619,7 +619,7 @@
         "Name": "Boilers",
         "Center": {
           "x": 56.04,
-          "y": 0.11,
+          "y": -5.0,
           "z": 5.99
         },
         "Size": {
@@ -635,7 +635,7 @@
         "Name": "Exit 3",
         "Center": {
           "x": 58.35,
-          "y": 0.27,
+          "y": -4.9,
           "z": 65.0
         },
         "Size": {
@@ -651,7 +651,7 @@
         "Name": "North Stairs",
         "Center": {
           "x": 35.4,
-          "y": 4.6,
+          "y": -5.6,
           "z": 40.0
         },
         "Size": {
@@ -667,7 +667,7 @@
         "Name": "South Stairs",
         "Center": {
           "x": 9.25,
-          "y": 4.58,
+          "y": -5.6,
           "z": 39.0
         },
         "Size": {
@@ -683,7 +683,7 @@
         "Name": "Office Building",
         "Center": {
           "x": 22.5,
-          "y": 5.0,
+          "y": -5.2,
           "z": 40.0
         },
         "Size": {
@@ -698,7 +698,7 @@
             "Name": "1 Floor",
             "Center": {
               "x": 22.5,
-              "y": 2.0,
+              "y": -0.1,
               "z": 39.0
             },
             "Size": {
@@ -714,7 +714,7 @@
             "Name": "2 Floor",
             "Center": {
               "x": 22.5,
-              "y": 6.0,
+              "y": 3.8,
               "z": 39.0
             },
             "Size": {
@@ -730,7 +730,7 @@
             "Name": "3 Floor",
             "Center": {
               "x": 22.5,
-              "y": 10.0,
+              "y": 7.8,
               "z": 39.0
             },
             "Size": {
@@ -748,7 +748,7 @@
         "Name": "Connector",
         "Center": {
           "x": 30.0,
-          "y": 0.22,
+          "y": -9.9,
           "z": 18.27
         },
         "Size": {
@@ -764,7 +764,7 @@
         "Name": "Platform",
         "Center": {
           "x": -2.97,
-          "y": 0.0,
+          "y": -10.1,
           "z": 37.48
         },
         "Size": {
@@ -780,7 +780,7 @@
         "Name": "Blue Containers",
         "Center": {
           "x": -14.88,
-          "y": 1.41,
+          "y": -3.7,
           "z": 58.0
         },
         "Size": {
@@ -796,7 +796,7 @@
         "Name": "Scav Bunker",
         "Center": {
           "x": -20.29,
-          "y": 0.1,
+          "y": -2.5,
           "z": 23.21
         },
         "Size": {
@@ -812,7 +812,7 @@
         "Name": "Wood Room",
         "Center": {
           "x": -46.79,
-          "y": 2.0,
+          "y": -0.6,
           "z": 62.0
         },
         "Size": {
@@ -828,7 +828,7 @@
         "Name": "Med Tent",
         "Center": {
           "x": -17.5,
-          "y": 0.17,
+          "y": -2.5,
           "z": -28.35
         },
         "Size": {
@@ -846,7 +846,7 @@
         "Name": "Silos",
         "Center": {
           "x": 7.0,
-          "y": -2.61,
+          "y": -10.3,
           "z": 17.0
         },
         "Size": {
@@ -862,7 +862,7 @@
         "Name": "TransitCustomsOut",
         "Center": {
           "x": 17.84,
-          "y": -0.34,
+          "y": -5.5,
           "z": -47.8
         },
         "Size": {
@@ -878,7 +878,7 @@
         "Name": "East Halls",
         "Center": {
           "x": 47.0,
-          "y": 5.0,
+          "y": -0.2,
           "z": -36.0
         },
         "Size": {
@@ -894,7 +894,7 @@
         "Name": "Forklifts",
         "Center": {
           "x": 66.26,
-          "y": 2.0,
+          "y": -0.6,
           "z": -42.59
         },
         "Size": {
@@ -910,7 +910,7 @@
         "Name": "Glass Hall",
         "Center": {
           "x": 69.17,
-          "y": 0.03,
+          "y": -2.6,
           "z": 1.0
         },
         "Size": {
@@ -926,7 +926,7 @@
         "Name": "Pumping Station",
         "Center": {
           "x": 40.32,
-          "y": 0.0,
+          "y": -2.6,
           "z": -10.98
         },
         "Size": {
@@ -942,7 +942,7 @@
         "Name": "Boilers",
         "Center": {
           "x": 56.04,
-          "y": 0.11,
+          "y": -5.0,
           "z": 5.99
         },
         "Size": {
@@ -958,7 +958,7 @@
         "Name": "Exit 3",
         "Center": {
           "x": 58.35,
-          "y": 0.27,
+          "y": -4.9,
           "z": 65.0
         },
         "Size": {
@@ -974,7 +974,7 @@
         "Name": "North Stairs",
         "Center": {
           "x": 35.4,
-          "y": 4.6,
+          "y": -5.6,
           "z": 40.0
         },
         "Size": {
@@ -990,7 +990,7 @@
         "Name": "South Stairs",
         "Center": {
           "x": 9.25,
-          "y": 4.58,
+          "y": -5.6,
           "z": 39.0
         },
         "Size": {
@@ -1006,7 +1006,7 @@
         "Name": "Office Building",
         "Center": {
           "x": 22.5,
-          "y": 5.0,
+          "y": -5.2,
           "z": 40.0
         },
         "Size": {
@@ -1021,7 +1021,7 @@
             "Name": "1 Floor",
             "Center": {
               "x": 22.5,
-              "y": 2.0,
+              "y": -0.1,
               "z": 39.0
             },
             "Size": {
@@ -1037,7 +1037,7 @@
             "Name": "2 Floor",
             "Center": {
               "x": 22.5,
-              "y": 6.0,
+              "y": 3.8,
               "z": 39.0
             },
             "Size": {
@@ -1053,7 +1053,7 @@
             "Name": "3 Floor",
             "Center": {
               "x": 22.5,
-              "y": 10.0,
+              "y": 7.8,
               "z": 39.0
             },
             "Size": {
@@ -1071,7 +1071,7 @@
         "Name": "Connector",
         "Center": {
           "x": 30.0,
-          "y": 0.22,
+          "y": -9.9,
           "z": 18.27
         },
         "Size": {
@@ -1087,7 +1087,7 @@
         "Name": "Platform",
         "Center": {
           "x": -2.97,
-          "y": 0.0,
+          "y": -10.1,
           "z": 37.48
         },
         "Size": {
@@ -1103,7 +1103,7 @@
         "Name": "Blue Containers",
         "Center": {
           "x": -14.88,
-          "y": 1.41,
+          "y": -3.7,
           "z": 58.0
         },
         "Size": {
@@ -1119,7 +1119,7 @@
         "Name": "Scav Bunker",
         "Center": {
           "x": -20.29,
-          "y": 0.1,
+          "y": -2.5,
           "z": 23.21
         },
         "Size": {
@@ -1135,7 +1135,7 @@
         "Name": "Wood Room",
         "Center": {
           "x": -46.79,
-          "y": 2.0,
+          "y": -0.6,
           "z": 62.0
         },
         "Size": {
@@ -1151,7 +1151,7 @@
         "Name": "Med Tent",
         "Center": {
           "x": -17.5,
-          "y": 0.17,
+          "y": -2.5,
           "z": -28.35
         },
         "Size": {
@@ -1163,7 +1163,1144 @@
         "SubZones": []
       }
     ],
-    "Interchange": [],
+    "Interchange": [
+      {
+        "GUID": "98a1737c-d230-42d2-8542-2751a10e31c5",
+        "Name": "Garage D",
+        "Center": {
+          "x": -30.0,
+          "y": 21.2,
+          "z": 134.5
+        },
+        "Size": {
+          "x": 250.0,
+          "y": 5.0,
+          "z": 120.0
+        },
+        "RotationZ": 0.0,
+        "SubZones": []
+      },
+      {
+        "GUID": "0b96bde5-9979-4863-a3aa-3362711a6fbe",
+        "Name": "Ramps",
+        "Center": {
+          "x": -163.6,
+          "y": 6.2,
+          "z": 144.0
+        },
+        "Size": {
+          "x": 50.0,
+          "y": 30.0,
+          "z": 140.0
+        },
+        "RotationZ": 0.0,
+        "SubZones": []
+      },
+      {
+        "GUID": "4e3a871a-32b3-497d-9eb3-b98034d6a769",
+        "Name": "Wall Break",
+        "Center": {
+          "x": -238.87,
+          "y": 16.2,
+          "z": 95.9
+        },
+        "Size": {
+          "x": 50.0,
+          "y": 10.0,
+          "z": 100.0
+        },
+        "RotationZ": 0.0,
+        "SubZones": []
+      },
+      {
+        "GUID": "67dca847-c84d-4721-bd2a-78bbe5f745b5",
+        "Name": "Garage C",
+        "Center": {
+          "x": 0.56,
+          "y": 21.2,
+          "z": 37.95
+        },
+        "Size": {
+          "x": 80.0,
+          "y": 5.0,
+          "z": 60.0
+        },
+        "RotationZ": 0.0,
+        "SubZones": []
+      },
+      {
+        "GUID": "11ef174b-c73a-4113-89fb-95ebc72b0744",
+        "Name": "Garage B",
+        "Center": {
+          "x": 48.02,
+          "y": 21.2,
+          "z": -129.64
+        },
+        "Size": {
+          "x": 100.0,
+          "y": 5.0,
+          "z": 100.0
+        },
+        "RotationZ": 0.0,
+        "SubZones": []
+      },
+      {
+        "GUID": "8f6b942d-e259-41b4-a919-e3d7a5b14d33",
+        "Name": "Garage A",
+        "Center": {
+          "x": 20.61,
+          "y": 21.2,
+          "z": -242.22
+        },
+        "Size": {
+          "x": 80.0,
+          "y": 5.0,
+          "z": 120.0
+        },
+        "RotationZ": 0.0,
+        "SubZones": []
+      },
+      {
+        "GUID": "6fab7af3-90dc-4540-a2dc-aab963d10fbd",
+        "Name": "Go Kart",
+        "Center": {
+          "x": 159.72,
+          "y": 16.7,
+          "z": -252.04
+        },
+        "Size": {
+          "x": 65.0,
+          "y": 10.0,
+          "z": 100.0
+        },
+        "RotationZ": 0.0,
+        "SubZones": []
+      },
+      {
+        "GUID": "94974073-18c9-47c4-8ed4-be466368e57c",
+        "Name": "Four Camp",
+        "Center": {
+          "x": 161.07,
+          "y": 16.2,
+          "z": -77.91
+        },
+        "Size": {
+          "x": 65.0,
+          "y": 10.0,
+          "z": 50.0
+        },
+        "RotationZ": 0.0,
+        "SubZones": []
+      },
+      {
+        "GUID": "bdd4b3d9-309e-4f6d-930f-da832d82024a",
+        "Name": "Scav Camp",
+        "Center": {
+          "x": 265.72,
+          "y": 16.0,
+          "z": -27.38
+        },
+        "Size": {
+          "x": 40.0,
+          "y": 10.0,
+          "z": 170.0
+        },
+        "RotationZ": 0.0,
+        "SubZones": []
+      },
+      {
+        "GUID": "94cf101d-4aeb-4dd6-b7f3-69dad9f72a0e",
+        "Name": "Oil Tower",
+        "Center": {
+          "x": 209.18,
+          "y": -27.7,
+          "z": 215.27
+        },
+        "Size": {
+          "x": 10.0,
+          "y": 100.0,
+          "z": 10.0
+        },
+        "RotationZ": 0.0,
+        "SubZones": []
+      },
+      {
+        "GUID": "46f52946-b674-414e-b86c-2248c7891bd6",
+        "Name": "Cargo Containers",
+        "Center": {
+          "x": 94.51,
+          "y": 16.3,
+          "z": 272.76
+        },
+        "Size": {
+          "x": 200.0,
+          "y": 10.0,
+          "z": 80.0
+        },
+        "RotationZ": 0.0,
+        "SubZones": []
+      },
+      {
+        "GUID": "321389e3-157e-4f00-97e1-c052c31e24bc",
+        "Name": "Higheway Construction",
+        "Center": {
+          "x": 362.36,
+          "y": 26.5,
+          "z": -403.79
+        },
+        "Size": {
+          "x": 20.0,
+          "y": 10.0,
+          "z": 20.0
+        },
+        "RotationZ": 20.0,
+        "SubZones": []
+      },
+      {
+        "GUID": "3e8a2a3d-d43f-48cd-be13-ea09d3817722",
+        "Name": "Idea Tower",
+        "Center": {
+          "x": 47.41,
+          "y": 20.0,
+          "z": -371.39
+        },
+        "Size": {
+          "x": 10.0,
+          "y": 50.0,
+          "z": 10.0
+        },
+        "RotationZ": 0.0,
+        "SubZones": []
+      },
+      {
+        "GUID": "fad400da-6a53-4a7c-a750-e27fe65c068c",
+        "Name": "Power Station",
+        "Center": {
+          "x": -207.05,
+          "y": 20.0,
+          "z": -352.6
+        },
+        "Size": {
+          "x": 50.0,
+          "y": 30.0,
+          "z": 50.0
+        },
+        "RotationZ": 0.0,
+        "SubZones": []
+      },
+      {
+        "GUID": "6cbc70f5-d37f-47d2-a999-dd2b31095a8c",
+        "Name": "IDEA",
+        "Center": {
+          "x": -18.03,
+          "y": 26.4,
+          "z": -243.36
+        },
+        "Size": {
+          "x": 230.0,
+          "y": 11.0,
+          "z": 120.0
+        },
+        "RotationZ": 0.0,
+        "SubZones": []
+      },
+      {
+        "GUID": "21cfda71-a0db-4cc3-87c1-62ed6c43bd05",
+        "Name": "Goshan",
+        "Center": {
+          "x": -119.63,
+          "y": 19.4,
+          "z": -58.08
+        },
+        "Size": {
+          "x": 80.0,
+          "y": 15.0,
+          "z": 250.0
+        },
+        "RotationZ": 0.0,
+        "SubZones": []
+      },
+      {
+        "GUID": "18002bb6-e677-44b4-88fe-d5cd985a9196",
+        "Name": "OLI",
+        "Center": {
+          "x": -30.05,
+          "y": 26.9,
+          "z": 134.52
+        },
+        "Size": {
+          "x": 250.0,
+          "y": 10.0,
+          "z": 120.0
+        },
+        "RotationZ": 0.0,
+        "SubZones": []
+      },
+      {
+        "GUID": "cadf6dad-4f77-452d-b573-64dd248dfe99",
+        "Name": "German",
+        "Center": {
+          "x": -15.98,
+          "y": 26.4,
+          "z": -74.22
+        },
+        "Size": {
+          "x": 10.0,
+          "y": 5.0,
+          "z": 10.0
+        },
+        "RotationZ": 0.0,
+        "SubZones": []
+      },
+      {
+        "GUID": "3c82c2ba-ad42-443c-8b6a-df208e4f7acc",
+        "Name": "Voyage",
+        "Center": {
+          "x": -15.06,
+          "y": 26.4,
+          "z": -88.19
+        },
+        "Size": {
+          "x": 10.0,
+          "y": 5.0,
+          "z": 10.0
+        },
+        "RotationZ": 0.0,
+        "SubZones": []
+      },
+      {
+        "GUID": "710a29a9-9245-4e95-93a2-b63309d1db98",
+        "Name": "Kostin",
+        "Center": {
+          "x": -24.0,
+          "y": 26.4,
+          "z": -105.0
+        },
+        "Size": {
+          "x": 26.0,
+          "y": 5.0,
+          "z": 18.0
+        },
+        "RotationZ": 0.0,
+        "SubZones": []
+      },
+      {
+        "GUID": "17472bd9-601d-4daf-82f5-e41a3aff17c1",
+        "Name": "Bizarro",
+        "Center": {
+          "x": -62.46,
+          "y": 26.4,
+          "z": -103.73
+        },
+        "Size": {
+          "x": 20.0,
+          "y": 5.0,
+          "z": 10.0
+        },
+        "RotationZ": 0.0,
+        "SubZones": []
+      },
+      {
+        "GUID": "c2c07801-8aac-44a5-982d-a9c2d505d680",
+        "Name": "Book Store",
+        "Center": {
+          "x": -31.46,
+          "y": 26.4,
+          "z": -135.0
+        },
+        "Size": {
+          "x": 40.0,
+          "y": 5.0,
+          "z": 12.0
+        },
+        "RotationZ": 0.0,
+        "SubZones": []
+      },
+      {
+        "GUID": "0ec2c861-0f1b-4193-9b26-f76b0fac8a9f",
+        "Name": "TTS",
+        "Center": {
+          "x": 19.78,
+          "y": 26.4,
+          "z": -134.89
+        },
+        "Size": {
+          "x": 30.0,
+          "y": 5.0,
+          "z": 15.0
+        },
+        "RotationZ": 0.0,
+        "SubZones": []
+      },
+      {
+        "GUID": "852953cf-6274-416d-a81b-a396d8b68ddf",
+        "Name": "EMERCOM",
+        "Center": {
+          "x": 21.19,
+          "y": 26.4,
+          "z": -105.93
+        },
+        "Size": {
+          "x": 20.0,
+          "y": 5.0,
+          "z": 10.0
+        },
+        "RotationZ": 0.0,
+        "SubZones": []
+      },
+      {
+        "GUID": "778c8487-8688-450c-9caa-3fa06df742fa",
+        "Name": "Mode7",
+        "Center": {
+          "x": 70.4,
+          "y": 26.4,
+          "z": -137.34
+        },
+        "Size": {
+          "x": 10.0,
+          "y": 5.0,
+          "z": 20.0
+        },
+        "RotationZ": 0.0,
+        "SubZones": []
+      },
+      {
+        "GUID": "e6a8b8cc-4a68-4e10-83c3-895f50531323",
+        "Name": "TRend",
+        "Center": {
+          "x": 62.76,
+          "y": 26.4,
+          "z": -154.79
+        },
+        "Size": {
+          "x": 28.0,
+          "y": 5.0,
+          "z": 10.0
+        },
+        "RotationZ": 0.0,
+        "SubZones": []
+      },
+      {
+        "GUID": "13bc864d-b049-4808-baa5-8b3ebc56a622",
+        "Name": "Nortex",
+        "Center": {
+          "x": 94.81,
+          "y": 26.4,
+          "z": -159.09
+        },
+        "Size": {
+          "x": 10.0,
+          "y": 5.0,
+          "z": 30.0
+        },
+        "RotationZ": 0.0,
+        "SubZones": []
+      },
+      {
+        "GUID": "cc008ee1-2b11-4b59-89c3-42da65a25ce9",
+        "Name": "Dino Clothes",
+        "Center": {
+          "x": 95.02,
+          "y": 26.4,
+          "z": -119.0
+        },
+        "Size": {
+          "x": 10.0,
+          "y": 5.0,
+          "z": 35.0
+        },
+        "RotationZ": 0.0,
+        "SubZones": []
+      },
+      {
+        "GUID": "7aab5b21-8e5e-4dd1-8758-1dde56d68985",
+        "Name": "Spiel",
+        "Center": {
+          "x": 94.72,
+          "y": 26.4,
+          "z": -88.57
+        },
+        "Size": {
+          "x": 10.0,
+          "y": 5.0,
+          "z": 20.0
+        },
+        "RotationZ": 0.0,
+        "SubZones": []
+      },
+      {
+        "GUID": "788466a0-638b-4110-928e-5bbe55253484",
+        "Name": "Viking",
+        "Center": {
+          "x": 56.110672,
+          "y": 26.0,
+          "z": -71.66474
+        },
+        "Size": {
+          "x": 40.0,
+          "y": 5.0,
+          "z": 20.0
+        },
+        "RotationZ": 0.0,
+        "SubZones": []
+      },
+      {
+        "GUID": "7929e6f4-16e9-4602-8fde-1c82987c01d5",
+        "Name": "Mantis",
+        "Center": {
+          "x": 17.931345,
+          "y": 26.0,
+          "z": -72.2225342
+        },
+        "Size": {
+          "x": 25.0,
+          "y": 5.0,
+          "z": 20.0
+        },
+        "RotationZ": 0.0,
+        "SubZones": []
+      },
+      {
+        "GUID": "6f8ee53e-8743-4ea7-aa0b-7de527b97baf",
+        "Name": "The National",
+        "Center": {
+          "x": 56.4082756,
+          "y": 26.0,
+          "z": -35.1413879
+        },
+        "Size": {
+          "x": 40.0,
+          "y": 5.0,
+          "z": 20.0
+        },
+        "RotationZ": 0.0,
+        "SubZones": []
+      },
+      {
+        "GUID": "837544d3-956d-4b53-adb2-614f55dc6174",
+        "Name": "Brutal",
+        "Center": {
+          "x": 18.7786312,
+          "y": 26.0,
+          "z": -35.1498337
+        },
+        "Size": {
+          "x": 25.0,
+          "y": 5.0,
+          "z": 20.0
+        },
+        "RotationZ": 0.0,
+        "SubZones": []
+      },
+      {
+        "GUID": "d454f2b9-83e2-4db4-9e3a-188d99cb185c",
+        "Name": "Kiba",
+        "Center": {
+          "x": -15.82431,
+          "y": 26.0,
+          "z": -26.6446571
+        },
+        "Size": {
+          "x": 12.0,
+          "y": 5.0,
+          "z": 24.0
+        },
+        "RotationZ": 0.0,
+        "SubZones": []
+      },
+      {
+        "GUID": "d6f6acfd-dd88-46a6-8165-42b960818eaf",
+        "Name": "Pretty Lights",
+        "Center": {
+          "x": -30.9312744,
+          "y": 26.0,
+          "z": -26.9226589
+        },
+        "Size": {
+          "x": 12.0,
+          "y": 5.0,
+          "z": 25.0
+        },
+        "RotationZ": 0.0,
+        "SubZones": []
+      },
+      {
+        "GUID": "e3b59003-1bb1-49bb-9f1d-e0cd82744a01",
+        "Name": "Generic",
+        "Center": {
+          "x": -24.3252525,
+          "y": 26.0,
+          "z": -4.67767239
+        },
+        "Size": {
+          "x": 25.0,
+          "y": 5.0,
+          "z": 15.0
+        },
+        "RotationZ": 0.0,
+        "SubZones": []
+      },
+      {
+        "GUID": "a77cc11f-6823-4780-b21b-ed2dc5c18a56",
+        "Name": "ADIK",
+        "Center": {
+          "x": 25.6613922,
+          "y": 26.0,
+          "z": -9.609451
+        },
+        "Size": {
+          "x": 40.0,
+          "y": 5.0,
+          "z": 25.0
+        },
+        "RotationZ": 0.0,
+        "SubZones": []
+      },
+      {
+        "GUID": "b70638a5-348d-430a-9db4-158dca79d262",
+        "Name": "Revis",
+        "Center": {
+          "x": 64.38609,
+          "y": 26.0,
+          "z": -15.3675928
+        },
+        "Size": {
+          "x": 25.0,
+          "y": 5.0,
+          "z": 15.0
+        },
+        "RotationZ": 0.0,
+        "SubZones": []
+      },
+      {
+        "GUID": "56981959-3e44-439e-a328-2a73f23b850c",
+        "Name": "Telespot",
+        "Center": {
+          "x": 94.8708954,
+          "y": 26.0,
+          "z": -20.852972
+        },
+        "Size": {
+          "x": 8.0,
+          "y": 5.0,
+          "z": 22.0
+        },
+        "RotationZ": 0.0,
+        "SubZones": []
+      },
+      {
+        "GUID": "0ce74bd9-56bf-4cfc-bfd3-0ee8b975dc13",
+        "Name": "Top Brand",
+        "Center": {
+          "x": 94.61675,
+          "y": 26.0,
+          "z": 11.8257
+        },
+        "Size": {
+          "x": 8.0,
+          "y": 5.0,
+          "z": 35.0
+        },
+        "RotationZ": 0.0,
+        "SubZones": []
+      },
+      {
+        "GUID": "03ff30b2-a8cd-45fa-8247-b716d5f08efe",
+        "Name": "Avokado",
+        "Center": {
+          "x": -33.3696671,
+          "y": 26.0,
+          "z": 26.62597
+        },
+        "Size": {
+          "x": 30.0,
+          "y": 5.0,
+          "z": 12.0
+        },
+        "RotationZ": 0.0,
+        "SubZones": []
+      },
+      {
+        "GUID": "0f9ddd26-e12d-490a-a469-5dc6bfd9563b",
+        "Name": "Rasmussen",
+        "Center": {
+          "x": 21.01461,
+          "y": 26.0,
+          "z": 26.3635674
+        },
+        "Size": {
+          "x": 25.0,
+          "y": 5.0,
+          "z": 12.0
+        },
+        "RotationZ": 0.0,
+        "SubZones": []
+      },
+      {
+        "GUID": "8eaf7bba-ed3a-4beb-b131-0298674c2e49",
+        "Name": "Sports",
+        "Center": {
+          "x": 63.8577881,
+          "y": 26.0,
+          "z": 12.1021881
+        },
+        "Size": {
+          "x": 25.0,
+          "y": 5.0,
+          "z": 10.0
+        },
+        "RotationZ": 0.0,
+        "SubZones": []
+      },
+      {
+        "GUID": "a7a08d9b-5ccc-4025-b397-569af72c3a17",
+        "Name": "Yushka",
+        "Center": {
+          "x": 71.30377,
+          "y": 26.0,
+          "z": 29.3759785
+        },
+        "Size": {
+          "x": 12.0,
+          "y": 5.0,
+          "z": 22.0
+        },
+        "RotationZ": 0.0,
+        "SubZones": []
+      },
+      {
+        "GUID": "80f888a6-11ea-46ec-8ec3-f443f48f1e8c",
+        "Name": "Boots 4 Life",
+        "Center": {
+          "x": 94.49845,
+          "y": 26.0,
+          "z": 52.5564346
+        },
+        "Size": {
+          "x": 8.0,
+          "y": 5.0,
+          "z": 40.0
+        },
+        "RotationZ": 0.0,
+        "SubZones": []
+      },
+      {
+        "GUID": "36e5cf9a-6c12-4b5a-85db-b8c789563fe7",
+        "Name": "Texho",
+        "Center": {
+          "x": 63.88003,
+          "y": 26.0,
+          "z": 47.52097
+        },
+        "Size": {
+          "x": 30.0,
+          "y": 5.0,
+          "z": 8.0
+        },
+        "RotationZ": 0.0,
+        "SubZones": []
+      },
+      {
+        "GUID": "460edbe6-47dd-4865-8324-dd230fce1743",
+        "Name": "Dom",
+        "Center": {
+          "x": 8.991107,
+          "y": 26.0,
+          "z": 47.2900124
+        },
+        "Size": {
+          "x": 50.0,
+          "y": 5.0,
+          "z": 20.0
+        },
+        "RotationZ": 0.0,
+        "SubZones": []
+      },
+      {
+        "GUID": "0bfcf29d-a181-4ac2-8386-fe33babc1b62",
+        "Name": "Tarkovstar",
+        "Center": {
+          "x": 70.47751,
+          "y": 35.0,
+          "z": -152.130234
+        },
+        "Size": {
+          "x": 10.0,
+          "y": 5.0,
+          "z": 10.0
+        },
+        "RotationZ": 0.0,
+        "SubZones": []
+      },
+      {
+        "GUID": "ed5577e8-cc7f-49d3-b795-96962da0a613",
+        "Name": "Father & Sons",
+        "Center": {
+          "x": 38.1412354,
+          "y": 35.0,
+          "z": -172.548
+        },
+        "Size": {
+          "x": 22.0,
+          "y": 5.0,
+          "z": 7.0
+        },
+        "RotationZ": 0.0,
+        "SubZones": []
+      },
+      {
+        "GUID": "9c5ba8c3-3dbd-4af9-9476-ba436aa5510d",
+        "Name": "Eastland",
+        "Center": {
+          "x": 26.5310841,
+          "y": 35.0,
+          "z": -148.738342
+        },
+        "Size": {
+          "x": 12.0,
+          "y": 5.0,
+          "z": 12.0
+        },
+        "RotationZ": 0.0,
+        "SubZones": []
+      },
+      {
+        "GUID": "092a9157-1902-4d03-ad4e-c9c7c0354109",
+        "Name": "Arena",
+        "Center": {
+          "x": 71.05509,
+          "y": 35.0,
+          "z": -135.404816
+        },
+        "Size": {
+          "x": 10.0,
+          "y": 5.0,
+          "z": 20.0
+        },
+        "RotationZ": 0.0,
+        "SubZones": []
+      },
+      {
+        "GUID": "04621169-115f-4951-b7dd-d584a747250c",
+        "Name": "Intourist",
+        "Center": {
+          "x": 70.78205,
+          "y": 35.0,
+          "z": -118.679588
+        },
+        "Size": {
+          "x": 10.0,
+          "y": 5.0,
+          "z": 10.0
+        },
+        "RotationZ": 0.0,
+        "SubZones": []
+      },
+      {
+        "GUID": "f6540cfd-8fef-407e-b8fa-967e68a422b0",
+        "Name": "TARHEALTH",
+        "Center": {
+          "x": 55.1769,
+          "y": 35.0,
+          "z": -135.408371
+        },
+        "Size": {
+          "x": 10.0,
+          "y": 5.0,
+          "z": 15.0
+        },
+        "RotationZ": 0.0,
+        "SubZones": []
+      },
+      {
+        "GUID": "042e0abf-8def-4f21-b31c-9fe3fb6bddce",
+        "Name": "Coushon MK",
+        "Center": {
+          "x": 20.0189419,
+          "y": 35.0,
+          "z": -133.998871
+        },
+        "Size": {
+          "x": 22.0,
+          "y": 5.0,
+          "z": 12.0
+        },
+        "RotationZ": 0.0,
+        "SubZones": []
+      },
+      {
+        "GUID": "7c41ccab-6d8a-4995-b2bd-4162f49c52a5",
+        "Name": "Burger Spot",
+        "Center": {
+          "x": -32.41639,
+          "y": 35.0,
+          "z": -103.111382
+        },
+        "Size": {
+          "x": 50.0,
+          "y": 5.0,
+          "z": 20.0
+        },
+        "RotationZ": 0.0,
+        "SubZones": []
+      },
+      {
+        "GUID": "cb4afc49-ce9e-4f96-bac2-3ee7e012db1e",
+        "Name": "PUSHKIN",
+        "Center": {
+          "x": -32.1177177,
+          "y": 35.0,
+          "z": -79.015564
+        },
+        "Size": {
+          "x": 15.0,
+          "y": 5.0,
+          "z": 25.0
+        },
+        "RotationZ": 0.0,
+        "SubZones": []
+      },
+      {
+        "GUID": "2abf26f4-1f8b-458d-9cc6-023eaa7905a5",
+        "Name": "Jacob & Jacob",
+        "Center": {
+          "x": 17.7880116,
+          "y": 35.0,
+          "z": -74.46869
+        },
+        "Size": {
+          "x": 25.0,
+          "y": 5.0,
+          "z": 15.0
+        },
+        "RotationZ": 0.0,
+        "SubZones": []
+      },
+      {
+        "GUID": "f028cb6c-38d8-4b7a-b01d-b4049ff334cd",
+        "Name": "Coffee Joy",
+        "Center": {
+          "x": 44.15804,
+          "y": 35.0,
+          "z": -73.04537
+        },
+        "Size": {
+          "x": 15.0,
+          "y": 5.0,
+          "z": 10.0
+        },
+        "RotationZ": 0.0,
+        "SubZones": []
+      },
+      {
+        "GUID": "6b5cab65-4ca5-4e8c-832e-d4dba8707bf4",
+        "Name": "Tarducks",
+        "Center": {
+          "x": 67.40931,
+          "y": 35.0,
+          "z": -71.33927
+        },
+        "Size": {
+          "x": 15.0,
+          "y": 5.0,
+          "z": 5.0
+        },
+        "RotationZ": 0.0,
+        "SubZones": []
+      },
+      {
+        "GUID": "5f32a73d-fb7a-4185-ad38-3e082eb45740",
+        "Name": "McDaniels",
+        "Center": {
+          "x": 67.9653549,
+          "y": 35.0,
+          "z": -88.91488
+        },
+        "Size": {
+          "x": 15.0,
+          "y": 5.0,
+          "z": 25.0
+        },
+        "RotationZ": 0.0,
+        "SubZones": []
+      },
+      {
+        "GUID": "0a67351e-e704-4969-a405-2f3c34042b9e",
+        "Name": "Sushi Huyushi",
+        "Center": {
+          "x": 66.58148,
+          "y": 35.0,
+          "z": -35.0540924
+        },
+        "Size": {
+          "x": 20.0,
+          "y": 5.0,
+          "z": 10.0
+        },
+        "RotationZ": 0.0,
+        "SubZones": []
+      },
+      {
+        "GUID": "99b05e74-24c2-4f58-835a-82ecde21bfda",
+        "Name": "Burger House",
+        "Center": {
+          "x": 67.44011,
+          "y": 35.0,
+          "z": -22.2973232
+        },
+        "Size": {
+          "x": 15.0,
+          "y": 5.0,
+          "z": 12.0
+        },
+        "RotationZ": 0.0,
+        "SubZones": []
+      },
+      {
+        "GUID": "91242612-c5c3-480c-b10b-4107a52d6beb",
+        "Name": "UZEI HISTORY",
+        "Center": {
+          "x": 29.7388439,
+          "y": 35.0,
+          "z": -7.281375
+        },
+        "Size": {
+          "x": 50.0,
+          "y": 5.0,
+          "z": 20.0
+        },
+        "RotationZ": 0.0,
+        "SubZones": []
+      },
+      {
+        "GUID": "3a5eaefe-a690-48a2-b1a7-23cb0eac151b",
+        "Name": "Underway",
+        "Center": {
+          "x": -15.923769,
+          "y": 35.0,
+          "z": -27.7021465
+        },
+        "Size": {
+          "x": 10.0,
+          "y": 5.0,
+          "z": 25.0
+        },
+        "RotationZ": 0.0,
+        "SubZones": []
+      },
+      {
+        "GUID": "11504d0e-f698-4cec-a9b7-4d829136bf96",
+        "Name": "Philly Cute",
+        "Center": {
+          "x": -31.5178852,
+          "y": 35.0,
+          "z": -26.85521
+        },
+        "Size": {
+          "x": 12.0,
+          "y": 5.0,
+          "z": 25.0
+        },
+        "RotationZ": 0.0,
+        "SubZones": []
+      },
+      {
+        "GUID": "ff12d1a6-f864-4ce2-8b88-ccd64f599a35",
+        "Name": "Papillon",
+        "Center": {
+          "x": 94.96583,
+          "y": 35.0,
+          "z": 13.427269
+        },
+        "Size": {
+          "x": 10.0,
+          "y": 5.0,
+          "z": 35.0
+        },
+        "RotationZ": 0.0,
+        "SubZones": []
+      },
+      {
+        "GUID": "885159ce-f771-4c62-9328-ae901ff3533a",
+        "Name": "TECHLIGHT",
+        "Center": {
+          "x": 90.4541245,
+          "y": 35.0,
+          "z": 53.11338
+        },
+        "Size": {
+          "x": 20.0,
+          "y": 5.0,
+          "z": 40.0
+        },
+        "RotationZ": 0.0,
+        "SubZones": []
+      },
+      {
+        "GUID": "7929decb-edd9-4f82-9934-10e4c8ff7f11",
+        "Name": "Fashion Store",
+        "Center": {
+          "x": 38.5748367,
+          "y": 35.0,
+          "z": 66.42527
+        },
+        "Size": {
+          "x": 25.0,
+          "y": 5.0,
+          "z": 10.0
+        },
+        "RotationZ": 0.0,
+        "SubZones": []
+      },
+      {
+        "GUID": "d5827541-9c42-4970-b454-32cb03fdab7d",
+        "Name": "Urban Clothes",
+        "Center": {
+          "x": 26.084343,
+          "y": 35.0,
+          "z": 42.89367
+        },
+        "Size": {
+          "x": 10.0,
+          "y": 5.0,
+          "z": 10.0
+        },
+        "RotationZ": 0.0,
+        "SubZones": []
+      },
+      {
+        "GUID": "ef60af0a-90f4-45a0-8987-c0fc1195ac44",
+        "Name": "SARA",
+        "Center": {
+          "x": 56.1407356,
+          "y": 35.0,
+          "z": 44.8847733
+        },
+        "Size": {
+          "x": 10.0,
+          "y": 5.0,
+          "z": 10.0
+        },
+        "RotationZ": 0.0,
+        "SubZones": []
+      },
+      {
+        "GUID": "78e40fbb-e3ba-427e-9a59-4d5b5d054a54",
+        "Name": "Figaro",
+        "Center": {
+          "x": 21.5372143,
+          "y": 35.0,
+          "z": 26.16736
+        },
+        "Size": {
+          "x": 25.0,
+          "y": 5.0,
+          "z": 10.0
+        },
+        "RotationZ": 0.0,
+        "SubZones": []
+      }
+    ],
     "Labs": [],
     "Reserve": [],
     "Shoreline": [
@@ -1172,7 +2309,7 @@
         "Name": "Crane",
         "Center": {
           "x": -643.24,
-          "y": -59.74,
+          "y": -64.9,
           "z": 487.62
         },
         "Size": {
@@ -1188,7 +2325,7 @@
         "Name": "Weather Station",
         "Center": {
           "x": -495.52,
-          "y": -25.95,
+          "y": -41.1,
           "z": 255.19
         },
         "Size": {
@@ -1204,7 +2341,7 @@
         "Name": "Tank Bridge",
         "Center": {
           "x": -353.98,
-          "y": -39.64,
+          "y": -44.8,
           "z": 190.03
         },
         "Size": {
@@ -1220,7 +2357,7 @@
         "Name": "Power Station",
         "Center": {
           "x": -213.49,
-          "y": -39.54,
+          "y": -54.7,
           "z": 182.78
         },
         "Size": {
@@ -1236,7 +2373,7 @@
         "Name": "Gas Station",
         "Center": {
           "x": -196.2,
-          "y": -49.21,
+          "y": -59.4,
           "z": 388.63
         },
         "Size": {
@@ -1252,7 +2389,7 @@
         "Name": "Pier",
         "Center": {
           "x": -331.94,
-          "y": -62.08,
+          "y": -67.2,
           "z": 515.85
         },
         "Size": {
@@ -1268,7 +2405,7 @@
         "Name": "Scav Island",
         "Center": {
           "x": 221.17,
-          "y": -64.36,
+          "y": -79.5,
           "z": 430.93
         },
         "Size": {
@@ -1284,7 +2421,7 @@
         "Name": "Village",
         "Center": {
           "x": 424.1,
-          "y": -54.33,
+          "y": -59.5,
           "z": 120.34
         },
         "Size": {
@@ -1300,7 +2437,7 @@
         "Name": "Cabins",
         "Center": {
           "x": 292.1,
-          "y": -56.41,
+          "y": -66.6,
           "z": 148.3
         },
         "Size": {
@@ -1316,7 +2453,7 @@
         "Name": "Cottages",
         "Center": {
           "x": 130.41,
-          "y": -47.39,
+          "y": -57.5,
           "z": 95.06
         },
         "Size": {
@@ -1332,7 +2469,7 @@
         "Name": "Constraction",
         "Center": {
           "x": 51.82,
-          "y": -46.73,
+          "y": -51.9,
           "z": 125.4
         },
         "Size": {
@@ -1348,7 +2485,7 @@
         "Name": "Bus Stop",
         "Center": {
           "x": -111.59,
-          "y": -21.9,
+          "y": -32.0,
           "z": -3.33
         },
         "Size": {
@@ -1364,7 +2501,7 @@
         "Name": "Swamp",
         "Center": {
           "x": 315.65,
-          "y": -54.66,
+          "y": -64.8,
           "z": -121.99
         },
         "Size": {
@@ -1380,7 +2517,7 @@
         "Name": "Bunker",
         "Center": {
           "x": -156.49,
-          "y": -16.62,
+          "y": -21.8,
           "z": -289.2
         },
         "Size": {
@@ -1396,7 +2533,7 @@
         "Name": "Scav Farm",
         "Center": {
           "x": -645.0,
-          "y": -26.87,
+          "y": -42.0,
           "z": -216.12
         },
         "Size": {
@@ -1412,7 +2549,7 @@
         "Name": "Radio Tower",
         "Center": {
           "x": -711.88,
-          "y": -27.67,
+          "y": -37.8,
           "z": 88.83
         },
         "Size": {
@@ -1428,7 +2565,7 @@
         "Name": "Resort",
         "Center": {
           "x": -251.33,
-          "y": -4.11,
+          "y": -34.3,
           "z": -111.73
         },
         "Size": {
@@ -1443,7 +2580,7 @@
             "Name": "West Wing 1 | 1 Floor",
             "Center": {
               "x": -173.0,
-              "y": -3.5,
+              "y": -6.1,
               "z": -82.0
             },
             "Size": {
@@ -1459,7 +2596,7 @@
             "Name": "West Wing 1 | 2 Floor",
             "Center": {
               "x": -173.0,
-              "y": 0.5,
+              "y": -1.2,
               "z": -82.0
             },
             "Size": {
@@ -1475,7 +2612,7 @@
             "Name": "West Wing 1 | 3 Floor",
             "Center": {
               "x": -173.0,
-              "y": 3.5,
+              "y": 1.9,
               "z": -82.0
             },
             "Size": {
@@ -1491,7 +2628,7 @@
             "Name": "East Wing 1 | 1 Floor",
             "Center": {
               "x": -330.5,
-              "y": -3.5,
+              "y": -6.1,
               "z": -82.0
             },
             "Size": {
@@ -1507,7 +2644,7 @@
             "Name": "East Wing 1 | 2 Floor",
             "Center": {
               "x": -330.5,
-              "y": 0.5,
+              "y": -1.2,
               "z": -82.0
             },
             "Size": {
@@ -1523,7 +2660,7 @@
             "Name": "East Wing 1 | 3 Floor",
             "Center": {
               "x": -330.5,
-              "y": 3.5,
+              "y": 1.9,
               "z": -82.0
             },
             "Size": {
@@ -1539,7 +2676,7 @@
             "Name": "Bridge Between East and West Wings",
             "Center": {
               "x": -251.78,
-              "y": 1.0,
+              "y": -1.2,
               "z": -94.91
             },
             "Size": {
@@ -1555,7 +2692,7 @@
             "Name": "Admin",
             "Center": {
               "x": -251.69,
-              "y": -2.49,
+              "y": -25.1,
               "z": -145.0
             },
             "Size": {
@@ -1575,7 +2712,7 @@
         "Name": "SCAV Bunker",
         "Center": {
           "x": 224.81,
-          "y": 24.41,
+          "y": 16.8,
           "z": -708.93
         },
         "Size": {
@@ -1591,7 +2728,7 @@
         "Name": "SCAV Camp",
         "Center": {
           "x": 135.09,
-          "y": 24.4,
+          "y": 16.7,
           "z": -742.3
         },
         "Size": {
@@ -1607,7 +2744,7 @@
         "Name": "Convoy",
         "Center": {
           "x": 196.03,
-          "y": 10.85,
+          "y": 5.7,
           "z": -594.32
         },
         "Size": {
@@ -1623,7 +2760,7 @@
         "Name": "USEC Camp",
         "Center": {
           "x": 303.86,
-          "y": 22.89,
+          "y": 7.7,
           "z": -499.07
         },
         "Size": {
@@ -1638,7 +2775,7 @@
             "Name": "Med Tent 1",
             "Center": {
               "x": 287.36,
-              "y": 22.94,
+              "y": 17.8,
               "z": -515.84
             },
             "Size": {
@@ -1654,7 +2791,7 @@
             "Name": "Med Tent 2",
             "Center": {
               "x": 272.34,
-              "y": 24.01,
+              "y": 20.9,
               "z": -511.81
             },
             "Size": {
@@ -1670,7 +2807,7 @@
             "Name": "Med Tent 3",
             "Center": {
               "x": 307.88,
-              "y": 23.04,
+              "y": 19.9,
               "z": -461.47
             },
             "Size": {
@@ -1688,7 +2825,7 @@
         "Name": "Ponds",
         "Center": {
           "x": -6.99,
-          "y": 17.56,
+          "y": 7.4,
           "z": -507.51
         },
         "Size": {
@@ -1704,7 +2841,7 @@
         "Name": "Cultist Village",
         "Center": {
           "x": -72.24,
-          "y": 9.36,
+          "y": -0.8,
           "z": -688.77
         },
         "Size": {
@@ -1719,7 +2856,7 @@
             "Name": "The Sunken Church",
             "Center": {
               "x": -60.68,
-              "y": 10.77,
+              "y": 5.6,
               "z": -645.0
             },
             "Size": {
@@ -1735,7 +2872,7 @@
             "Name": "Home 1",
             "Center": {
               "x": -97.88,
-              "y": 8.04,
+              "y": 2.9,
               "z": -618.06
             },
             "Size": {
@@ -1751,7 +2888,7 @@
             "Name": "Home 2",
             "Center": {
               "x": -100.0,
-              "y": 8.4,
+              "y": 3.2,
               "z": -665.0
             },
             "Size": {
@@ -1767,7 +2904,7 @@
             "Name": "Home 3",
             "Center": {
               "x": -130.14,
-              "y": 10.59,
+              "y": 5.4,
               "z": -686.22
             },
             "Size": {
@@ -1783,7 +2920,7 @@
             "Name": "Boat",
             "Center": {
               "x": -27.64,
-              "y": 7.71,
+              "y": 2.6,
               "z": -687.84
             },
             "Size": {
@@ -1799,7 +2936,7 @@
             "Name": "Home 4",
             "Center": {
               "x": -26.99,
-              "y": 10.08,
+              "y": 4.9,
               "z": -743.04
             },
             "Size": {
@@ -1817,7 +2954,7 @@
         "Name": "Scav Town",
         "Center": {
           "x": -482.0,
-          "y": 14.93,
+          "y": 4.8,
           "z": -395.0
         },
         "Size": {
@@ -1832,7 +2969,7 @@
             "Name": "Home 1",
             "Center": {
               "x": -460.04,
-              "y": 15.56,
+              "y": 5.4,
               "z": -362.0
             },
             "Size": {
@@ -1848,7 +2985,7 @@
             "Name": "Home 2",
             "Center": {
               "x": -454.06,
-              "y": 15.41,
+              "y": 5.3,
               "z": -394.0
             },
             "Size": {
@@ -1864,7 +3001,7 @@
             "Name": "Home 3",
             "Center": {
               "x": -507.5,
-              "y": 15.53,
+              "y": 5.4,
               "z": -391.38
             },
             "Size": {
@@ -1880,7 +3017,7 @@
             "Name": "Burn 1",
             "Center": {
               "x": -507.87,
-              "y": 15.13,
+              "y": 5.0,
               "z": -370.28
             },
             "Size": {
@@ -1898,7 +3035,7 @@
         "Name": "House with an antenna",
         "Center": {
           "x": -509.17,
-          "y": 15.95,
+          "y": 10.8,
           "z": -176.39
         },
         "Size": {
@@ -1914,7 +3051,7 @@
         "Name": "Burn in Old Sawn",
         "Center": {
           "x": -539.75,
-          "y": 16.8,
+          "y": 11.7,
           "z": -205.58
         },
         "Size": {
@@ -1930,7 +3067,7 @@
         "Name": "Shed next to the Depot",
         "Center": {
           "x": -517.22,
-          "y": 10.0,
+          "y": 2.3,
           "z": 150.75
         },
         "Size": {
@@ -1946,7 +3083,7 @@
         "Name": "Depo",
         "Center": {
           "x": -660.17,
-          "y": 9.34,
+          "y": 1.7,
           "z": 139.97
         },
         "Size": {
@@ -1961,7 +3098,7 @@
             "Name": "Office",
             "Center": {
               "x": -616.0,
-              "y": 8.29,
+              "y": 3.1,
               "z": 132.0
             },
             "Size": {
@@ -1977,7 +3114,7 @@
             "Name": "Storage",
             "Center": {
               "x": -687.62,
-              "y": 8.26,
+              "y": 3.1,
               "z": 105.05
             },
             "Size": {
@@ -1995,7 +3132,7 @@
         "Name": "Crash Site",
         "Center": {
           "x": -253.62,
-          "y": 11.02,
+          "y": 5.9,
           "z": -30.0
         },
         "Size": {
@@ -2011,7 +3148,7 @@
         "Name": "Military Camp",
         "Center": {
           "x": -186.96,
-          "y": -1.87,
+          "y": -12.0,
           "z": 232.12
         },
         "Size": {
@@ -2027,7 +3164,7 @@
         "Name": "Jaeger Camp",
         "Center": {
           "x": -256.11,
-          "y": 8.59,
+          "y": 3.4,
           "z": 6.93
         },
         "Size": {
@@ -2043,7 +3180,7 @@
         "Name": "Sawmill",
         "Center": {
           "x": 20.77,
-          "y": -3.56,
+          "y": -28.7,
           "z": -13.72
         },
         "Size": {
@@ -2059,7 +3196,7 @@
         "Name": "Shack",
         "Center": {
           "x": 244.63,
-          "y": -8.27,
+          "y": -13.4,
           "z": 120.25
         },
         "Size": {
@@ -2075,7 +3212,7 @@
         "Name": "ZB-014",
         "Center": {
           "x": 436.38,
-          "y": -10.2,
+          "y": -20.3,
           "z": 69.46
         },
         "Size": {
@@ -2091,7 +3228,7 @@
         "Name": "USEC Place",
         "Center": {
           "x": 239.31,
-          "y": 0.46,
+          "y": -9.7,
           "z": -65.3
         },
         "Size": {
@@ -2110,7 +3247,7 @@
         "Name": "Primorsky Ave",
         "Center": {
           "x": 12.0,
-          "y": 1.43,
+          "y": 0.3,
           "z": 147.14
         },
         "Size": {
@@ -2125,7 +3262,7 @@
             "Name": "Primorsky Ave Taxi V-Ex",
             "Center": {
               "x": 8.86,
-              "y": 2.11,
+              "y": 1.0,
               "z": 467.81
             },
             "Size": {
@@ -2143,7 +3280,7 @@
         "Name": "Park Cinema",
         "Center": {
           "x": -73.57,
-          "y": -0.1,
+          "y": -1.2,
           "z": 400.32
         },
         "Size": {
@@ -2159,7 +3296,7 @@
         "Name": "Nizhnyaya St.",
         "Center": {
           "x": -118.91,
-          "y": 2.11,
+          "y": 1.0,
           "z": 440.26
         },
         "Size": {
@@ -2175,7 +3312,7 @@
         "Name": "Cinema",
         "Center": {
           "x": -168.04,
-          "y": 8.61,
+          "y": 7.5,
           "z": 400.31
         },
         "Size": {
@@ -2191,7 +3328,7 @@
         "Name": "Verhnyaya St.",
         "Center": {
           "x": -118.1,
-          "y": 2.12,
+          "y": 1.0,
           "z": 360.09
         },
         "Size": {
@@ -2207,7 +3344,7 @@
         "Name": "Courtyard",
         "Center": {
           "x": -155.87,
-          "y": 2.37,
+          "y": 1.2,
           "z": 487.47
         },
         "Size": {
@@ -2223,7 +3360,7 @@
         "Name": "Damaged House",
         "Center": {
           "x": -246.57,
-          "y": 6.37,
+          "y": 5.2,
           "z": 344.14
         },
         "Size": {
@@ -2239,7 +3376,7 @@
         "Name": "Corner Restaurant",
         "Center": {
           "x": -205.21,
-          "y": 3.44,
+          "y": 2.3,
           "z": 336.43
         },
         "Size": {
@@ -2255,7 +3392,7 @@
         "Name": "Hive",
         "Center": {
           "x": -211.81,
-          "y": 4.51,
+          "y": 3.4,
           "z": 303.87
         },
         "Size": {
@@ -2271,7 +3408,7 @@
         "Name": "Alco Market",
         "Center": {
           "x": -224.65,
-          "y": 2.24,
+          "y": 1.1,
           "z": 281.96
         },
         "Size": {
@@ -2287,7 +3424,7 @@
         "Name": "Sparja Grocery",
         "Center": {
           "x": 138.0,
-          "y": 3.75,
+          "y": 2.6,
           "z": 303.27
         },
         "Size": {
@@ -2303,7 +3440,7 @@
         "Name": "Lexos",
         "Center": {
           "x": 72.37,
-          "y": 2.63,
+          "y": 1.5,
           "z": 315.0
         },
         "Size": {
@@ -2318,7 +3455,7 @@
             "Name": "Lexos Outside",
             "Center": {
               "x": 75.0,
-              "y": 2.56,
+              "y": 1.4,
               "z": 345.0
             },
             "Size": {
@@ -2336,7 +3473,7 @@
         "Name": "Concordia",
         "Center": {
           "x": 143.42,
-          "y": 10.0,
+          "y": 8.8,
           "z": 364.63
         },
         "Size": {
@@ -2352,7 +3489,7 @@
         "Name": "Construction",
         "Center": {
           "x": 220.0,
-          "y": 0.0,
+          "y": -1.1,
           "z": 295.1
         },
         "Size": {
@@ -2368,7 +3505,7 @@
         "Name": "Teppakot / Koener",
         "Center": {
           "x": 94.56,
-          "y": 3.18,
+          "y": 2.0,
           "z": 417.87
         },
         "Size": {
@@ -2384,7 +3521,7 @@
         "Name": "Beluga",
         "Center": {
           "x": -40.44,
-          "y": 0.6,
+          "y": -0.6,
           "z": -47.66
         },
         "Size": {
@@ -2400,7 +3537,7 @@
         "Name": "Klimov Shopping Mail",
         "Center": {
           "x": -143.73,
-          "y": 5.1,
+          "y": 3.9,
           "z": -28.29
         },
         "Size": {
@@ -2416,7 +3553,7 @@
         "Name": "Klimov St. Right",
         "Center": {
           "x": -116.0,
-          "y": 0.21,
+          "y": -0.9,
           "z": 28.13
         },
         "Size": {
@@ -2432,7 +3569,7 @@
         "Name": "Klimov St. Left",
         "Center": {
           "x": 161.83,
-          "y": -3.8,
+          "y": -4.9,
           "z": 7.98
         },
         "Size": {
@@ -2448,7 +3585,7 @@
         "Name": "Cardinal Bank",
         "Center": {
           "x": 97.0,
-          "y": 0.25,
+          "y": -0.9,
           "z": -35.0
         },
         "Size": {
@@ -2464,7 +3601,7 @@
         "Name": "Cardinal Apartaments",
         "Center": {
           "x": 106.53,
-          "y": -1.65,
+          "y": -2.8,
           "z": -110.46
         },
         "Size": {
@@ -2480,7 +3617,7 @@
         "Name": "LERM Expo",
         "Center": {
           "x": 239.01,
-          "y": -2.11,
+          "y": -3.3,
           "z": -70.96
         },
         "Size": {
@@ -2496,7 +3633,7 @@
         "Name": "Post Office",
         "Center": {
           "x": 43.97,
-          "y": 1.18,
+          "y": 0.0,
           "z": 100.98
         },
         "Size": {
@@ -2512,7 +3649,7 @@
         "Name": "Pharmacy 1",
         "Center": {
           "x": 41.02,
-          "y": 2.68,
+          "y": 1.5,
           "z": 159.82
         },
         "Size": {
@@ -2528,7 +3665,7 @@
         "Name": "Prestigo Cafe",
         "Center": {
           "x": 43.92,
-          "y": 4.53,
+          "y": 1.0,
           "z": 226.44
         },
         "Size": {
@@ -2544,7 +3681,7 @@
         "Name": "Tarbank",
         "Center": {
           "x": 62.31,
-          "y": 2.81,
+          "y": 1.7,
           "z": 231.14
         },
         "Size": {
@@ -2560,7 +3697,7 @@
         "Name": "Chekannaya St.",
         "Center": {
           "x": 157.84,
-          "y": 2.95,
+          "y": 1.8,
           "z": 249.28
         },
         "Size": {
@@ -2576,7 +3713,7 @@
         "Name": "Vet Clinic",
         "Center": {
           "x": 221.09,
-          "y": 0.0,
+          "y": -1.1,
           "z": 174.63
         },
         "Size": {
@@ -2592,7 +3729,7 @@
         "Name": "School",
         "Center": {
           "x": 212.47,
-          "y": 0.0,
+          "y": -1.1,
           "z": 128.67
         },
         "Size": {
@@ -2608,7 +3745,7 @@
         "Name": "Kamchatskaya St.",
         "Center": {
           "x": 243.0,
-          "y": 0.0,
+          "y": -1.1,
           "z": 120.0
         },
         "Size": {
@@ -2624,7 +3761,7 @@
         "Name": "Zmejkij Alley",
         "Center": {
           "x": 140.0,
-          "y": 0.0,
+          "y": -1.1,
           "z": 139.91
         },
         "Size": {
@@ -2640,7 +3777,7 @@
         "Name": "Shestyorochka",
         "Center": {
           "x": -220.39,
-          "y": 2.95,
+          "y": 1.8,
           "z": 134.48
         },
         "Size": {
@@ -2656,7 +3793,7 @@
         "Name": "Nikitskaya St.",
         "Center": {
           "x": -148.48,
-          "y": 2.07,
+          "y": 0.9,
           "z": 207.69
         },
         "Size": {
@@ -2672,7 +3809,7 @@
         "Name": "Pinewood Hotel",
         "Center": {
           "x": -73.57,
-          "y": 0.93,
+          "y": -0.2,
           "z": 110.6
         },
         "Size": {
@@ -2687,7 +3824,7 @@
             "Name": "Sparja Express",
             "Center": {
               "x": -75.0,
-              "y": 1.44,
+              "y": 0.3,
               "z": 165.0
             },
             "Size": {
@@ -2703,7 +3840,7 @@
             "Name": "Burger Spot",
             "Center": {
               "x": -32.93,
-              "y": 1.53,
+              "y": 0.4,
               "z": 136.91
             },
             "Size": {
@@ -2721,7 +3858,7 @@
         "Name": "Primorskij 49",
         "Center": {
           "x": -16.88,
-          "y": 2.64,
+          "y": 1.5,
           "z": 241.24
         },
         "Size": {
@@ -2737,7 +3874,7 @@
         "Name": "Diner",
         "Center": {
           "x": -80.05,
-          "y": 3.28,
+          "y": 2.1,
           "z": 234.15
         },
         "Size": {
@@ -2753,7 +3890,7 @@
         "Name": "Office",
         "Center": {
           "x": -174.9,
-          "y": 2.73,
+          "y": 1.6,
           "z": 226.46
         },
         "Size": {
@@ -2769,7 +3906,7 @@
         "Name": "Abandon Factory",
         "Center": {
           "x": -119.39,
-          "y": 4.31,
+          "y": 3.2,
           "z": 274.72
         },
         "Size": {
@@ -2785,7 +3922,7 @@
         "Name": "Malevecha St.",
         "Center": {
           "x": -199.36,
-          "y": 2.11,
+          "y": 1.0,
           "z": 288.14
         },
         "Size": {
@@ -2801,7 +3938,7 @@
         "Name": "Marked Hotel",
         "Center": {
           "x": -198.06,
-          "y": 4.61,
+          "y": 3.5,
           "z": 245.28
         },
         "Size": {
@@ -2817,7 +3954,7 @@
         "Name": "Pharmacy 2",
         "Center": {
           "x": -50.59,
-          "y": 3.22,
+          "y": 2.1,
           "z": 337.36
         },
         "Size": {
@@ -2835,7 +3972,7 @@
         "Name": "TerraGroup",
         "Center": {
           "x": -5.0,
-          "y": 23.85,
+          "y": 22.7,
           "z": 15.0
         },
         "Size": {
@@ -2850,7 +3987,7 @@
             "Name": "Park TerraGroup",
             "Center": {
               "x": 21.97,
-              "y": 23.05,
+              "y": 21.9,
               "z": 31.84
             },
             "Size": {
@@ -2866,7 +4003,7 @@
             "Name": "Parking",
             "Center": {
               "x": 4.55,
-              "y": 23.84,
+              "y": 22.7,
               "z": -41.36
             },
             "Size": {
@@ -2882,7 +4019,7 @@
             "Name": "Lobby",
             "Center": {
               "x": -35.92,
-              "y": 24.22,
+              "y": 23.1,
               "z": 32.62
             },
             "Size": {
@@ -2898,7 +4035,7 @@
             "Name": "Office3",
             "Center": {
               "x": -17.0,
-              "y": 31.0,
+              "y": 29.9,
               "z": 75.0
             },
             "Size": {
@@ -2914,7 +4051,7 @@
             "Name": "Office4",
             "Center": {
               "x": -11.68,
-              "y": 31.0,
+              "y": 29.9,
               "z": 48.0
             },
             "Size": {
@@ -2932,7 +4069,7 @@
         "Name": "Winery",
         "Center": {
           "x": 118.0,
-          "y": 22.78,
+          "y": 21.6,
           "z": 25.0
         },
         "Size": {
@@ -2947,7 +4084,7 @@
             "Name": "Storage Winery",
             "Center": {
               "x": 126.21,
-              "y": 22.82,
+              "y": 21.7,
               "z": 23.19
             },
             "Size": {
@@ -2965,7 +4102,7 @@
         "Name": "Med Tent",
         "Center": {
           "x": 154.0,
-          "y": 22.73,
+          "y": 21.6,
           "z": -82.11
         },
         "Size": {
@@ -2981,7 +4118,7 @@
         "Name": "Rise",
         "Center": {
           "x": 137.06,
-          "y": 19.57,
+          "y": 18.4,
           "z": 66.15
         },
         "Size": {
@@ -2997,7 +4134,7 @@
         "Name": "Avenue Mira",
         "Center": {
           "x": 217.54,
-          "y": 16.03,
+          "y": 14.9,
           "z": -20.0
         },
         "Size": {
@@ -3013,12 +4150,12 @@
         "Name": "TarTower Sales Office",
         "Center": {
           "x": 197.18,
-          "y": 16.2,
+          "y": 15.1,
           "z": 134.65
         },
         "Size": {
           "x": 10.0,
-          "y": 10.0,
+          "y": 5.0,
           "z": 10.0
         },
         "RotationZ": 0.0,
@@ -3029,12 +4166,12 @@
         "Name": "Fusion Park",
         "Center": {
           "x": 195.72,
-          "y": 16.16,
+          "y": 15.0,
           "z": 101.86
         },
         "Size": {
           "x": 30.0,
-          "y": 10.0,
+          "y": 5.0,
           "z": 50.0
         },
         "RotationZ": 0.0,
@@ -3045,12 +4182,12 @@
         "Name": "Fusion Back",
         "Center": {
           "x": 173.45,
-          "y": 24.41,
+          "y": 23.3,
           "z": 103.6
         },
         "Size": {
           "x": 10.0,
-          "y": 10.0,
+          "y": 5.0,
           "z": 30.0
         },
         "RotationZ": 0.0,
@@ -3061,7 +4198,7 @@
         "Name": "Cafe",
         "Center": {
           "x": 115.0,
-          "y": 29.95,
+          "y": 28.8,
           "z": 151.05
         },
         "Size": {
@@ -3077,7 +4214,7 @@
         "Name": "Oasis",
         "Center": {
           "x": 117.44,
-          "y": 26.38,
+          "y": 25.2,
           "z": 104.01
         },
         "Size": {
@@ -3093,7 +4230,7 @@
         "Name": "Tarbank",
         "Center": {
           "x": 28.88,
-          "y": 23.48,
+          "y": 22.3,
           "z": 166.0
         },
         "Size": {
@@ -3108,12 +4245,12 @@
             "Name": "Empire Route Lobby",
             "Center": {
               "x": 18.0,
-              "y": 23.45,
+              "y": 22.3,
               "z": 160.0
             },
             "Size": {
               "x": 30.0,
-              "y": 10.0,
+              "y": 5.0,
               "z": 30.0
             },
             "RotationZ": 0.0,
@@ -3124,12 +4261,12 @@
             "Name": "Lobby 1",
             "Center": {
               "x": 48.0,
-              "y": 23.47,
+              "y": 22.3,
               "z": 140.58
             },
             "Size": {
               "x": 30.0,
-              "y": 10.0,
+              "y": 5.0,
               "z": 10.0
             },
             "RotationZ": 0.0,
@@ -3140,12 +4277,12 @@
             "Name": "Lobby 2",
             "Center": {
               "x": 58.0,
-              "y": 23.45,
+              "y": 22.3,
               "z": 156.83
             },
             "Size": {
               "x": 10.0,
-              "y": 10.0,
+              "y": 5.0,
               "z": 15.0
             },
             "RotationZ": 0.0,
@@ -3156,7 +4293,7 @@
             "Name": "Claymore Room",
             "Center": {
               "x": 59.78,
-              "y": 23.48,
+              "y": 22.3,
               "z": 171.38
             },
             "Size": {
@@ -3172,7 +4309,7 @@
             "Name": "Tarbank Office",
             "Center": {
               "x": 53.88,
-              "y": 33.0,
+              "y": 31.9,
               "z": 147.02
             },
             "Size": {
@@ -3190,12 +4327,12 @@
         "Name": "Showroom",
         "Center": {
           "x": 99.04,
-          "y": 26.0,
+          "y": 24.9,
           "z": 223.46
         },
         "Size": {
           "x": 12.0,
-          "y": 15.0,
+          "y": 5.0,
           "z": 12.0
         },
         "RotationZ": 0.0,
@@ -3206,7 +4343,7 @@
         "Name": "Capital Insight",
         "Center": {
           "x": 121.89,
-          "y": 32.84,
+          "y": 31.7,
           "z": 288.86
         },
         "Size": {
@@ -3221,7 +4358,7 @@
             "Name": "Lobby",
             "Center": {
               "x": 115.57,
-              "y": 23.41,
+              "y": 22.3,
               "z": 284.11
             },
             "Size": {
@@ -3237,7 +4374,7 @@
             "Name": "Right Rise",
             "Center": {
               "x": 134.9,
-              "y": 25.0,
+              "y": 23.9,
               "z": 264.63
             },
             "Size": {
@@ -3255,7 +4392,7 @@
         "Name": "Nakatani",
         "Center": {
           "x": -10.0,
-          "y": 20.0,
+          "y": 18.9,
           "z": 330.02
         },
         "Size": {
@@ -3273,7 +4410,7 @@
         "Name": "TerraGroup",
         "Center": {
           "x": -5.0,
-          "y": 23.85,
+          "y": -26.3,
           "z": 15.0
         },
         "Size": {
@@ -3288,7 +4425,7 @@
             "Name": "Park TerraGroup",
             "Center": {
               "x": 21.97,
-              "y": 23.05,
+              "y": 12.9,
               "z": 31.84
             },
             "Size": {
@@ -3304,7 +4441,7 @@
             "Name": "Parking",
             "Center": {
               "x": 4.55,
-              "y": 23.84,
+              "y": 13.7,
               "z": -41.36
             },
             "Size": {
@@ -3320,7 +4457,7 @@
             "Name": "Lobby",
             "Center": {
               "x": -35.92,
-              "y": 24.22,
+              "y": 13.1,
               "z": 32.62
             },
             "Size": {
@@ -3336,7 +4473,7 @@
             "Name": "Office3",
             "Center": {
               "x": -17.0,
-              "y": 31.0,
+              "y": 28.9,
               "z": 75.0
             },
             "Size": {
@@ -3352,7 +4489,7 @@
             "Name": "Office4",
             "Center": {
               "x": -11.68,
-              "y": 31.0,
+              "y": 29.4,
               "z": 48.0
             },
             "Size": {
@@ -3370,7 +4507,7 @@
         "Name": "Winery",
         "Center": {
           "x": 118.0,
-          "y": 22.78,
+          "y": 20.1,
           "z": 25.0
         },
         "Size": {
@@ -3385,7 +4522,7 @@
             "Name": "Storage Winery",
             "Center": {
               "x": 126.21,
-              "y": 22.82,
+              "y": 20.2,
               "z": 23.19
             },
             "Size": {
@@ -3403,7 +4540,7 @@
         "Name": "Med Tent",
         "Center": {
           "x": 154.0,
-          "y": 22.73,
+          "y": 20.1,
           "z": -82.11
         },
         "Size": {
@@ -3419,7 +4556,7 @@
         "Name": "Rise",
         "Center": {
           "x": 137.06,
-          "y": 19.57,
+          "y": 14.4,
           "z": 66.15
         },
         "Size": {
@@ -3435,7 +4572,7 @@
         "Name": "Avenue Mira",
         "Center": {
           "x": 217.54,
-          "y": 16.03,
+          "y": 10.9,
           "z": -20.0
         },
         "Size": {
@@ -3451,7 +4588,7 @@
         "Name": "TarTower Sales Office",
         "Center": {
           "x": 197.18,
-          "y": 16.2,
+          "y": 11.1,
           "z": 134.65
         },
         "Size": {
@@ -3467,7 +4604,7 @@
         "Name": "Fusion Park",
         "Center": {
           "x": 195.72,
-          "y": 16.16,
+          "y": 11.0,
           "z": 101.86
         },
         "Size": {
@@ -3483,7 +4620,7 @@
         "Name": "Fusion Back",
         "Center": {
           "x": 173.45,
-          "y": 24.41,
+          "y": 19.3,
           "z": 103.6
         },
         "Size": {
@@ -3499,7 +4636,7 @@
         "Name": "Cafe",
         "Center": {
           "x": 115.0,
-          "y": 29.95,
+          "y": 19.8,
           "z": 151.05
         },
         "Size": {
@@ -3515,7 +4652,7 @@
         "Name": "Oasis",
         "Center": {
           "x": 117.44,
-          "y": 26.38,
+          "y": 16.2,
           "z": 104.01
         },
         "Size": {
@@ -3531,7 +4668,7 @@
         "Name": "Tarbank",
         "Center": {
           "x": 28.88,
-          "y": 23.48,
+          "y": -11.7,
           "z": 166.0
         },
         "Size": {
@@ -3546,7 +4683,7 @@
             "Name": "Empire Route Lobby",
             "Center": {
               "x": 18.0,
-              "y": 23.45,
+              "y": 18.3,
               "z": 160.0
             },
             "Size": {
@@ -3562,7 +4699,7 @@
             "Name": "Lobby 1",
             "Center": {
               "x": 48.0,
-              "y": 23.47,
+              "y": 18.3,
               "z": 140.58
             },
             "Size": {
@@ -3578,7 +4715,7 @@
             "Name": "Lobby 2",
             "Center": {
               "x": 58.0,
-              "y": 23.45,
+              "y": 18.3,
               "z": 156.83
             },
             "Size": {
@@ -3594,7 +4731,7 @@
             "Name": "Claymore Room",
             "Center": {
               "x": 59.78,
-              "y": 23.48,
+              "y": 20.8,
               "z": 171.38
             },
             "Size": {
@@ -3610,7 +4747,7 @@
             "Name": "Tarbank Office",
             "Center": {
               "x": 53.88,
-              "y": 33.0,
+              "y": 30.4,
               "z": 147.02
             },
             "Size": {
@@ -3628,7 +4765,7 @@
         "Name": "Showroom",
         "Center": {
           "x": 99.04,
-          "y": 26.0,
+          "y": 18.4,
           "z": 223.46
         },
         "Size": {
@@ -3644,7 +4781,7 @@
         "Name": "Capital Insight",
         "Center": {
           "x": 121.89,
-          "y": 32.84,
+          "y": 17.7,
           "z": 288.86
         },
         "Size": {
@@ -3659,7 +4796,7 @@
             "Name": "Lobby",
             "Center": {
               "x": 115.57,
-              "y": 23.41,
+              "y": 15.8,
               "z": 284.11
             },
             "Size": {
@@ -3675,7 +4812,7 @@
             "Name": "Right Rise",
             "Center": {
               "x": 134.9,
-              "y": 25.0,
+              "y": 20.9,
               "z": 264.63
             },
             "Size": {
@@ -3693,7 +4830,7 @@
         "Name": "Nakatani",
         "Center": {
           "x": -10.0,
-          "y": 20.0,
+          "y": 4.9,
           "z": 330.02
         },
         "Size": {
