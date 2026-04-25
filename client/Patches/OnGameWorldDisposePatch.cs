@@ -16,7 +16,7 @@ namespace SPTLeaderboard.Patches
         [PatchPrefix]
         static void Prefix()
         {
-#if DEBUG
+#if DEBUG || BETA
             OverlayDebug.Instance.Disable();
             
             LeaderboardPlugin.Instance.ZoneTrackerService.Disable();

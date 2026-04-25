@@ -18,7 +18,7 @@ namespace SPTLeaderboard.Patches
         [PatchPostfix]
         static void PostFix()
         {
-#if DEBUG
+#if DEBUG || BETA
             OverlayDebug.Instance.Enable();
 
             if (!LeaderboardPlugin.Instance.ZoneTrackerService)

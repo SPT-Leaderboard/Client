@@ -35,9 +35,9 @@ public static class GlobalData
     public static string UserModsPath = Path.GetFullPath(Path.Combine(_sptRootPath, "user", "mods")); 
     public static string LeaderboardIconPath = Path.GetFullPath(Path.Combine(_sptRootPath, "BepInEx", "plugins", "SPT-Leaderboard", "SavedIcon.png"));
     public static string LeaderboardFullImagePath = Path.GetFullPath(Path.Combine(_sptRootPath, "BepInEx", "plugins", "SPT-Leaderboard", "SavedFull.png"));
-    public static string ZonesConfig = Path.GetFullPath(Path.Combine(_sptRootPath, "BepInEx", "plugins", "SPT-Leaderboard", "zonesConfig.json"));
+    public static string ZonesConfig = Path.GetFullPath(Path.Combine(_sptRootPath, "BepInEx", "plugins", "SPT-Leaderboard", "map_zones.json"));
 
-    public static string ZonesEmbeddedConfig = "SPTLeaderboard.BuildScripts.zonesConfig.json";
+    public static string ZonesEmbeddedConfig = "SPTLeaderboard.BuildScripts.map_zones.json";
     
     // Limits equipment capacity
     public static EquipmentData EquipmentLimits = new()

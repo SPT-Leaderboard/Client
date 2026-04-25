@@ -222,7 +222,7 @@
       <None Include="Dependencies\Keys\sptld.snk" />
     </ItemGroup>
     <ItemGroup>
-      <EmbeddedResource Include="BuildScripts\zonesConfig.json" />
+      <EmbeddedResource Include="BuildScripts\map_zones.json" />
     </ItemGroup>
     <ItemGroup>
       <Folder Include="Models\" />

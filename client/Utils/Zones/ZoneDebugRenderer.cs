@@ -18,6 +18,7 @@ public class ZoneDebugRenderer: MonoBehaviour
     private Material _seeThroughMaterial;
 
     public bool ShowOverlays { get; set; }
+    public bool ShowZones { get; set; }
     public ZoneTrackerService ZoneTrackerService { get; set; }
 
     private Material GetNormalMaterial()
@@ -143,7 +144,7 @@ public class ZoneDebugRenderer: MonoBehaviour
 
         Color zoneColor = zoneGuid != null ? GetZoneColor(zoneGuid) : Color.white;
 
-        Material zoneMaterial = SPTLeaderboard.Configuration.Settings.Instance.ZonesSeeThroughWalls.Value
+        Material zoneMaterial = Settings.Instance.ZonesSeeThroughWalls.Value
             ? GetSeeThroughMaterial()
             : GetNormalMaterial();
 
@@ -214,7 +215,7 @@ public class ZoneDebugRenderer: MonoBehaviour
 
         Color zoneColor = zoneGuid != null ? GetZoneColor(zoneGuid) : Color.white;
 
-        Material zoneMaterial = Configuration.Settings.Instance.ZonesSeeThroughWalls.Value
+        Material zoneMaterial = Settings.Instance.ZonesSeeThroughWalls.Value
             ? new Material(Shader.Find("GUI/Text Shader")) // See through walls
             : new Material(Shader.Find("Sprites/Default")); // Normal rendering
 
@@ -256,7 +257,7 @@ public class ZoneDebugRenderer: MonoBehaviour
         lr.positionCount = 2;
         lr.startColor = color;
         lr.endColor = color;
-        lr.material = SPTLeaderboard.Configuration.Settings.Instance.ZonesSeeThroughWalls.Value
+        lr.material = Settings.Instance.ZonesSeeThroughWalls.Value
             ? new Material(Shader.Find("GUI/Text Shader"))
             : new Material(Shader.Find("Sprites/Default"));
         lr.SetPosition(0, start);
@@ -265,11 +266,11 @@ public class ZoneDebugRenderer: MonoBehaviour
 
     public void DrawZonePlanes(Vector3 Size, Vector3 Center, float rotationZ, string zoneGuid = null)
     {
-        if (!SPTLeaderboard.Configuration.Settings.Instance.ShowZonePlanes.Value)
+        if (!Settings.Instance.ShowZonePlanes.Value)
             return;
 
         Color zoneColor = zoneGuid != null ? GetZoneColor(zoneGuid) : Color.white;
-        zoneColor.a = Settings.Instance.ZonePlanesTransparent.Value; // Very transparent
+        zoneColor.a = Settings.Instance.ZonePlanesTransparency.Value; // Very transparent
 
         Vector3[] corners = new Vector3[8];
         FillZoneCorners(Center, Size, rotationZ, corners);
@@ -334,6 +335,12 @@ public class ZoneDebugRenderer: MonoBehaviour
 
     public void DrawZonesForMap(string mapName)
     {
+        if (!ShowZones)
+        {
+            ClearDebugViews();
+            return;
+        }
+
         if (ZoneTrackerService == null)
         {
             Logger.LogDebugInfo("[ZoneTracker] ZoneTrackerService is null");
@@ -388,7 +395,7 @@ public class ZoneDebugRenderer: MonoBehaviour
             DrawZonePlanes(zone.Size, zone.Center, zone.RotationZ, zone.GUID);
 
             // Draw coordinate axes for the zone if enabled
-            if (SPTLeaderboard.Configuration.Settings.Instance?.ShowCoordinateAxes?.Value == true)
+            if (Settings.Instance?.ShowZoneCoordinateAxes?.Value == true)
             {
                 DrawCoordinateAxes(zone.Center, zone.Size.magnitude * 0.3f, zone.GUID);
             }

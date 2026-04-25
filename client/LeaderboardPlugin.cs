@@ -163,7 +163,7 @@ namespace SPTLeaderboard
                 Utils.Logger.LogInfo("Pause Mod not loaded.");
             }
             
-#if DEBUG
+#if DEBUG || BETA
             new OnGameWorldStartPatch().Enable();
             new OnGameWorldDisposePatch().Enable();
 #endif
@@ -175,7 +175,7 @@ namespace SPTLeaderboard
         private void Update()
         {
             HandleKeybind();
-#if DEBUG
+#if DEBUG || BETA
             Tick?.Invoke();
 #endif
         }

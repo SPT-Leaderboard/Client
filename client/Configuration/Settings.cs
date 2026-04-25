@@ -10,27 +10,8 @@ namespace SPTLeaderboard.Configuration
 	public class Settings
 	{
 		public static Settings Instance { get; private set; }
-		
-#if DEBUG || BETA
-		public ConfigEntry<KeyboardShortcut> KeyBind;
-		public ConfigEntry<KeyboardShortcut> KeyBindTwo;
-		public ConfigEntry<float> PositionXDebug;
-		public ConfigEntry<float> PositionYDebug;
-		public ConfigEntry<int> FontSizeDebug;
-		public ConfigEntry<int> OverlayFontSize;
-		public ConfigEntry<float> OverlayMaxDist;
-		public ConfigEntry<float> OverlayUpDist;
-		public ConfigEntry<bool> ShowCoordinateAxes;
-		public ConfigEntry<bool> ZonesSeeThroughWalls;
-		public ConfigEntry<bool> ShowZonePlanes;
-		public ConfigEntry<float> ZonePlanesTransparent;
-#endif
-#if DEBUG
-		public ConfigEntry<bool> Debug;
-#endif
 
 		public ConfigEntry<KeyboardShortcut> ToggleZonesInterfaceKey;
-
 		public ConfigEntry<bool> EnableSendData;
 		public ConfigEntry<bool> ShowPointsNotification;
 		public ConfigEntry<bool> ShowExperienceNotification;
@@ -41,95 +22,26 @@ namespace SPTLeaderboard.Configuration
 		public ConfigEntry<string> PhpPath;
 		public ConfigEntry<int> SupportInRaidConnectionTimer;
 
+#if DEBUG
+		public ConfigEntry<bool> Debug;
+#endif
+#if DEBUG || BETA
+		public ConfigEntry<float> PositionOverlayX;
+		public ConfigEntry<float> PositionOverlayY;
+		public ConfigEntry<int> FontSizeOverlay;
+		public ConfigEntry<int> ZoneOverlayFontSize;
+		public ConfigEntry<float> ZoneOverlayMaxDistance;
+		public ConfigEntry<float> ZoneOverlayUpDistance;
+		public ConfigEntry<bool> ShowZoneCoordinateAxes;
+		public ConfigEntry<bool> ShowZoneOverlays;
+		public ConfigEntry<bool> ShowZones;
+		public ConfigEntry<bool> ZonesSeeThroughWalls;
+		public ConfigEntry<bool> ShowZonePlanes;
+		public ConfigEntry<float> ZonePlanesTransparency;
+#endif
+
 		private Settings(ConfigFile configFile)
 		{
-#if DEBUG || BETA
-			KeyBind = configFile.Bind(
-				"2. Debug",
-				"Test key bind 1", 
-				new KeyboardShortcut(KeyCode.LeftArrow), 
-				new ConfigDescription(
-					"Just keybind for tests")); 
-			
-			KeyBindTwo = configFile.Bind(
-				"2. Debug",
-				"Test key bind 2", 
-				new KeyboardShortcut(KeyCode.UpArrow), 
-				new ConfigDescription(
-					"Just keybind for tests"));
-
-			PositionXDebug = configFile.Bind(
-				"2. Debug",
-				"PositionX",
-				10f,
-				new ConfigDescription("X Position", new AcceptableValueRange<float>(-2000f, 2000f)));
-
-			PositionYDebug = configFile.Bind(
-				"2. Debug",
-				"PositionY",
-				-10f,
-				new ConfigDescription("Y Position", new AcceptableValueRange<float>(-2000f, 2000f)));
-			
-			FontSizeDebug = configFile.Bind(
-				"2. Debug",
-				"FontSizeDebug",
-				28,
-				new ConfigDescription("FontSizeDebug", new AcceptableValueRange<int>(0, 200)));
-			
-			OverlayFontSize = configFile.Bind(
-				"2. Debug",
-				"OverlayFontSize",
-				18,
-				new ConfigDescription(
-					"Sets the font size of overlays.",
-					new AcceptableValueRange<int>(2, 32),
-					new ConfigurationAttributes()));
-			
-			OverlayMaxDist = configFile.Bind(
-				"2. Debug",
-				"OverlayMaxDist",
-				200f,
-				new ConfigDescription(
-					"Max distance to render an overlay",
-					new AcceptableValueRange<float>(0f, 1000f),
-					new ConfigurationAttributes()));
-			
-			OverlayUpDist = configFile.Bind(
-				"2. Debug",
-				"OverlayUpDist",
-				1.5f,
-				new ConfigDescription(
-					"Distance the overlay is above the objects",
-					new AcceptableValueRange<float>(0f, 5f),
-					new ConfigurationAttributes()));
-
-			ShowCoordinateAxes = configFile.Bind(
-				"3. Zones",
-				"Show Coordinate Axes",
-				true,
-				new ConfigDescription(
-					"Show coordinate axes (X=red, Y=green, Z=blue) for each zone",
-					null,
-					new ConfigurationAttributes()));
-
-			ZonesSeeThroughWalls = configFile.Bind(
-				"3. Zones",
-				"Zones See Through Walls",
-				false,
-				new ConfigDescription(
-					"Make zone lines visible through walls",
-					null,
-					new ConfigurationAttributes()));
-
-			ShowZonePlanes = configFile.Bind(
-				"3. Zones",
-				"Show Zone Planes",
-				false,
-				new ConfigDescription(
-					"Show semi-transparent colored planes for each zone face",
-					null,
-					new ConfigurationAttributes()));
-
 			ToggleZonesInterfaceKey = configFile.Bind(
 				"1. Settings",
 				"Toggle Zones Interface Key",
@@ -141,21 +53,6 @@ namespace SPTLeaderboard.Configuration
 					{
 						Order = 9
 					}));
-			
-			ZonePlanesTransparent = configFile.Bind(
-				"3. Zones",
-				"Zone Planes Tranparent Value",
-				0.2f,
-				new ConfigDescription("Value", new AcceptableValueRange<float>(0f, 1f)));
-#endif
-#if DEBUG
-			Debug = configFile.Bind(
-				"2. Debug",
-				"Debug",
-				true,
-				new ConfigDescription(
-					"Display debug messages in console and log them inside SPT server .log file"));
-#endif
 			
 			EnableSendData = configFile.Bind(
 				"1. Settings", 
@@ -268,23 +165,128 @@ namespace SPTLeaderboard.Configuration
 						Order = 0,
 						IsAdvanced = true
 					}));
+
+#if DEBUG
+			Debug = configFile.Bind(
+				"2. Debug",
+				"Debug",
+				true,
+				new ConfigDescription("Developer toggle"));
+#endif
+#if DEBUG || BETA
+			// Main overlay settings
+			PositionOverlayX = configFile.Bind(
+				"2. Debug",
+				"PositionX",
+				10f,
+				new ConfigDescription("X Position", new AcceptableValueRange<float>(-2000f, 2000f)));
+
+			PositionOverlayY = configFile.Bind(
+				"2. Debug",
+				"PositionY",
+				-10f,
+				new ConfigDescription("Y Position", new AcceptableValueRange<float>(-2000f, 2000f)));
+
+			FontSizeOverlay = configFile.Bind(
+				"2. Debug",
+				"FontSizeDebug",
+				28,
+				new ConfigDescription("FontSizeDebug", new AcceptableValueRange<int>(0, 200)));
+
+			// Zones overlay settings
+			ZoneOverlayFontSize = configFile.Bind(
+				"2. Debug",
+				"ZoneOverlayFontSize",
+				10,
+				new ConfigDescription(
+					"Set font size in overlay zone",
+					new AcceptableValueRange<int>(2, 32),
+					new ConfigurationAttributes()));
+
+			ZoneOverlayMaxDistance = configFile.Bind(
+				"2. Debug",
+				"ZoneOverlayMaxDistance",
+				200f,
+				new ConfigDescription(
+					"Max distance to render an overlay zone",
+					new AcceptableValueRange<float>(0f, 1000f),
+					new ConfigurationAttributes()));
+
+			ZoneOverlayUpDistance = configFile.Bind(
+				"2. Debug",
+				"ZoneOverlayUpDistance",
+				1.5f,
+				new ConfigDescription(
+					"Distance the overlay is above the zones",
+					new AcceptableValueRange<float>(0f, 5f),
+					new ConfigurationAttributes()));
+
+			ShowZoneCoordinateAxes = configFile.Bind(
+				"3. Zones",
+				"Show Zone Coordinate Axes",
+				false,
+				new ConfigDescription(
+					"Show zone coordinate axes (X=red, Y=green, Z=blue) for each zone",
+					null,
+					new ConfigurationAttributes()));
+
+			ShowZoneOverlays = configFile.Bind(
+				"3. Zones",
+				"Show Zone Overlays",
+				false,
+				new ConfigDescription(
+					"Show text overlays for zones",
+					null,
+					new ConfigurationAttributes()));
+
+			ShowZones = configFile.Bind(
+				"3. Zones",
+				"Show Zones",
+				false,
+				new ConfigDescription(
+					"Master toggle to show or hide all zone visuals",
+					null,
+					new ConfigurationAttributes()));
+
+			ZonesSeeThroughWalls = configFile.Bind(
+				"3. Zones",
+				"Zones See Through Walls",
+				false,
+				new ConfigDescription(
+					"Make zone lines visible through walls",
+					null,
+					new ConfigurationAttributes()));
+
+			ShowZonePlanes = configFile.Bind(
+				"3. Zones",
+				"Show Zone Planes",
+				false,
+				new ConfigDescription(
+					"Show semi-transparent colored planes for each zone face",
+					null,
+					new ConfigurationAttributes()));
+
+			ZonePlanesTransparency = configFile.Bind(
+				"3. Zones",
+				"Zone Planes Transparency Value",
+				0.3f,
+				new ConfigDescription("Value", new AcceptableValueRange<float>(0f, 1f)));
 			
-			#if DEBUG || BETA
-			PositionXDebug.SettingChanged += (_, __) =>
+			PositionOverlayX.SettingChanged += (_, __) =>
 			{
-				OverlayDebug.Instance.SetOverlayPosition(new Vector2(PositionXDebug.Value, PositionYDebug.Value));
+				OverlayDebug.Instance.SetOverlayPosition(new Vector2(PositionOverlayX.Value, PositionOverlayY.Value));
 			};
 			
-			PositionYDebug.SettingChanged += (_, __) =>
+			PositionOverlayY.SettingChanged += (_, __) =>
 			{
-				OverlayDebug.Instance.SetOverlayPosition(new Vector2(PositionXDebug.Value, PositionYDebug.Value));
+				OverlayDebug.Instance.SetOverlayPosition(new Vector2(PositionOverlayX.Value, PositionOverlayY.Value));
 			};
 
-			FontSizeDebug.SettingChanged += (_, __) =>
+			FontSizeOverlay.SettingChanged += (_, __) =>
 			{
-				OverlayDebug.Instance.SetFontSize(FontSizeDebug.Value);
+				OverlayDebug.Instance.SetFontSize(FontSizeOverlay.Value);
 			};
-			#endif
+#endif
 		}
 		
 		/// <summary>

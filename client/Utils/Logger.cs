@@ -15,7 +15,7 @@ public class Logger
     {
         get
         {
-#if DEBUG
+#if DEBUG || BETA
             return true;
 #else
             return LeaderboardPlugin.IsDebugLogsEnabled;

@@ -35,7 +35,7 @@ public class OverlayDebug: MonoBehaviour
 
         _overlayText = textObj.AddComponent<TextMeshProUGUI>();
         _overlayText.text = "Overlay initialized";
-        _overlayText.fontSize = Settings.Instance.FontSizeDebug.Value;
+        _overlayText.fontSize = Settings.Instance.FontSizeOverlay.Value;
         _overlayText.color = Color.white;
         _overlayText.alignment = TextAlignmentOptions.TopLeft;
         _overlayText.enableWordWrapping = false;
@@ -46,7 +46,7 @@ public class OverlayDebug: MonoBehaviour
         rectTransform.pivot = new Vector2(0, 1);
         rectTransform.sizeDelta = new Vector2(800, 200);
         
-        SetOverlayPosition(new Vector2(Settings.Instance.PositionXDebug.Value, Settings.Instance.PositionYDebug.Value));
+        SetOverlayPosition(new Vector2(Settings.Instance.PositionOverlayX.Value, Settings.Instance.PositionOverlayY.Value));
 
         LeaderboardPlugin.Instance.Tick += UpdateOverlay;
     }
@@ -84,7 +84,7 @@ public class OverlayDebug: MonoBehaviour
         if (PlayerHelper.Instance.Player != null)
         {
             var pos = PlayerHelper.Instance.Player.PlayerBones.transform.position;
-            debugValues.AppendLine("         ─═ PLAYER POSITION ═─");
+            debugValues.AppendLine("        ─═ PLAYER POSITION ═─");
             debugValues.AppendFormat("X: {0:F1} | Y: {1:F1} | Z: {2:F1}\n", pos.x, pos.y, pos.z);
             debugValues.AppendLine();
         }
@@ -251,7 +251,7 @@ public class OverlayDebug: MonoBehaviour
             if (zoneTracker.CurrentSubZone != null)
             {
                 debugValues.AppendLine("\n");
-                debugValues.AppendLine("      ─═ SUB-ZONE ═─");
+                debugValues.AppendLine("        ─═ SUB-ZONE ═─");
                 debugValues.AppendLine($"SUB-ZONE: <color=yellow>{zoneTracker.CurrentSubZone.Name}</color>");
 
                 // Build sub-zone time and distance line properly
@@ -290,7 +290,7 @@ public class OverlayDebug: MonoBehaviour
 
                 if (subDamageInZone > 0 || subMedsInZone > 0 || subHealInZone > 0)
                 {
-                    debugValues.AppendLine("      CURRENT SESSION:");
+                    debugValues.AppendLine("        CURRENT SESSION:");
                     if (subDamageInZone > 0)
                         debugValues.AppendFormat("Damage: <color=red>{0:F1}</color> | ", subDamageInZone);
                     if (subMedsInZone > 0)
@@ -305,7 +305,7 @@ public class OverlayDebug: MonoBehaviour
                 {
                     string subZoneGuid = zoneTracker.CurrentSubZone.GUID;
 
-                    debugValues.AppendLine("      TOTAL RAID STATS:");
+                    debugValues.AppendLine("        TOTAL RAID STATS:");
                     
                     bool hasSubTotalTime = raidData.TimeSpendInZones.TryGetValue(subZoneGuid, out float totalTime);
                     bool hasSubTotalKm = raidData.KilometerWalkedInZones.TryGetValue(subZoneGuid, out float totalKm);
@@ -396,7 +396,7 @@ public class OverlayDebug: MonoBehaviour
             
             // Session Counters Debug Block
             debugValues.AppendLine();
-            debugValues.AppendLine("    ─═ SESSION COUNTERS ═─");
+            debugValues.AppendLine("        ─═ SESSION COUNTERS ═─");
             
             debugValues.AppendFormat("Used Medicines: <color=orange>{0}</color>\n", usedMedicines);
             debugValues.AppendFormat("Health Healed: <color=green>{0:F1}</color>\n", healthHealed);

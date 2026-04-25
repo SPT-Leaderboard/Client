@@ -1,4 +1,4 @@
-﻿#if DEBUG
+﻿#if DEBUG || BETA
 using System;
 using System.Collections.Generic;
 using SPTLeaderboard.Configuration;
@@ -40,9 +40,6 @@ namespace SPTLeaderboard.Utils.Zones
         private ZoneDebugRenderer _zoneDebugRenderer;
 
         private bool _liveUpdateEnabled = true;
-        private string _lastCenterX, _lastCenterY, _lastCenterZ;
-        private string _lastSizeX, _lastSizeY, _lastSizeZ;
-        private string _lastRotationZ;
         private bool _wasUIOpen;
         private PlayerRotateBlocker _rotateBlocker;
 
@@ -56,12 +53,13 @@ namespace SPTLeaderboard.Utils.Zones
         {
             _zoneTrackerService = LeaderboardPlugin.Instance.ZoneTrackerService;
             
-            
             ZoneCursorUtils.Initialize();
             if (_zoneTrackerService != null)
             {
                 _zoneDebugRenderer = gameObject.AddComponent<ZoneDebugRenderer>();
                 _zoneDebugRenderer.ZoneTrackerService = _zoneTrackerService;
+                ApplyZoneRenderSettings();
+                SubscribeToZoneSettingsChanges();
                 _zoneTrackerService.OnZonesLoaded += OnZonesLoaded;
             }
             else
@@ -75,6 +73,7 @@ namespace SPTLeaderboard.Utils.Zones
         {
             _rotateBlocker?.Unlock();
             _rotateBlocker = null;
+            UnsubscribeFromZoneSettingsChanges();
             if (_zoneTrackerService != null)
             {
                 _zoneTrackerService.OnZonesLoaded -= OnZonesLoaded;
@@ -85,7 +84,7 @@ namespace SPTLeaderboard.Utils.Zones
         {
             if (IsUIOpen) ZoneCursorUtils.ApplyState(0, true);
         }
-
+#if DEBUG
         private void Update()
         {
             if (Settings.Instance.ToggleZonesInterfaceKey.Value.IsDown())
@@ -119,7 +118,7 @@ namespace SPTLeaderboard.Utils.Zones
                 _wasUIOpen = IsUIOpen;
             }
         }
-
+#endif
         void OnGUI()
         {
             if (!IsUIOpen)
@@ -169,41 +168,30 @@ namespace SPTLeaderboard.Utils.Zones
             GUILayout.EndHorizontal();
 
             GUILayout.BeginHorizontal();
-            bool showOverlays = _zoneTrackerService != null && _zoneDebugRenderer.ShowOverlays;
+            bool showOverlays = Settings.Instance.ShowZoneOverlays.Value;
             bool newShowOverlays = GUILayout.Toggle(showOverlays, "Show overlay zones", GUILayout.Height(25));
-            if (_zoneDebugRenderer != null && newShowOverlays != showOverlays)
+            if (newShowOverlays != showOverlays)
             {
-                _zoneDebugRenderer.ShowOverlays = newShowOverlays;
-                if (newShowOverlays)
-                {
-                    if (selectedMap != null)
-                    {
-                        _zoneDebugRenderer.CreateOverlaysForCurrentZones(selectedMap);
-                    }
-                    else
-                    {
-                        _zoneDebugRenderer.CreateOverlaysForCurrentZones();
-                    }
-                }
-                else
-                {
-                    _zoneDebugRenderer.ClearOverlays();
-                }
+                Settings.Instance.ShowZoneOverlays.Value = newShowOverlays;
             }
 
             GUILayout.EndHorizontal();
 
             GUILayout.BeginHorizontal();
-            bool showCoordinateAxes = Settings.Instance.ShowCoordinateAxes.Value;
+            bool showZones = Settings.Instance.ShowZones.Value;
+            bool newShowZones = GUILayout.Toggle(showZones, "Show zones", GUILayout.Height(25));
+            if (newShowZones != showZones)
+            {
+                Settings.Instance.ShowZones.Value = newShowZones;
+            }
+            GUILayout.EndHorizontal();
+
+            GUILayout.BeginHorizontal();
+            bool showCoordinateAxes = Settings.Instance.ShowZoneCoordinateAxes.Value;
             bool newShowCoordinateAxes = GUILayout.Toggle(showCoordinateAxes, "Show coordinate axes", GUILayout.Height(25));
             if (newShowCoordinateAxes != showCoordinateAxes)
             {
-                Settings.Instance.ShowCoordinateAxes.Value = newShowCoordinateAxes;
-                // Re-render zones to apply the change
-                if (_zoneTrackerService != null && selectedMap != null)
-                {
-                    _zoneDebugRenderer.DrawZonesForMap(selectedMap);
-                }
+                Settings.Instance.ShowZoneCoordinateAxes.Value = newShowCoordinateAxes;
             }
             GUILayout.EndHorizontal();
 
@@ -213,11 +201,6 @@ namespace SPTLeaderboard.Utils.Zones
             if (newZonesSeeThroughWalls != zonesSeeThroughWalls)
             {
                 Settings.Instance.ZonesSeeThroughWalls.Value = newZonesSeeThroughWalls;
-                // Re-render zones to apply the change
-                if (_zoneTrackerService != null && selectedMap != null)
-                {
-                    _zoneDebugRenderer.DrawZonesForMap(selectedMap);
-                }
             }
             GUILayout.EndHorizontal();
 
@@ -227,11 +210,6 @@ namespace SPTLeaderboard.Utils.Zones
             if (newShowZonePlanes != showZonePlanes)
             {
                 Settings.Instance.ShowZonePlanes.Value = newShowZonePlanes;
-                // Re-render zones to apply the change
-                if (_zoneTrackerService != null && selectedMap != null)
-                {
-                    _zoneDebugRenderer.DrawZonesForMap(selectedMap);
-                }
             }
             GUILayout.EndHorizontal();
 
@@ -744,17 +722,8 @@ namespace SPTLeaderboard.Utils.Zones
                 Logger.LogDebugInfo($"[ZonesInterface] Selected zone: {selectedZone.Name}, GUID: {selectedZone.GUID}");
 
                 SyncFieldsWithSelectedZone();
-
-                // Initialize last values for change detection
-                _lastCenterX = editedCenterX;
-                _lastCenterY = editedCenterY;
-                _lastCenterZ = editedCenterZ;
-                _lastSizeX = editedSizeX;
-                _lastSizeY = editedSizeY;
-                _lastSizeZ = editedSizeZ;
-                _lastRotationZ = editedRotationZ;
             }
-            catch (System.Exception ex)
+            catch (Exception ex)
             {
                 Logger.LogDebugInfo($"[ZonesInterface] Error selecting zone at index {index}: {ex.Message}");
             }
@@ -821,7 +790,7 @@ namespace SPTLeaderboard.Utils.Zones
                 editedSizeZ = selectedZone.Size.z.ToString("F2");
                 editedRotationZ = selectedZone.RotationZ.ToString("F2");
             }
-            catch (System.Exception ex)
+            catch (Exception ex)
             {
                 Logger.LogDebugInfo($"[ZonesInterface] Error syncing fields with selected zone: {ex.Message}");
                 // Set default values
@@ -1005,7 +974,7 @@ namespace SPTLeaderboard.Utils.Zones
                 Logger.LogDebugInfo($"[ZonesInterface] Added new sub-zone in zone {currentParentZone.Name}");
                 LocalizationService.Notification($"Added new sub-zone in zone {currentParentZone.Name}");
             }
-            catch (System.Exception ex)
+            catch (Exception ex)
             {
                 Logger.LogDebugInfo($"[ZonesInterface] Error adding new sub-zone: {ex.Message}");
                 LocalizationService.NotificationWarning("Error adding new sub-zone");
@@ -1145,12 +1114,6 @@ namespace SPTLeaderboard.Utils.Zones
                 Logger.LogDebugInfo($"[ZonesInterface] Set zone center to player position: {playerPos}");
                 LocalizationService.Notification("Center set to player position");
 
-                // Update last values to prevent immediate re-trigger
-                _lastCenterX = editedCenterX;
-                _lastCenterY = editedCenterY;
-                _lastCenterZ = editedCenterZ;
-
-
                 UpdateZoneVisualWithEditedValues();
             }
             catch (Exception ex)
@@ -1215,6 +1178,60 @@ namespace SPTLeaderboard.Utils.Zones
 
             // Simply re-render all zones for the current map
             _zoneDebugRenderer.DrawZonesForMap(selectedMap);
+        }
+
+        void SubscribeToZoneSettingsChanges()
+        {
+            if (Settings.Instance == null)
+                return;
+
+            Settings.Instance.ShowZoneOverlays.SettingChanged += OnZoneRenderSettingsChanged;
+            Settings.Instance.ShowZones.SettingChanged += OnZoneRenderSettingsChanged;
+            Settings.Instance.ShowZonePlanes.SettingChanged += OnZoneRenderSettingsChanged;
+            Settings.Instance.ShowZoneCoordinateAxes.SettingChanged += OnZoneRenderSettingsChanged;
+            Settings.Instance.ZonesSeeThroughWalls.SettingChanged += OnZoneRenderSettingsChanged;
+            Settings.Instance.ZonePlanesTransparency.SettingChanged += OnZoneRenderSettingsChanged;
+        }
+
+        void UnsubscribeFromZoneSettingsChanges()
+        {
+            if (Settings.Instance == null)
+                return;
+
+            Settings.Instance.ShowZoneOverlays.SettingChanged -= OnZoneRenderSettingsChanged;
+            Settings.Instance.ShowZones.SettingChanged -= OnZoneRenderSettingsChanged;
+            Settings.Instance.ShowZonePlanes.SettingChanged -= OnZoneRenderSettingsChanged;
+            Settings.Instance.ShowZoneCoordinateAxes.SettingChanged -= OnZoneRenderSettingsChanged;
+            Settings.Instance.ZonesSeeThroughWalls.SettingChanged -= OnZoneRenderSettingsChanged;
+            Settings.Instance.ZonePlanesTransparency.SettingChanged -= OnZoneRenderSettingsChanged;
+        }
+
+        void OnZoneRenderSettingsChanged(object _, EventArgs __)
+        {
+            ApplyZoneRenderSettings();
+        }
+
+        void ApplyZoneRenderSettings()
+        {
+            if (_zoneDebugRenderer == null)
+                return;
+
+            _zoneDebugRenderer.ShowOverlays = Settings.Instance.ShowZoneOverlays.Value;
+            _zoneDebugRenderer.ShowZones = Settings.Instance.ShowZones.Value;
+
+            if (_zoneTrackerService == null || _zoneTrackerService.AllZones == null || _zoneTrackerService.AllZones.Count == 0)
+                return;
+
+            string mapToRender = selectedMap;
+            if (string.IsNullOrEmpty(mapToRender))
+            {
+                mapToRender = DataUtils.GetPrettyMapName(DataUtils.GetRaidRawMap().ToLower());
+            }
+
+            if (!string.IsNullOrEmpty(mapToRender))
+            {
+                _zoneDebugRenderer.DrawZonesForMap(mapToRender);
+            }
         }
     }
 }

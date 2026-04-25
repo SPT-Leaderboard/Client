@@ -65,9 +65,9 @@ namespace SPTLeaderboard.Utils.Zones
                 var pos = transform.position;
                 var dist = Mathf.RoundToInt((transform.position - mainCamera.transform.position).magnitude);
 
-                if (_content.text.Length <= 0 || Settings.Instance == null || !(dist < Settings.Instance.OverlayMaxDist.Value)) return;
+                if (_content.text.Length <= 0 || Settings.Instance == null || !(dist < Settings.Instance.ZoneOverlayMaxDistance.Value)) return;
 
-                var screenPos = mainCamera.WorldToScreenPoint(pos + (Vector3.up * Settings.Instance.OverlayUpDist.Value));
+                var screenPos = mainCamera.WorldToScreenPoint(pos + (Vector3.up * Settings.Instance.ZoneOverlayUpDistance.Value));
 
                 if (screenPos.z <= 0) return;
 
@@ -106,7 +106,7 @@ namespace SPTLeaderboard.Utils.Zones
 
                 if (Settings.Instance != null)
                 {
-                    guiStyle.fontSize = Settings.Instance.OverlayFontSize.Value;
+                    guiStyle.fontSize = Settings.Instance.ZoneOverlayFontSize.Value;
                 }
 
                 // Set background color based on zone level
