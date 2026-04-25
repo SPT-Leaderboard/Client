@@ -140,6 +140,10 @@ namespace SPTLeaderboard.Utils.Zones
                 if (_zoneTrackerService != null)
                 {
                     _zoneTrackerService.LoadZones();
+                    if (_zoneDebugRenderer != null && selectedMap != null)
+                    {
+                        _zoneDebugRenderer.DrawZonesForMap(selectedMap);
+                    }
                 }
                 else
                 {
@@ -415,30 +419,93 @@ namespace SPTLeaderboard.Utils.Zones
                 editedCenterY = GUILayout.TextField(editedCenterY);
                 GUILayout.Label("Z:", GUILayout.Width(20));
                 editedCenterZ = GUILayout.TextField(editedCenterZ);
-                if (GUILayout.Button("📍", GUILayout.Width(30), GUILayout.Height(20)))
+                if (GUILayout.Button("CP", GUILayout.Width(30), GUILayout.Height(20)))
                 {
                     SetCenterToPlayerPosition();
-                    GUI.FocusControl(null); // Remove focus to ensure text fields update
+                    GUI.FocusControl(null);
                 }
                 GUILayout.EndHorizontal();
-
-                // Live update center if values changed
-                if (_liveUpdateEnabled && selectedZone != null &&
-                    (_lastCenterX != editedCenterX || _lastCenterY != editedCenterY || _lastCenterZ != editedCenterZ ||
-                     _lastSizeX != editedSizeX || _lastSizeY != editedSizeY || _lastSizeZ != editedSizeZ ||
-                     _lastRotationZ != editedRotationZ))
+                GUILayout.BeginHorizontal();
+                GUILayout.Label("X:", GUILayout.Width(20));
+                if (GUILayout.Button("+1", GUILayout.Width(35), GUILayout.Height(20)))
                 {
-                    UpdateZoneVisualWithEditedValues();
-
-                    // Update last values
-                    _lastCenterX = editedCenterX;
-                    _lastCenterY = editedCenterY;
-                    _lastCenterZ = editedCenterZ;
-                    _lastSizeX = editedSizeX;
-                    _lastSizeY = editedSizeY;
-                    _lastSizeZ = editedSizeZ;
-                    _lastRotationZ = editedRotationZ;
+                    SetAddXValue(1);
+                    GUI.FocusControl(null);
+                    ApplyChanges();
                 }
+                if (GUILayout.Button("+10", GUILayout.Width(35), GUILayout.Height(20)))
+                {
+                    SetAddXValue(10);
+                    GUI.FocusControl(null);
+                    ApplyChanges();
+                }
+                if (GUILayout.Button("-1", GUILayout.Width(35), GUILayout.Height(20)))
+                {
+                    SetAddXValue(-1);
+                    GUI.FocusControl(null);
+                    ApplyChanges();
+                }
+                if (GUILayout.Button("-10", GUILayout.Width(35), GUILayout.Height(20)))
+                {
+                    SetAddXValue(-10);
+                    GUI.FocusControl(null);
+                    ApplyChanges();
+                }
+                GUILayout.EndHorizontal();
+                GUILayout.BeginHorizontal();
+                GUILayout.Label("Y:", GUILayout.Width(20));
+                if (GUILayout.Button("+1", GUILayout.Width(35), GUILayout.Height(20)))
+                {
+                    SetAddYValue(1);
+                    GUI.FocusControl(null);
+                    ApplyChanges();
+                }
+                if (GUILayout.Button("+10", GUILayout.Width(35), GUILayout.Height(20)))
+                {
+                    SetAddYValue(10);
+                    GUI.FocusControl(null);
+                    ApplyChanges();
+                }
+                if (GUILayout.Button("-1", GUILayout.Width(35), GUILayout.Height(20)))
+                {
+                    SetAddYValue(-1);
+                    GUI.FocusControl(null);
+                    ApplyChanges();
+                }
+                if (GUILayout.Button("-10", GUILayout.Width(35), GUILayout.Height(20)))
+                {
+                    SetAddYValue(-10);
+                    GUI.FocusControl(null);
+                    ApplyChanges();
+                }
+                GUILayout.EndHorizontal();
+                GUILayout.BeginHorizontal();
+                GUILayout.Label("Z:", GUILayout.Width(20));
+                if (GUILayout.Button("+1", GUILayout.Width(35), GUILayout.Height(20)))
+                {
+                    SetAddZValue(1);
+                    GUI.FocusControl(null);
+                    ApplyChanges();
+                }
+                if (GUILayout.Button("+10", GUILayout.Width(35), GUILayout.Height(20)))
+                {
+                    SetAddZValue(10);
+                    GUI.FocusControl(null);
+                    ApplyChanges();
+                }
+                if (GUILayout.Button("-1", GUILayout.Width(35), GUILayout.Height(20)))
+                {
+                    SetAddZValue(-1);
+                    GUI.FocusControl(null);
+                    ApplyChanges();
+                }
+                if (GUILayout.Button("-10", GUILayout.Width(35), GUILayout.Height(20)))
+                {
+                    SetAddZValue(-10);
+                    GUI.FocusControl(null);
+                    ApplyChanges();
+                }
+                GUILayout.EndHorizontal();
 
                 GUILayout.Space(5);
 
@@ -450,6 +517,87 @@ namespace SPTLeaderboard.Utils.Zones
                 editedSizeY = GUILayout.TextField(editedSizeY);
                 GUILayout.Label("Z:", GUILayout.Width(20));
                 editedSizeZ = GUILayout.TextField(editedSizeZ);
+                GUILayout.EndHorizontal();
+                GUILayout.BeginHorizontal();
+                GUILayout.Label("X:", GUILayout.Width(20));
+                if (GUILayout.Button("+1", GUILayout.Width(35), GUILayout.Height(20)))
+                {
+                    SetAddXValueScale(1);
+                    GUI.FocusControl(null);
+                    ApplyChanges();
+                }
+                if (GUILayout.Button("+10", GUILayout.Width(35), GUILayout.Height(20)))
+                {
+                    SetAddXValueScale(10);
+                    GUI.FocusControl(null);
+                    ApplyChanges();
+                }
+                if (GUILayout.Button("-1", GUILayout.Width(35), GUILayout.Height(20)))
+                {
+                    SetAddXValueScale(-1);
+                    GUI.FocusControl(null);
+                    ApplyChanges();
+                }
+                if (GUILayout.Button("-10", GUILayout.Width(35), GUILayout.Height(20)))
+                {
+                    SetAddXValueScale(-10);
+                    GUI.FocusControl(null);
+                    ApplyChanges();
+                }
+                GUILayout.EndHorizontal();
+                GUILayout.BeginHorizontal();
+                GUILayout.Label("Y:", GUILayout.Width(20));
+                if (GUILayout.Button("+1", GUILayout.Width(35), GUILayout.Height(20)))
+                {
+                    SetAddYValueScale(1);
+                    GUI.FocusControl(null);
+                    ApplyChanges();
+                }
+                if (GUILayout.Button("+10", GUILayout.Width(35), GUILayout.Height(20)))
+                {
+                    SetAddYValueScale(10);
+                    GUI.FocusControl(null);
+                    ApplyChanges();
+                }
+                if (GUILayout.Button("-1", GUILayout.Width(35), GUILayout.Height(20)))
+                {
+                    SetAddYValueScale(-1);
+                    GUI.FocusControl(null);
+                    ApplyChanges();
+                }
+                if (GUILayout.Button("-10", GUILayout.Width(35), GUILayout.Height(20)))
+                {
+                    SetAddYValueScale(-10);
+                    GUI.FocusControl(null);
+                    ApplyChanges();
+                }
+                GUILayout.EndHorizontal();
+                GUILayout.BeginHorizontal();
+                GUILayout.Label("Z:", GUILayout.Width(20));
+                if (GUILayout.Button("+1", GUILayout.Width(35), GUILayout.Height(20)))
+                {
+                    SetAddZValueScale(1);
+                    GUI.FocusControl(null);
+                    ApplyChanges();
+                }
+                if (GUILayout.Button("+10", GUILayout.Width(35), GUILayout.Height(20)))
+                {
+                    SetAddZValueScale(10);
+                    GUI.FocusControl(null);
+                    ApplyChanges();
+                }
+                if (GUILayout.Button("-1", GUILayout.Width(35), GUILayout.Height(20)))
+                {
+                    SetAddZValueScale(-1);
+                    GUI.FocusControl(null);
+                    ApplyChanges();
+                }
+                if (GUILayout.Button("-10", GUILayout.Width(35), GUILayout.Height(20)))
+                {
+                    SetAddZValueScale(-10);
+                    GUI.FocusControl(null);
+                    ApplyChanges();
+                }
                 GUILayout.EndHorizontal();
 
                 GUILayout.Space(5);
@@ -988,15 +1136,8 @@ namespace SPTLeaderboard.Utils.Zones
         {
             try
             {
-                var player = PlayerHelper.Instance.Player;
-                if (player == null)
-                {
-                    Logger.LogDebugInfo("[ZonesInterface] Player not found for position setting");
-                    LocalizationService.NotificationWarning("Player not found");
-                    return;
-                }
-
-                Vector3 playerPos = player.PlayerBones.transform.position;
+                Vector3 playerPos = PlayerHelper.Instance.CurrentPosition;
+                playerPos.y -= 1;
                 editedCenterX = playerPos.x.ToString("F2");
                 editedCenterY = playerPos.y.ToString("F2");
                 editedCenterZ = playerPos.z.ToString("F2");
@@ -1009,13 +1150,61 @@ namespace SPTLeaderboard.Utils.Zones
                 _lastCenterY = editedCenterY;
                 _lastCenterZ = editedCenterZ;
 
-                // Update visual immediately
+
                 UpdateZoneVisualWithEditedValues();
             }
             catch (Exception ex)
             {
                 Logger.LogDebugInfo($"[ZonesInterface] Error getting player position: {ex.Message}");
                 LocalizationService.NotificationWarning($"Error getting player position: {ex.Message}");
+            }
+        }
+
+        void SetAddXValue(float value)
+        {
+            if (float.TryParse(editedCenterX, out float cx))
+            {
+                editedCenterX = (cx + value).ToString("F2");
+            }
+        }
+
+        void SetAddYValue(float value)
+        {
+            if (float.TryParse(editedCenterY, out float cy))
+            {
+                editedCenterY = (cy + value).ToString("F2");
+            }
+        }
+
+        void SetAddZValue(float value)
+        {
+            if (float.TryParse(editedCenterZ, out float cz))
+            {
+                editedCenterZ = (cz + value).ToString("F2");
+            }
+        }
+        
+        void SetAddXValueScale(float value)
+        {
+            if (float.TryParse(editedSizeX, out float cx))
+            {
+                editedSizeX = (cx + value).ToString("F2");
+            }
+        }
+
+        void SetAddYValueScale(float value)
+        {
+            if (float.TryParse(editedSizeY, out float cy))
+            {
+                editedSizeY = (cy + value).ToString("F2");
+            }
+        }
+
+        void SetAddZValueScale(float value)
+        {
+            if (float.TryParse(editedSizeZ, out float cz))
+            {
+                editedSizeZ = (cz + value).ToString("F2");
             }
         }
 
