@@ -2301,8 +2301,779 @@
         "SubZones": []
       }
     ],
-    "Labs": [],
-    "Reserve": [],
+    "Labs": [
+      {
+        "GUID": "6ba54327-4bfe-4a9c-b936-4afc9bf5e2b1",
+        "Name": "Boiler Room",
+        "Center": {
+          "x": -264.7718,
+          "y": -100.0,
+          "z": -367.045349
+        },
+        "Size": {
+          "x": 30.0,
+          "y": 5.0,
+          "z": 30.0
+        },
+        "RotationZ": 0.0,
+        "SubZones": []
+      },
+      {
+        "GUID": "4ee1732a-a67a-486a-ba18-a593fc9707fe",
+        "Name": "Medical Block Elevator",
+        "Center": {
+          "x": -116.097023,
+          "y": -100.0,
+          "z": -348.4589
+        },
+        "Size": {
+          "x": 15.0,
+          "y": 5.0,
+          "z": 15.0
+        },
+        "RotationZ": 0.0,
+        "SubZones": []
+      },
+      {
+        "GUID": "987dd76c-ea46-4cf4-8c91-912637e2ef45",
+        "Name": "Server Room",
+        "Center": {
+          "x": -127.33,
+          "y": -0.9,
+          "z": -310.31
+        },
+        "Size": {
+          "x": 40.0,
+          "y": 5.0,
+          "z": 25.0
+        },
+        "RotationZ": 90.0,
+        "SubZones": []
+      },
+      {
+        "GUID": "a74f8e18-edd7-4608-ae64-821e63dd9b0c",
+        "Name": "Test Room",
+        "Center": {
+          "x": -131.439911,
+          "y": -0.9,
+          "z": -354.3283
+        },
+        "Size": {
+          "x": 20.0,
+          "y": 5.0,
+          "z": 20.0
+        },
+        "RotationZ": 0.0,
+        "SubZones": []
+      },
+      {
+        "GUID": "35a28af6-3d3c-43d8-8b1f-4d9efd0d7306",
+        "Name": "Main Working Area",
+        "Center": {
+          "x": -173.58,
+          "y": -0.9,
+          "z": -343.96
+        },
+        "Size": {
+          "x": 100.0,
+          "y": 15.0,
+          "z": 50.0
+        },
+        "RotationZ": 90.0,
+        "SubZones": []
+      },
+      {
+        "GUID": "b3e8e1ce-e52b-43fb-a6ed-76604a82fc38",
+        "Name": "Warehouse Tunnels",
+        "Center": {
+          "x": -130.14,
+          "y": -0.9,
+          "z": -268.05
+        },
+        "Size": {
+          "x": 40.0,
+          "y": 5.0,
+          "z": 30.0
+        },
+        "RotationZ": 90.0,
+        "SubZones": []
+      },
+      {
+        "GUID": "40573f91-aa89-4009-a7b9-e30319f84797",
+        "Name": "Warehouse",
+        "Center": {
+          "x": -171.201767,
+          "y": -0.9,
+          "z": -269.221771
+        },
+        "Size": {
+          "x": 50.0,
+          "y": 5.0,
+          "z": 50.0
+        },
+        "RotationZ": 0.0,
+        "SubZones": []
+      },
+      {
+        "GUID": "52f76fbe-2a23-487c-bec0-ac199828dec9",
+        "Name": "Warehouse Gate",
+        "Center": {
+          "x": -171.633957,
+          "y": -0.9,
+          "z": -235.961746
+        },
+        "Size": {
+          "x": 20.0,
+          "y": 5.0,
+          "z": 30.0
+        },
+        "RotationZ": 0.0,
+        "SubZones": []
+      },
+      {
+        "GUID": "f2adbb96-9200-47f6-94f8-243995631731",
+        "Name": "Infirmary LvL 1",
+        "Center": {
+          "x": -130.58,
+          "y": -0.9,
+          "z": -400.31
+        },
+        "Size": {
+          "x": 25.0,
+          "y": 5.0,
+          "z": 20.0
+        },
+        "RotationZ": 90.0,
+        "SubZones": []
+      },
+      {
+        "GUID": "7b7a6af5-2e14-4131-8c37-8be4d1056c11",
+        "Name": "Negotiation Room",
+        "Center": {
+          "x": -150.888641,
+          "y": -0.9,
+          "z": -402.4575
+        },
+        "Size": {
+          "x": 20.0,
+          "y": 5.0,
+          "z": 20.0
+        },
+        "RotationZ": 0.0,
+        "SubZones": []
+      },
+      {
+        "GUID": "87edffab-b12a-405b-bac0-c28c714fbadf",
+        "Name": "Parking",
+        "Center": {
+          "x": -231.276733,
+          "y": -0.9,
+          "z": -401.28363
+        },
+        "Size": {
+          "x": 40.0,
+          "y": 5.0,
+          "z": 30.0
+        },
+        "RotationZ": 0.0,
+        "SubZones": []
+      },
+      {
+        "GUID": "bc7456ed-83df-48d2-8638-72daece88f51",
+        "Name": "Vestibules 1",
+        "Center": {
+          "x": -246.835724,
+          "y": -0.9,
+          "z": -380.153717
+        },
+        "Size": {
+          "x": 10.0,
+          "y": 5.0,
+          "z": 10.0
+        },
+        "RotationZ": 0.0,
+        "SubZones": []
+      },
+      {
+        "GUID": "22bca9c1-f94a-4fed-a8b7-88a65ebe7a3a",
+        "Name": "Vestibules 2",
+        "Center": {
+          "x": -216.798233,
+          "y": -0.9,
+          "z": -379.762421
+        },
+        "Size": {
+          "x": 10.0,
+          "y": 5.0,
+          "z": 10.0
+        },
+        "RotationZ": 0.0,
+        "SubZones": []
+      },
+      {
+        "GUID": "4c30e826-6c85-4f41-aabf-79eb4397bdec",
+        "Name": "Reception",
+        "Center": {
+          "x": -269.3098,
+          "y": -0.9,
+          "z": -344.154633
+        },
+        "Size": {
+          "x": 30.0,
+          "y": 5.0,
+          "z": 30.0
+        },
+        "RotationZ": 0.0,
+        "SubZones": []
+      },
+      {
+        "GUID": "31c3a0bc-d036-4800-843d-113bd48111dc",
+        "Name": "Security Barracks",
+        "Center": {
+          "x": -260.02,
+          "y": -0.9,
+          "z": -324.2
+        },
+        "Size": {
+          "x": 15.0,
+          "y": 5.0,
+          "z": 20.0
+        },
+        "RotationZ": 90.0,
+        "SubZones": []
+      },
+      {
+        "GUID": "56c55883-8ced-48d8-ba2a-8aff76994ac1",
+        "Name": "Gym",
+        "Center": {
+          "x": -237.327454,
+          "y": -0.9,
+          "z": -303.460022
+        },
+        "Size": {
+          "x": 20.0,
+          "y": 5.0,
+          "z": 20.0
+        },
+        "RotationZ": 0.0,
+        "SubZones": []
+      },
+      {
+        "GUID": "55eea7e7-f789-465b-90f6-b7c5a84ba9f7",
+        "Name": "Lecture Hall",
+        "Center": {
+          "x": -211.179718,
+          "y": -0.9,
+          "z": -305.4165
+        },
+        "Size": {
+          "x": 15.0,
+          "y": 5.0,
+          "z": 15.0
+        },
+        "RotationZ": 0.0,
+        "SubZones": []
+      },
+      {
+        "GUID": "5bdb2d7d-27d2-4e54-b84d-35a2b604af6c",
+        "Name": "Security 1",
+        "Center": {
+          "x": -247.051819,
+          "y": 3.0,
+          "z": -380.545
+        },
+        "Size": {
+          "x": 10.0,
+          "y": 5.0,
+          "z": 10.0
+        },
+        "RotationZ": 0.0,
+        "SubZones": []
+      },
+      {
+        "GUID": "2008dcaf-8c94-4673-a923-0199caed8b55",
+        "Name": "Security 2",
+        "Center": {
+          "x": -217.230423,
+          "y": 3.0,
+          "z": -380.349365
+        },
+        "Size": {
+          "x": 10.0,
+          "y": 5.0,
+          "z": 10.0
+        },
+        "RotationZ": 0.0,
+        "SubZones": []
+      },
+      {
+        "GUID": "a57c817d-4f43-4318-bcbc-6d62fe3ad323",
+        "Name": "Conference Room",
+        "Center": {
+          "x": -234.950378,
+          "y": 3.0,
+          "z": -343.763336
+        },
+        "Size": {
+          "x": 20.0,
+          "y": 5.0,
+          "z": 20.0
+        },
+        "RotationZ": 0.0,
+        "SubZones": []
+      },
+      {
+        "GUID": "b12c3fbb-7f88-4d19-b7a1-164b83cd7576",
+        "Name": "Administrative Office",
+        "Center": {
+          "x": -261.3142,
+          "y": 3.0,
+          "z": -364.110657
+        },
+        "Size": {
+          "x": 15.0,
+          "y": 5.0,
+          "z": 20.0
+        },
+        "RotationZ": 0.0,
+        "SubZones": []
+      },
+      {
+        "GUID": "3d1b0b6b-1fad-4b1e-9c36-8dece4f71672",
+        "Name": "Security Office",
+        "Center": {
+          "x": -261.31,
+          "y": 3.0,
+          "z": -324.2
+        },
+        "Size": {
+          "x": 12.0,
+          "y": 5.0,
+          "z": 22.0
+        },
+        "RotationZ": 90.0,
+        "SubZones": []
+      },
+      {
+        "GUID": "68ff5b11-7158-454a-8a9f-c5113f33960d",
+        "Name": "Cafeteria",
+        "Center": {
+          "x": -223.07,
+          "y": 3.0,
+          "z": -303.46
+        },
+        "Size": {
+          "x": 20.0,
+          "y": 5.0,
+          "z": 40.0
+        },
+        "RotationZ": 90.0,
+        "SubZones": []
+      },
+      {
+        "GUID": "7772dec3-e74b-437d-abdb-adef550553d7",
+        "Name": "Offices 1",
+        "Center": {
+          "x": -191.082687,
+          "y": 3.0,
+          "z": -402.653137
+        },
+        "Size": {
+          "x": 20.0,
+          "y": 5.0,
+          "z": 20.0
+        },
+        "RotationZ": 0.0,
+        "SubZones": []
+      },
+      {
+        "GUID": "8c294768-3d6d-4854-b5e2-56f9fb91ce7a",
+        "Name": "Officies 2",
+        "Center": {
+          "x": -151.104736,
+          "y": 3.0,
+          "z": -402.8488
+        },
+        "Size": {
+          "x": 20.0,
+          "y": 5.0,
+          "z": 20.0
+        },
+        "RotationZ": 0.0,
+        "SubZones": []
+      },
+      {
+        "GUID": "d2675c6d-993e-4a0d-8b5d-6341c3b1d7b5",
+        "Name": "Infirmary Lvl 2",
+        "Center": {
+          "x": -130.79,
+          "y": 3.0,
+          "z": -401.28
+        },
+        "Size": {
+          "x": 30.0,
+          "y": 5.0,
+          "z": 20.0
+        },
+        "RotationZ": 90.0,
+        "SubZones": []
+      },
+      {
+        "GUID": "fe95aacf-9f33-441f-a6ad-fd3d99e383e2",
+        "Name": "Sterile Laboratory",
+        "Center": {
+          "x": -131.01,
+          "y": 3.0,
+          "z": -364.31
+        },
+        "Size": {
+          "x": 20.0,
+          "y": 5.0,
+          "z": 20.0
+        },
+        "RotationZ": 0.0,
+        "SubZones": []
+      },
+      {
+        "GUID": "312d07ff-0a72-44c3-aafe-d037b18da09c",
+        "Name": "Control Room",
+        "Center": {
+          "x": -170.985672,
+          "y": 3.0,
+          "z": -285.851776
+        },
+        "Size": {
+          "x": 10.0,
+          "y": 5.0,
+          "z": 10.0
+        },
+        "RotationZ": 0.0,
+        "SubZones": []
+      }
+    ],
+    "Reserve": [
+      {
+        "GUID": "2ddfaa68-6c45-4667-a371-e3cdb616ab40",
+        "Name": "White Queen",
+        "Center": {
+          "x": -50.0,
+          "y": -20.0,
+          "z": 180.0
+        },
+        "Size": {
+          "x": 120.0,
+          "y": 100.0,
+          "z": 50.0
+        },
+        "RotationZ": 0.0,
+        "SubZones": [
+          {
+            "GUID": "b791eed7-4071-4fc3-bf99-70131c5f0ac0",
+            "Name": "Dome",
+            "Center": {
+              "x": -5.79,
+              "y": 17.0,
+              "z": 183.66
+            },
+            "Size": {
+              "x": 25.0,
+              "y": 50.0,
+              "z": 35.0
+            },
+            "RotationZ": 0.0,
+            "SubZones": []
+          }
+        ]
+      },
+      {
+        "GUID": "13901a1b-3cc7-42ed-82df-44fc0757021d",
+        "Name": "White Pawn",
+        "Center": {
+          "x": -102.95,
+          "y": -37.0,
+          "z": 92.32
+        },
+        "Size": {
+          "x": 50.0,
+          "y": 50.0,
+          "z": 16.0
+        },
+        "RotationZ": 15.0,
+        "SubZones": []
+      },
+      {
+        "GUID": "430cb0c6-137d-4b44-bfc6-8bf7c2a62a87",
+        "Name": "Black Pawn",
+        "Center": {
+          "x": -162.91,
+          "y": -37.0,
+          "z": 55.83
+        },
+        "Size": {
+          "x": 16.0,
+          "y": 50.0,
+          "z": 50.0
+        },
+        "RotationZ": 15.0,
+        "SubZones": []
+      },
+      {
+        "GUID": "434724b1-7240-4fa3-a970-f1a0a65433c4",
+        "Name": "Black Bishop",
+        "Center": {
+          "x": -138.88,
+          "y": -37.0,
+          "z": -15.55
+        },
+        "Size": {
+          "x": 70.0,
+          "y": 50.0,
+          "z": 25.0
+        },
+        "RotationZ": 15.0,
+        "SubZones": []
+      },
+      {
+        "GUID": "0bfc9a45-619a-4be3-a1ef-13a61d58635d",
+        "Name": "Tarmac",
+        "Center": {
+          "x": -117.208138,
+          "y": -37.0,
+          "z": 39.41489
+        },
+        "Size": {
+          "x": 60.0,
+          "y": 50.0,
+          "z": 60.0
+        },
+        "RotationZ": 15.0,
+        "SubZones": []
+      },
+      {
+        "GUID": "e2c4be03-1743-4317-86d9-7972ca0e998e",
+        "Name": "White King",
+        "Center": {
+          "x": -47.4834557,
+          "y": -37.0,
+          "z": 15.4495478
+        },
+        "Size": {
+          "x": 50.0,
+          "y": 50.0,
+          "z": 50.0
+        },
+        "RotationZ": 15.0,
+        "SubZones": []
+      },
+      {
+        "GUID": "d1ec32c0-221e-4fe5-9492-ba7efc447777",
+        "Name": "Black Knight",
+        "Center": {
+          "x": 17.279541,
+          "y": -37.0,
+          "z": -11.1207247
+        },
+        "Size": {
+          "x": 20.0,
+          "y": 50.0,
+          "z": 40.0
+        },
+        "RotationZ": 15.0,
+        "SubZones": []
+      },
+      {
+        "GUID": "76b08385-1f13-4ba7-b68e-88f0abb96b37",
+        "Name": "Gas Station",
+        "Center": {
+          "x": 30.85888,
+          "y": -7.0,
+          "z": 27.9532051
+        },
+        "Size": {
+          "x": 20.0,
+          "y": 10.0,
+          "z": 20.0
+        },
+        "RotationZ": 15.0,
+        "SubZones": []
+      },
+      {
+        "GUID": "24397139-578d-45cd-bc96-1304f0776ab8",
+        "Name": "Mechanic",
+        "Center": {
+          "x": 56.71185,
+          "y": -7.0,
+          "z": 61.81728
+        },
+        "Size": {
+          "x": 35.0,
+          "y": 10.0,
+          "z": 15.0
+        },
+        "RotationZ": 15.0,
+        "SubZones": []
+      },
+      {
+        "GUID": "1a102f26-9f9f-4380-9159-8f46f772a394",
+        "Name": "Garage",
+        "Center": {
+          "x": 98.23329,
+          "y": -7.0,
+          "z": 29.25567
+        },
+        "Size": {
+          "x": 20.0,
+          "y": 10.0,
+          "z": 80.0
+        },
+        "RotationZ": 15.0,
+        "SubZones": []
+      },
+      {
+        "GUID": "98e7323e-23fe-45fa-9457-b91b5a02be85",
+        "Name": "White Knight",
+        "Center": {
+          "x": 84.65395,
+          "y": -7.0,
+          "z": -31.6996613
+        },
+        "Size": {
+          "x": 25.0,
+          "y": 10.0,
+          "z": 35.0
+        },
+        "RotationZ": 15.0,
+        "SubZones": []
+      },
+      {
+        "GUID": "0cec0f58-c515-4500-a908-232342e26a18",
+        "Name": "E1 Bunkers",
+        "Center": {
+          "x": -240.201736,
+          "y": -37.0,
+          "z": -20.72988
+        },
+        "Size": {
+          "x": 100.0,
+          "y": 50.0,
+          "z": 150.0
+        },
+        "RotationZ": 0.0,
+        "SubZones": []
+      },
+      {
+        "GUID": "d7123785-f804-47bf-a352-735cf52db1c1",
+        "Name": "K Buildings",
+        "Center": {
+          "x": 32.868866,
+          "y": -7.0,
+          "z": -103.27729
+        },
+        "Size": {
+          "x": 100.0,
+          "y": 10.0,
+          "z": 65.0
+        },
+        "RotationZ": 15.0,
+        "SubZones": []
+      },
+      {
+        "GUID": "f8b65cc0-6efe-4604-868e-cc7bbd10a70b",
+        "Name": "Shipping Yard",
+        "Center": {
+          "x": -31.6,
+          "y": -17.0,
+          "z": -151.32
+        },
+        "Size": {
+          "x": 50.0,
+          "y": 20.0,
+          "z": 40.0
+        },
+        "RotationZ": 15.0,
+        "SubZones": []
+      },
+      {
+        "GUID": "9aa2e46c-0152-4dc1-a76f-9a7be4503064",
+        "Name": "Warehouse Bunkers",
+        "Center": {
+          "x": 86.72,
+          "y": -37.0,
+          "z": -195.25
+        },
+        "Size": {
+          "x": 150.0,
+          "y": 50.0,
+          "z": 55.0
+        },
+        "RotationZ": 15.0,
+        "SubZones": []
+      },
+      {
+        "GUID": "86374ed6-3850-48af-8695-048d84c771be",
+        "Name": "Barracks",
+        "Center": {
+          "x": 172.505737,
+          "y": -7.0,
+          "z": -220.224213
+        },
+        "Size": {
+          "x": 50.0,
+          "y": 10.0,
+          "z": 50.0
+        },
+        "RotationZ": 15.0,
+        "SubZones": []
+      },
+      {
+        "GUID": "0f6f73a8-c130-4502-9081-a81a10c78cc2",
+        "Name": "Train Station",
+        "Center": {
+          "x": 165.94,
+          "y": -10.0,
+          "z": -149.26
+        },
+        "Size": {
+          "x": 50.0,
+          "y": 15.0,
+          "z": 50.0
+        },
+        "RotationZ": 15.0,
+        "SubZones": []
+      },
+      {
+        "GUID": "a9aafd33-5370-43af-9a70-9b2c2b02a0a8",
+        "Name": "E2 Bunkers",
+        "Center": {
+          "x": 186.35,
+          "y": -17.0,
+          "z": -8.77
+        },
+        "Size": {
+          "x": 150.0,
+          "y": 20.0,
+          "z": 100.0
+        },
+        "RotationZ": 15.0,
+        "SubZones": []
+      },
+      {
+        "GUID": "3692ff58-ccf8-4cbf-a8bd-8098b17a1b5e",
+        "Name": "White Bishop",
+        "Center": {
+          "x": -65.4467,
+          "y": -7.0,
+          "z": -30.5587349
+        },
+        "Size": {
+          "x": 35.0,
+          "y": 10.0,
+          "z": 15.0
+        },
+        "RotationZ": 15.0,
+        "SubZones": []
+      }
+    ],
     "Shoreline": [
       {
         "GUID": "3006e49e-4258-44f7-89e7-cf97a0046077",
@@ -2372,16 +3143,16 @@
         "GUID": "c14e8973-77dc-42e1-8f28-b01f9e8ff0d0",
         "Name": "Gas Station",
         "Center": {
-          "x": -196.2,
-          "y": -59.4,
-          "z": 388.63
+          "x": -194.39,
+          "y": -62.22,
+          "z": 387.99
         },
         "Size": {
           "x": 70.0,
           "y": 20.0,
           "z": 50.0
         },
-        "RotationZ": 0.0,
+        "RotationZ": 15.0,
         "SubZones": []
       },
       {
@@ -2394,7 +3165,7 @@
         },
         "Size": {
           "x": 40.0,
-          "y": 10.0,
+          "y": 20.0,
           "z": 130.0
         },
         "RotationZ": -50.0,
@@ -2452,9 +3223,9 @@
         "GUID": "eb10b774-a612-4f46-95f7-6f9858d4dcb1",
         "Name": "Cottages",
         "Center": {
-          "x": 130.41,
-          "y": -57.5,
-          "z": 95.06
+          "x": 130.82,
+          "y": -49.48,
+          "z": 93.8
         },
         "Size": {
           "x": 100.0,
@@ -3240,7 +4011,376 @@
         "SubZones": []
       }
     ],
-    "Lighthouse": [],
+    "Lighthouse": [
+      {
+        "GUID": "58da9adc-9ecc-436a-8621-238c59e93a07",
+        "Name": "Main Road",
+        "Center": {
+          "x": 6.6,
+          "y": 3.96,
+          "z": 57.76
+        },
+        "Size": {
+          "x": 30.0,
+          "y": 20.0,
+          "z": 630.0
+        },
+        "RotationZ": 0.0,
+        "SubZones": []
+      },
+      {
+        "GUID": "0886be0a-905c-4ae7-9130-fd9f8c09b8ca",
+        "Name": "Bridge 1",
+        "Center": {
+          "x": -15.26,
+          "y": 4.12,
+          "z": -352.38
+        },
+        "Size": {
+          "x": 21.0,
+          "y": 10.0,
+          "z": 60.0
+        },
+        "RotationZ": 0.0,
+        "SubZones": []
+      },
+      {
+        "GUID": "096460d4-6d21-45f6-905c-8c05e7781e0f",
+        "Name": "Dead tree",
+        "Center": {
+          "x": 65.05,
+          "y": 26.08,
+          "z": -77.61
+        },
+        "Size": {
+          "x": 20.0,
+          "y": 20.0,
+          "z": 20.0
+        },
+        "RotationZ": 0.0,
+        "SubZones": []
+      },
+      {
+        "GUID": "2f3d524c-1d73-4e13-ae60-79c9d3bb5bc8",
+        "Name": "Pikes Peak Resort",
+        "Center": {
+          "x": -101.49,
+          "y": 6.63,
+          "z": -52.72
+        },
+        "Size": {
+          "x": 70.0,
+          "y": 30.0,
+          "z": 110.0
+        },
+        "RotationZ": 0.0,
+        "SubZones": []
+      },
+      {
+        "GUID": "4f339f6b-f68e-4256-9bee-b28f080fd5bb",
+        "Name": "Tennis Court",
+        "Center": {
+          "x": -70.08,
+          "y": 24.77,
+          "z": 122.65
+        },
+        "Size": {
+          "x": 16.0,
+          "y": 10.0,
+          "z": 30.0
+        },
+        "RotationZ": 0.0,
+        "SubZones": []
+      },
+      {
+        "GUID": "e297270b-e665-4433-9d31-71858342a421",
+        "Name": "Grand Chalet",
+        "Center": {
+          "x": -124.04,
+          "y": 8.92,
+          "z": 94.9
+        },
+        "Size": {
+          "x": 70.0,
+          "y": 40.0,
+          "z": 60.0
+        },
+        "RotationZ": 0.0,
+        "SubZones": []
+      },
+      {
+        "GUID": "d7f89e0d-2f8c-4702-901f-bf1be8a6fccb",
+        "Name": "Boathouses",
+        "Center": {
+          "x": 140.72,
+          "y": -2.95,
+          "z": -160.02
+        },
+        "Size": {
+          "x": 40.0,
+          "y": 10.0,
+          "z": 80.0
+        },
+        "RotationZ": 0.0,
+        "SubZones": []
+      },
+      {
+        "GUID": "ada0f8e1-de64-4aa1-927c-5fb5dbe464ff",
+        "Name": "Construction",
+        "Center": {
+          "x": 21.18,
+          "y": 2.52,
+          "z": -178.16
+        },
+        "Size": {
+          "x": 20.0,
+          "y": 10.0,
+          "z": 140.0
+        },
+        "RotationZ": 0.0,
+        "SubZones": []
+      },
+      {
+        "GUID": "f1b8c82b-8944-4361-8111-63418c14ca51",
+        "Name": "Gunner Nest",
+        "Center": {
+          "x": 25.58,
+          "y": 1.89,
+          "z": -451.3
+        },
+        "Size": {
+          "x": 30.0,
+          "y": 10.0,
+          "z": 20.0
+        },
+        "RotationZ": 0.0,
+        "SubZones": []
+      },
+      {
+        "GUID": "3f93d0df-ce97-4d22-8f6a-431f5ca6c32a",
+        "Name": "Island",
+        "Center": {
+          "x": -129.8,
+          "y": -15.65,
+          "z": -364.63
+        },
+        "Size": {
+          "x": 120.0,
+          "y": 30.0,
+          "z": 90.0
+        },
+        "RotationZ": 0.0,
+        "SubZones": []
+      },
+      {
+        "GUID": "735461c9-6af5-4796-b94c-5225f7f4ed0f",
+        "Name": "Cabins",
+        "Center": {
+          "x": -277.74,
+          "y": -10.57,
+          "z": -325.95
+        },
+        "Size": {
+          "x": 120.0,
+          "y": 30.0,
+          "z": 100.0
+        },
+        "RotationZ": 30.0,
+        "SubZones": []
+      },
+      {
+        "GUID": "a157fa82-f97d-415b-b9b2-5d47572c724a",
+        "Name": "Red Brick",
+        "Center": {
+          "x": -75.31,
+          "y": 5.05,
+          "z": -286.06
+        },
+        "Size": {
+          "x": 10.0,
+          "y": 10.0,
+          "z": 30.0
+        },
+        "RotationZ": 0.0,
+        "SubZones": []
+      },
+      {
+        "GUID": "096b2c73-8b1c-4898-8fb4-be3b01075f69",
+        "Name": "Convenience",
+        "Center": {
+          "x": -54.37,
+          "y": 3.43,
+          "z": -296.88
+        },
+        "Size": {
+          "x": 10.0,
+          "y": 10.0,
+          "z": 20.0
+        },
+        "RotationZ": 0.0,
+        "SubZones": []
+      },
+      {
+        "GUID": "d743763b-c66a-4d5c-9b5b-1cc638cfe6d9",
+        "Name": "Hillside",
+        "Center": {
+          "x": -146.12,
+          "y": 8.7,
+          "z": -245.97
+        },
+        "Size": {
+          "x": 10.0,
+          "y": 10.0,
+          "z": 10.0
+        },
+        "RotationZ": 0.0,
+        "SubZones": []
+      },
+      {
+        "GUID": "63f4b9f2-899e-4d02-8296-14e8f7966a37",
+        "Name": "Cottages",
+        "Center": {
+          "x": -166.94,
+          "y": 7.01,
+          "z": -207.9
+        },
+        "Size": {
+          "x": 68.0,
+          "y": 11.0,
+          "z": 33.0
+        },
+        "RotationZ": 0.0,
+        "SubZones": []
+      },
+      {
+        "GUID": "5f108970-517d-407e-b3d5-13e4d05908d8",
+        "Name": "Pipes",
+        "Center": {
+          "x": -176.38,
+          "y": -0.25,
+          "z": -526.54
+        },
+        "Size": {
+          "x": 20.0,
+          "y": 17.0,
+          "z": 150.0
+        },
+        "RotationZ": 0.0,
+        "SubZones": []
+      },
+      {
+        "GUID": "c8062b24-268a-4d24-8d6c-3fc21bbf99fc",
+        "Name": "Water Treatment",
+        "Center": {
+          "x": -57.86,
+          "y": -3.37,
+          "z": -584.12
+        },
+        "Size": {
+          "x": 124.0,
+          "y": 24.0,
+          "z": 234.0
+        },
+        "RotationZ": 0.0,
+        "SubZones": []
+      },
+      {
+        "GUID": "afb1c6cb-c4b6-4c9c-8d20-bea82cb47488",
+        "Name": "Plant 1",
+        "Center": {
+          "x": 42.06,
+          "y": -5.91,
+          "z": -624.64
+        },
+        "Size": {
+          "x": 30.0,
+          "y": 30.0,
+          "z": 75.0
+        },
+        "RotationZ": 0.0,
+        "SubZones": []
+      },
+      {
+        "GUID": "4bbdabb7-a9eb-4e5f-9b19-291c50c6c639",
+        "Name": "Plant 2",
+        "Center": {
+          "x": -97.3,
+          "y": 1.45,
+          "z": -741.24
+        },
+        "Size": {
+          "x": 70.0,
+          "y": 22.0,
+          "z": 30.0
+        },
+        "RotationZ": 0.0,
+        "SubZones": []
+      },
+      {
+        "GUID": "e9720e44-d658-4d63-bd61-a5d19dc41cbf",
+        "Name": "Train Yard",
+        "Center": {
+          "x": -42.52,
+          "y": 9.54,
+          "z": -866.47
+        },
+        "Size": {
+          "x": 210.0,
+          "y": 20.0,
+          "z": 170.0
+        },
+        "RotationZ": 0.0,
+        "SubZones": []
+      },
+      {
+        "GUID": "8708f886-1085-43f1-9ea1-a4068eaaa4c1",
+        "Name": "Crash Site",
+        "Center": {
+          "x": -128.49,
+          "y": 12.87,
+          "z": 302.0
+        },
+        "Size": {
+          "x": 30.0,
+          "y": 30.0,
+          "z": 30.0
+        },
+        "RotationZ": 0.0,
+        "SubZones": []
+      },
+      {
+        "GUID": "a70b2500-8e34-4077-957d-dbc14dbb9f9b",
+        "Name": "LightKeeper Road",
+        "Center": {
+          "x": 220.65,
+          "y": -3.19,
+          "z": 519.77
+        },
+        "Size": {
+          "x": 190.0,
+          "y": 20.0,
+          "z": 100.0
+        },
+        "RotationZ": 0.0,
+        "SubZones": []
+      },
+      {
+        "GUID": "8d3f1f86-9ea9-4998-8fc3-d225778609c6",
+        "Name": "LightKeeper",
+        "Center": {
+          "x": 390.37,
+          "y": -14.78,
+          "z": 504.5
+        },
+        "Size": {
+          "x": 150.0,
+          "y": 110.0,
+          "z": 170.0
+        },
+        "RotationZ": 0.0,
+        "SubZones": []
+      }
+    ],
     "Streets of Tarkov": [
       {
         "GUID": "dd590549-f5a6-425a-beae-12f20d024659",
