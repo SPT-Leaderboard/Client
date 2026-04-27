@@ -57,6 +57,11 @@ public class HitsTracker
     {
         return data;
     }
+
+    /// <summary>
+    /// Snapshot for payloads / serialization — avoids races with <see cref="Clear"/> or hit updates.
+    /// </summary>
+    public HitsData GetHitsDataSnapshot() => data.Clone();
     
     public float GetLongestShot()
     {

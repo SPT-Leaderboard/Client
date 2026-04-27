@@ -20,6 +20,33 @@ namespace SPTLeaderboard.Data
         /// </summary>
         [JsonProperty("fikaCustomRaidSettings", NullValueHandling = NullValueHandling.Ignore)]
         public FikaCustomRaidSettingsPayload FikaCustomRaidSettings { get; set; }
+
+        public RaidSettingsData Clone()
+        {
+            FikaCustomRaidSettingsPayload fika = null;
+            if (FikaCustomRaidSettings != null)
+            {
+                fika = new FikaCustomRaidSettingsPayload
+                {
+                    UseCustomWeather = FikaCustomRaidSettings.UseCustomWeather,
+                    DisableOverload = FikaCustomRaidSettings.DisableOverload,
+                    DisableLegStamina = FikaCustomRaidSettings.DisableLegStamina,
+                    DisableArmStamina = FikaCustomRaidSettings.DisableArmStamina,
+                    InstantLoad = FikaCustomRaidSettings.InstantLoad,
+                    FastLoad = FikaCustomRaidSettings.FastLoad
+                };
+            }
+
+            return new RaidSettingsData
+            {
+                BotAmount = BotAmount,
+                BotDifficulty = BotDifficulty,
+                BossesEnabled = BossesEnabled,
+                BotsEnabled = BotsEnabled,
+                MetabolismDisabled = MetabolismDisabled,
+                FikaCustomRaidSettings = fika
+            };
+        }
     }
 
     /// <summary>

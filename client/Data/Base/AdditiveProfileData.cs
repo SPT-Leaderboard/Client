@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using Newtonsoft.Json;
 using SPTLeaderboard.Data.Internal;
+using UnityEngine;
 
 namespace SPTLeaderboard.Data.Base
 {
@@ -119,11 +120,8 @@ namespace SPTLeaderboard.Data.Base
         [JsonProperty("lastRaidAverageShot")]
         public float AverageShot { get; set; }
         
-        [JsonProperty("DiedAtX")]
-        public float DiedAtX { get; set; }
-        
-        [JsonProperty("DiedAtY")]
-        public float DiedAtY { get; set; }
+        [JsonProperty("diedPosition")]
+        public Vector3 DiedPosition { get; set; }
         
         [JsonProperty("savageKills")]
         public int SavageKills { get; set; }
@@ -228,8 +226,7 @@ namespace SPTLeaderboard.Data.Base
                 LongestShot = original.LongestShot,
                 LongestHeadshot = 0,
                 AverageShot = original.AverageShot,
-                DiedAtX = original.DiedAtX,
-                DiedAtY = original.DiedAtY,
+                DiedPosition = original.DiedPosition,
                 SavageKills = original.SavageKills,
                 BossKills = original.BossKills,
                 ModWeaponStats = original.ModWeaponStats,

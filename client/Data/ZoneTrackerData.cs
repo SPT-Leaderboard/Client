@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using Newtonsoft.Json;
 
 namespace SPTLeaderboard.Data
@@ -43,6 +44,43 @@ namespace SPTLeaderboard.Data
         
         [JsonProperty("AmountContainersOpenedInZones")]
         public Dictionary<string, int> AmountContainersOpenedInZones = new();
+
+        /// <summary>
+        /// Deep copy for safe serialization off the main thread (avoids concurrent mutation of live raid data).
+        /// </summary>
+        public ZoneTrackerData Clone()
+        {
+            var c = new ZoneTrackerData
+            {
+                ZonesEntered = new List<string>(ZonesEntered),
+                TimeSpendInZones = new Dictionary<string, float>(TimeSpendInZones),
+                KilometerWalkedInZones = new Dictionary<string, float>(KilometerWalkedInZones),
+                MedicinesUsedInZones = new Dictionary<string, int>(MedicinesUsedInZones),
+                HealthHealedUsedInZones = new Dictionary<string, float>(HealthHealedUsedInZones),
+                KillsInZones = new Dictionary<string, int>(KillsInZones),
+                DamageToEnemyInZones = new Dictionary<string, float>(DamageToEnemyInZones),
+                DamageToPlayerInZones = new Dictionary<string, float>(DamageToPlayerInZones),
+                AmountComputersOpenedInZones = new Dictionary<string, int>(AmountComputersOpenedInZones),
+                AmountSafeOpenedInZones = new Dictionary<string, int>(AmountSafeOpenedInZones),
+                AmountContainersOpenedInZones = new Dictionary<string, int>(AmountContainersOpenedInZones)
+            };
+
+            c.KillDetailsInZones = KillDetailsInZones.ToDictionary(
+                kv => kv.Key,
+                kv => kv.Value.Select(k => new KillInfo
+                {
+                    Weapon = k.Weapon,
+                    Distance = k.Distance,
+                    Role = k.Role,
+                    BodyPart = k.BodyPart
+                }).ToList());
+
+            c.LootedItemsInZones = LootedItemsInZones.ToDictionary(
+                kv => kv.Key,
+                kv => new List<ItemData>(kv.Value));
+
+            return c;
+        }
     }
     
     public class KillInfo

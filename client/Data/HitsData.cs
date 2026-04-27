@@ -24,4 +24,16 @@ public class HitsData
     
     [JsonProperty("rightLeg")]
     public int RightLeg { get; set; }
+
+    public HitsData Clone() =>
+        new HitsData
+        {
+            Head = Head,
+            Chest = Chest,
+            Stomach = Stomach,
+            LeftArm = LeftArm,
+            RightArm = RightArm,
+            LeftLeg = LeftLeg,
+            RightLeg = RightLeg
+        };
 }

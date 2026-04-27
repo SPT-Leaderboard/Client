@@ -25,28 +25,30 @@ namespace SPTLeaderboard.Services
         /// </summary>
         /// <param name="localRaidSettings">Local raid settings</param>
         /// <param name="resultRaid">Raid result</param>
-        public async UniTask ProcessAndSendProfileAsync(LocalRaidSettings localRaidSettings, RaidEndDescriptorClass resultRaid)
+        public UniTask ProcessAndSendProfileAsync(LocalRaidSettings localRaidSettings, RaidEndDescriptorClass resultRaid)
         {
             if (!ShouldProcessProfile())
-                return;
+                return UniTask.CompletedTask;
 
             if (!Singleton<PreloaderUI>.Instantiated)
-                return;
+                return UniTask.CompletedTask;
 
             var session = PlayerHelper.GetSession();
             if (session.Profile == null)
-                return;
+                return UniTask.CompletedTask;
 
-            var profileData = await UniTask.RunOnThreadPool(() => DeserializeProfileData(resultRaid));
+            // Keep on game thread: Profile / ZoneTracker / loot lists are not safe from a worker thread,
+            // and JsonConvert on a worker still races if payloads hold live references to those collections.
+            var profileData = DeserializeProfileData(resultRaid);
             if (profileData == null)
-                return;
+                return UniTask.CompletedTask;
 
             var isScavRaid = DetermineRaidType(session.Profile, profileData);
             var sessionData = GetSessionData(session);
             var raidInfo = GetRaidInfo(localRaidSettings, resultRaid, session.Profile);
 
-            await UniTask.RunOnThreadPool(() => 
-                ProcessAndSendProfileData(sessionData, raidInfo, isScavRaid, resultRaid));
+            ProcessAndSendProfileData(sessionData, raidInfo, isScavRaid, resultRaid);
+            return UniTask.CompletedTask;
         }
 
         /// <summary>
@@ -230,11 +232,13 @@ namespace SPTLeaderboard.Services
             if (resultRaid.result is ExitStatus.Runner or ExitStatus.Transit or ExitStatus.Survived)
             {
                 var revenueItems = LeaderboardPlugin.Instance.TrackingLoot.LootedItems;
-            
-                return isScavRaid ? preRaidItems.Concat(revenueItems).ToList() : revenueItems;
+
+                return isScavRaid
+                    ? preRaidItems.Concat(revenueItems).ToList()
+                    : new List<ItemData>(revenueItems);
             }
 
-            return isScavRaid ? new List<ItemData>() : preRaidItems;
+            return isScavRaid ? new List<ItemData>() : new List<ItemData>(preRaidItems);
         }
 
         /// <summary>
@@ -558,8 +562,8 @@ namespace SPTLeaderboard.Services
                 Password = EncryptionService.Instance.Password,
                 DBinInv = haveDevItems,
                 IsCasual = Settings.Instance.ModCasualMode.Value,
-                RaidSettingsData = LeaderboardPlugin.Instance.SavedRaidSettingsData,
-                ZoneTrackerData = LeaderboardPlugin.Instance.ZoneTrackerService.CurrentRaidData
+                RaidSettingsData = LeaderboardPlugin.Instance.SavedRaidSettingsData?.Clone() ?? new RaidSettingsData(),
+                ZoneTrackerData = LeaderboardPlugin.Instance.ZoneTrackerService.CurrentRaidData?.Clone() ?? new ZoneTrackerData()
             };
         }
 
@@ -591,13 +595,12 @@ namespace SPTLeaderboard.Services
                 LastRaidMap = lastRaidLocation,
                 LastRaidMapRaw = lastRaidLocationRaw,
                 LastRaidTransitionTo = lastRaidTransitionTo,
-                RaidHits = HitsTracker.Instance.GetHitsData(),
+                RaidHits = HitsTracker.Instance.GetHitsDataSnapshot(),
                 AllAchievements = allAchievementsDict,
                 LongestShot = longestShot,
                 LongestHeadshot = longestHeadshot,
                 AverageShot = averageShot,
-                DiedAtX = PlayerHelper.Instance.LastDeathPosition.x,
-                DiedAtY = PlayerHelper.Instance.LastDeathPosition.y,
+                DiedPosition = PlayerHelper.Instance.LastDeathPosition,
                 BossKills = killedBoss,
                 SavageKills = killedSavage,
                 ModWeaponStats = processedStatTrackData,
@@ -645,13 +648,12 @@ namespace SPTLeaderboard.Services
                 LastRaidMap = lastRaidLocation,
                 LastRaidMapRaw = lastRaidLocationRaw,
                 LastRaidTransitionTo = lastRaidTransitionTo,
-                RaidHits = HitsTracker.Instance.GetHitsData(),
+                RaidHits = HitsTracker.Instance.GetHitsDataSnapshot(),
                 AllAchievements = allAchievementsDict,
                 LongestShot = longestShot,
                 LongestHeadshot = longestHeadshot,
                 AverageShot = averageShot,
-                DiedAtX = PlayerHelper.Instance.LastDeathPosition.x,
-                DiedAtY = PlayerHelper.Instance.LastDeathPosition.y,
+                DiedPosition = PlayerHelper.Instance.LastDeathPosition,
                 BossKills = killedBoss,
                 SavageKills = killedSavage,
                 ModWeaponStats = processedStatTrackData,
