@@ -9,7 +9,7 @@ public static class GlobalData
     public const string Version = "5.1.0";
     
 #if DEBUG || BETA
-    public const string SubVersion = "100";
+    public const string SubVersion = "101";
 #endif
     
     public const string BaseSptVersion = "4.0";

@@ -47,7 +47,6 @@ namespace SPTLeaderboard.Services
                     Logger.LogWarning(
                         "Your secret token was initialized by the mod. Remember to never show it to anyone!");
                     LoadToken();
-                    LoadPassword();
                 }
             }
             catch (Exception e)
@@ -55,6 +54,21 @@ namespace SPTLeaderboard.Services
                 Logger.LogError(
                     $"Error handling token file: ${e.Message}");
                 _token = GenerateToken();
+            }
+            
+            try
+            {
+                if (File.Exists(GlobalData.PathPassword))
+                {
+                    Logger.LogWarning(
+                        "Your password was initialized by the mod. Remember to never show it to anyone!");
+                    LoadPassword();
+                }
+            }
+            catch (Exception e)
+            {
+                Logger.LogError(
+                    $"Error handling password file: ${e.Message}");
             }
         }
         
