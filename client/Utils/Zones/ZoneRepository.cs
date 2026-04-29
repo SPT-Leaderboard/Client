@@ -22,6 +22,12 @@ namespace SPTLeaderboard.Utils.Zones
 
         public Dictionary<string, List<ZoneData>> LoadAllZones()
         {
+            if (ZonesConfigData != null && ZonesConfigData.Count > 0)
+            {
+                Logger.LogDebugInfo("[ZoneTracker] Loaded zones from in-memory config");
+                return ZonesConfigData;
+            }
+
             if (File.Exists(GlobalData.ZonesConfig))
             {
                 var zonesFromFile = LoadFromFile(GlobalData.ZonesConfig);

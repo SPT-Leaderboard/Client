@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using Newtonsoft.Json.Serialization;
@@ -84,13 +85,21 @@ namespace SPTLeaderboard.Utils
                             };
 
                             var zonesDict = new Dictionary<string, List<ZoneData>>();
+                            var serializer = JsonSerializer.Create(settings);
+                            var mapsToken = jsonObject["data"] ?? jsonObject;
                             
-                            foreach (var prop in jsonObject.Properties())
+                            if (mapsToken is not JObject mapsObject)
+                            {
+                                SetZonesConfigDataFallback("[UpdateZones] Invalid zones payload format: maps container is not an object");
+                                return;
+                            }
+                            
+                            foreach (var prop in mapsObject.Properties())
                             {
                                 if (prop.Name == "ver")
                                     continue;
-                                
-                                var zonesList = prop.Value.ToObject<List<ZoneData>>(JsonSerializer.Create(settings));
+
+                                var zonesList = ParseZonesList(prop.Value, serializer);
                                 if (zonesList != null)
                                 {
                                     zonesDict[prop.Name] = zonesList;
@@ -133,14 +142,16 @@ namespace SPTLeaderboard.Utils
         
         private static void SetZonesConfigData(Dictionary<string, List<ZoneData>> zonesDict)
         {
-            var repository = LeaderboardPlugin.Instance.ZoneRepository ?? new ZoneRepository();
+            LeaderboardPlugin.Instance.ZoneRepository ??= new ZoneRepository();
+            var repository = LeaderboardPlugin.Instance.ZoneRepository;
             repository.ZonesConfigData = zonesDict;
             LeaderboardPlugin.Instance.configZonesUpdated = true;
         }
         
         private static void SetZonesConfigDataFallback(string logMessage)
         {
-            var repository = LeaderboardPlugin.Instance.ZoneRepository ?? new ZoneRepository();
+            LeaderboardPlugin.Instance.ZoneRepository ??= new ZoneRepository();
+            var repository = LeaderboardPlugin.Instance.ZoneRepository;
             repository.ZonesConfigData = repository.LoadAllZones();
             LeaderboardPlugin.Instance.configZonesUpdated = true;
             
@@ -194,6 +205,37 @@ namespace SPTLeaderboard.Utils
             {
                 return 0;
             }
+        }
+
+        private static List<ZoneData> ParseZonesList(JToken token, JsonSerializer serializer)
+        {
+            if (token == null)
+                return null;
+
+            if (token.Type == JTokenType.Array)
+                return token.ToObject<List<ZoneData>>(serializer);
+
+            if (token.Type != JTokenType.Object)
+                return null;
+
+            var tokenObject = (JObject)token;
+            
+            foreach (var nestedKey in new[] { "zones", "data", "items", "list" })
+            {
+                if (tokenObject.TryGetValue(nestedKey, StringComparison.OrdinalIgnoreCase, out var nestedValue))
+                {
+                    var parsedNested = ParseZonesList(nestedValue, serializer);
+                    if (parsedNested != null)
+                        return parsedNested;
+                }
+            }
+            
+            var zoneList = tokenObject.Properties()
+                .Select(prop => prop.Value.ToObject<ZoneData>(serializer))
+                .Where(zone => zone != null)
+                .ToList();
+
+            return zoneList.Count > 0 ? zoneList : null;
         }
     }
 }
