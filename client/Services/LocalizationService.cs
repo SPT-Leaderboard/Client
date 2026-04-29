@@ -54,6 +54,16 @@ namespace SPTLeaderboard.Services
                 
                 return string.Format(LocalizationData.Error_Capacity["en"], localeTypeEquipment); // fallback to English
             }
+            else if (errorType == ErrorType.PRERAID_SETTINGS_INVALID)
+            {
+                var localeTypeSettings = GetLocale(localeKey);
+                if (LocalizationData.PreRaid_Settings_Incorrect.TryGetValue(CurrentLanguage(), out var errorTextExplain))
+                {
+                    return string.Format(errorTextExplain, localeTypeSettings);
+                }
+                
+                return string.Format(LocalizationData.PreRaid_Settings_Incorrect["en"], localeTypeSettings); // fallback to English
+            }
             else
             {
                 if (GetLocaleTypeError(errorType).TryGetValue(CurrentLanguage(), out var errorTextExplain))
