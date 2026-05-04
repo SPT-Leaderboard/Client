@@ -110,6 +110,7 @@ namespace SPTLeaderboard
                 {
                     if (!callback)
                     {
+                        // FIKA in 2.2.4 override vanilla raid settings screen
                         new RaidSettingsHookPatch().Enable();
                         return;
                     } 

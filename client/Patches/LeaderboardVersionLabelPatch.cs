@@ -1,5 +1,4 @@
-﻿using System;
-using System.Reflection;
+﻿using System.Reflection;
 using EFT.UI;
 using HarmonyLib;
 using SPT.Reflection.Patching;
@@ -42,8 +41,6 @@ namespace SPTLeaderboard.Patches
 			{
 				field.SetValue(__instance, current + " | " + sptlbVersion);
 			}
-
-			// return true по умолчанию — оригинальный method_6 продолжит работу
 		}
 	}
 }
