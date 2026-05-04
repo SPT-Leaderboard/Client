@@ -1,38 +1,37 @@
 ﻿using System.Reflection;
 using EFT;
+using EFT.UI.Matchmaker;
 using HarmonyLib;
 using SPT.Reflection.Patching;
 using SPTLeaderboard.Data;
-using SPTLeaderboard.Integrations;
 
 namespace SPTLeaderboard.Patches
 {
     internal class RaidSettingsHookPatch : ModulePatch
     {
+        private static FieldInfo _raidSettingsField;
+
         protected override MethodBase GetTargetMethod()
         {
-            return AccessTools.Method(typeof(Class308), "SendRaidSettings");
+            return AccessTools.Method(typeof(RaidSettingsWindow), "method_4");
         }
 
         [PatchPostfix]
-        public static void Postfix(RaidSettings settings)
+        public static void PatchPostfix(RaidSettingsWindow __instance)
         {
-            if (settings == null)
-                return;
+            _raidSettingsField ??= AccessTools.Field(typeof(RaidSettingsWindow), "raidSettings_0");
+            
+            var raidSettings = (RaidSettings)_raidSettingsField.GetValue(__instance);
 
-            var saved = new RaidSettingsData
+            LeaderboardPlugin.Instance.SavedRaidSettingsData = new RaidSettingsData
             {
-                BotAmount = settings.WavesSettings.BotAmount.ToString(),
-                BotDifficulty = settings.WavesSettings.BotDifficulty.ToString(),
-                BossesEnabled = settings.WavesSettings.IsBosses,
-                BotsEnabled = settings.BotSettings.IsEnabled,
-                MetabolismDisabled = settings.MetabolismDisabled
+                BotAmount = raidSettings.BotSettings.BotAmount.ToString(),
+                BotDifficulty = raidSettings.WavesSettings.BotDifficulty.ToString(),
+                BossesEnabled = raidSettings.WavesSettings.IsBosses,
+                BotsEnabled = raidSettings.BotSettings.IsEnabled,
+                MetabolismDisabled = raidSettings.MetabolismDisabled,
+                FikaCustomRaidSettings = new FikaCustomRaidSettingsPayload()
             };
-
-            if (FikaInterop.TryGetCustomRaidSettings(out var fikaCustom))
-                saved.FikaCustomRaidSettings = fikaCustom;
-
-            LeaderboardPlugin.Instance.SavedRaidSettingsData = saved;
         }
     }
 }

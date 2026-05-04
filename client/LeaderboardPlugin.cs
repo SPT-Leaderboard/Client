@@ -97,7 +97,6 @@ namespace SPTLeaderboard
             new PlayerOnDeadPatch().Enable();
             new OnPlayerAddedItem().Enable();
             new OnPlayerRemovedItem().Enable();
-            new RaidSettingsHookPatch().Enable();
             new WeaponModdingScreenPatch().Enable();
             new TraderScreensGroupPatch().Enable();
             new RagfairScreenPatch().Enable();
@@ -109,7 +108,11 @@ namespace SPTLeaderboard
             {
                 FikaInterop.CheckFikaCore(callback =>
                 {
-                    if (!callback) return;
+                    if (!callback)
+                    {
+                        new RaidSettingsHookPatch().Enable();
+                        return;
+                    } 
 
                     new OnCoopApplyShotFourPatch().Enable();
                     Utils.Logger.LogInfo("FIKA is found. Enable patch for hit hook");
