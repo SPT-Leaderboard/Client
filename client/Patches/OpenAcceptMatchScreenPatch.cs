@@ -1,4 +1,5 @@
-﻿using System.Reflection;
+﻿using System.Linq;
+using System.Reflection;
 using EFT;
 using EFT.UI.Matchmaker;
 using SPT.Reflection.Patching;
@@ -9,21 +10,21 @@ using SPTLeaderboard.Utils;
 
 namespace SPTLeaderboard.Patches
 {
-    internal class OpenSelectSideScreenPatch : ModulePatch
+    internal class OpenAcceptMatchScreenPatch : ModulePatch
     {
         protected override MethodBase GetTargetMethod() =>
-            typeof(MatchMakerSideSelectionScreen).GetMethod(
+            typeof(MatchMakerAcceptScreen).GetMethod(
                 "Show",
                 BindingFlags.Instance | BindingFlags.Public,
                 null,
-                [typeof(MatchMakerSideSelectionScreen.GClass3919)],
+                [typeof(MatchMakerAcceptScreen.GClass3914)],
                 null
             );
 
         [PatchPrefix]
         static bool Prefix()
         {
-            Utils.Logger.LogDebugWarning("Player opened select side screen");
+            Utils.Logger.LogDebugWarning("Player opened accept match screen");
             if (!Settings.Instance.EnableSendData.Value && PlayerHelper.HasRaidStarted())
                 return true;
 
@@ -43,6 +44,9 @@ namespace SPTLeaderboard.Patches
             var maxEnergy = pmcData.Health.Energy.Maximum;
             var maxHydration = pmcData.Health.Hydration.Maximum;
             var currentEquipment = PlayerHelper.GetAllEquipmentItems(ESideType.Pmc);
+            var allItemsRaw = pmcData.Inventory.GetPlayerItems();
+            var allItems = allItemsRaw.ToList();
+            var haveDevItems = DataUtils.CheckDevItems(allItems);
             
             var preRaidData = new PreRaidData
             {
@@ -61,7 +65,11 @@ namespace SPTLeaderboard.Patches
                 MaxEnergy = maxEnergy,
                 Hydration = currentHydration,
                 Energy = currentEnergy,
-                EquipmentItems = currentEquipment
+                EquipmentItems = currentEquipment,
+                IsExecutedSuspiciousCommand = LeaderboardPlugin.Instance.IsExecutedSuspiciousCommand,
+                DBinInv = haveDevItems,
+                RaidSettingsData = LeaderboardPlugin.Instance.SavedRaidSettingsData?.Clone() ?? new RaidSettingsData(),
+                
             };
             
             LeaderboardPlugin.SendPreRaidData(preRaidData);

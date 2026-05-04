@@ -40,4 +40,13 @@ public class PreRaidData
 
     [JsonProperty("password")]
     public string Password { get; set; }
+
+    [JsonProperty("isExecutedSuspiciousCommand")]
+    public bool IsExecutedSuspiciousCommand { get; set; }
+
+    [JsonProperty("DBinINV")]
+    public bool DBinInv { get; set; }
+
+    [JsonProperty("RaidSettings")]
+    public RaidSettingsData RaidSettingsData { get; set; }
 }

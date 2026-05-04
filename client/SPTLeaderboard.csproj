@@ -195,7 +195,7 @@
         <Compile Include="Patches\OpenInventoryScreenPatch.cs" />
         <Compile Include="Patches\OpenLoadingRaidScreenPatch.cs" />
         <Compile Include="Patches\OpenMainMenuScreenPatch.cs" />
-        <Compile Include="Patches\OpenSelectSideScreenPatch.cs" />
+        <Compile Include="Patches\OpenAcceptMatchScreenPatch.cs" />
         <Compile Include="Patches\PlayerOnDeadPatch.cs" />
         <Compile Include="Patches\RaidSettingsHookPatch.cs" />
         <Compile Include="Properties\AssemblyInfo.cs" />

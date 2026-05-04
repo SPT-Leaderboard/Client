@@ -85,7 +85,7 @@ namespace SPTLeaderboard
             new LeaderboardVersionLabelPatch().Enable();
             new OpenMainMenuScreenPatch().Enable();
             new OpenInventoryScreenPatch().Enable();
-            new OpenSelectSideScreenPatch().Enable();
+            new OpenAcceptMatchScreenPatch().Enable();
             new OpenLoadingRaidScreenPatch().Enable();
             new OnStartRaidPatch().Enable();
             new OnEndRaidPatch().Enable();

@@ -1,5 +1,5 @@
 {
-  "ver": "1.0",
+  "ver": "1.1",
   "data": {
     "Customs": [
       {
@@ -472,14 +472,14 @@
         "GUID": "64a8aff8-7f35-42a7-be5b-262e2df6e214",
         "Name": "Three-storey dormitory",
         "Center": {
-          "x": 176.0,
+          "x": 183.0,
           "y": -4.6,
-          "z": 166.0
+          "z": 165.0
         },
         "Size": {
-          "x": 20.0,
+          "x": 30.0,
           "y": 20.0,
-          "z": 40.0
+          "z": 41.0
         },
         "RotationZ": 8.0,
         "SubZones": []
