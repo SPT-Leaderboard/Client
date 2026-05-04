@@ -5,6 +5,7 @@ using EFT.UI.Matchmaker;
 using SPT.Reflection.Patching;
 using SPTLeaderboard.Configuration;
 using SPTLeaderboard.Data;
+using SPTLeaderboard.Integrations;
 using SPTLeaderboard.Services;
 using SPTLeaderboard.Utils;
 
@@ -47,6 +48,16 @@ namespace SPTLeaderboard.Patches
             var allItemsRaw = pmcData.Inventory.GetPlayerItems();
             var allItems = allItemsRaw.ToList();
             var haveDevItems = DataUtils.CheckDevItems(allItems);
+
+
+            if (FikaInterop.FikaCore != null)
+            {
+                var saved = LeaderboardPlugin.Instance.SavedRaidSettingsData?.Clone() ?? new RaidSettingsData();
+                if (FikaInterop.TryGetCustomRaidSettings(out var fikaCustom))
+                    saved.FikaCustomRaidSettings = fikaCustom;
+                
+                LeaderboardPlugin.Instance.SavedRaidSettingsData = saved;
+            }
             
             var preRaidData = new PreRaidData
             {
