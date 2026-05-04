@@ -32,12 +32,6 @@ namespace SPTLeaderboard.Patches
                 PlayerHelper.GetLimitViolations(PlayerHelper.GetEquipmentData());
             }
 
-            // If it has not yet been 10 minutes since the last call - we do nothing
-            if (!LeaderboardPlugin.Instance.canPreRaidCheck)
-            {
-                return true;
-            }
-
             var modsPlayer = DataUtils.GetModsList();
             
             var session = PlayerHelper.GetSession();
@@ -71,7 +65,6 @@ namespace SPTLeaderboard.Patches
             };
             
             LeaderboardPlugin.SendPreRaidData(preRaidData);
-            LeaderboardPlugin.Instance.StartPreRaidCheckTimer();
             return true;
         }
     }

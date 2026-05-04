@@ -31,7 +31,6 @@ namespace SPTLeaderboard
         private Timer _inRaidHeartbeatTimer;
         private Timer _preRaidCheckTimer;
         
-        public bool canPreRaidCheck = true;
         public bool cachedPlayerModelPreview;
         public bool engLocaleLoaded;
         public bool configLimitsUpdated;
@@ -489,26 +488,6 @@ namespace SPTLeaderboard
             _inRaidHeartbeatTimer.Stop();
             _inRaidHeartbeatTimer.Dispose();
             _inRaidHeartbeatTimer = null;
-        }
-
-        /// <summary>
-        /// Start a delay for the preRaid check.
-        /// </summary>
-        public void StartPreRaidCheckTimer()
-        {
-            StopPreRaidCheckTimer();
-            
-            canPreRaidCheck = false;
-            _preRaidCheckTimer = new Timer(10 * 60 * 1000);
-            _preRaidCheckTimer.Elapsed += (sender, args) =>
-            {
-                canPreRaidCheck = true;
-                _preRaidCheckTimer.Stop();
-                _preRaidCheckTimer.Dispose();
-                _preRaidCheckTimer = null;
-            };
-            _preRaidCheckTimer.AutoReset = false;
-            _preRaidCheckTimer.Start();
         }
         
         /// <summary>
