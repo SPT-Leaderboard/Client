@@ -58,7 +58,9 @@ namespace SPTLeaderboard.Patches
             }
 
             PlayerHelper.LastActionState = ActionState.KILLED_ENEMY;
+#if DEBUG
             LocalizationService.Notification($"role={role.ToStringNoBox()}");
+#endif
             Utils.Logger.LogDebugWarning($"[OnEnemyKill] " +
                 $"distance={distance:F1}, " +
                 $"role={role.ToStringNoBox()}, " +
