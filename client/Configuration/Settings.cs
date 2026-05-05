@@ -11,7 +11,6 @@ namespace SPTLeaderboard.Configuration
 	{
 		public static Settings Instance { get; private set; }
 
-		public ConfigEntry<KeyboardShortcut> ToggleZonesInterfaceKey;
 		public ConfigEntry<bool> EnableSendData;
 		public ConfigEntry<bool> ShowPointsNotification;
 		public ConfigEntry<bool> ShowExperienceNotification;
@@ -23,6 +22,7 @@ namespace SPTLeaderboard.Configuration
 		public ConfigEntry<int> SupportInRaidConnectionTimer;
 
 #if DEBUG
+		public ConfigEntry<KeyboardShortcut> ToggleZonesInterfaceKey;
 		public ConfigEntry<bool> Debug;
 #endif
 #if DEBUG || BETA
@@ -42,6 +42,7 @@ namespace SPTLeaderboard.Configuration
 
 		private Settings(ConfigFile configFile)
 		{
+			#if DEBUG
 			ToggleZonesInterfaceKey = configFile.Bind(
 				"1. Settings",
 				"Toggle Zones Interface Key",
@@ -53,7 +54,7 @@ namespace SPTLeaderboard.Configuration
 					{
 						Order = 9
 					}));
-			
+			#endif
 			EnableSendData = configFile.Bind(
 				"1. Settings", 
 				"Is Sending Data", 
