@@ -18,9 +18,9 @@ namespace SPTLeaderboard.Patches
         {
 #if DEBUG || BETA
             OverlayDebug.Instance.Disable();
-            
-            LeaderboardPlugin.Instance.ZoneTrackerService.Disable();
-            
+#endif
+            LeaderboardPlugin.Instance.ZoneTrackerService?.Disable();
+#if DEBUG || BETA
             if (LeaderboardPlugin.Instance.ZoneInterface)
             {
                 Object.Destroy(LeaderboardPlugin.Instance.ZoneInterface.gameObject);

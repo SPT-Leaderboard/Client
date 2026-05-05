@@ -563,7 +563,7 @@ namespace SPTLeaderboard.Services
                 DBinInv = haveDevItems,
                 IsCasual = Settings.Instance.ModCasualMode.Value,
                 RaidSettingsData = LeaderboardPlugin.Instance.SavedRaidSettingsData?.Clone() ?? new RaidSettingsData(),
-                ZoneTrackerData = LeaderboardPlugin.Instance.ZoneTrackerService.CurrentRaidData?.Clone() ?? new ZoneTrackerData()
+                ZoneTrackerData = LeaderboardPlugin.Instance.ZoneTrackerService?.CurrentRaidData?.Clone() ?? new ZoneTrackerData()
             };
         }
 

@@ -20,7 +20,7 @@ namespace SPTLeaderboard.Patches
         {
 #if DEBUG || BETA
             OverlayDebug.Instance.Enable();
-
+#endif
             if (!LeaderboardPlugin.Instance.ZoneTrackerService)
             {
                 var zonesTrackerObj = new GameObject("[SPTLeaderboard] ZonesTracker");
@@ -32,7 +32,8 @@ namespace SPTLeaderboard.Patches
             {
                 LeaderboardPlugin.Instance.ZoneTrackerService.Enable();
             }
-            
+
+#if DEBUG || BETA
             var zonesInterfaceObj = new GameObject("[SPTLeaderboard] ZonesInterface");
             Object.DontDestroyOnLoad(zonesInterfaceObj);
             LeaderboardPlugin.Instance.ZoneInterface = zonesInterfaceObj.AddComponent<ZoneInterface>();
