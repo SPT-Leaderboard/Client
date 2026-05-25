@@ -1,0 +1,43 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+    <PropertyGroup>
+        <TargetFramework>net9.0</TargetFramework>
+        <RootNamespace>SPTLeaderboard.Server</RootNamespace>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+        <OutputType>Library</OutputType>
+        <Version>1.0.1</Version>
+        <!-- The two lines below will set the output path for the binaries -->
+        <OutputPath>bin\$(Configuration)\$(MSBuildProjectName)-$(Version)\</OutputPath>
+        <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
+        <Title>SPTLeaderboard CSharp Server</Title>
+        <Authors>yuyuimoe</Authors>
+        <Description>SPTLeaderboard Server Mod For SPT 4.0.0</Description>
+        <Copyright>MPL 2.0</Copyright>
+        <PackageProjectUrl>https://sptlb.yuyui.moe</PackageProjectUrl>
+        <RepositoryUrl>https://github.com/SPT-Leaderboard/Server-CSharp</RepositoryUrl>
+        <RepositoryType>Git</RepositoryType>
+        <Configurations>Debug;Release;Beta</Configurations>
+        <Platforms>AnyCPU</Platforms>
+        <AssemblyName>SPTLeaderboard.Server</AssemblyName>
+    </PropertyGroup>
+
+    <PropertyGroup>
+        <TarkovDir Condition=" '$(TarkovDir)' == '' ">C:\Games\SPT\</TarkovDir>
+        <TarkovDevDir Condition=" '$(TarkovDevDir)' == '' ">C:\Games\SPTDEV\</TarkovDevDir>
+        <ServerModDir>SPT\user\mods\SPT-Leaderboard\</ServerModDir>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <PackageReference Include="SPTarkov.Server.Core" Version="4.0.0" />
+    </ItemGroup>
+
+    <Target Name="CopyServerDll" AfterTargets="Build">
+        <ItemGroup>
+            <OutputDLL Include="$(TargetDir)$(TargetFileName)" />
+        </ItemGroup>
+        <Copy Condition="Exists('$(TarkovDir)')" SourceFiles="@(OutputDLL)" DestinationFolder="$(TarkovDir)$(ServerModDir)" Retries="3" RetryDelayMilliseconds="1000" ContinueOnError="WarnAndContinue" />
+        <Copy Condition="Exists('$(TarkovDevDir)')" SourceFiles="@(OutputDLL)" DestinationFolder="$(TarkovDevDir)$(ServerModDir)" Retries="3" RetryDelayMilliseconds="1000" ContinueOnError="WarnAndContinue" />
+    </Target>
+
+</Project>

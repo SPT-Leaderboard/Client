@@ -1,0 +1,76 @@
+﻿using System.Reflection;
+using EFT;
+using EFT.UI.Matchmaker;
+using SPT.Reflection.Patching;
+using SPTLeaderboard.Configuration;
+using SPTLeaderboard.Data;
+using SPTLeaderboard.Services;
+using SPTLeaderboard.Utils;
+
+namespace SPTLeaderboard.Patches
+{
+    internal class OpenSelectSideScreenPatch : ModulePatch
+    {
+        protected override MethodBase GetTargetMethod() =>
+            typeof(MatchMakerSideSelectionScreen).GetMethod(
+                "Show",
+                BindingFlags.Instance | BindingFlags.Public,
+                null,
+                [typeof(MatchMakerSideSelectionScreen.GClass3919)],
+                null
+            );
+
+        [PatchPrefix]
+        static bool Prefix()
+        {
+            Utils.Logger.LogDebugWarning("Player opened select side screen");
+            if (!Settings.Instance.EnableSendData.Value && PlayerHelper.HasRaidStarted())
+                return true;
+
+            if (!Settings.Instance.ModCasualMode.Value)
+            {
+                PlayerHelper.GetLimitViolations(PlayerHelper.GetEquipmentData());
+            }
+
+            // If it has not yet been 10 minutes since the last call - we do nothing
+            if (!LeaderboardPlugin.Instance.canPreRaidCheck)
+            {
+                return true;
+            }
+
+            var modsPlayer = DataUtils.GetModsList();
+            
+            var session = PlayerHelper.GetSession();
+            
+            var pmcData = session.GetProfileBySide(ESideType.Pmc);
+            
+            var currentEnergy = pmcData.Health.Energy.Current;
+            var currentHydration = pmcData.Health.Hydration.Current;
+            var maxEnergy = pmcData.Health.Energy.Maximum;
+            var maxHydration = pmcData.Health.Hydration.Maximum;
+            var currentEquipment = PlayerHelper.GetAllEquipmentItems(ESideType.Pmc);
+            
+            var preRaidData = new PreRaidData
+            {
+                ProfileId = PlayerHelper.GetProfile().ProfileId,
+                VersionMod = GlobalData.Version,
+                IsCasual = Settings.Instance.ModCasualMode.Value,
+#if DEBUG
+                Mods = Settings.Instance.Debug.Value ? ["DEBUGSPTLB"] : modsPlayer,
+#else
+                Mods = modsPlayer,
+#endif
+                Hash = EncryptionService.Instance.GetHashMod(),
+                MaxHydration = maxHydration,
+                MaxEnergy = maxEnergy,
+                Hydration = currentHydration,
+                Energy = currentEnergy,
+                EquipmentItems = currentEquipment
+            };
+            
+            LeaderboardPlugin.SendPreRaidData(preRaidData);
+            LeaderboardPlugin.Instance.StartPreRaidCheckTimer();
+            return true;
+        }
+    }
+}

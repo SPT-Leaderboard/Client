@@ -1,6 +1,6 @@
 Set-Location -Path $PSScriptRoot
 
-$dllPath = ".\Build\BepInEx\plugins\SPT-Leaderboard\SPTLeaderboard.dll"
+$dllPath = ".\Build\BepInEx\plugins\SPT-Leaderboard\SPTLeaderboard.Client.dll"
 $dllFullPath = Join-Path $PSScriptRoot $dllPath
 
 Write-Host "Checking DLL in path: $dllFullPath"

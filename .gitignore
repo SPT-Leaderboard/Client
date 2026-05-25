@@ -9,6 +9,9 @@ secret.token
 *vscode
 client/SPTLeaderboard.sln.DotSettings.user
 *.7z
-client/BuildScripts/Build
+BuildScripts/Build/
+BuildScripts/_FullPackStaging/
 *.dll
 *.pdb
+
+BuildScripts/HASH.txt

@@ -8,12 +8,12 @@
         <OutputType>Library</OutputType>
         <AppDesignerFolder>Properties</AppDesignerFolder>
         <RootNamespace>SPTLeaderboard</RootNamespace>
-        <AssemblyName>SPTLeaderboard</AssemblyName>
+        <AssemblyName>SPTLeaderboard.Client</AssemblyName>
         <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
         <LangVersion>latest</LangVersion>
         <FileAlignment>512</FileAlignment>
         <Deterministic>true</Deterministic>
-        <SignAssembly>true</SignAssembly>
+        <SignAssembly>false</SignAssembly>
         <AssemblyOriginatorKeyFile>Dependencies\Keys\sptld.snk</AssemblyOriginatorKeyFile>
     </PropertyGroup>
     <PropertyGroup>
@@ -23,6 +23,7 @@
         <TarkovPluginsDir>$(TarkovDir)BepInEx\plugins\</TarkovPluginsDir>
         <TarkovManagedDir>$(TarkovDir)EscapeFromTarkov_Data\Managed\</TarkovManagedDir>
         <TarkovBepInExCoreDir>$(TarkovDir)BepInEx\core\</TarkovBepInExCoreDir>
+        <ClientPluginDir>BepInEx\plugins\SPT-Leaderboard\</ClientPluginDir>
     </PropertyGroup>
     <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
         <DebugSymbols>true</DebugSymbols>
@@ -222,7 +223,9 @@
       <None Include="Dependencies\Keys\sptld.snk" />
     </ItemGroup>
     <ItemGroup>
-      <EmbeddedResource Include="BuildScripts\map_zones.json" />
+      <EmbeddedResource Include="..\..\BuildScripts\map_zones.json">
+        <LogicalName>SPTLeaderboard.BuildScripts.map_zones.json</LogicalName>
+      </EmbeddedResource>
     </ItemGroup>
     <ItemGroup>
       <Folder Include="Models\" />
@@ -237,21 +240,19 @@
             <OutputDLL Include="$(ProjectDir)$(OutDir)$(TargetName).dll" />
         </ItemGroup>
         <!-- Copies the output to tarkov game folder -->
-        <Copy SourceFiles="@(OutputDLL)" DestinationFolder="$(TarkovDir)BepInEx\plugins\SPT-Leaderboard\%(RecursiveDir)" />
-        <Copy Condition="Exists('$(TarkovDevDir)')" SourceFiles="@(OutputDLL)" DestinationFolder="$(TarkovDevDir)BepInEx\plugins\SPT-Leaderboard\%(RecursiveDir)" />
+        <Copy Condition="Exists('$(TarkovDir)')" SourceFiles="@(OutputDLL)" DestinationFolder="$(TarkovDir)$(ClientPluginDir)%(RecursiveDir)" Retries="3" RetryDelayMilliseconds="1000" ContinueOnError="WarnAndContinue" />
+        <Copy Condition="Exists('$(TarkovDevDir)')" SourceFiles="@(OutputDLL)" DestinationFolder="$(TarkovDevDir)$(ClientPluginDir)%(RecursiveDir)" Retries="3" RetryDelayMilliseconds="1000" ContinueOnError="WarnAndContinue" />
         <!-- Delete previous build folder -->
-        <RemoveDir Directories="$(ProjectDir)BuildScripts\Build" />
+        <RemoveDir Directories="$(SolutionDir)BuildScripts\Build" />
         <!-- Copy dll to build folder -->
-        <Copy SourceFiles="@(OutputDLL)" DestinationFolder="$(ProjectDir)BuildScripts\Build\BepInEx\plugins\SPT-Leaderboard\%(RecursiveDir)" />
+        <Copy SourceFiles="@(OutputDLL)" DestinationFolder="$(SolutionDir)BuildScripts\Build\$(ClientPluginDir)%(RecursiveDir)" />
     </Target>
     <Target Name="RunPackModScript" AfterTargets="CopyDll">
         <ItemGroup>
             <OutputDLL Include="$(ProjectDir)$(OutDir)$(TargetName).dll" />
             <OutputDir Include="$(ProjectDir)" />
         </ItemGroup>
-        <Exec Condition="'$(Configuration)' == 'Debug'" Command="powershell -ExecutionPolicy Bypass -File &quot;$(OutputDir)BuildScripts\PackModDebug.ps1&quot;" />
-        <Exec Condition="'$(Configuration)' == 'Release'" Command="powershell -ExecutionPolicy Bypass -File &quot;$(OutputDir)BuildScripts\PackModRelease.ps1&quot;" />
-        <Exec Condition="'$(Configuration)' == 'Beta'" Command="powershell -ExecutionPolicy Bypass -File &quot;$(OutputDir)BuildScripts\PackModBeta.ps1&quot;" />
+        <Exec Command="powershell -ExecutionPolicy Bypass -File &quot;$(SolutionDir)BuildScripts\Pack-FullMod.ps1&quot; -Configuration $(Configuration)" />
     </Target>
 
 </Project>

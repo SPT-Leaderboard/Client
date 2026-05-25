@@ -1,8 +1,8 @@
 Set-Location -Path $PSScriptRoot
 
-$dllPath = ".\Build\BepInEx\plugins\SPT-Leaderboard\SPTLeaderboard.dll"
+$dllPath = ".\Build\BepInEx\plugins\SPT-Leaderboard\SPTLeaderboard.Client.dll"
 $dllFullPath = Join-Path $PSScriptRoot $dllPath
-$globalDataPath = "..\Data\GlobalData.cs"
+$globalDataPath = "..\src\Client\Data\GlobalData.cs"
 
 Write-Host "Checking DLL in path: $dllFullPath"
 if (-Not (Test-Path $dllFullPath)) {
@@ -25,7 +25,7 @@ $sha256 = Get-FileHash -Algorithm SHA256 -Path $dllFullPath
 Write-Host "SHA256 Hash of DLL: $($sha256.Hash.ToLower())"
 
 $sourceFolder = ".\Build\*"
-$destination7z = ".\SPT_Leaderboard_DEBUG_v${versionClean}-${subVersion}.7z"
+$destination7z = ".\SPT_Leaderboard_BETA_v${versionClean}-${subVersion}.7z"
 
 # Path 7z
 $sevenZipPath = "C:\Program Files\7-Zip\7z.exe"
@@ -33,4 +33,4 @@ $sevenZipPath = "C:\Program Files\7-Zip\7z.exe"
 # Create 7z
 & $sevenZipPath a -t7z -mx=9 $destination7z $sourceFolder
 
-Write-Host "DEBUG Mod packed: $destination7z"
+Write-Host "BETA Mod packed: $destination7z"
