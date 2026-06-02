@@ -30,10 +30,7 @@ namespace SPTLeaderboard.Patches
             }
             
             HitsTracker.Instance.IncreaseHit(bodyPart);
-        
-#if DEBUG || BETA
-            OverlayDebug.Instance.UpdateOverlay();
-#endif
+
             Utils.Logger.LogDebugWarning($"[ProcessShot ObservedClientBridge] Hit BodyType {bodyPart.ToString()}");
             Utils.Logger.LogDebugWarning($"[ProcessShot ObservedClientBridge] Hit EBodyPartColliderType {bodyPartCollider.ToString()}");
         }

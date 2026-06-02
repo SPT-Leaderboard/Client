@@ -451,11 +451,6 @@ namespace SPTLeaderboard.Services
                 return (statTrackIsUsed, null);
             }
 
-
-            Logger.LogDebugWarning(
-                $"Data raw StatTrack {JsonConvert.SerializeObject(dataStatTrack).ToJson()}");
-
-
             processedStatTrackData = StatTrackInterop.GetAllValidWeapons(profileId, dataStatTrack);
             if (processedStatTrackData == null)
             {

@@ -31,9 +31,7 @@ namespace SPTLeaderboard.Patches
             }
             
             HitsTracker.Instance.IncreaseHit(bodyPartType);
-#if DEBUG || BETA
-            OverlayDebug.Instance.UpdateOverlay();
-#endif
+            
             Utils.Logger.LogDebugWarning($"[ProcessShot Local] Hit BodyType {bodyPartType.ToString()}");
             Utils.Logger.LogDebugWarning($"[ProcessShot Local] Hit EBodyPartColliderType {colliderType.ToString()}");
             

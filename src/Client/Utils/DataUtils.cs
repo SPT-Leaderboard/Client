@@ -71,12 +71,12 @@ public static class DataUtils
     /// </summary>
     public static List<string> GetModsList()
     {
-        Logger.LogDebugWarning("[Logs mods source]");
-        Logger.LogDebugWarning($"[ServerMods] {JsonConvert.SerializeObject(GetServerMods())}");
-        Logger.LogDebugWarning($"[UserMods] {JsonConvert.SerializeObject(GetUserMods())}");
-        Logger.LogDebugWarning($"[BepinexMods] {JsonConvert.SerializeObject(GetBepinexMods())}");
-        Logger.LogDebugWarning($"[BepinexDll] {JsonConvert.SerializeObject(GetBepinexDll())}");
-        Logger.LogDebugWarning($"[ClientMods] {JsonConvert.SerializeObject(GetClientMods())}");
+        Logger.LogDebugInfo("[Logs mods source]");
+        Logger.LogDebugInfo($"[ServerMods] {JsonConvert.SerializeObject(GetServerMods())}");
+        Logger.LogDebugInfo($"[UserMods] {JsonConvert.SerializeObject(GetUserMods())}");
+        Logger.LogDebugInfo($"[BepinexMods] {JsonConvert.SerializeObject(GetBepinexMods())}");
+        Logger.LogDebugInfo($"[BepinexDll] {JsonConvert.SerializeObject(GetBepinexDll())}");
+        Logger.LogDebugInfo($"[ClientMods] {JsonConvert.SerializeObject(GetClientMods())}");
         
         return GetServerMods()
             .Concat(GetUserMods())
