@@ -15,6 +15,7 @@ public static class GlobalData
     public const string BaseSptVersion = "4.0";
     
     public const int HeartbeatCooldownSeconds = 60;
+    public const int ZoneTrackerCheckIntervalMs = 500;
     
     public const string SafeContainerKey = "578f8782245977354405a1e3";
     public const string ComputerContainerKey = "59139c2186f77411564f8e42";

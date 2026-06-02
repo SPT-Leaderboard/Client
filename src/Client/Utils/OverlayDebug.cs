@@ -15,7 +15,8 @@ public class OverlayDebug: MonoBehaviour
     private TextMeshProUGUI _overlayText;
     private GameObject _overlay;
     private float _lastUpdateTime;
-    private const float UPDATE_INTERVAL = 0.5f; // Update every 500ms to avoid FPS drops
+    private readonly System.Text.StringBuilder _debugValues = new();
+    private string _lastOverlayText = "";
     
     public void Enable()
     {
@@ -53,25 +54,31 @@ public class OverlayDebug: MonoBehaviour
 
     private void Update()
     {
-        if (Time.time - _lastUpdateTime >= UPDATE_INTERVAL)
-        {
-            UpdateOverlay();
-            _lastUpdateTime = Time.time;
-        }
+        UpdateOverlay();
     }
 
     public void UpdateOverlay()
     {
         if (_overlayText == null) return;
 
-        var debugValues = new System.Text.StringBuilder();
+        var updateInterval = Mathf.Max(0.1f, Settings.Instance.DebugOverlayUpdateIntervalMs.Value / 1000f);
+        if (Time.time - _lastUpdateTime < updateInterval)
+            return;
+
+        _lastUpdateTime = Time.time;
+
+        var debugValues = _debugValues;
+        debugValues.Clear();
 
         // Raid hits section
         var currentHitsData = HitsTracker.Instance.GetHitsData();
-        int usedMedicines = LeaderboardPlugin.Instance.ZoneTrackerService?.GetUsedMedicines() ?? 0;
-        float healthHealed = LeaderboardPlugin.Instance.ZoneTrackerService?.GetHealthHealed() ?? 0f;
-        float combatDamage = LeaderboardPlugin.Instance.ZoneTrackerService?.GetDamageToPlayer() ?? 0f;
-        float damageToEnemy = LeaderboardPlugin.Instance.ZoneTrackerService?.GetDamageToEnemy() ?? 0f;
+        var zoneTrackerService = LeaderboardPlugin.Instance.ZoneTrackerService;
+        var profile = PlayerHelper.GetProfile();
+        var sessionCounters = profile?.EftStats.SessionCounters;
+        int usedMedicines = sessionCounters?.GetInt(SessionCounterTypesAbstractClass.Medicines) ?? 0;
+        float healthHealed = sessionCounters?.GetFloat(SessionCounterTypesAbstractClass.Heal) ?? 0f;
+        float combatDamage = sessionCounters?.GetFloat(SessionCounterTypesAbstractClass.CombatDamage) ?? 0f;
+        float damageToEnemy = sessionCounters?.GetFloat(SessionCounterTypesAbstractClass.CauseBodyDamage) ?? 0f;
         
         
         debugValues.AppendLine("        ─═ RAID HITS ═─");
@@ -90,10 +97,10 @@ public class OverlayDebug: MonoBehaviour
         }
 
         // Zone information
-        if (LeaderboardPlugin.Instance.ZoneTrackerService != null)
+        if (zoneTrackerService != null)
         {
-            var zoneTracker = LeaderboardPlugin.Instance.ZoneTrackerService;
-            float kilometerStat = LeaderboardPlugin.Instance.ZoneTrackerService?.GetKilometer() ?? 0f;
+            var zoneTracker = zoneTrackerService;
+            float kilometerStat = zoneTrackerService.GetKilometer();
 
             debugValues.AppendLine("        ─═ CURRENT ZONE ═─");
             if (zoneTracker.CurrentZone != null)
@@ -126,9 +133,9 @@ public class OverlayDebug: MonoBehaviour
                     debugValues.AppendLine();
                 }
                 
-                float currentCombatDamage = PlayerHelper.GetProfile()?.EftStats.SessionCounters.GetFloat(SessionCounterTypesAbstractClass.CombatDamage) ?? 0f;
-                int currentMeds = PlayerHelper.GetProfile()?.EftStats.SessionCounters.GetInt(SessionCounterTypesAbstractClass.Medicines) ?? 0;
-                float currentHeal = PlayerHelper.GetProfile()?.EftStats.SessionCounters.GetFloat(SessionCounterTypesAbstractClass.Heal) ?? 0f;
+                float currentCombatDamage = combatDamage;
+                int currentMeds = usedMedicines;
+                float currentHeal = healthHealed;
 
                 float damageInZone = currentCombatDamage - zoneTracker.ZoneDamageToPlayer;
                 int medsInZone = currentMeds - zoneTracker.ZoneMedicinesUsed;
@@ -280,9 +287,9 @@ public class OverlayDebug: MonoBehaviour
                     debugValues.AppendLine();
                 }
                 
-                float currentCombatDamage = PlayerHelper.GetProfile()?.EftStats.SessionCounters.GetFloat(SessionCounterTypesAbstractClass.CombatDamage) ?? 0f;
-                int currentMeds = PlayerHelper.GetProfile()?.EftStats.SessionCounters.GetInt(SessionCounterTypesAbstractClass.Medicines) ?? 0;
-                float currentHeal = PlayerHelper.GetProfile()?.EftStats.SessionCounters.GetFloat(SessionCounterTypesAbstractClass.Heal) ?? 0f;
+                float currentCombatDamage = combatDamage;
+                int currentMeds = usedMedicines;
+                float currentHeal = healthHealed;
 
                 float subDamageInZone = currentCombatDamage - zoneTracker.SubZoneDamageToPlayer;
                 int subMedsInZone = currentMeds - zoneTracker.SubZoneMedicinesUsed;
@@ -405,7 +412,12 @@ public class OverlayDebug: MonoBehaviour
             debugValues.AppendFormat("Damage to Enemy: <color=#a45054>{0:F2}</color>\n", damageToEnemy);
         }
 
-        _overlayText.text = debugValues.ToString();
+        var overlayText = debugValues.ToString();
+        if (_lastOverlayText == overlayText)
+            return;
+
+        _lastOverlayText = overlayText;
+        _overlayText.text = overlayText;
     }
 
     public void SetOverlayPosition(Vector2 anchoredPosition)

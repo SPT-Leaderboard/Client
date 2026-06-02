@@ -79,6 +79,9 @@ namespace SPTLeaderboard
             #endregion
             
             _settings = Settings.Create(Config);
+#if DEBUG || BETA
+            IsDebugLogsEnabled = _settings.DebugLogsEnabled.Value;
+#endif
             EncryptionService.Create();
             LocalizationService.Create();
             
@@ -193,6 +196,9 @@ namespace SPTLeaderboard
                 if (Input.GetKeyDown(KeyCode.Space))
                 {
                     IsDebugLogsEnabled = !IsDebugLogsEnabled;
+#if DEBUG || BETA
+                    Settings.Instance.DebugLogsEnabled.Value = IsDebugLogsEnabled;
+#endif
                     LocalizationService.NotificationWarning($"Advanced SPTLB Logs are: {IsDebugLogsEnabled}");
                 }
             }

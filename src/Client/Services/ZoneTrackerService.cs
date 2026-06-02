@@ -44,12 +44,14 @@ namespace SPTLeaderboard.Services
         private Dictionary<string, List<ZoneData>> _allZones = new();
 
         private List<string> _lootedContainers = new();
+        private float _nextPositionCheckTime;
 
         public void Enable()
         {
             _zones.Clear();
             CurrentRaidData = new ZoneTrackerData();
             _lootedContainers.Clear();
+            _nextPositionCheckTime = 0f;
             CurrentZone = null;
             CurrentSubZone = null;
 
@@ -82,6 +84,7 @@ namespace SPTLeaderboard.Services
             }
             else
             {
+                _zones.Clear();
                 _allZones.Clear();
                 Logger.LogWarning($"[ZoneTracker] For map {DataUtils.GetRaidRawMap().ToLower()} zones not found.");
             }
@@ -147,6 +150,12 @@ namespace SPTLeaderboard.Services
 
         public void CheckPlayerPosition(Vector3 pos)
         {
+            var now = Time.realtimeSinceStartup;
+            if (now < _nextPositionCheckTime)
+                return;
+
+            _nextPositionCheckTime = now + GlobalData.ZoneTrackerCheckIntervalMs / 1000f;
+
             if (_zones == null || _zones.Count == 0)
                 return;
 
@@ -181,6 +190,9 @@ namespace SPTLeaderboard.Services
 
         private ZoneData FindZoneContainingPosition(Vector3 pos, List<ZoneData> zones)
         {
+            if (zones == null || zones.Count == 0)
+                return null;
+
             return zones.Where(zone => zone != null).FirstOrDefault(zone => zone.GetBounds().Contains(pos));
         }
 

@@ -16,6 +16,7 @@ public class ZoneDebugRenderer: MonoBehaviour
     // Cached materials to prevent memory leaks
     private Material _normalMaterial;
     private Material _seeThroughMaterial;
+    private Material _zonePlaneMaterial;
 
     public bool ShowOverlays { get; set; }
     public bool ShowZones { get; set; }
@@ -37,6 +38,23 @@ public class ZoneDebugRenderer: MonoBehaviour
             _seeThroughMaterial = new Material(Shader.Find("GUI/Text Shader"));
         }
         return _seeThroughMaterial;
+    }
+
+    private Material GetZonePlaneMaterial()
+    {
+        if (_zonePlaneMaterial != null)
+            return _zonePlaneMaterial;
+
+        _zonePlaneMaterial = new Material(Shader.Find("Standard"));
+        _zonePlaneMaterial.SetFloat("_Mode", 3);
+        _zonePlaneMaterial.SetInt("_SrcBlend", (int)UnityEngine.Rendering.BlendMode.SrcAlpha);
+        _zonePlaneMaterial.SetInt("_DstBlend", (int)UnityEngine.Rendering.BlendMode.OneMinusSrcAlpha);
+        _zonePlaneMaterial.SetInt("_ZWrite", 0);
+        _zonePlaneMaterial.DisableKeyword("_ALPHATEST_ON");
+        _zonePlaneMaterial.EnableKeyword("_ALPHABLEND_ON");
+        _zonePlaneMaterial.DisableKeyword("_ALPHAPREMULTIPLY_ON");
+        _zonePlaneMaterial.renderQueue = 3000;
+        return _zonePlaneMaterial;
     }
 
     private Color GetZoneColor(string zoneGuid)
@@ -99,6 +117,11 @@ public class ZoneDebugRenderer: MonoBehaviour
             Destroy(_seeThroughMaterial);
             _seeThroughMaterial = null;
         }
+        if (_zonePlaneMaterial != null)
+        {
+            Destroy(_zonePlaneMaterial);
+            _zonePlaneMaterial = null;
+        }
 
         Logger.LogDebugInfo($"[ZoneDebugRenderer] Cleared {_zoneColors.Count} cached zone colors and materials");
     }
@@ -157,7 +180,7 @@ public class ZoneDebugRenderer: MonoBehaviour
             lr.positionCount = 2;
             lr.startColor = zoneColor;
             lr.endColor = zoneColor;
-            lr.material = zoneMaterial;
+            lr.sharedMaterial = zoneMaterial;
 
             lr.SetPosition(0, corners[edges[i, 0]]);
             lr.SetPosition(1, corners[edges[i, 1]]);
@@ -216,8 +239,8 @@ public class ZoneDebugRenderer: MonoBehaviour
         Color zoneColor = zoneGuid != null ? GetZoneColor(zoneGuid) : Color.white;
 
         Material zoneMaterial = Settings.Instance.ZonesSeeThroughWalls.Value
-            ? new Material(Shader.Find("GUI/Text Shader")) // See through walls
-            : new Material(Shader.Find("Sprites/Default")); // Normal rendering
+            ? GetSeeThroughMaterial()
+            : GetNormalMaterial();
 
         for (int i = 0; i < edges.GetLength(0); i++)
         {
@@ -228,7 +251,7 @@ public class ZoneDebugRenderer: MonoBehaviour
             lr.positionCount = 2;
             lr.startColor = zoneColor;
             lr.endColor = zoneColor;
-            lr.material = zoneMaterial;
+            lr.sharedMaterial = zoneMaterial;
             lr.SetPosition(0, corners[edges[i, 0]]);
             lr.SetPosition(1, corners[edges[i, 1]]);
         }
@@ -257,9 +280,9 @@ public class ZoneDebugRenderer: MonoBehaviour
         lr.positionCount = 2;
         lr.startColor = color;
         lr.endColor = color;
-        lr.material = Settings.Instance.ZonesSeeThroughWalls.Value
-            ? new Material(Shader.Find("GUI/Text Shader"))
-            : new Material(Shader.Find("Sprites/Default"));
+        lr.sharedMaterial = Settings.Instance.ZonesSeeThroughWalls.Value
+            ? GetSeeThroughMaterial()
+            : GetNormalMaterial();
         lr.SetPosition(0, start);
         lr.SetPosition(1, end);
     }
@@ -305,8 +328,7 @@ public class ZoneDebugRenderer: MonoBehaviour
 
             meshFilter.mesh = mesh;
 
-            // Create semi-transparent material
-            var material = new Material(Shader.Find("Standard"));
+            var material = GetZonePlaneMaterial();
             if (material == null)
             {
                 Logger.LogDebugInfo("[ZoneTracker] Could not create material for zone plane");
@@ -314,17 +336,10 @@ public class ZoneDebugRenderer: MonoBehaviour
                 return;
             }
 
-            material.color = color;
-            material.SetFloat("_Mode", 3); // Transparent mode
-            material.SetInt("_SrcBlend", (int)UnityEngine.Rendering.BlendMode.SrcAlpha);
-            material.SetInt("_DstBlend", (int)UnityEngine.Rendering.BlendMode.OneMinusSrcAlpha);
-            material.SetInt("_ZWrite", 0);
-            material.DisableKeyword("_ALPHATEST_ON");
-            material.EnableKeyword("_ALPHABLEND_ON");
-            material.DisableKeyword("_ALPHAPREMULTIPLY_ON");
-            material.renderQueue = 3000;
-
-            meshRenderer.material = material;
+            meshRenderer.sharedMaterial = material;
+            var propertyBlock = new MaterialPropertyBlock();
+            propertyBlock.SetColor("_Color", color);
+            meshRenderer.SetPropertyBlock(propertyBlock);
             _debugViews.Add(go);
         }
         catch (System.Exception ex)

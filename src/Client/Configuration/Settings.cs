@@ -26,9 +26,11 @@ namespace SPTLeaderboard.Configuration
 		public ConfigEntry<bool> Debug;
 #endif
 #if DEBUG || BETA
+		public ConfigEntry<bool> DebugLogsEnabled;
 		public ConfigEntry<float> PositionOverlayX;
 		public ConfigEntry<float> PositionOverlayY;
 		public ConfigEntry<int> FontSizeOverlay;
+		public ConfigEntry<int> DebugOverlayUpdateIntervalMs;
 		public ConfigEntry<int> ZoneOverlayFontSize;
 		public ConfigEntry<float> ZoneOverlayMaxDistance;
 		public ConfigEntry<float> ZoneOverlayUpDistance;
@@ -175,6 +177,18 @@ namespace SPTLeaderboard.Configuration
 				new ConfigDescription("Developer toggle"));
 #endif
 #if DEBUG || BETA
+			DebugLogsEnabled = configFile.Bind(
+				"2. Debug",
+				"Debug Logs Enabled",
+				false,
+				new ConfigDescription(
+					"Enable advanced SPTLB debug logs in DEBUG/BETA builds",
+					null,
+					new ConfigurationAttributes
+					{
+						Order = 100
+					}));
+
 			// Main overlay settings
 			PositionOverlayX = configFile.Bind(
 				"2. Debug",
@@ -193,6 +207,18 @@ namespace SPTLeaderboard.Configuration
 				"FontSizeDebug",
 				28,
 				new ConfigDescription("FontSizeDebug", new AcceptableValueRange<int>(0, 200)));
+
+			DebugOverlayUpdateIntervalMs = configFile.Bind(
+				"2. Debug",
+				"Debug Overlay Update Interval Ms",
+				1000,
+				new ConfigDescription(
+					"How often debug overlay text is rebuilt, in milliseconds",
+					new AcceptableValueRange<int>(100, 5000),
+					new ConfigurationAttributes
+					{
+						IsAdvanced = true
+					}));
 
 			// Zones overlay settings
 			ZoneOverlayFontSize = configFile.Bind(

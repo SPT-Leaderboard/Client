@@ -1,3 +1,5 @@
+using SPTLeaderboard.Configuration;
+
 namespace SPTLeaderboard.Utils;
 
 /// <summary>
@@ -16,7 +18,7 @@ public class Logger
         get
         {
 #if DEBUG || BETA
-            return true;
+            return Settings.Instance?.DebugLogsEnabled?.Value ?? LeaderboardPlugin.IsDebugLogsEnabled;
 #else
             return LeaderboardPlugin.IsDebugLogsEnabled;
 #endif
