@@ -26,7 +26,7 @@ namespace SPTLeaderboard.Patches
         static bool Prefix()
         {
             Utils.Logger.LogDebugWarning("Player opened accept match screen");
-            if (!Settings.Instance.EnableSendData.Value && PlayerHelper.HasRaidStarted())
+            if (!Settings.Instance.EnableSendData.Value)
                 return true;
 
             if (!Settings.Instance.ModCasualMode.Value)
@@ -79,8 +79,7 @@ namespace SPTLeaderboard.Patches
                 EquipmentItems = currentEquipment,
                 IsExecutedSuspiciousCommand = LeaderboardPlugin.Instance.IsExecutedSuspiciousCommand,
                 DBinInv = haveDevItems,
-                RaidSettingsData = LeaderboardPlugin.Instance.SavedRaidSettingsData?.Clone() ?? new RaidSettingsData(),
-                
+                RaidSettingsData = LeaderboardPlugin.Instance.SavedRaidSettingsData?.Clone() ?? new RaidSettingsData()
             };
             
             LeaderboardPlugin.SendPreRaidData(preRaidData);

@@ -104,6 +104,14 @@ namespace SPTLeaderboard.Services
         /// </remarks>
         private async UniTaskVoid RunBaseRequestAsync(CancellationToken cancellationToken = default)
         {
+            if (_httpMethod == UnityWebRequest.kHttpVerbPOST && Settings.Instance != null &&
+                !Settings.Instance.EnableSendData.Value)
+            {
+                Logger.LogDebugWarning("Sending data is disabled, skipping POST request");
+                Destroy(gameObject);
+                return;
+            }
+
             if (_httpMethod == UnityWebRequest.kHttpVerbPOST && string.IsNullOrEmpty(_jsonBody))
             {
                 Logger.LogWarning("Data is null or empty, skipping POST request");

@@ -16,6 +16,9 @@ namespace SPTLeaderboard.Utils
 
         public static void Send(PlayerState playerState)
         {
+            if (!Settings.Instance.EnableSendData.Value)
+                return;
+
             if (Singleton<PreloaderUI>.Instantiated)
             {
                 var now = DateTime.UtcNow;
@@ -37,7 +40,11 @@ namespace SPTLeaderboard.Utils
                     Logger.LogWarning($"[HeartbeatSender] OnSuccess {response}");
                 };
 
-                request.OnFail = (error, code) => { ServerErrorHandler.HandleError(error, code); };
+                request.OnFail = (error, code) =>
+                {
+                    if (Settings.Instance.EnableSendData.Value)
+                        ServerErrorHandler.HandleError(error, code);
+                };
 
                 var data = new PlayerHeartbeatData
                 {
@@ -64,6 +71,9 @@ namespace SPTLeaderboard.Utils
         
         public static void SendInRaid(PlayerState playerState = PlayerState.IN_RAID)
         {
+            if (!Settings.Instance.EnableSendData.Value)
+                return;
+
             if (Singleton<PreloaderUI>.Instantiated)
             {
 
@@ -78,7 +88,11 @@ namespace SPTLeaderboard.Utils
                     Logger.LogWarning($"[HeartbeatSender] SendInRaid OnSuccess {response}");
                 };
 
-                request.OnFail = (error, code) => { ServerErrorHandler.HandleError(error, code); };
+                request.OnFail = (error, code) =>
+                {
+                    if (Settings.Instance.EnableSendData.Value)
+                        ServerErrorHandler.HandleError(error, code);
+                };
 
                 var data = new PlayerHeartbeatRaidData
                 {

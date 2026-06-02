@@ -271,6 +271,9 @@ namespace SPTLeaderboard
         /// </remarks>
         public static void SendProfileIcon(Texture2D texture, bool isFullBody)
         {
+            if (!Settings.Instance.EnableSendData.Value)
+                return;
+
             var request = NetworkApiRequest.Create(GlobalData.IconUrl);
             var session = PlayerHelper.GetSession();
             request.OnSuccess = (response, code) =>
@@ -278,7 +281,11 @@ namespace SPTLeaderboard
                 Utils.Logger.LogInfo($"[SendProfileIcon] OnSuccess {response}");
             };
 
-            request.OnFail = ServerErrorHandler.HandleError;
+            request.OnFail = (error, code) =>
+            {
+                if (Settings.Instance.EnableSendData.Value)
+                    ServerErrorHandler.HandleError(error, code);
+            };
                     
             byte[] imageData = texture.EncodeToPNG();
             var encodedImage = Convert.ToBase64String(imageData);
@@ -317,6 +324,9 @@ namespace SPTLeaderboard
         /// </remarks>
         public static void SendRaidData(object data)
         {
+            if (!Settings.Instance.EnableSendData.Value)
+                return;
+
             SendRaidDataAsync(data, CancellationToken.None).Forget();
         }
         
@@ -325,6 +335,9 @@ namespace SPTLeaderboard
         /// </summary>
         private static async UniTaskVoid SendRaidDataAsync(object data, CancellationToken cancellationToken)
         {
+            if (!Settings.Instance.EnableSendData.Value)
+                return;
+
             // Serialize and compute hash in background thread to avoid blocking main thread
             string jsonBody;
             string dataHash;
@@ -377,6 +390,9 @@ namespace SPTLeaderboard
                 
                 Utils.Logger.LogInfo($"[SendRaidDataAsync] OnSuccess {response}");
 
+                if (!Settings.Instance.EnableSendData.Value)
+                    return;
+
                 try
                 {
                     var responseData = JsonConvert.DeserializeObject<ResponseRaidData>(response.ToString());
@@ -411,7 +427,8 @@ namespace SPTLeaderboard
                     _lastSentDataTime = DateTime.MinValue;
                 }
                 
-                ServerErrorHandler.HandleError(error, code);
+                if (Settings.Instance.EnableSendData.Value)
+                    ServerErrorHandler.HandleError(error, code);
             };
             
 #if DEBUG
@@ -436,6 +453,9 @@ namespace SPTLeaderboard
         /// </remarks>
         public static void SendPreRaidData(object data)
         {
+            if (!Settings.Instance.EnableSendData.Value)
+                return;
+
             var request = NetworkApiRequest.Create(GlobalData.PreRaidUrl);
 
             request.OnSuccess = (response, code) =>
@@ -445,7 +465,8 @@ namespace SPTLeaderboard
 
             request.OnFail = (error, code) =>
             {
-                ServerErrorHandler.HandleError(error, code);
+                if (Settings.Instance.EnableSendData.Value)
+                    ServerErrorHandler.HandleError(error, code);
             };
 
             string jsonBody = JsonConvert.SerializeObject(data);
