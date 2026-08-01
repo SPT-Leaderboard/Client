@@ -284,7 +284,7 @@ public static class DataUtils
         };
     }
 
-    public static void TryGetTransitionData(RaidEndDescriptorClass resultRaid, Action<string, bool> callback)
+    public static void TryGetTransitionData(SessionResult resultRaid, Action<string, bool> callback)
     {
         var lastRaidTransitionTo = "None";
         

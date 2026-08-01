@@ -37,9 +37,9 @@ namespace SPTLeaderboard.Utils.Zones
 
             try
             {
-                if (CameraClass.Instance?.SSAA?.isActiveAndEnabled == true)
+                if (EFT.CameraControl.CameraManager.Instance?.SSAA?.isActiveAndEnabled == true)
                 {
-                    _screenScale = CameraClass.Instance.SSAA.GetOutputWidth() / (float)CameraClass.Instance.SSAA.GetInputWidth();
+                    _screenScale = EFT.CameraControl.CameraManager.Instance.SSAA.GetOutputWidth() / (float)EFT.CameraControl.CameraManager.Instance.SSAA.GetInputWidth();
                 }
             }
             catch (System.Exception ex)

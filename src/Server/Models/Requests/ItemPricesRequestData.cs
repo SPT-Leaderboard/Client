@@ -7,5 +7,5 @@ namespace SPTLeaderboard.Server.Models.Requests;
 public record ItemPricesRequestData : IRequestData
 {
     [JsonPropertyName("templateIds")]
-    public MongoId[] TemplateIds { get; set; }
+    public MongoId[] TemplateIds { get; set; } = [];
 }

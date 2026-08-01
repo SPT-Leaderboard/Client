@@ -6,7 +6,7 @@ namespace SPTLeaderboard.Server.Models.Responses;
 public record CheckInboxResponseData
 {
     [JsonPropertyName("status")]
-    public string Status { get; set; }
+    public string Status { get; set; } = string.Empty;
     
     [JsonPropertyName("sessionId")]
     public MongoId SessionId { get; set; }

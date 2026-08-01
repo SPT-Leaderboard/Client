@@ -15,12 +15,11 @@ using SPTLeaderboard.Services;
 using SPTLeaderboard.Utils;
 using SPTLeaderboard.Utils.Zones;
 using UnityEngine;
-using Timer = System.Timers.Timer;
 
 namespace SPTLeaderboard
 {
     [BepInDependency("com.arys.unitytoolkit", "2.0.1")]
-    [BepInPlugin("harmonyzt.SPTLeaderboard", "SPTLeaderboard.Client", "5.1.8")]
+    [BepInPlugin("harmonyzt.SPTLeaderboard", "SPTLeaderboard.Client", "5.1.9")]
     public class LeaderboardPlugin : BaseUnityPlugin
     {
         public static LeaderboardPlugin Instance { get; private set; }
@@ -28,8 +27,8 @@ namespace SPTLeaderboard
         private Settings _settings;
         private IconSaver _iconSaver;
         
-        private Timer _inRaidHeartbeatTimer;
-        private Timer _preRaidCheckTimer;
+        private System.Timers.Timer _inRaidHeartbeatTimer;
+        private System.Timers.Timer _preRaidCheckTimer;
         
         public bool cachedPlayerModelPreview;
         public bool engLocaleLoaded;
@@ -497,7 +496,7 @@ namespace SPTLeaderboard
             StopInRaidHeartbeat();
             HeartbeatSender.Send(PlayerState.IN_RAID);
         
-            _inRaidHeartbeatTimer = new Timer(_settings.SupportInRaidConnectionTimer.Value * 1000);
+            _inRaidHeartbeatTimer = new System.Timers.Timer(_settings.SupportInRaidConnectionTimer.Value * 1000);
             _inRaidHeartbeatTimer.Elapsed += (_, __) =>
             {
                 if (PlayerHelper.HasRaidStarted())

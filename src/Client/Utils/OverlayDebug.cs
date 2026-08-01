@@ -75,10 +75,10 @@ public class OverlayDebug: MonoBehaviour
         var zoneTrackerService = LeaderboardPlugin.Instance.ZoneTrackerService;
         var profile = PlayerHelper.GetProfile();
         var sessionCounters = profile?.EftStats.SessionCounters;
-        int usedMedicines = sessionCounters?.GetInt(SessionCounterTypesAbstractClass.Medicines) ?? 0;
-        float healthHealed = sessionCounters?.GetFloat(SessionCounterTypesAbstractClass.Heal) ?? 0f;
-        float combatDamage = sessionCounters?.GetFloat(SessionCounterTypesAbstractClass.CombatDamage) ?? 0f;
-        float damageToEnemy = sessionCounters?.GetFloat(SessionCounterTypesAbstractClass.CauseBodyDamage) ?? 0f;
+        int usedMedicines = sessionCounters?.GetInt(EFT.Counters.PredefinedCounters.Medicines) ?? 0;
+        float healthHealed = sessionCounters?.GetFloat(EFT.Counters.PredefinedCounters.Heal) ?? 0f;
+        float combatDamage = sessionCounters?.GetFloat(EFT.Counters.PredefinedCounters.CombatDamage) ?? 0f;
+        float damageToEnemy = sessionCounters?.GetFloat(EFT.Counters.PredefinedCounters.CauseBodyDamage) ?? 0f;
         
         
         debugValues.AppendLine("        ─═ RAID HITS ═─");

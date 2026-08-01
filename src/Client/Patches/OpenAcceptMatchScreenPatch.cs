@@ -18,7 +18,7 @@ namespace SPTLeaderboard.Patches
                 "Show",
                 BindingFlags.Instance | BindingFlags.Public,
                 null,
-                [typeof(MatchMakerAcceptScreen.GClass3914)],
+                [typeof(MatchMakerAcceptScreen.MatchmakerAcceptScreenController)],
                 null
             );
 

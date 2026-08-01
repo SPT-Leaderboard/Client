@@ -41,7 +41,7 @@ public class PlayerHelper
         EquipmentSlot.Headwear,
         EquipmentSlot.Earpiece];
     
-    public static ISession GetSession(bool throwIfNull = false)
+    public static IEftSession GetSession(bool throwIfNull = false)
     {
         var session = ClientAppUtils.GetClientApp().Session;
 
@@ -119,7 +119,7 @@ public class PlayerHelper
         
         foreach (var slotSearch in AllSlotsToSearch)
         {
-            var listEquipment = pmcData.Inventory.GetItemsInSlots(slotSearch.ToEnumerable());
+            var listEquipment = pmcData.Inventory.GetItemsInSlots(new[] { slotSearch });
             
             List<ItemDataWithLocale> filtered = new();
             foreach (var equipment in listEquipment)
@@ -174,7 +174,7 @@ public class PlayerHelper
         if (item == null)
             return 0;
 
-        var capacity = item.Grids.Sum(CompoundItem.Class2341.class2341_0.method_10);
+        var capacity = item.Grids.Sum(CompoundItem.CG_Class2341.CG_Class2341.method_10);
 #if DEBUG || BETA
         Logger.LogWarning($"Size {slot.ToString()} {capacity}");
 #endif
@@ -193,7 +193,7 @@ public class PlayerHelper
         if (item == null)
             return 0;
 
-        var capacity = item.Grids.Sum(CompoundItem.Class2341.class2341_0.method_10);
+        var capacity = item.Grids.Sum(CompoundItem.CG_Class2341.CG_Class2341.method_10);
 #if DEBUG || BETA
         Logger.LogWarning($"Size Stash {capacity}");
 #endif
@@ -249,13 +249,13 @@ public class PlayerHelper
     public static string TryGetAgressorName(Profile profile)
     {
         string nameKiller = "";
-        GClass788 agressorData = profile.EftStats.Aggressor;
+        AggressorStats agressorData = profile.EftStats.Aggressor;
         if (agressorData != null)
         {
                     
-            if (((GInterface214)agressorData).ProfileId != profile.Id)
+            if (((IProfileDataContainer)agressorData).ProfileId != profile.Id)
             {
-                if (((GInterface214)agressorData).ProfileId == "66f3fad50ec64d74847d049d")
+                if (((IProfileDataContainer)agressorData).ProfileId == "66f3fad50ec64d74847d049d")
                 {
                     nameKiller = LocalizationService.GetLocaleName(agressorData.Name, false);
                 }
@@ -276,10 +276,10 @@ public class PlayerHelper
     public static string TryGetBodyPartKilled(Profile profile)
     {
         string BodyPart = "";
-        GClass788 agressorData = profile.EftStats.Aggressor;
+        AggressorStats agressorData = profile.EftStats.Aggressor;
         if (agressorData != null)
         {
-            if (((GInterface214)agressorData).ProfileId != profile.Id)
+            if (((IProfileDataContainer)agressorData).ProfileId != profile.Id)
             {
                 BodyPart = agressorData.ColliderType.ToString();
             }
@@ -295,10 +295,10 @@ public class PlayerHelper
     public static string TryGetCategoryKiller(Profile profile)
     {
         string CategoryKiller = "";
-        GClass788 agressorData = profile.EftStats.Aggressor;
+        AggressorStats agressorData = profile.EftStats.Aggressor;
         if (agressorData != null)
         {
-            if (((GInterface214)agressorData).ProfileId != profile.Id)
+            if (((IProfileDataContainer)agressorData).ProfileId != profile.Id)
             {
                 CategoryKiller = agressorData.Category.ToString();
             }

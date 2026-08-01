@@ -14,14 +14,14 @@ namespace SPTLeaderboard.Patches
                 BindingFlags.Instance | BindingFlags.Public);
 
         [PatchPrefix]
-        static bool Prefix(DamageInfoStruct damageInfo, EBodyPart bodyPartType, EBodyPartColliderType colliderType)
+        static bool Prefix(EFT.Ballistics.DamageInfo damageInfo, EBodyPart bodyPartType, EBodyPartColliderType colliderType)
         {
             if (!Settings.Instance.EnableSendData.Value)
                 return true;
             
             Utils.Logger.LogDebugWarning("[ProcessShot Local] Hit");
             
-            IPlayerOwner player = damageInfo.Player;
+            IObserverToPlayerBridge player = damageInfo.Player;
 
             Utils.Logger.LogDebugWarning($"[ProcessShot Local] Nick -> {player?.Nickname}");
 

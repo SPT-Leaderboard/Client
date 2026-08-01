@@ -24,11 +24,11 @@ public sealed class PlayerRotateBlocker(Player player)
 
         _savedYawLimit          = mc.YawLimit;
         _savedPitchLimit        = mc.PitchLimit;
-        _savedPitchTargetLimit  = mc.PitchTargetLimit;
+        _savedPitchTargetLimit  = mc._pitchTargetLimit;
         _savedRotationAction    = mc.RotationAction;
         _savedRotation          = mc.Rotation;
         _savedPreviousRotation  = mc.PreviousRotation;
-        _savedMyTransformRotation = mc.MyTransformRotation;
+        _savedMyTransformRotation = mc._myTransformRotation;
 
         var yaw   = mc.Yaw;
         var pitch = mc.Pitch;
@@ -36,7 +36,7 @@ public sealed class PlayerRotateBlocker(Player player)
         mc.SetRotationLimit(new Vector2(yaw, yaw), new Vector2(pitch, pitch));
         mc.SetPitchForce(pitch, pitch);
         mc.SetDirectlyLookRotations(new Vector2(yaw, pitch), new Vector2(yaw, pitch));
-        mc.MyTransformRotation = Quaternion.Euler(0f, yaw, 0f);
+        mc._myTransformRotation = Quaternion.Euler(0f, yaw, 0f);
         mc.UpdateDeltaAngle();
 
         mc.RotationAction = MovementContext.DefaultRotationFunction;
@@ -53,7 +53,7 @@ public sealed class PlayerRotateBlocker(Player player)
         mc.SetRotationLimit(_savedYawLimit, _savedPitchLimit);
         mc.SetPitchSmoothly(_savedPitchTargetLimit);
         mc.SetDirectlyLookRotations(_savedRotation, _savedPreviousRotation);
-        mc.MyTransformRotation = _savedMyTransformRotation;
+        mc._myTransformRotation = _savedMyTransformRotation;
         mc.UpdateDeltaAngle();
 
         mc.RotationAction = _savedRotationAction ?? MovementContext.DefaultRotationFunction;

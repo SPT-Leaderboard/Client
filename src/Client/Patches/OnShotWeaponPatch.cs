@@ -11,7 +11,7 @@ namespace SPTLeaderboard.Patches
     {
         protected override MethodBase GetTargetMethod()
         {
-            var targetType = typeof(LocationStatisticsCollectorAbstractClass);
+            var targetType = typeof(EFT.BaseStatisticsManager);
             return targetType?.GetMethod(
                 "OnShot",
                 BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic
@@ -19,7 +19,7 @@ namespace SPTLeaderboard.Patches
         }
 
         [PatchPrefix]
-        static bool Prefix(Weapon weapon, AmmoItemClass ammo)
+        static bool Prefix(Weapon weapon, Ammo ammo)
         {
             if (!Settings.Instance.EnableSendData.Value)
                 return true;

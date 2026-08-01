@@ -11,7 +11,7 @@ namespace SPTLeaderboard.Patches
         protected override MethodBase GetTargetMethod()
         {
             return typeof(MatchMakerSideSelectionScreen).GetMethod(
-                "method_12",
+                nameof(MatchMakerSideSelectionScreen.SetSelectedSide),
                 BindingFlags.Instance | BindingFlags.Public,
                 null,
                 new[] { typeof(ESideType) },

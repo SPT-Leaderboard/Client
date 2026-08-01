@@ -24,8 +24,8 @@ namespace SPTLeaderboard.Patches
                     typeof(InventoryController),
                     typeof(CompoundItem[]),
                     typeof(IHealthController),
-                    typeof(ISession),
-                    typeof(GClass3943)
+                    typeof(IEftSession),
+                    typeof(RagfairSearch)
                 },
                 null
             );

@@ -1,5 +1,6 @@
 using System.Reflection;
-using HarmonyLib;
+using EFT;
+using EFT.InventoryLogic;
 using SPT.Reflection.Patching;
 using SPTLeaderboard.Utils;
 
@@ -8,10 +9,10 @@ namespace SPTLeaderboard.Patches
     public class OnPlayerAddedItem: ModulePatch
     {
         protected override MethodBase GetTargetMethod() =>
-            AccessTools.Method(AccessTools.TypeByName("Player"), "OnItemAdded");
+            typeof(Player).GetInterfaceMap(typeof(IAddHandler)).TargetMethods[0];
     
         [PatchPostfix]
-        static void Postfix(object __instance, GEventArgs1 eventArgs)
+        static void Postfix(object __instance, AddItemEventArgs eventArgs)
         {
             if (ReferenceEquals(__instance, PlayerHelper.Instance.Player))
             {

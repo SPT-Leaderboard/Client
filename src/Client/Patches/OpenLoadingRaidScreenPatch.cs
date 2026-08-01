@@ -15,9 +15,9 @@ namespace SPTLeaderboard.Patches
                 BindingFlags.Instance | BindingFlags.Public,
                 null,
                 [
-                    typeof(ISession), 
+                    typeof(IEftSession),
                     typeof(RaidSettings),
-                    typeof(MatchmakerPlayerControllerClass)
+                    typeof(MatchmakerPlayersController)
                 ],
                 null
             );

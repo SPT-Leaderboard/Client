@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
     <PropertyGroup>
-        <TargetFramework>net9.0</TargetFramework>
+        <TargetFramework>net10.0</TargetFramework>
         <RootNamespace>SPTLeaderboard.Server</RootNamespace>
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
@@ -12,9 +12,9 @@
         <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
         <Title>SPTLeaderboard CSharp Server</Title>
         <Authors>yuyuimoe</Authors>
-        <Description>SPTLeaderboard Server Mod For SPT 4.0.0</Description>
+        <Description>SPTLeaderboard Server Mod For SPT 4.1.0</Description>
         <Copyright>MPL 2.0</Copyright>
-        <PackageProjectUrl>https://sptlb.yuyui.moe</PackageProjectUrl>
+        <PackageProjectUrl>https://sptlb.katrinfoxvr.com</PackageProjectUrl>
         <RepositoryUrl>https://github.com/SPT-Leaderboard/Server-CSharp</RepositoryUrl>
         <RepositoryType>Git</RepositoryType>
         <Configurations>Debug;Release;Beta</Configurations>
@@ -23,13 +23,13 @@
     </PropertyGroup>
 
     <PropertyGroup>
-        <TarkovDir Condition=" '$(TarkovDir)' == '' ">C:\Games\SPT\</TarkovDir>
-        <TarkovDevDir Condition=" '$(TarkovDevDir)' == '' ">C:\Games\SPTDEV\</TarkovDevDir>
-        <ServerModDir>SPT\user\mods\SPT-Leaderboard\</ServerModDir>
+        <TarkovDir Condition=" '$(TarkovDir)' == '' ">C:\SPT41\</TarkovDir>
+        <TarkovDevDir Condition=" '$(TarkovDevDir)' == '' ">C:\SPTDEV\</TarkovDevDir>
+        <ServerModDir>SPT_Runtime\user\mods\SPT-Leaderboard\</ServerModDir>
     </PropertyGroup>
 
     <ItemGroup>
-      <PackageReference Include="SPTarkov.Server.Core" Version="4.0.0" />
+      <PackageReference Include="SPTarkov.Server.Core" Version="4.1.0" />
     </ItemGroup>
 
     <Target Name="CopyServerDll" AfterTargets="Build">

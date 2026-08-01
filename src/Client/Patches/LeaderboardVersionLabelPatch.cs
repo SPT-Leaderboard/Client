@@ -10,7 +10,7 @@ namespace SPTLeaderboard.Patches
 	{
 		protected override MethodBase GetTargetMethod()
 		{
-			return AccessTools.Method(typeof(PreloaderUI), "method_6");
+			return AccessTools.Method(typeof(PreloaderUI), nameof(PreloaderUI.RefreshCornerLabel));
 		}
 
 		[PatchPrefix]
@@ -20,8 +20,6 @@ namespace SPTLeaderboard.Patches
 			const string buildType = " [DEBUG]";
 #elif BETA
             const string buildType = " [BETA]";
-#else
-            const string buildType = "";
 #endif
 
 #if DEBUG || BETA

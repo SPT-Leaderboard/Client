@@ -13,6 +13,7 @@ using SPTLeaderboard.Data.Base;
 using SPTLeaderboard.Data.Internal;
 using SPTLeaderboard.Integrations;
 using SPTLeaderboard.Utils;
+using LeaderboardHideoutData = SPTLeaderboard.Data.HideoutData;
 
 namespace SPTLeaderboard.Services
 {
@@ -25,7 +26,7 @@ namespace SPTLeaderboard.Services
         /// </summary>
         /// <param name="localRaidSettings">Local raid settings</param>
         /// <param name="resultRaid">Raid result</param>
-        public UniTask ProcessAndSendProfileAsync(LocalRaidSettings localRaidSettings, RaidEndDescriptorClass resultRaid)
+        public UniTask ProcessAndSendProfileAsync(LocalRaidSettings localRaidSettings, SessionResult resultRaid)
         {
             if (!ShouldProcessProfile())
                 return UniTask.CompletedTask;
@@ -85,7 +86,7 @@ namespace SPTLeaderboard.Services
         /// <summary>
         /// Deserializes profile data from raid result
         /// </summary>
-        private ProfileData DeserializeProfileData(RaidEndDescriptorClass resultRaid)
+        private ProfileData DeserializeProfileData(SessionResult resultRaid)
         {
             try
             {
@@ -115,7 +116,7 @@ namespace SPTLeaderboard.Services
         /// <summary>
         /// Gets session data
         /// </summary>
-        private (string profileId, Profile pmcData, Profile scavData) GetSessionData(ISession session)
+        private (string profileId, Profile pmcData, Profile scavData) GetSessionData(IEftSession session)
         {
             var profileId = session.Profile.Id;
             var pmcData = session.GetProfileBySide(ESideType.Pmc);
@@ -128,7 +129,7 @@ namespace SPTLeaderboard.Services
         /// Gets raid information
         /// </summary>
         private (string gameVersion, string lastRaidLocationRaw, string lastRaidLocation) GetRaidInfo(
-            LocalRaidSettings localRaidSettings, RaidEndDescriptorClass resultRaid, Profile profile)
+            LocalRaidSettings localRaidSettings, SessionResult resultRaid, Profile profile)
         {
             var gameVersion = profile.Info.GameVersion;
             var lastRaidLocationRaw = localRaidSettings.location;
@@ -143,7 +144,7 @@ namespace SPTLeaderboard.Services
         private void ProcessAndSendProfileData(
             (string profileId, Profile pmcData, Profile scavData) sessionData,
             (string gameVersion, string lastRaidLocationRaw, string lastRaidLocation) raidInfo,
-            bool isScavRaid, RaidEndDescriptorClass resultRaid)
+            bool isScavRaid, SessionResult resultRaid)
         {
             var (profileId, pmcData, scavData) = sessionData;
             var (gameVersion, lastRaidLocationRaw, lastRaidLocation) = raidInfo;
@@ -205,7 +206,7 @@ namespace SPTLeaderboard.Services
         /// <summary>
         /// Gets killer name
         /// </summary>
-        private (string, string, string) GetAgressorData(RaidEndDescriptorClass resultRaid, Profile pmcData, Profile scavData)
+        private (string, string, string) GetAgressorData(SessionResult resultRaid, Profile pmcData, Profile scavData)
         {
             if (resultRaid.result != ExitStatus.Killed)
                 return ("", "", "");
@@ -226,7 +227,7 @@ namespace SPTLeaderboard.Services
         /// <summary>
         /// Calculates raid revenue
         /// </summary>
-        private List<ItemData> GetRaidRevenueItems(RaidEndDescriptorClass resultRaid, bool isScavRaid)
+        private List<ItemData> GetRaidRevenueItems(SessionResult resultRaid, bool isScavRaid)
         {
             var preRaidItems = LeaderboardPlugin.Instance.TrackingLoot.PreRaidItems;
             if (resultRaid.result is ExitStatus.Runner or ExitStatus.Transit or ExitStatus.Survived)
@@ -244,7 +245,7 @@ namespace SPTLeaderboard.Services
         /// <summary>
         /// Gets transition data
         /// </summary>
-        private (bool isTransition, string lastRaidTransitionTo) GetTransitionData(RaidEndDescriptorClass resultRaid)
+        private (bool isTransition, string lastRaidTransitionTo) GetTransitionData(SessionResult resultRaid)
         {
             var isTransition = false;
             var lastRaidTransitionTo = "None";
@@ -353,12 +354,12 @@ namespace SPTLeaderboard.Services
 
             if (isScavRaid)
             {
-                killedPmc = scavData.EftStats.SessionCounters.GetInt(SessionCounterTypesAbstractClass.KilledPmc);
-                killedSavage = scavData.EftStats.SessionCounters.GetInt(SessionCounterTypesAbstractClass.KilledSavage);
-                killedBoss = scavData.EftStats.SessionCounters.GetInt(SessionCounterTypesAbstractClass.KilledBoss);
-                hitCount = scavData.EftStats.SessionCounters.GetInt(SessionCounterTypesAbstractClass.HitCount);
+                killedPmc = scavData.EftStats.SessionCounters.GetInt(EFT.Counters.PredefinedCounters.KilledPmc);
+                killedSavage = scavData.EftStats.SessionCounters.GetInt(EFT.Counters.PredefinedCounters.KilledSavage);
+                killedBoss = scavData.EftStats.SessionCounters.GetInt(EFT.Counters.PredefinedCounters.KilledBoss);
+                hitCount = scavData.EftStats.SessionCounters.GetInt(EFT.Counters.PredefinedCounters.HitCount);
                 totalDamage =
-                    (int)scavData.EftStats.SessionCounters.GetFloat(SessionCounterTypesAbstractClass.CauseBodyDamage);
+                    (int)scavData.EftStats.SessionCounters.GetFloat(EFT.Counters.PredefinedCounters.CauseBodyDamage);
                 expLooting = 0;
                 damageTaken = 0;
 
@@ -372,14 +373,14 @@ namespace SPTLeaderboard.Services
             }
             else
             {
-                killedPmc = pmcData.EftStats.SessionCounters.GetInt(SessionCounterTypesAbstractClass.KilledPmc);
-                killedSavage = pmcData.EftStats.SessionCounters.GetInt(SessionCounterTypesAbstractClass.KilledSavage);
-                killedBoss = pmcData.EftStats.SessionCounters.GetInt(SessionCounterTypesAbstractClass.KilledBoss);
-                expLooting = pmcData.EftStats.SessionCounters.GetInt(SessionCounterTypesAbstractClass.ExpLooting);
-                hitCount = pmcData.EftStats.SessionCounters.GetInt(SessionCounterTypesAbstractClass.HitCount);
+                killedPmc = pmcData.EftStats.SessionCounters.GetInt(EFT.Counters.PredefinedCounters.KilledPmc);
+                killedSavage = pmcData.EftStats.SessionCounters.GetInt(EFT.Counters.PredefinedCounters.KilledSavage);
+                killedBoss = pmcData.EftStats.SessionCounters.GetInt(EFT.Counters.PredefinedCounters.KilledBoss);
+                expLooting = pmcData.EftStats.SessionCounters.GetInt(EFT.Counters.PredefinedCounters.ExpLooting);
+                hitCount = pmcData.EftStats.SessionCounters.GetInt(EFT.Counters.PredefinedCounters.HitCount);
                 totalDamage =
-                    (int)pmcData.EftStats.SessionCounters.GetFloat(SessionCounterTypesAbstractClass.CauseBodyDamage);
-                damageTaken = (int)pmcData.EftStats.SessionCounters.GetFloat(SessionCounterTypesAbstractClass.BloodLoss);
+                    (int)pmcData.EftStats.SessionCounters.GetFloat(EFT.Counters.PredefinedCounters.CauseBodyDamage);
+                damageTaken = (int)pmcData.EftStats.SessionCounters.GetFloat(EFT.Counters.PredefinedCounters.BloodLoss);
 
                 Logger.LogDebugWarning($"Death coordinates {PlayerHelper.Instance.LastDeathPosition}");
                 Logger.LogDebugWarning("\n");
@@ -402,20 +403,20 @@ namespace SPTLeaderboard.Services
         /// <summary>
         /// Gets hideout data
         /// </summary>
-        private HideoutData GetHideoutData(Profile pmcData, bool isScavRaid)
+        private LeaderboardHideoutData GetHideoutData(Profile pmcData, bool isScavRaid)
         {
             if (isScavRaid)
-                return new HideoutData();
+                return new LeaderboardHideoutData();
 
             var areasPmc = pmcData.Hideout.Areas.ToList();
-            var hideoutData = new HideoutData();
+            var hideoutData = new LeaderboardHideoutData();
 
             foreach (var areaPmc in areasPmc)
             {
                 if (areaPmc.AreaType != EAreaType.NotSet)
                 {
                     var propertyName = areaPmc.AreaType.ToString();
-                    var property = typeof(HideoutData).GetProperty(propertyName);
+                    var property = typeof(LeaderboardHideoutData).GetProperty(propertyName);
                     if (property != null && property.PropertyType == typeof(int))
                     {
                         property.SetValue(hideoutData, areaPmc.Level);
@@ -484,9 +485,9 @@ namespace SPTLeaderboard.Services
             float averageShot, int longestShot, int longestHeadshot, float maxHealth, float currentHealth,
             float currentEnergy, float currentHydration, float maxEnergy, float maxHydration,
             int killedPmc, int killedSavage, int killedBoss, int expLooting, int hitCount,
-            int totalDamage, int damageTaken, HideoutData hideoutData, List<string> listModsPlayer,
+            int totalDamage, int damageTaken, LeaderboardHideoutData hideoutData, List<string> listModsPlayer,
             bool statTrackIsUsed, Dictionary<string, WeaponInfo> processedStatTrackData,
-            Profile pmcData, Profile scavData, RaidEndDescriptorClass resultRaid)
+            Profile pmcData, Profile scavData, SessionResult resultRaid)
         {
             if (haveDevItems)
                 return;
@@ -520,7 +521,7 @@ namespace SPTLeaderboard.Services
         /// Creates base profile data
         /// </summary>
         private BaseData CreateBaseData(string profileId, string gameVersion, bool isScavRaid, float maxHealth,
-            float currentHealth, Profile pmcData, int killedPmc, RaidEndDescriptorClass resultRaid,
+            float currentHealth, Profile pmcData, int killedPmc, SessionResult resultRaid,
             List<string> listModsPlayer, bool haveDevItems)
         {
             int calculatedTime;
@@ -566,7 +567,7 @@ namespace SPTLeaderboard.Services
         /// Creates PMC profile data
         /// </summary>
         private AdditiveProfileData CreatePmcProfileData(BaseData baseData, (string, string, string) agressorData, bool discFromRaid,
-            bool isTransition, bool statTrackIsUsed, int expLooting, HideoutData hideoutData, int hitCount,
+            bool isTransition, bool statTrackIsUsed, int expLooting, LeaderboardHideoutData hideoutData, int hitCount,
             string lastRaidLocation, string lastRaidLocationRaw, string lastRaidTransitionTo,
             Dictionary<string, int> allAchievementsDict, int longestShot, int longestHeadshot, float averageShot,
             int killedBoss, int killedSavage, Dictionary<string, WeaponInfo> processedStatTrackData,

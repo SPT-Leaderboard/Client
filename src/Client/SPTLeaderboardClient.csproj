@@ -17,8 +17,8 @@
         <AssemblyOriginatorKeyFile>Dependencies\Keys\sptld.snk</AssemblyOriginatorKeyFile>
     </PropertyGroup>
     <PropertyGroup>
-        <TarkovDir Condition=" '$(TarkovDir)' == '' ">C:\Games\SPT\</TarkovDir>
-        <TarkovDevDir Condition=" '$(TarkovDevDir)' == '' ">C:\Games\SPTDEV\</TarkovDevDir>
+        <TarkovDir Condition=" '$(TarkovDir)' == '' ">C:\SPT41\</TarkovDir>
+        <TarkovDevDir Condition=" '$(TarkovDevDir)' == '' ">C:\SPTDEV\</TarkovDevDir>
         <TarkovPluginsSPTDir>$(TarkovDir)BepInEx\plugins\spt\</TarkovPluginsSPTDir>
         <TarkovPluginsDir>$(TarkovDir)BepInEx\plugins\</TarkovPluginsDir>
         <TarkovManagedDir>$(TarkovDir)EscapeFromTarkov_Data\Managed\</TarkovManagedDir>

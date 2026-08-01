@@ -17,17 +17,17 @@ namespace SPTLeaderboard.Patches
                 null,
                 CallingConventions.Any,
                 [
-                    typeof(ItemContextAbstractClass),    // sourceContext
+                    typeof(ItemContext),                 // sourceContext
                     typeof(CompoundItem),                // lootItem
-                    typeof(ISession),                    // session
+                    typeof(IEftSession),                 // session
                     typeof(InventoryController),         // inventoryController
                     typeof(IHealthController),           // health
                     typeof(Profile),                     // profile
-                    typeof(InsuranceCompanyClass),       // insurance
-                    typeof(EquipmentBuildsStorageClass), // buildsStorage
+                    typeof(EFT.UI.Insurance.InsuranceCompany), // insurance
+                    typeof(EFT.UI.Builds.EquipmentBuildsStorage), // buildsStorage
                     typeof(ItemsPanel.EItemsTab),        // currentTab
                     typeof(bool),                        // inRaid
-                    typeof(SortingTableItemClass),       // sortingTable
+                    typeof(SortingTable),                // sortingTable
                     typeof(SimpleStashPanel.EStashSearchAvailability), // searchAvailability
                     typeof(bool),                        // isInventoryBlocked
                     typeof(InventoryEquipment)           // equipment (nullable, но тип обязателен)
@@ -39,9 +39,9 @@ namespace SPTLeaderboard.Patches
         [PatchPostfix]
         static void Postfix(
             ItemsPanel __instance,
-            ItemContextAbstractClass sourceContext,
+            ItemContext sourceContext,
             CompoundItem lootItem,
-            ISession session,
+            IEftSession session,
             InventoryController inventoryController,
             bool inRaid)
         {

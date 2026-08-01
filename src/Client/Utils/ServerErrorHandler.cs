@@ -82,9 +82,9 @@ namespace SPTLeaderboard.Utils
         {
             try
             {
-                if (Singleton<SharedGameSettingsClass>.Instance?.Game?.Settings?.Language != null)
+                if (Singleton<EFT.Settings.SettingsManager>.Instance?.Game?.Settings?.Language != null)
                 {
-                    return Singleton<SharedGameSettingsClass>.Instance.Game.Settings.Language;
+                    return Singleton<EFT.Settings.SettingsManager>.Instance.Game.Settings.Language;
                 }
             }
             catch

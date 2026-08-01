@@ -19,7 +19,7 @@ namespace SPTLeaderboard.Patches
                 new[]
                 {
                     typeof(Profile), 
-                    typeof(MatchmakerPlayerControllerClass),
+                    typeof(EFT.UI.Matchmaker.MatchmakerPlayersController),
                     typeof(ESessionMode)
                 },
                 null
@@ -35,7 +35,7 @@ namespace SPTLeaderboard.Patches
             
             if (!LeaderboardPlugin.Instance.engLocaleLoaded)
             { 
-                bool hasEnLocale = LocaleManagerClass.LocaleManagerClass.Dictionary_4.TryGetValue("en", out _);
+                bool hasEnLocale = LocalizationManager.Instance.ContainsCulture("en");
                 if (!hasEnLocale)
                 {
                     _ = LocalizationService.Instance.LoadEnglishLocaleAsync();

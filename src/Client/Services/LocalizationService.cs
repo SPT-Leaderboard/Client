@@ -20,11 +20,11 @@ namespace SPTLeaderboard.Services
         /// <returns></returns>
         private string CurrentLanguage()
         {
-            if (Singleton<SharedGameSettingsClass>.Instance.Game.Settings.Language == null)
+            if (Singleton<EFT.Settings.SettingsManager>.Instance.Game.Settings.Language == null)
             {
                 return "en";
             }
-            return Singleton<SharedGameSettingsClass>.Instance.Game.Settings.Language;
+            return Singleton<EFT.Settings.SettingsManager>.Instance.Game.Settings.Language;
         }
     
         public static LocalizationService Create()
@@ -102,7 +102,7 @@ namespace SPTLeaderboard.Services
         }
         
         /// <summary>
-        /// Get localization by id with current locale in LocaleManagerClass EFT
+        /// Get localization by id with current locale in EFT's LocalizationManager.
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
@@ -117,7 +117,7 @@ namespace SPTLeaderboard.Services
         }
 
         /// <summary>
-        /// Get localization by id in LocaleManagerClass EFT
+        /// Get localization by id in EFT's LocalizationManager.
         /// </summary>
         /// <param name="id"></param>
         /// <param name="throwUnknown"></param>
@@ -145,7 +145,7 @@ namespace SPTLeaderboard.Services
                 return "Unknown";
             }
             string text;
-            if (LocaleManagerClass.LocaleManagerClass.method_8(id, locale, out text))
+            if (LocalizationManager.Instance.TryGetLocalization(id, locale, out text))
             {
                 return text;
             }
@@ -188,7 +188,7 @@ namespace SPTLeaderboard.Services
             };
         }
         
-        public static string GetCorrectedNickname(GInterface214 profileData)
+        public static string GetCorrectedNickname(IProfileDataContainer profileData)
         {
             return profileData.Side == EPlayerSide.Savage ? Transliterate(profileData.Nickname) : profileData.Nickname;
         }
@@ -200,7 +200,7 @@ namespace SPTLeaderboard.Services
         /// <returns></returns>
         private static string Transliterate(string text)
         {
-            return GClass953.Dictionary_0.Aggregate(text, (current, key) => current.Replace(key.Key, key.Value));
+            return Transliteration.Iso.Aggregate(text, (current, key) => current.Replace(key.Key, key.Value));
         }
 
         /// <summary>
@@ -213,7 +213,7 @@ namespace SPTLeaderboard.Services
                 Logger.LogInfo("Request to load FULL english locale");
                 var session = PlayerHelper.GetSession();
                 Dictionary<string, string> result = await session.GetLocalization("en").AsUniTask();
-                LocaleManagerClass.LocaleManagerClass.UpdateLocales("en", result);
+                LocalizationManager.Instance.UpdateLocales("en", result);
             }
             catch (Exception e)
             {
@@ -231,11 +231,11 @@ namespace SPTLeaderboard.Services
         /// Defaults to <see cref="ENotificationDurationType.Default"/>.
         /// </param>
         /// <remarks>
-        /// Internally calls <see cref="NotificationManagerClass.DisplayMessageNotification"/> to show the message.
+        /// Internally calls <see cref="EFT.Communications.NotificationManager.DisplayMessageNotification"/>.
         /// </remarks>
         public static void Notification(string text, ENotificationDurationType durationType = ENotificationDurationType.Default)
         {
-            NotificationManagerClass.DisplayMessageNotification(
+            EFT.Communications.NotificationManager.DisplayMessageNotification(
                 text, 
                 durationType);
         }
@@ -249,11 +249,11 @@ namespace SPTLeaderboard.Services
         /// Defaults to <see cref="ENotificationDurationType.Long"/>.
         /// </param>
         /// <remarks>
-        /// Internally calls <see cref="NotificationManagerClass.DisplayWarningNotification"/> to show the message.
+        /// Internally calls <see cref="EFT.Communications.NotificationManager.DisplayWarningNotification"/>.
         /// </remarks>
         public static void NotificationWarning(string text, ENotificationDurationType durationType = ENotificationDurationType.Long)
         {
-            NotificationManagerClass.DisplayWarningNotification(
+            EFT.Communications.NotificationManager.DisplayWarningNotification(
                 text, 
                 durationType);
         }

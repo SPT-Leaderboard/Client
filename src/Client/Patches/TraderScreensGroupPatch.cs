@@ -17,7 +17,7 @@ namespace SPTLeaderboard.Patches
                 null,
                 new[]
                 {
-                    typeof(TraderScreensGroup.GClass3888)
+                    typeof(TraderScreensGroup.TraderScreenController)
                 },
                 null
             );

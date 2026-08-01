@@ -3,8 +3,12 @@ using System.IO;
 using System.Threading;
 using Comfort.Common;
 using Cysharp.Threading.Tasks;
+using EFT;
 using EFT.Communications;
+using EFT.InventoryLogic;
+using EFT.PlayerIcons;
 using EFT.UI;
+using PlayerIcons;
 using SPT.Reflection.Utils;
 using SPTLeaderboard.Data;
 using UnityEngine;
@@ -15,7 +19,7 @@ namespace SPTLeaderboard.Utils
     public class IconSaver : MonoBehaviour
     {
         private bool _isShowed;
-        private GClass929 _presetIcon;
+        private ItemIcon _presetIcon;
         private PlayerModelView _targetPlayerModelView;
         
         public GameObject clonePlayerModelViewObj;
@@ -28,9 +32,12 @@ namespace SPTLeaderboard.Utils
         {
             var profile = PlayerHelper.GetProfile();
 
-            XYCellSizeStruct textureSize = new XYCellSizeStruct(500, 500);
+            IntVec2 textureSize = new IntVec2(500, 500);
 
-            _presetIcon = Singleton<GClass927>.Instance.method_11(new GClass932(profile.Inventory.Equipment.CloneVisibleItem(), profile.Customization), textureSize);
+            var request = new PlayerIconRequest(
+                profile.Inventory.Equipment.CloneVisibleItem<InventoryEquipment>(),
+                profile.Customization);
+            _presetIcon = Singleton<PlayerIconCreator>.Instance.GetIconInternal(request, textureSize);
 
             if (_presetIcon.Sprite == null)
             {
@@ -55,7 +62,7 @@ namespace SPTLeaderboard.Utils
                 {
                     if (!_isShowed)
                     {
-                        ISession backEndSession = PatchConstants.BackEndSession;
+                        IEftSession backEndSession = PatchConstants.BackEndSession;
                         if (backEndSession?.Profile != null)
                         {
                             WaitForLoadingCompleteAsync(this.GetCancellationTokenOnDestroy()).Forget();
@@ -120,7 +127,7 @@ namespace SPTLeaderboard.Utils
             }
             catch (Exception ex)
             {
-                NotificationManagerClass.DisplayMessageNotification("Error to save screenshot", ENotificationDurationType.Default, ENotificationIconType.Alert);
+                EFT.Communications.NotificationManager.DisplayMessageNotification("Error to save screenshot", ENotificationDurationType.Default, ENotificationIconType.Alert);
                 Logger.LogError($"Error to save screenshot: {ex.Message}");
                 Logger.LogError($"{ex.StackTrace}");
                 return false;

@@ -12,7 +12,7 @@ namespace SPTLeaderboard.Patches
     {
         protected override MethodBase GetTargetMethod()
         {
-            var targetType = typeof(LocationStatisticsCollectorAbstractClass);
+            var targetType = typeof(EFT.BaseStatisticsManager);
             return targetType?.GetMethod(
                 "OnEnemyDamage",
                 BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic
@@ -22,7 +22,7 @@ namespace SPTLeaderboard.Patches
         [PatchPostfix]
         static void PostFix(
             object __instance,
-            DamageInfoStruct damage,
+            EFT.Ballistics.DamageInfo damage,
             EBodyPart bodyPart,
             string playerProfileId,
             EPlayerSide playerSide,
@@ -39,7 +39,7 @@ namespace SPTLeaderboard.Patches
             if (!Settings.Instance.EnableSendData.Value)
                 return;
             
-            if (damage.Weapon is not ThrowWeapItemClass)
+            if (damage.Weapon is not EFT.InventoryLogic.ThrowWeap)
             {
                 HitsTracker.Instance.AddHit(distance, bodyPart);
             }

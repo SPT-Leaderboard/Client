@@ -13,12 +13,12 @@ namespace SPTLeaderboard.Patches
     internal class OnEndRaidPatch : ModulePatch
     {
         protected override MethodBase GetTargetMethod() =>
-            typeof(Class308).GetMethod(
+            typeof(EftClientBackendSession).GetMethod(
                 "LocalRaidEnded",
                 BindingFlags.Instance | BindingFlags.Public);
 
         [PatchPrefix]
-        static bool Prefix(LocalRaidSettings settings, RaidEndDescriptorClass results, FlatItemsDataClass[] lostInsuredItems, Dictionary<string, FlatItemsDataClass[]> transferItems, object __instance)
+        static bool Prefix(LocalRaidSettings settings, SessionResult results, JsonType.FlatItem[] lostInsuredItems, Dictionary<string, JsonType.FlatItem[]> transferItems, object __instance)
         {
             if (!Settings.Instance.EnableSendData.Value)
                 return true;
@@ -32,8 +32,8 @@ namespace SPTLeaderboard.Patches
         }
 
         [PatchPostfix]
-        static void Postfix(LocalRaidSettings settings, RaidEndDescriptorClass results,
-            FlatItemsDataClass[] lostInsuredItems, Dictionary<string, FlatItemsDataClass[]> transferItems,
+        static void Postfix(LocalRaidSettings settings, SessionResult results,
+            JsonType.FlatItem[] lostInsuredItems, Dictionary<string, JsonType.FlatItem[]> transferItems,
             object __instance)
         {
             ProcessProfileService.Create().ProcessAndSendProfileAsync(settings, results).Forget();

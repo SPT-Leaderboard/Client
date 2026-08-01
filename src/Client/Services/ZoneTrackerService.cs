@@ -345,12 +345,12 @@ namespace SPTLeaderboard.Services
         public int GetUsedMedicines()
         {
             return PlayerHelper.GetProfile().EftStats.SessionCounters
-                .GetInt(SessionCounterTypesAbstractClass.Medicines);
+                .GetInt(EFT.Counters.PredefinedCounters.Medicines);
         }
 
         public float GetHealthHealed()
         {
-            return PlayerHelper.GetProfile().EftStats.SessionCounters.GetFloat(SessionCounterTypesAbstractClass.Heal);
+            return PlayerHelper.GetProfile().EftStats.SessionCounters.GetFloat(EFT.Counters.PredefinedCounters.Heal);
         }
 
         public float GetKilometer()
@@ -360,17 +360,17 @@ namespace SPTLeaderboard.Services
 
         public float GetDamageToPlayer()
         {
-            return PlayerHelper.GetProfile().EftStats.SessionCounters.GetFloat(SessionCounterTypesAbstractClass.CombatDamage);
+            return PlayerHelper.GetProfile().EftStats.SessionCounters.GetFloat(EFT.Counters.PredefinedCounters.CombatDamage);
         }
         
         public float GetDamageToEnemy()
         {
-            return PlayerHelper.GetProfile().EftStats.SessionCounters.GetFloat(SessionCounterTypesAbstractClass.CauseBodyDamage);
+            return PlayerHelper.GetProfile().EftStats.SessionCounters.GetFloat(EFT.Counters.PredefinedCounters.CauseBodyDamage);
         }
         
         #endregion
         
-        public void OnEnemyKilledInZone(DamageInfoStruct damage, string role, float distance, EBodyPart bodyPart)
+        public void OnEnemyKilledInZone(EFT.Ballistics.DamageInfo damage, string role, float distance, EBodyPart bodyPart)
         {
             if (CurrentZone != null)
             {
@@ -379,9 +379,9 @@ namespace SPTLeaderboard.Services
                 CurrentRaidData.KillsInZones[CurrentZone.GUID]++;
 
                 if (!CurrentRaidData.KillDetailsInZones.ContainsKey(CurrentZone.GUID))
-                    CurrentRaidData.KillDetailsInZones[CurrentZone.GUID] = new List<KillInfo>();
+                    CurrentRaidData.KillDetailsInZones[CurrentZone.GUID] = new List<SPTLeaderboard.Data.KillInfo>();
 
-                CurrentRaidData.KillDetailsInZones[CurrentZone.GUID].Add(new KillInfo
+                CurrentRaidData.KillDetailsInZones[CurrentZone.GUID].Add(new SPTLeaderboard.Data.KillInfo
                 {
                     Weapon = LocalizationService.GetLocaleName(damage.Weapon.ShortName),
                     Distance = distance,
@@ -401,9 +401,9 @@ namespace SPTLeaderboard.Services
                     CurrentRaidData.KillsInZones[CurrentSubZone.GUID]++;
 
                     if (!CurrentRaidData.KillDetailsInZones.ContainsKey(CurrentSubZone.GUID))
-                        CurrentRaidData.KillDetailsInZones[CurrentSubZone.GUID] = new List<KillInfo>();
+                        CurrentRaidData.KillDetailsInZones[CurrentSubZone.GUID] = new List<SPTLeaderboard.Data.KillInfo>();
 
-                    CurrentRaidData.KillDetailsInZones[CurrentSubZone.GUID].Add(new KillInfo
+                    CurrentRaidData.KillDetailsInZones[CurrentSubZone.GUID].Add(new SPTLeaderboard.Data.KillInfo
                     {
                         Weapon = LocalizationService.GetLocaleName(damage.Weapon.ShortName),
                         Distance = distance,
@@ -416,7 +416,7 @@ namespace SPTLeaderboard.Services
                 }
             }
         }
-        public void OnEnemyDamage(DamageInfoStruct damage)
+        public void OnEnemyDamage(EFT.Ballistics.DamageInfo damage)
         {
             if (CurrentZone != null)
             {

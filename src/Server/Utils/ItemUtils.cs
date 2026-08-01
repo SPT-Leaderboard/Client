@@ -1,12 +1,12 @@
 ﻿using SPTarkov.DI.Annotations;
-using SPTarkov.Server.Core.Helpers;
+using SPTarkov.Server.Core.Helpers.Items;
 using SPTarkov.Server.Core.Models.Common;
 using SPTarkov.Server.Core.Models.Eft.Common.Tables;
 using SPTarkov.Server.Core.Models.Utils;
 
 namespace SPTLeaderboard.Server.Utils;
 [Injectable(InjectionType.Singleton)]
-public class ItemUtils(ItemHelper itemHelper, RagfairUtils ragfairUtils, ISptLogger<ItemUtils> logger)
+public class ItemUtils(ItemHelper itemHelper, RagfairUtils ragfairUtils)
 {
     public double GetTotalFleaPrice(MongoId[] templateIds)
     {

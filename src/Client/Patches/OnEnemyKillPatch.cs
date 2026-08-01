@@ -14,7 +14,7 @@ namespace SPTLeaderboard.Patches
     {
         protected override MethodBase GetTargetMethod()
         {
-            var targetType = typeof(LocationStatisticsCollectorAbstractClass);
+            var targetType = typeof(EFT.BaseStatisticsManager);
             return targetType?.GetMethod(
                 "OnEnemyKill",
                 BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic
@@ -23,7 +23,7 @@ namespace SPTLeaderboard.Patches
 
         [PatchPrefix]
         static bool Prefix(
-            DamageInfoStruct damage,
+            EFT.Ballistics.DamageInfo damage,
             EDamageType lethalDamageType,
             EBodyPart bodyPart,
             EPlayerSide playerSide,
@@ -45,7 +45,7 @@ namespace SPTLeaderboard.Patches
             if (!Settings.Instance.EnableSendData.Value)
                 return true;
             
-            IPlayerOwner player = damage.Player;
+            IObserverToPlayerBridge player = damage.Player;
             if ((Player)player?.iPlayer != PlayerHelper.Instance.Player)
             {
                 return true;

@@ -19,13 +19,13 @@ namespace SPTLeaderboard.Patches
                 [
                     typeof(IHealthController),
                     typeof(InventoryController),
-                    typeof(AbstractQuestControllerClass),
-                    typeof(AbstractAchievementControllerClass),
-                    typeof(AbstractPrestigeControllerClass),
+                    typeof(EFT.Quests.QuestController),
+                    typeof(EFT.Achievements.AchievementsController),
+                    typeof(EFT.Prestige.PrestigeController),
                     typeof(CompoundItem),
                     typeof(EInventoryTab),
-                    typeof(ISession),
-                    typeof(ItemContextAbstractClass),
+                    typeof(EFT.IEftSession),
+                    typeof(ItemContext),
                     typeof(bool)
                 ],
                 null

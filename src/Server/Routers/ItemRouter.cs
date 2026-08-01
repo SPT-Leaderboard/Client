@@ -6,10 +6,10 @@ using SPTLeaderboard.Server.Models.Requests;
 
 namespace SPTLeaderboard.Server.Routers;
 
-[Injectable(TypePriority = OnLoadOrder.PostDBModLoader + 1)]
+[Injectable(TypePriority = OnLoadOrder.Routers + 1)]
 public class ItemRouter : StaticRouter
 {
-   private static ItemCallbacks _callbacks;
+   private static ItemCallbacks _callbacks = null!;
 
    public ItemRouter(JsonUtil jsonUtil, ItemCallbacks callbacks) : base(jsonUtil, GetRoutes())
    {
@@ -18,6 +18,6 @@ public class ItemRouter : StaticRouter
 
    private static List<RouteAction> GetRoutes()
       => [
-         new RouteAction<ItemPricesRequestData>("/SPTLB/GetItemPrices", async (url, data, sessionId, output) => await _callbacks.HandleItemPrices(data))
+         new RouteAction<ItemPricesRequestData>("/SPTLB/GetItemPrices", async (url, data, sessionId, output, cancellationToken) => await _callbacks.HandleItemPrices(data))
       ];
 }

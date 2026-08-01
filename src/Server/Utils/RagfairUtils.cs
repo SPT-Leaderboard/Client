@@ -1,13 +1,13 @@
 ﻿using SPTarkov.DI.Annotations;
-using SPTarkov.Server.Core.Helpers;
+using SPTarkov.Server.Core.Helpers.Items;
 using SPTarkov.Server.Core.Models.Common;
 using SPTarkov.Server.Core.Models.Enums;
 using SPTarkov.Server.Core.Models.Utils;
-using SPTarkov.Server.Core.Services;
+using SPTarkov.Server.Core.Services.Ragfair;
 
 namespace SPTLeaderboard.Server.Utils;
 [Injectable(InjectionType.Singleton)]
-public class RagfairUtils(RagfairOfferService ragfairOfferService, ItemHelper itemHelper, ISptLogger<RagfairUtils> logger)
+public class RagfairUtils(RagfairOfferService ragfairOfferService, ItemHelper itemHelper)
 {
     public double GetLowestItemPrice(MongoId templateId)
     {
@@ -25,7 +25,8 @@ public class RagfairUtils(RagfairOfferService ragfairOfferService, ItemHelper it
 
         offers = offers.Where(o => o.User?.MemberType != MemberCategory.Trader
                                 && o.Requirements?.First().TemplateId == Money.ROUBLES
-                                && itemHelper.GetItemQualityModifier(o.Items?.First()) == 1.0).ToArray();
+                                && o.Items?.FirstOrDefault() is { } item
+                                && itemHelper.GetItemQualityModifier(item) == 1.0).ToArray();
         if (!offers.Any())
         {
             return 0;

@@ -12,7 +12,7 @@ public static class GlobalData
     public const string SubVersion = "102";
 #endif
     
-    public const string BaseSptVersion = "4.0";
+    public const string BaseSptVersion = "4.1";
     
     public const int HeartbeatCooldownSeconds = 60;
     public const int ZoneTrackerCheckIntervalMs = 500;

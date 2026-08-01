@@ -13,13 +13,13 @@ namespace SPTLeaderboard.Patches
 
         protected override MethodBase GetTargetMethod()
         {
-            return AccessTools.Method(typeof(RaidSettingsWindow), "method_4");
+            return AccessTools.Method(typeof(RaidSettingsWindow), nameof(RaidSettingsWindow.UpdateRaidSettings));
         }
 
         [PatchPostfix]
         public static void PatchPostfix(RaidSettingsWindow __instance)
         {
-            _raidSettingsField ??= AccessTools.Field(typeof(RaidSettingsWindow), "raidSettings_0");
+            _raidSettingsField ??= AccessTools.Field(typeof(RaidSettingsWindow), "_raidSettings");
             
             var raidSettings = (RaidSettings)_raidSettingsField.GetValue(__instance);
 

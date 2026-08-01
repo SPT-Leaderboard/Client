@@ -13,14 +13,14 @@ namespace SPTLeaderboard.Patches
             .GetMethod("ApplyShot", BindingFlags.Instance | BindingFlags.Public);
     
         [PatchPostfix]
-        static void PostFix(DamageInfoStruct damageInfo, EBodyPart bodyPart, EBodyPartColliderType bodyPartCollider, EArmorPlateCollider armorPlateCollider, ShotIdStruct shotId)
+        static void PostFix(EFT.Ballistics.DamageInfo damageInfo, EBodyPart bodyPart, EBodyPartColliderType bodyPartCollider, EArmorPlateCollider armorPlateCollider, EFT.Ballistics.ShotId shotId)
         {
             if (!Settings.Instance.EnableSendData.Value)
                 return;
         
             Utils.Logger.LogDebugWarning("[ProcessShot ObservedClientBridge] Hit");
             
-            IPlayerOwner player = damageInfo.Player;
+            IObserverToPlayerBridge player = damageInfo.Player;
 
             Utils.Logger.LogDebugWarning($"[ProcessShot ObservedClientBridge] Nick -> {player?.Nickname}");
 

@@ -4,10 +4,10 @@ using SPTarkov.Server.Core.Utils;
 using SPTLeaderboard.Server.Callbacks;
 
 namespace SPTLeaderboard.Server.Routers;
-[Injectable(TypePriority = OnLoadOrder.PostDBModLoader + 1)]
+[Injectable(TypePriority = OnLoadOrder.Routers + 1)]
 public class InboxRouter : StaticRouter
 {
-    private static InboxCallbacks _callbacks;
+    private static InboxCallbacks _callbacks = null!;
 
     public InboxRouter(JsonUtil jsonUtil, InboxCallbacks callbacks) : base(jsonUtil, GetRoutes())
     {
@@ -18,9 +18,9 @@ public class InboxRouter : StaticRouter
     {
         return
         [
-            new RouteAction("/client/match/local/end", async (url, data, sessionId, output) => await _callbacks.HandleInboxNotChecked(sessionId, output)),
-            new RouteAction("/client/game/logout", async (url, data, sessionId, output) => await _callbacks.HandleInboxNotChecked(sessionId, output)),
-            new RouteAction("/client/game/profile/items/moving", async (url, data, sessionId, output) => await _callbacks.HandleInboxChecked(sessionId, output)),
+            new RouteAction("/client/match/local/end", async (url, data, sessionId, output, cancellationToken) => await _callbacks.HandleInboxNotChecked(sessionId, output)),
+            new RouteAction("/client/game/logout", async (url, data, sessionId, output, cancellationToken) => await _callbacks.HandleInboxNotChecked(sessionId, output)),
+            new RouteAction("/client/game/profile/items/moving", async (url, data, sessionId, output, cancellationToken) => await _callbacks.HandleInboxChecked(sessionId, output)),
         ];
     }
     
