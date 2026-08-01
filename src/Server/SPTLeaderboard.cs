@@ -17,7 +17,7 @@ namespace SPTLeaderboard.Server
         public bool HasPrepatcher { get; init; } = false;
         public List<string>? Incompatibilities { get; init; }
         public Dictionary<string, SemanticVersioning.Range>? ModDependencies { get; init; }
-        public string? Url { get; init; } = "https://sptlb.yuyui.moe";
+        public string? Url { get; init; } = "https://sptlb.katrinfoxvr.com";
         public string License { get; init; } = "MPL 2.0";
     }
 
