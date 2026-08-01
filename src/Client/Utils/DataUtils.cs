@@ -96,16 +96,16 @@ public static class DataUtils
 
         try
         {
-            string json = RequestHandler.GetJson("/launcher/server/serverModsUsedByProfile");
+            string json = RequestHandler.GetJson("/launcher/v2/mods");
 
             if (string.IsNullOrWhiteSpace(json))
                 return listServerMods;
             
-            List<ModItem> serverMods = Json.Deserialize<List<ModItem>>(json);
+            LauncherModsResponse serverMods = Json.Deserialize<LauncherModsResponse>(json);
 
-            if (serverMods != null)
+            if (serverMods?.Response != null)
             {
-                var listMods = serverMods.Select(mod => mod.Name).ToList();
+                var listMods = serverMods.Response.Keys.ToList();
                 listServerMods.AddRange(listMods);
             }
         }

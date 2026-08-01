@@ -56,4 +56,10 @@ namespace SPTLeaderboard.Data.Internal
         [JsonProperty("version")]
         public string Version { get; set; }
     }
+
+    public class LauncherModsResponse
+    {
+        [JsonProperty("response")]
+        public Dictionary<string, ModItem> Response { get; set; }
+    }
 }

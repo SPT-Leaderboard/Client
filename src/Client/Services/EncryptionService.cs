@@ -112,7 +112,7 @@ namespace SPTLeaderboard.Services
             #if DEBUG
             if (Settings.Instance.Debug.Value)
             {
-                return "0349231dcfb7ba18631ddd8da3c67e70726c2e94d867e158f3e4bd762be094af";
+                return "79f0bef04649ac26103f65873116cd3fa60c69f05a92aa31d5b1ae50dcaf68a4";
             }
             #endif
             
