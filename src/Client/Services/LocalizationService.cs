@@ -1,8 +1,8 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using Comfort.Common;
-using Cysharp.Threading.Tasks;
 using EFT;
 using EFT.Communications;
 using SPTLeaderboard.Data;
@@ -206,13 +206,13 @@ namespace SPTLeaderboard.Services
         /// <summary>
         /// Request eng lcoalization for non-eng users
         /// </summary>
-        public async UniTask LoadEnglishLocaleAsync()
+        public async Task LoadEnglishLocaleAsync()
         {
             try
             {
                 Logger.LogInfo("Request to load FULL english locale");
                 var session = PlayerHelper.GetSession();
-                Dictionary<string, string> result = await session.GetLocalization("en").AsUniTask();
+                Dictionary<string, string> result = await session.GetLocalization("en");
                 LocalizationManager.Instance.UpdateLocales("en", result);
             }
             catch (Exception e)

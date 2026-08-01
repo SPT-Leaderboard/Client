@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using System.Reflection;
-using Cysharp.Threading.Tasks;
 using EFT;
 using SPT.Reflection.Patching;
 using SPTLeaderboard.Configuration;
@@ -36,7 +35,7 @@ namespace SPTLeaderboard.Patches
             JsonType.FlatItem[] lostInsuredItems, Dictionary<string, JsonType.FlatItem[]> transferItems,
             object __instance)
         {
-            ProcessProfileService.Create().ProcessAndSendProfileAsync(settings, results).Forget();
+            ProcessProfileService.Create().ProcessAndSendProfile(settings, results);
         }
     }
 }

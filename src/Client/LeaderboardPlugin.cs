@@ -1,8 +1,8 @@
 using System;
 using System.Threading;
+using System.Threading.Tasks;
 using BepInEx;
 using BepInEx.Logging;
-using Cysharp.Threading.Tasks;
 using HarmonyLib;
 using Newtonsoft.Json;
 using SPTLeaderboard.Configuration;
@@ -18,7 +18,6 @@ using UnityEngine;
 
 namespace SPTLeaderboard
 {
-    [BepInDependency("com.arys.unitytoolkit", "2.0.1")]
     [BepInPlugin("harmonyzt.SPTLeaderboard", "SPTLeaderboard.Client", "5.1.9")]
     public class LeaderboardPlugin : BaseUnityPlugin
     {
@@ -332,13 +331,13 @@ namespace SPTLeaderboard
             if (!Settings.Instance.EnableSendData.Value)
                 return;
 
-            SendRaidDataAsync(data, CancellationToken.None).Forget();
+            _ = SendRaidDataAsync(data, CancellationToken.None);
         }
         
         /// <summary>
         /// Sends the raid and profile data to the server (async version).
         /// </summary>
-        private static async UniTaskVoid SendRaidDataAsync(object data, CancellationToken cancellationToken)
+        private static async Task SendRaidDataAsync(object data, CancellationToken cancellationToken)
         {
             if (!Settings.Instance.EnableSendData.Value)
                 return;
@@ -349,12 +348,12 @@ namespace SPTLeaderboard
             
             try
             {
-                (jsonBody, dataHash) = await UniTask.RunOnThreadPool(() =>
+                (jsonBody, dataHash) = await Task.Run(() =>
                 {
                     string json = JsonConvert.SerializeObject(data);
                     string hash = DataUtils.ComputeHash(json);
                     return (json, hash);
-                }, cancellationToken: cancellationToken);
+                }, cancellationToken);
             }
             catch (OperationCanceledException)
             {

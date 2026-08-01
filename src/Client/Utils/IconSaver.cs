@@ -1,8 +1,8 @@
 ﻿using System;
 using System.IO;
 using System.Threading;
+using System.Threading.Tasks;
 using Comfort.Common;
-using Cysharp.Threading.Tasks;
 using EFT;
 using EFT.Communications;
 using EFT.InventoryLogic;
@@ -21,6 +21,7 @@ namespace SPTLeaderboard.Utils
         private bool _isShowed;
         private ItemIcon _presetIcon;
         private PlayerModelView _targetPlayerModelView;
+        private readonly CancellationTokenSource _destroyCancellation = new();
         
         public GameObject clonePlayerModelViewObj;
         public GameObject cachedPlayerModelViewObj;
@@ -65,8 +66,8 @@ namespace SPTLeaderboard.Utils
                         IEftSession backEndSession = PatchConstants.BackEndSession;
                         if (backEndSession?.Profile != null)
                         {
-                            WaitForLoadingCompleteAsync(this.GetCancellationTokenOnDestroy()).Forget();
-                            _targetPlayerModelView.Show(PatchConstants.BackEndSession.Profile, null, null, 0f, null, false).AsUniTask().Forget();
+                            _ = WaitForLoadingCompleteAsync(_destroyCancellation.Token);
+                            _ = _targetPlayerModelView.Show(PatchConstants.BackEndSession.Profile, null, null, 0f, null, false);
                         }
                         else
                         {
@@ -91,7 +92,7 @@ namespace SPTLeaderboard.Utils
         /// <param name="rawImage"></param>
         /// <param name="filePath"></param>
         /// <returns></returns>
-        private async UniTask<bool> CaptureFromRenderTextureAsync(RawImage rawImage, string filePath, CancellationToken cancellationToken = default)
+        private async Task<bool> CaptureFromRenderTextureAsync(RawImage rawImage, string filePath, CancellationToken cancellationToken = default)
         {
             Texture source = rawImage.texture;
             if (source is not RenderTexture renderTexture)
@@ -119,7 +120,8 @@ namespace SPTLeaderboard.Utils
                 byte[] bytes = croppedTexture.EncodeToPNG();
                 
                 // Yield to allow other operations before file write
-                await UniTask.Yield(cancellationToken);
+                await Task.Yield();
+                cancellationToken.ThrowIfCancellationRequested();
                 File.WriteAllBytes(filePath, bytes);
                 
                 Destroy(texture2D);
@@ -145,10 +147,10 @@ namespace SPTLeaderboard.Utils
         /// </summary>
         public void PlayerModelLoaded()
         {
-            PlayerModelLoadedAsync(this.GetCancellationTokenOnDestroy()).Forget();
+            _ = PlayerModelLoadedAsync(_destroyCancellation.Token);
         }
 
-        private async UniTaskVoid PlayerModelLoadedAsync(CancellationToken cancellationToken = default)
+        private async Task PlayerModelLoadedAsync(CancellationToken cancellationToken = default)
         {
             RawImage rawImage = clonePlayerModelViewObj.GetComponent<RawImage>();
 
@@ -370,11 +372,11 @@ namespace SPTLeaderboard.Utils
         /// <summary>
         /// Little latency for capture screenshot FullBody
         /// </summary>
-        private async UniTaskVoid WaitForLoadingCompleteAsync(CancellationToken cancellationToken = default)
+        private async Task WaitForLoadingCompleteAsync(CancellationToken cancellationToken = default)
         {
             while (!_targetPlayerModelView.LoadingComplete && !cancellationToken.IsCancellationRequested)
             {
-                await UniTask.Yield(cancellationToken);
+                await Task.Yield();
             }
 
             if (cancellationToken.IsCancellationRequested)
@@ -383,12 +385,18 @@ namespace SPTLeaderboard.Utils
             }
 
             _isShowed = true;
-            await UniTask.Delay(TimeSpan.FromSeconds(2f), cancellationToken: cancellationToken);
+            await Task.Delay(TimeSpan.FromSeconds(2f), cancellationToken);
 
             if (!cancellationToken.IsCancellationRequested)
             {
                 PlayerModelLoaded();
             }
+        }
+
+        private void OnDestroy()
+        {
+            _destroyCancellation.Cancel();
+            _destroyCancellation.Dispose();
         }
         
         private Vector3 GetOffScreenPosition(float offset = 500f)

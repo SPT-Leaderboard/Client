@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using Comfort.Common;
-using Cysharp.Threading.Tasks;
 using EFT;
 using EFT.Quests;
 using EFT.UI;
@@ -26,30 +25,29 @@ namespace SPTLeaderboard.Services
         /// </summary>
         /// <param name="localRaidSettings">Local raid settings</param>
         /// <param name="resultRaid">Raid result</param>
-        public UniTask ProcessAndSendProfileAsync(LocalRaidSettings localRaidSettings, SessionResult resultRaid)
+        public void ProcessAndSendProfile(LocalRaidSettings localRaidSettings, SessionResult resultRaid)
         {
             if (!ShouldProcessProfile())
-                return UniTask.CompletedTask;
+                return;
 
             if (!Singleton<PreloaderUI>.Instantiated)
-                return UniTask.CompletedTask;
+                return;
 
             var session = PlayerHelper.GetSession();
             if (session.Profile == null)
-                return UniTask.CompletedTask;
+                return;
 
             // Keep on game thread: Profile / ZoneTracker / loot lists are not safe from a worker thread,
             // and JsonConvert on a worker still races if payloads hold live references to those collections.
             var profileData = DeserializeProfileData(resultRaid);
             if (profileData == null)
-                return UniTask.CompletedTask;
+                return;
 
             var isScavRaid = DetermineRaidType(session.Profile, profileData);
             var sessionData = GetSessionData(session);
             var raidInfo = GetRaidInfo(localRaidSettings, resultRaid, session.Profile);
 
             ProcessAndSendProfileData(sessionData, raidInfo, isScavRaid, resultRaid);
-            return UniTask.CompletedTask;
         }
 
         /// <summary>
@@ -283,11 +281,8 @@ namespace SPTLeaderboard.Services
 
             if (haveDevItems)
             {
-                UniTask.Post(() =>
-                {
-                    LocalizationService.NotificationWarning(LocalizationService.Instance.GetLocaleErrorText(ErrorType.DEVITEMS),
-                        ServerErrorHandler.GetDurationType(ErrorType.DEVITEMS));
-                });
+                LocalizationService.NotificationWarning(LocalizationService.Instance.GetLocaleErrorText(ErrorType.DEVITEMS),
+                    ServerErrorHandler.GetDurationType(ErrorType.DEVITEMS));
 #if DEBUG
                 if (Settings.Instance.Debug.Value)
                 {

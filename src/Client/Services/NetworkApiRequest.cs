@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using System.Threading;
-using Cysharp.Threading.Tasks;
+using System.Threading.Tasks;
 using SPTLeaderboard.Configuration;
 using SPTLeaderboard.Data;
 using SPTLeaderboard.Utils;
@@ -29,6 +29,7 @@ namespace SPTLeaderboard.Services
         
         private int _retryCount;
         private int _maxRetries = 2;
+        private readonly CancellationTokenSource _destroyCancellation = new();
         
         private static readonly Dictionary<string, (string hash, DateTime time)> _sentDataHashes = new();
         private static readonly object _hashLock = new();
@@ -91,7 +92,7 @@ namespace SPTLeaderboard.Services
         /// </summary>
         public void Send()
         {
-            RunBaseRequestAsync(this.GetCancellationTokenOnDestroy()).Forget();
+            _ = RunBaseRequestAsync(_destroyCancellation.Token);
         }
 
         /// <summary>
@@ -102,7 +103,7 @@ namespace SPTLeaderboard.Services
         /// - Calls <see cref="OnFail"/> if the request fails or exceeds retry attempts.  
         /// - Automatically destroys the GameObject after completion.
         /// </remarks>
-        private async UniTaskVoid RunBaseRequestAsync(CancellationToken cancellationToken = default)
+        private async Task RunBaseRequestAsync(CancellationToken cancellationToken = default)
         {
             if (_httpMethod == UnityWebRequest.kHttpVerbPOST && Settings.Instance != null &&
                 !Settings.Instance.EnableSendData.Value)
@@ -177,7 +178,7 @@ namespace SPTLeaderboard.Services
             
             while (!operation.isDone && !cancellationToken.IsCancellationRequested)
             {
-                await UniTask.Yield(cancellationToken);
+                await Task.Yield();
             }
             
             if (cancellationToken.IsCancellationRequested)
@@ -215,8 +216,8 @@ namespace SPTLeaderboard.Services
                     Logger.LogDebugWarning($"Timeout, retrying {_retryCount}/{_maxRetries}...");
                     _isComplete = false;
                     request.Dispose();
-                    await UniTask.Delay(TimeSpan.FromSeconds(0.5f), cancellationToken: cancellationToken);
-                    RunBaseRequestAsync(cancellationToken).Forget();
+                    await Task.Delay(TimeSpan.FromSeconds(0.5f), cancellationToken);
+                    await RunBaseRequestAsync(cancellationToken);
                 }
                 else
                 {
@@ -248,6 +249,12 @@ namespace SPTLeaderboard.Services
                     Destroy(gameObject);
                 }
             }
+        }
+
+        private void OnDestroy()
+        {
+            _destroyCancellation.Cancel();
+            _destroyCancellation.Dispose();
         }
     }
 }

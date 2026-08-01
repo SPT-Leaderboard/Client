@@ -7,10 +7,10 @@ using System.Security.Cryptography;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading;
+using System.Threading.Tasks;
 using BepInEx;
 using BepInEx.Bootstrap;
 using Comfort.Common;
-using Cysharp.Threading.Tasks;
 using EFT;
 using EFT.InventoryLogic;
 using Newtonsoft.Json;
@@ -369,17 +369,17 @@ public static class DataUtils
     /// <summary>
     /// Computes a hash of the data to detect duplicates (async version - runs in background thread)
     /// </summary>
-    public static async UniTask<string> ComputeHashAsync(string input, CancellationToken cancellationToken = default)
+    public static Task<string> ComputeHashAsync(string input, CancellationToken cancellationToken = default)
     {
         // Run hash computation in background thread to avoid blocking main thread
-        return await UniTask.RunOnThreadPool(() =>
+        return Task.Run(() =>
         {
             using (var sha256 = SHA256.Create())
             {
                 byte[] hashBytes = sha256.ComputeHash(Encoding.UTF8.GetBytes(input));
                 return Convert.ToBase64String(hashBytes);
             }
-        }, cancellationToken: cancellationToken);
+        }, cancellationToken);
     }
     
     /// <summary>
