@@ -12,6 +12,7 @@ namespace SPTLeaderboard.Configuration
 		public static Settings Instance { get; private set; }
 
 		public ConfigEntry<bool> EnableSendData;
+		public ConfigEntry<bool> IsHardcore;
 		public ConfigEntry<bool> ShowPointsNotification;
 		public ConfigEntry<bool> ShowExperienceNotification;
 		public ConfigEntry<bool> ModCasualMode;
@@ -63,6 +64,18 @@ namespace SPTLeaderboard.Configuration
 				true, 
 				new ConfigDescription(
 					"When disable, stops sending your scores and statistics to the leaderboard server",
+					null, 
+					new ConfigurationAttributes
+					{
+						Order = 8
+					}));
+			
+			IsHardcore = configFile.Bind(
+				"1. Settings", 
+				"Is Hardcore mode", 
+				false, 
+				new ConfigDescription(
+					"Players who have chosen to play this way, would only have access to whitelisted mods that are proven to be harmless towards gameplay (QoL, specifically) and gain extra boosts to LC, BattlePass EXP, and Skill Score.",
 					null, 
 					new ConfigurationAttributes
 					{

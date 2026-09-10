@@ -64,6 +64,7 @@ namespace SPTLeaderboard.Patches
                 ProfileId = PlayerHelper.GetProfile().ProfileId,
                 VersionMod = GlobalData.Version,
                 IsCasual = Settings.Instance.ModCasualMode.Value,
+                IsHardcore = Settings.Instance.IsHardcore.Value,
 #if DEBUG
                 Mods = Settings.Instance.Debug.Value ? ["DEBUGSPTLB"] : modsPlayer,
 #else

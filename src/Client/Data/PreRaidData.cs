@@ -17,6 +17,9 @@ public class PreRaidData
     [JsonProperty("isCasual")]
     public bool IsCasual { get; set; }
     
+    [JsonProperty("isHardcore")]
+    public bool IsHardcore { get; set; }
+    
     [JsonProperty("hash")]
     public string Hash { get; set; }
     

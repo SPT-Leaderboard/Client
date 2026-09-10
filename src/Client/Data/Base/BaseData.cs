@@ -56,6 +56,9 @@ namespace SPTLeaderboard.Data.Base
         [JsonProperty("isCasual")]
         public bool IsCasual { get; set; }
         
+        [JsonProperty("isHardcore")]
+        public bool IsHardcore { get; set; }
+        
         [JsonProperty("RaidSettings")]
         public RaidSettingsData RaidSettingsData { get; set; }
 
@@ -64,5 +67,6 @@ namespace SPTLeaderboard.Data.Base
         
         [JsonProperty("ZoneTrackerData")]
         public ZoneTrackerData ZoneTrackerData { get; set; }
+
     }
 }
