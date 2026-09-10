@@ -58,6 +58,9 @@ namespace SPTLeaderboard.Data.Base
         
         [JsonProperty("isHardcore")]
         public bool IsHardcore { get; set; }
+
+        [JsonProperty("hasOtherFikaPlayers")]
+        public bool HasOtherFikaPlayers { get; set; }
         
         [JsonProperty("RaidSettings")]
         public RaidSettingsData RaidSettingsData { get; set; }

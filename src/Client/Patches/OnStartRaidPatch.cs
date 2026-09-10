@@ -2,6 +2,7 @@
 using EFT;
 using SPT.Reflection.Patching;
 using SPTLeaderboard.Configuration;
+using SPTLeaderboard.Integrations;
 using SPTLeaderboard.Utils;
 using UnityEngine;
 
@@ -21,6 +22,9 @@ namespace SPTLeaderboard.Patches
                 return true;
             
             HitsTracker.Instance.Clear();
+
+            LeaderboardPlugin.Instance.HasOtherFikaPlayers =
+                FikaInterop.TryGetHasOtherHumanPlayers(out var hasOtherHumanPlayers) && hasOtherHumanPlayers;
 
             LeaderboardPlugin.Instance.TrackingLoot.OnStartRaid(settings.playerSide);
             

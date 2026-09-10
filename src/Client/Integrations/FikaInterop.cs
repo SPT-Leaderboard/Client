@@ -12,6 +12,7 @@ namespace SPTLeaderboard.Integrations
         public const string FikaHeadlessGuid = "com.fika.headless";
 
         private const string FikaBackendUtilsTypeName = "Fika.Core.Main.Utils.FikaBackendUtils";
+        private const string CoopHandlerTypeName = "Fika.Core.Main.Components.CoopHandler";
 
         public static bool IsCheckedFikaCore { get; private set; }
         public static bool IsCheckedFikaHeadless { get; private set; }
@@ -140,6 +141,34 @@ namespace SPTLeaderboard.Integrations
                 return false;
 
             FastLoad = value;
+            return true;
+        }
+
+        public static bool TryGetHasOtherHumanPlayers(out bool hasOtherHumanPlayers)
+        {
+            hasOtherHumanPlayers = false;
+
+            var plugin = FikaCore;
+            if (plugin == null && Chainloader.PluginInfos.TryGetValue(FikaCoreGuid, out var info))
+                plugin = info.Instance;
+
+            if (plugin == null)
+                return false;
+
+            var coopHandlerType = plugin.GetType().Assembly.GetType(CoopHandlerTypeName, throwOnError: false);
+            var tryGetCoopHandler = coopHandlerType?.GetMethod("TryGetCoopHandler", BindingFlags.Public | BindingFlags.Static);
+            if (tryGetCoopHandler == null)
+                return false;
+
+            var arguments = new object[] { null };
+            if (tryGetCoopHandler.Invoke(null, arguments) is not bool found || !found || arguments[0] == null)
+                return false;
+
+            var amountOfHumans = arguments[0].GetType().GetProperty("AmountOfHumans", BindingFlags.Public | BindingFlags.Instance);
+            if (amountOfHumans?.GetValue(arguments[0]) is not int humanCount)
+                return false;
+
+            hasOtherHumanPlayers = humanCount > 1;
             return true;
         }
 

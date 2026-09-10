@@ -48,6 +48,7 @@ namespace SPTLeaderboard
         public static bool IsDebugLogsEnabled = false;
         public bool IsPMCSelected = true;
         public bool IsExecutedSuspiciousCommand = false;
+        public bool HasOtherFikaPlayers;
 
         public RaidSettingsData SavedRaidSettingsData = new();
         private Harmony pauseModIntegration;

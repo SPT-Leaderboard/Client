@@ -554,6 +554,7 @@ namespace SPTLeaderboard.Services
                 DBinInv = haveDevItems,
                 IsCasual = Settings.Instance.ModCasualMode.Value,
                 IsHardcore = Settings.Instance.IsHardcore.Value,
+                HasOtherFikaPlayers = LeaderboardPlugin.Instance.HasOtherFikaPlayers,
                 RaidSettingsData = LeaderboardPlugin.Instance.SavedRaidSettingsData?.Clone() ?? new RaidSettingsData(),
                 ZoneTrackerData = LeaderboardPlugin.Instance.ZoneTrackerService?.CurrentRaidData?.Clone() ?? new ZoneTrackerData()
             };

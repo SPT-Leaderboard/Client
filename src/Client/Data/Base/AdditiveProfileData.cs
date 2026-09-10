@@ -65,6 +65,10 @@ namespace SPTLeaderboard.Data.Base
         
         [JsonProperty("isHardcore")]
         public bool IsHardcore { get; set; } = baseData.IsHardcore;
+
+        [JsonProperty("hasOtherFikaPlayers")]
+        public bool HasOtherFikaPlayers { get; set; } = baseData.HasOtherFikaPlayers;
+        
         [JsonProperty("RaidSettings")]
         public RaidSettingsData RaidSettingsData = baseData.RaidSettingsData;
         
@@ -208,6 +212,7 @@ namespace SPTLeaderboard.Data.Base
                 DBinInv = original.DBinInv,
                 IsCasual = original.IsCasual,
                 IsHardcore = original.IsHardcore,
+                HasOtherFikaPlayers = original.HasOtherFikaPlayers,
                 RaidSettingsData = original.RaidSettingsData,
                 ZoneTrackerData = original.ZoneTrackerData
             })
