@@ -63,6 +63,8 @@ namespace SPTLeaderboard.Data.Base
         [JsonProperty("isCasual")]
         public bool IsCasual { get; set; } = baseData.IsCasual;
         
+        [JsonProperty("isHardcore")]
+        public bool IsHardcore { get; set; } = baseData.IsHardcore;
         [JsonProperty("RaidSettings")]
         public RaidSettingsData RaidSettingsData = baseData.RaidSettingsData;
         
@@ -205,6 +207,7 @@ namespace SPTLeaderboard.Data.Base
                 Password = "BETA",
                 DBinInv = original.DBinInv,
                 IsCasual = original.IsCasual,
+                IsHardcore = original.IsHardcore,
                 RaidSettingsData = original.RaidSettingsData,
                 ZoneTrackerData = original.ZoneTrackerData
             })
