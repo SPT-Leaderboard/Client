@@ -84,7 +84,6 @@ namespace SPTLeaderboard
             EncryptionService.Create();
             LocalizationService.Create();
             
-            new LeaderboardVersionLabelPatch().Enable();
             new OpenMainMenuScreenPatch().Enable();
             new OpenInventoryScreenPatch().Enable();
             new OpenAcceptMatchScreenPatch().Enable();

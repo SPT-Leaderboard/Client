@@ -72,10 +72,10 @@ namespace SPTLeaderboard.Configuration
 			
 			IsHardcore = configFile.Bind(
 				"1. Settings", 
-				"Is Hardcore mode", 
+				"Hardcore mode", 
 				false, 
 				new ConfigDescription(
-					"Players who have chosen to play this way, would only have access to whitelisted mods that are proven to be harmless towards gameplay (QoL, specifically) and gain extra boosts to LC, BattlePass EXP, and Skill Score.",
+					"Enabling this will switch you to a Hardcore Mode.\n You will not be ranked in the leaderboard and your stats won't count towards its progress.\n You'll be free off any leaderboard restrictions (except reasonable ones), have access to raid history and your profile like usual.\n DANGER - Once you played with this ON - YOU CANT GET BACK INTO RANKING.",
 					null, 
 					new ConfigurationAttributes
 					{
@@ -84,7 +84,7 @@ namespace SPTLeaderboard.Configuration
 			
 			ShowPointsNotification = configFile.Bind(
 				"1. Settings", 
-				"Show Notification Points", 
+				"Show LC Notification", 
 				true, 
 				new ConfigDescription(
 					"When turned on, display a notification about the issuance of leaderboard points at the end of the raid.",
@@ -96,7 +96,7 @@ namespace SPTLeaderboard.Configuration
 			
 			ShowExperienceNotification = configFile.Bind(
 				"1. Settings", 
-				"Show Notification Experience", 
+				"Show BattlePass EXP Notification", 
 				true, 
 				new ConfigDescription(
 					"When turned on, display a notification about the issuance of leaderboard experience at the end of the raid.",
@@ -136,10 +136,9 @@ namespace SPTLeaderboard.Configuration
 				10, 
 				new ConfigDescription(
 					"How long mod will be waiting for the response from Leaderboard API, in SECONDS",
-					null, 
+					null,
 					new ConfigurationAttributes
 					{
-						Order = 3,
 						IsAdvanced = true
 					}));
 			

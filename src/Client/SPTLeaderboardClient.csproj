@@ -178,7 +178,6 @@
         <Compile Include="Services\NetworkApiRequest.cs" />
         <Compile Include="Services\ProcessProfileService.cs" />
         <Compile Include="Patches\HideoutAwakePatch.cs" />
-        <Compile Include="Patches\LeaderboardVersionLabelPatch.cs" />
         <Compile Include="Patches\OnApplyDamageInfoPatch.cs" />
         <Compile Include="Patches\OnCoopApplyShotFourPatch.cs" />
         <Compile Include="Patches\OnEndRaidPatch.cs" />
