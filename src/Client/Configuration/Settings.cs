@@ -129,7 +129,7 @@ namespace SPTLeaderboard.Configuration
 					{
 						Order = 4
 					}));
-			
+
 			ConnectionTimeout = configFile.Bind(
 				"1. Settings", 
 				"Connection Timeout", 

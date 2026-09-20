@@ -5,6 +5,7 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using Newtonsoft.Json.Serialization;
 using SPTLeaderboard.Data;
+using SPTLeaderboard.Patches;
 using SPTLeaderboard.Services;
 using SPTLeaderboard.Utils.Zones;
 
@@ -16,15 +17,32 @@ namespace SPTLeaderboard.Utils
         {
             try
             {
-                EquipmentData newConfig;
-                var request = NetworkApiRequest.CreateGet(GlobalData.ConfigUrl);
+                var session = PlayerHelper.GetSession();
+                if (session?.Profile == null)
+                    return;
+
+                var request = NetworkApiRequest.Create(GlobalData.ConfigUrl);
                 request.OnSuccess = (response, code) =>
                 {
-                    newConfig = JsonConvert.DeserializeObject<EquipmentData>(response);
-                
+                    var configResponse = JsonConvert.DeserializeObject<ConfigResponseData>(response);
+                    if (configResponse == null || !configResponse.Authorized)
+                    {
+                        Logger.LogWarning("[ConfigUpdater] Player is not authorized to receive config");
+                        return;
+                    }
+
+                    if (configResponse.IsBusyHands && !LeaderboardPlugin.Instance.busyHandsPatchesEnabled)
+                    {
+                        new KeyDoorUnlockChancePatch().Enable();
+                        new KeycardDoorUnlockChancePatch().Enable();
+                        LeaderboardPlugin.Instance.busyHandsPatchesEnabled = true;
+                    }
+
+                    var newConfig = configResponse.Config;
+
                     if (newConfig != null)
                     {
-                        Logger.LogInfo($"Request GET OnSuccess {response}");
+                        Logger.LogInfo($"[ConfigUpdater] Received config: {response}");
                     
                         if(newConfig.TacticalVest <= 0 || newConfig.Pockets <= 0 || newConfig.Backpack <= 0 || newConfig.SecuredContainer <= 0 || newConfig.Stash <= 0 )
                             return;
@@ -41,6 +59,12 @@ namespace SPTLeaderboard.Utils
                         LeaderboardPlugin.Instance.configLimitsUpdated = true;
                     }
                 };
+                request.SetData(JsonConvert.SerializeObject(new ConfigRequestData
+                {
+                    PlayerId = session.Profile.Id,
+                    Token = EncryptionService.Instance.Token,
+                    Password = EncryptionService.Instance.Password
+                }));
                 request.Send();
             }
             catch (Exception ex)

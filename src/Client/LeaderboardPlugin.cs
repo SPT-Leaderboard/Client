@@ -33,6 +33,7 @@ namespace SPTLeaderboard
         public bool engLocaleLoaded;
         public bool configLimitsUpdated;
         public bool configZonesUpdated;
+        public bool busyHandsPatchesEnabled;
 #if DEBUG || BETA
         public Action Tick;
 #endif
@@ -104,7 +105,6 @@ namespace SPTLeaderboard
             new ClickESideScreenPatch().Enable();
             new OpenStashPanelShowPatch().Enable();
             new OnShotWeaponPatch().Enable();
-
             if (!FikaInterop.IsCheckedFikaCore)
             {
                 FikaInterop.CheckFikaCore(callback =>
