@@ -172,16 +172,12 @@ namespace SPTLeaderboard.Services
             Logger.LogDebugWarning($"Request ID = {reqId}");
 
             request.timeout = Settings.Instance.ConnectionTimeout.Value;
-
-            // Start the request
+            
             var operation = request.SendWebRequest();
+
+            bool requestCompleted = await WaitForCompletionAsync(operation, cancellationToken);
             
-            while (!operation.isDone && !cancellationToken.IsCancellationRequested)
-            {
-                await Task.Yield();
-            }
-            
-            if (cancellationToken.IsCancellationRequested)
+            if (!requestCompleted)
             {
                 request.Dispose();
                 Destroy(gameObject);
@@ -247,6 +243,42 @@ namespace SPTLeaderboard.Services
                     OnFail?.Invoke(errorData, request.responseCode);
                     request.Dispose();
                     Destroy(gameObject);
+                }
+            }
+        }
+
+        /// <summary>
+        /// Awaits a Unity web request completion notification without polling the main thread.
+        /// </summary>
+        /// <returns><c>true</c> when the operation completed; <c>false</c> when cancelled.</returns>
+        private static async Task<bool> WaitForCompletionAsync(
+            UnityWebRequestAsyncOperation operation,
+            CancellationToken cancellationToken)
+        {
+            if (operation.isDone)
+            {
+                return true;
+            }
+
+            var completionSource = new TaskCompletionSource<bool>();
+            Action<AsyncOperation> onCompleted = _ => completionSource.TrySetResult(true);
+            operation.completed += onCompleted;
+
+            using (cancellationToken.Register(() => completionSource.TrySetResult(false)))
+            {
+                // The operation can finish between the initial isDone check and the event subscription.
+                if (operation.isDone)
+                {
+                    completionSource.TrySetResult(true);
+                }
+
+                try
+                {
+                    return await completionSource.Task;
+                }
+                finally
+                {
+                    operation.completed -= onCompleted;
                 }
             }
         }

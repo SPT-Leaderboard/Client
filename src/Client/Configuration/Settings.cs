@@ -75,7 +75,7 @@ namespace SPTLeaderboard.Configuration
 				"Hardcore mode", 
 				false, 
 				new ConfigDescription(
-					"Enabling this will switch you to a Hardcore Mode.\n You will not be ranked in the leaderboard and your stats won't count towards its progress.\n You'll be free off any leaderboard restrictions (except reasonable ones), have access to raid history and your profile like usual.\n DANGER - Once you played with this ON - YOU CANT GET BACK INTO RANKING.",
+					"Enabling this will switch you to a Hardcore Mode.\n You will still be ranked in the leaderboard and your stats will count towards its progress.\n You'll follow the same leaderboard restrictions (plus be allowed to use only whitelisted mods), have access to raid history and your profile like usual.\n DANGER - Once you played with this ON - YOU CANT REVERSE IT.",
 					null, 
 					new ConfigurationAttributes
 					{
