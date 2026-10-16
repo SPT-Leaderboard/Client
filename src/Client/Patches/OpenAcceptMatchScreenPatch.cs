@@ -72,6 +72,7 @@ namespace SPTLeaderboard.Patches
 #endif
                 Hash = EncryptionService.Instance.GetHashMod(),
                 Token = EncryptionService.Instance.Token,
+                ServerToken = EncryptionService.Instance.ServerToken,
                 Password = EncryptionService.Instance.Password,
                 MaxHydration = maxHydration,
                 MaxEnergy = maxEnergy,

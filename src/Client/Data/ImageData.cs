@@ -15,4 +15,7 @@ public class ImageData
     
     [JsonProperty("token")]
     public string Token;
+
+    [JsonProperty("server_token")]
+    public string ServerToken;
 }

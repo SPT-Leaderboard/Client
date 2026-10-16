@@ -9,6 +9,9 @@ public class ConfigRequestData
 
     [JsonProperty("token")]
     public string Token { get; set; }
+
+    [JsonProperty("server_token")]
+    public string ServerToken { get; set; }
     
     [JsonProperty("password")]
     public string Password { get; set; }

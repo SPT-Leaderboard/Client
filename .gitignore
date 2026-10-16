@@ -6,6 +6,7 @@ Dependencies
 dist
 node_modules
 secret.token
+server.token
 *vscode
 client/SPTLeaderboard.sln.DotSettings.user
 *.7z

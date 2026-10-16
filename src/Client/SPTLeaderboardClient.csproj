@@ -17,6 +17,7 @@
         <AssemblyOriginatorKeyFile>Dependencies\Keys\sptld.snk</AssemblyOriginatorKeyFile>
     </PropertyGroup>
     <PropertyGroup>
+        <SolutionDir Condition=" '$(SolutionDir)' == '' Or '$(SolutionDir)' == '*Undefined*' ">$(MSBuildThisFileDirectory)..\..\</SolutionDir>
         <TarkovDir Condition=" '$(TarkovDir)' == '' ">D:\SPT41\</TarkovDir>
         <TarkovDevDir Condition=" '$(TarkovDevDir)' == '' ">D:\SPTDEV\</TarkovDevDir>
         <TarkovPluginsSPTDir>$(TarkovDir)BepInEx\plugins\spt\</TarkovPluginsSPTDir>
@@ -218,6 +219,14 @@
         <Compile Include="Utils\Zones\ZoneInterface.cs" />
     </ItemGroup>
     <ItemGroup>
+        <ProjectReference Include="..\Server\SPTLeaderboardServer.csproj">
+            <Project>{5B67B8BC-CADA-4B48-AC42-D06F8E0D4907}</Project>
+            <Name>SPTLeaderboardServer</Name>
+            <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+            <SkipGetTargetFrameworkProperties>true</SkipGetTargetFrameworkProperties>
+        </ProjectReference>
+    </ItemGroup>
+    <ItemGroup>
       <None Include="Dependencies\Keys\sptld.snk" />
     </ItemGroup>
     <ItemGroup>
@@ -250,7 +259,7 @@
             <OutputDLL Include="$(ProjectDir)$(OutDir)$(TargetName).dll" />
             <OutputDir Include="$(ProjectDir)" />
         </ItemGroup>
-        <Exec Command="powershell -ExecutionPolicy Bypass -File &quot;$(SolutionDir)BuildScripts\Pack-FullMod.ps1&quot; -Configuration $(Configuration)" />
+        <Exec Command="powershell -ExecutionPolicy Bypass -File &quot;$(SolutionDir)BuildScripts\Pack-FullMod.ps1&quot; -Configuration $(Configuration) -SkipServerBuild" />
     </Target>
 
 </Project>

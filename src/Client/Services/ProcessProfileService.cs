@@ -550,6 +550,7 @@ namespace SPTLeaderboard.Services
                 RaidTime = calculatedTime,
                 SptVersion = DataUtils.GetSptVersion(),
                 Token = EncryptionService.Instance.Token,
+                ServerToken = EncryptionService.Instance.ServerToken,
                 Password = EncryptionService.Instance.Password,
                 DBinInv = haveDevItems,
                 IsCasual = Settings.Instance.ModCasualMode.Value,

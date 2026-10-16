@@ -52,7 +52,8 @@ namespace SPTLeaderboard.Utils
                     Timestamp = DataUtils.CurrentTimestamp,
                     Version = GlobalData.Version,
                     SessionId = session.Profile.Id,
-                    Token = EncryptionService.Instance.Token
+                    Token = EncryptionService.Instance.Token,
+                    ServerToken = EncryptionService.Instance.ServerToken
                 };
 
                 string jsonBody = JsonConvert.SerializeObject(data);
@@ -105,6 +106,7 @@ namespace SPTLeaderboard.Utils
                     Side = DataUtils.GetRaidPlayerSide(),
                     GameTime = DataUtils.GetRaidGameTime(),
                     Token = EncryptionService.Instance.Token,
+                    ServerToken = EncryptionService.Instance.ServerToken,
                     CurrentCoordinates = PlayerHelper.Instance.CurrentPosition
                 };
 

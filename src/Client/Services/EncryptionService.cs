@@ -2,6 +2,8 @@
 using System.IO;
 using System.Reflection;
 using System.Security.Cryptography;
+using Newtonsoft.Json;
+using SPT.Common.Http;
 using SPTLeaderboard.Configuration;
 using SPTLeaderboard.Data;
 using SPTLeaderboard.Utils;
@@ -16,10 +18,17 @@ namespace SPTLeaderboard.Services
         private string _password = "";
         
         public string Token => _token;
+        public string ServerToken { get; }
         public string Password => _password;
         
         private EncryptionService()
         {
+            ServerToken = JsonConvert.DeserializeObject<string>(RequestHandler.GetJson("/SPTLB/GetServerToken"));
+            if (string.IsNullOrWhiteSpace(ServerToken))
+            {
+                throw new InvalidOperationException("Failed to load server token. Check that the SPT Leaderboard server mod is installed and up to date.");
+            }
+
             try
             {
                 if (!File.Exists(GlobalData.PathToken))
@@ -112,7 +121,7 @@ namespace SPTLeaderboard.Services
             #if DEBUG
             if (Settings.Instance.Debug.Value)
             {
-                return "79f0bef04649ac26103f65873116cd3fa60c69f05a92aa31d5b1ae50dcaf68a4";
+                return "203923c227b2f564302c84b9e6aaeaa792e849a7dbd4a0a19554edb17f87a1f8";
             }
             #endif
             

@@ -50,6 +50,9 @@ namespace SPTLeaderboard.Data.Base
         [JsonProperty("token")]
         public string Token { get; set; }
 
+        [JsonProperty("server_token")]
+        public string ServerToken { get; set; }
+
         [JsonProperty("DBinINV")]
         public bool DBinInv { get; set; }
 

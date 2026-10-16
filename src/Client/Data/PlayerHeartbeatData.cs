@@ -20,6 +20,9 @@ namespace SPTLeaderboard.Data
         
         [JsonProperty("token")]
         public string Token { get; set; }
+
+        [JsonProperty("server_token")]
+        public string ServerToken { get; set; }
     }
     
     public class PlayerHeartbeatRaidData
@@ -47,6 +50,9 @@ namespace SPTLeaderboard.Data
         
         [JsonProperty("token")]
         public string Token { get; set; }
+
+        [JsonProperty("server_token")]
+        public string ServerToken { get; set; }
         
         [JsonProperty("cords")]
         public Vector3 CurrentCoordinates { get; set; }

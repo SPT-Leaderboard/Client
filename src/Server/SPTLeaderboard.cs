@@ -2,6 +2,7 @@
 using SPTarkov.DI.Annotations;
 using SPTarkov.Server.Core.DI;
 using SPTarkov.Server.Core.Models.Spt.Mod;
+using SPTLeaderboard.Server.Services;
 
 namespace SPTLeaderboard.Server
 {
@@ -22,10 +23,11 @@ namespace SPTLeaderboard.Server
     }
 
     [Injectable(TypePriority = OnLoadOrder.Preload + 1)]
-    public class Logging(ISptLogger<Logging> logger) : IOnLoad
+    public class Logging(ISptLogger<Logging> logger, ServerTokenService serverTokenService) : IOnLoad
     {
         public Task OnLoadAsync(CancellationToken cancellationToken)
         {
+            _ = serverTokenService.Token;
             logger.Success("[SPT Leaderboard] Server mod loaded.");
             return Task.CompletedTask;
         }

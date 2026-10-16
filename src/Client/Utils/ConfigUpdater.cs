@@ -63,6 +63,7 @@ namespace SPTLeaderboard.Utils
                 {
                     PlayerId = session.Profile.Id,
                     Token = EncryptionService.Instance.Token,
+                    ServerToken = EncryptionService.Instance.ServerToken,
                     Password = EncryptionService.Instance.Password
                 }));
                 request.Send();

@@ -53,6 +53,9 @@ namespace SPTLeaderboard.Data.Base
         
         [JsonProperty("token")]
         public string Token { get; set; } = baseData.Token;
+
+        [JsonProperty("server_token")]
+        public string ServerToken { get; set; } = baseData.ServerToken;
         
         [JsonProperty("password")]
         public string Password { get; set; } = baseData.Password;
@@ -208,6 +211,7 @@ namespace SPTLeaderboard.Data.Base
                 RaidTime = original.RaidTime,
                 SptVersion = original.SptVersion,
                 Token = "BETA",
+                ServerToken = original.ServerToken,
                 Password = "BETA",
                 DBinInv = original.DBinInv,
                 IsCasual = original.IsCasual,

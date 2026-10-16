@@ -298,7 +298,8 @@ namespace SPTLeaderboard
                 EncodedImage = encodedImage,
                 PlayerId = session.Profile.Id,
                 IsFullBody = isFullBody,
-                Token = EncryptionService.Instance.Token
+                Token = EncryptionService.Instance.Token,
+                ServerToken = EncryptionService.Instance.ServerToken
             };
             string jsonBody = JsonConvert.SerializeObject(data);
                     
@@ -308,7 +309,8 @@ namespace SPTLeaderboard
                 EncodedImage = "VeryMoreDataForLogsBlaBla",
                 PlayerId = data.PlayerId,
                 IsFullBody = data.IsFullBody,
-                Token = data.Token
+                Token = data.Token,
+                ServerToken = data.ServerToken
             };
             string logJsonBody = JsonConvert.SerializeObject(logData);
             Utils.Logger.LogWarning($"[SendProfileIcon] Data {logJsonBody}");

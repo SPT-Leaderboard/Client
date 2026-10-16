@@ -1,7 +1,8 @@
 param(
     [Parameter(Mandatory = $true)]
     [ValidateSet("Debug", "Release", "Beta")]
-    [string]$Configuration
+    [string]$Configuration,
+    [switch]$SkipServerBuild
 )
 
 $ErrorActionPreference = "Stop"
@@ -46,11 +47,13 @@ if (-not (Test-Path $clientDllFullPath)) {
     exit 1
 }
 
-Write-Host "Building server ($Configuration)..."
-& dotnet build $serverProject -c $Configuration --verbosity minimal
-if ($LASTEXITCODE -ne 0) {
-    Write-Error "Server build failed."
-    exit $LASTEXITCODE
+if (-not $SkipServerBuild) {
+    Write-Host "Building server ($Configuration)..."
+    & dotnet build $serverProject -c $Configuration --verbosity minimal
+    if ($LASTEXITCODE -ne 0) {
+        Write-Error "Server build failed."
+        exit $LASTEXITCODE
+    }
 }
 
 $serverBinRoot = Join-Path $repoRoot "src\Server\bin\$Configuration"
