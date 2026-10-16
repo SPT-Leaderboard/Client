@@ -90,6 +90,7 @@ namespace SPTLeaderboard
             new OpenAcceptMatchScreenPatch().Enable();
             new OpenLoadingRaidScreenPatch().Enable();
             new OnStartRaidPatch().Enable();
+            new OnRaidGameStartedPatch().Enable();
             new OnEndRaidPatch().Enable();
             new HideoutAwakePatch().Enable();
             new OnApplyDamageInfoPatch().Enable();
