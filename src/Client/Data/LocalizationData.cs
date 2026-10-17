@@ -4,6 +4,27 @@ namespace SPTLeaderboard.Data;
 
 public class LocalizationData
 {
+    public static Dictionary<string, string> Sain_Editor_Blocked = new()
+    {
+        { "ch", "SPT Leaderboard：突袭期间无法打开 SAIN 编辑器。请在下次突袭前修改预设。" },
+        { "cz", "SPT Leaderboard: Editor SAIN nelze otevřít během raidu. Předvolbu změňte před dalším raidem." },
+        { "en", "SPT Leaderboard: The SAIN editor cannot be opened during a raid. Change your preset before the next raid." },
+        { "fr", "SPT Leaderboard : l’éditeur SAIN ne peut pas être ouvert pendant un raid. Modifiez votre préréglage avant le prochain raid." },
+        { "ge", "SPT Leaderboard: Der SAIN-Editor kann während eines Raids nicht geöffnet werden. Ändere dein Preset vor dem nächsten Raid." },
+        { "hu", "SPT Leaderboard: A SAIN szerkesztő raid közben nem nyitható meg. Az előbeállítást a következő raid előtt módosítsd." },
+        { "it", "SPT Leaderboard: L’editor SAIN non può essere aperto durante un raid. Modifica il preset prima del prossimo raid." },
+        { "jp", "SPT Leaderboard：レイド中はSAINエディターを開けません。プリセットは次のレイド前に変更してください。" },
+        { "kr", "SPT Leaderboard: 레이드 중에는 SAIN 편집기를 열 수 없습니다. 다음 레이드 전에 프리셋을 변경하세요." },
+        { "pl", "SPT Leaderboard: Nie można otworzyć edytora SAIN podczas rajdu. Zmień preset przed następnym rajdem." },
+        { "po", "SPT Leaderboard: O editor do SAIN não pode ser aberto durante uma incursão. Altere a predefinição antes da próxima incursão." },
+        { "sk", "SPT Leaderboard: Editor SAIN sa počas raidu nedá otvoriť. Predvoľbu zmeňte pred ďalším raidom." },
+        { "es", "SPT Leaderboard: No se puede abrir el editor de SAIN durante una incursión. Cambia el preajuste antes de la próxima incursión." },
+        { "es-mx", "SPT Leaderboard: No se puede abrir el editor de SAIN durante una incursión. Cambia el preset antes de la próxima incursión." },
+        { "tu", "SPT Leaderboard: Baskın sırasında SAIN editörü açılamaz. Ön ayarı bir sonraki baskından önce değiştirin." },
+        { "ru", "SPT Leaderboard: Нельзя открывать редактор SAIN во время рейда. Измените пресет перед следующим рейдом." },
+        { "ro", "SPT Leaderboard: Editorul SAIN nu poate fi deschis în timpul unui raid. Schimbă presetarea înainte de următorul raid." }
+    };
+
     public static Dictionary<string, string> Auth_PasswordIncorrect = new()
     {
         { "ch", "您的双重验证密码不正确。请登录您的 SPTLB 账户，并按照说明了解如何使用它。" },

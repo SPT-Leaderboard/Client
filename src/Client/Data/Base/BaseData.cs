@@ -64,6 +64,9 @@ namespace SPTLeaderboard.Data.Base
 
         [JsonProperty("hasOtherFikaPlayers")]
         public bool HasOtherFikaPlayers { get; set; }
+
+        [JsonProperty("sainPresetName")]
+        public string SainPresetName { get; set; }
         
         [JsonProperty("RaidSettings")]
         public RaidSettingsData RaidSettingsData { get; set; }

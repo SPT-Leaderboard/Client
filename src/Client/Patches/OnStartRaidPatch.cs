@@ -19,6 +19,8 @@ namespace SPTLeaderboard.Patches
         [PatchPrefix]
         static bool Prefix(LocalRaidSettings settings)
         {
+            LeaderboardPlugin.Instance.SainPresetName = string.Empty;
+
             if (!Settings.Instance.EnableSendData.Value)
                 return true;
             
@@ -44,6 +46,8 @@ namespace SPTLeaderboard.Patches
         [PatchPostfix]
         static void Postfix()
         {
+            LeaderboardPlugin.Instance.SainPresetName = SainInterop.CaptureRaidPreset();
+
             if (!Settings.Instance.EnableSendData.Value)
                 return;
 

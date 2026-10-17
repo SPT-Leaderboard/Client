@@ -50,6 +50,7 @@ namespace SPTLeaderboard
         public bool IsPMCSelected = true;
         public bool IsExecutedSuspiciousCommand = false;
         public bool HasOtherFikaPlayers;
+        public string SainPresetName = string.Empty;
 
         public RaidSettingsData SavedRaidSettingsData = new();
         private Harmony pauseModIntegration;
@@ -175,6 +176,12 @@ namespace SPTLeaderboard
             
             Instance = this;
             Utils.Logger.LogInfo("Successful loaded!");
+        }
+
+        private void Start()
+        {
+            if (_settings != null)
+                SainInterop.Initialize();
         }
 
         private void Update()

@@ -88,6 +88,13 @@ namespace SPTLeaderboard.Services
             return localeCoin;
         }
 
+        public string GetSainEditorBlockedText()
+        {
+            return LocalizationData.Sain_Editor_Blocked.TryGetValue(CurrentLanguage(), out var text)
+                ? text
+                : LocalizationData.Sain_Editor_Blocked["en"];
+        }
+
          public string GetLocaleExperience(int value = 0)
         {
             if (LocalizationData.AddBattlePassXP.TryGetValue(CurrentLanguage(), out var textAddBattlePassXP))
